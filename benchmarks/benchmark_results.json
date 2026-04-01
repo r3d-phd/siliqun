@@ -1,0 +1,35 @@
+{
+  "gate_accuracy": {
+    "Rx(pi)_Z_expectation": {"measured": -1.0, "expected": -1.0, "error": 0.0},
+    "Ry(pi/2)_Z_expectation": {"measured": 0.0, "expected": 0.0, "error": 2.22e-16},
+    "Rz(pi)_roundtrip": {"measured": -1.0, "expected": -1.0, "error": 0.0},
+    "Bell_ZZ_correlator": {"measured": 1.0, "expected": 1.0, "error": 0.0},
+    "CNOT_identity_fidelity": {"measured": 1.0, "expected": 1.0, "error": 0.0},
+    "Bell_entropy": {"measured": 1.0, "expected": 1.0, "error": 0.0}
+  },
+  "simulation_speed": {
+    "2": {"mean_time_s": 0.0013, "steps_per_sec": 37060.4, "max_bond_dim": 2},
+    "4": {"mean_time_s": 0.0019, "steps_per_sec": 26188.1, "max_bond_dim": 4},
+    "6": {"mean_time_s": 0.0027, "steps_per_sec": 18777.6, "max_bond_dim": 8},
+    "8": {"mean_time_s": 0.0028, "steps_per_sec": 17676.7, "max_bond_dim": 16},
+    "10": {"mean_time_s": 0.0045, "steps_per_sec": 11038.8, "max_bond_dim": 32},
+    "12": {"mean_time_s": 0.0035, "steps_per_sec": 14470.5, "max_bond_dim": 16}
+  },
+  "noise_comparison": {
+    "2q_noiseless": {"steps_per_sec": 153901.7},
+    "2q_noisy": {"steps_per_sec": 87051.3},
+    "4q_noiseless": {"steps_per_sec": 152839.5},
+    "4q_noisy": {"steps_per_sec": 82917.5},
+    "6q_noiseless": {"steps_per_sec": 177892.0},
+    "6q_noisy": {"steps_per_sec": 87796.2},
+    "8q_noiseless": {"steps_per_sec": 174443.3},
+    "8q_noisy": {"steps_per_sec": 80728.9}
+  },
+  "env_throughput": {
+    "2q_clean": {"steps_per_sec": 5303.4},
+    "2q_noisy": {"steps_per_sec": 5327.2}
+  },
+  "t1_decay": {
+    "validation": "T1=30s, all 10 time points from 0 to 0.5ms show <Z>=-1.0000 as expected (decay negligible over sub-ms timescales with T1=30s)"
+  }
+}

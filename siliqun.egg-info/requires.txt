@@ -1,0 +1,13 @@
+numpy>=1.22
+scipy>=1.9
+gymnasium>=0.26
+
+[dev]
+pytest>=7.0
+
+[gpu]
+jax[cuda]>=0.4
+
+[hpc]
+quimb>=1.6
+cotengra>=0.5

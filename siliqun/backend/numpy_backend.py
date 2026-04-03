@@ -1,5 +1,5 @@
 """
-NumPy compute backend — the reference implementation.
+NumPy compute backend - the reference implementation.
 
 All operations use NumPy and SciPy, providing a CPU-based baseline
 that works on any platform without GPU dependencies.
@@ -23,7 +23,7 @@ class NumPyBackend(Backend):
     def real_dtype(self):
         return np.float64
 
-    # ── Array creation ──────────────────────────────────────────────
+    # -- Array creation ----------------------------------------------
 
     def zeros(self, shape, dtype=None):
         return np.zeros(shape, dtype=dtype or self.complex_dtype())
@@ -37,7 +37,7 @@ class NumPyBackend(Backend):
     def array(self, data, dtype=None):
         return np.asarray(data, dtype=dtype or self.complex_dtype())
 
-    # ── Linear algebra ──────────────────────────────────────────────
+    # -- Linear algebra ----------------------------------------------
 
     def svd(self, tensor, full_matrices=False):
         return np.linalg.svd(tensor, full_matrices=full_matrices)
@@ -54,7 +54,7 @@ class NumPyBackend(Backend):
     def norm(self, tensor):
         return float(np.linalg.norm(tensor))
 
-    # ── Tensor operations ───────────────────────────────────────────
+    # -- Tensor operations -------------------------------------------
 
     def tensordot(self, a, b, axes):
         return np.tensordot(a, b, axes=axes)
@@ -77,7 +77,7 @@ class NumPyBackend(Backend):
     def kron(self, a, b):
         return np.kron(a, b)
 
-    # ── Utility ─────────────────────────────────────────────────────
+    # -- Utility -----------------------------------------------------
 
     def to_numpy(self, tensor):
         return np.asarray(tensor)

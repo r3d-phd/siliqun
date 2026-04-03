@@ -1,5 +1,5 @@
 """
-JAX compute backend — GPU-accelerated with JIT compilation.
+JAX compute backend - GPU-accelerated with JIT compilation.
 
 Provides automatic differentiation and XLA compilation for
 high-performance tensor network operations on GPU/TPU.
@@ -36,7 +36,7 @@ class JAXBackend(Backend):
     def real_dtype(self):
         return jnp.float64
 
-    # ── Array creation ──────────────────────────────────────────────
+    # -- Array creation ----------------------------------------------
 
     def zeros(self, shape, dtype=None):
         return jnp.zeros(shape, dtype=dtype or self.complex_dtype())
@@ -50,7 +50,7 @@ class JAXBackend(Backend):
     def array(self, data, dtype=None):
         return jnp.asarray(data, dtype=dtype or self.complex_dtype())
 
-    # ── Linear algebra ──────────────────────────────────────────────
+    # -- Linear algebra ----------------------------------------------
 
     def svd(self, tensor, full_matrices=False):
         return jnp.linalg.svd(tensor, full_matrices=full_matrices)
@@ -67,7 +67,7 @@ class JAXBackend(Backend):
     def norm(self, tensor):
         return float(jnp.linalg.norm(tensor))
 
-    # ── Tensor operations ───────────────────────────────────────────
+    # -- Tensor operations -------------------------------------------
 
     def tensordot(self, a, b, axes):
         return jnp.tensordot(a, b, axes=axes)
@@ -90,7 +90,7 @@ class JAXBackend(Backend):
     def kron(self, a, b):
         return jnp.kron(a, b)
 
-    # ── Utility ─────────────────────────────────────────────────────
+    # -- Utility -----------------------------------------------------
 
     def to_numpy(self, tensor):
         return np.asarray(tensor)

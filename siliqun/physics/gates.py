@@ -1,7 +1,7 @@
 """
 Quantum gate library for silicon spin qubits.
 
-Provides standard single- and two-qubit gates as dense 2×2 and 4×4
+Provides standard single- and two-qubit gates as dense 2x2 and 4x4
 matrices, plus silicon-specific pulse-derived gates (ESR, EDSR,
 exchange-based CNOT/SWAP).
 """
@@ -12,7 +12,7 @@ import numpy as np
 from ..backend import active_backend
 
 
-# ── Pauli matrices ──────────────────────────────────────────────────
+# -- Pauli matrices --------------------------------------------------
 
 PAULI_I = np.array([[1, 0], [0, 1]], dtype=np.complex128)
 PAULI_X = np.array([[0, 1], [1, 0]], dtype=np.complex128)
@@ -24,7 +24,7 @@ SIGMA_PLUS = np.array([[0, 1], [0, 0]], dtype=np.complex128)
 SIGMA_MINUS = np.array([[0, 0], [1, 0]], dtype=np.complex128)
 
 
-# ── Pauli gate functions ──────────────────────────────────────────
+# -- Pauli gate functions ------------------------------------------
 
 def pauli_x() -> np.ndarray:
     """Pauli X gate."""
@@ -39,7 +39,7 @@ def pauli_z() -> np.ndarray:
     return PAULI_Z.copy()
 
 
-# ── Standard single-qubit gates ────────────────────────────────────
+# -- Standard single-qubit gates ------------------------------------
 
 def hadamard() -> np.ndarray:
     """Hadamard gate H."""
@@ -47,24 +47,24 @@ def hadamard() -> np.ndarray:
 
 
 def phase_gate(phi: float) -> np.ndarray:
-    """Phase gate S(φ) = diag(1, e^{iφ})."""
+    """Phase gate S(phi) = diag(1, e^{iphi})."""
     return np.array([[1, 0], [0, np.exp(1j * phi)]], dtype=np.complex128)
 
 
 def rx(theta: float) -> np.ndarray:
-    """Rotation about X axis: Rx(θ) = exp(-iθX/2)."""
+    """Rotation about X axis: Rx(theta) = exp(-ithetaX/2)."""
     c, s = np.cos(theta / 2), np.sin(theta / 2)
     return np.array([[c, -1j * s], [-1j * s, c]], dtype=np.complex128)
 
 
 def ry(theta: float) -> np.ndarray:
-    """Rotation about Y axis: Ry(θ) = exp(-iθY/2)."""
+    """Rotation about Y axis: Ry(theta) = exp(-ithetaY/2)."""
     c, s = np.cos(theta / 2), np.sin(theta / 2)
     return np.array([[c, -s], [s, c]], dtype=np.complex128)
 
 
 def rz(theta: float) -> np.ndarray:
-    """Rotation about Z axis: Rz(θ) = exp(-iθZ/2)."""
+    """Rotation about Z axis: Rz(theta) = exp(-ithetaZ/2)."""
     return np.array(
         [[np.exp(-1j * theta / 2), 0], [0, np.exp(1j * theta / 2)]],
         dtype=np.complex128,
@@ -72,11 +72,11 @@ def rz(theta: float) -> np.ndarray:
 
 
 def t_gate() -> np.ndarray:
-    """T gate (π/8 gate)."""
+    """T gate (pi/8 gate)."""
     return phase_gate(np.pi / 4)
 
 
-# ── Standard two-qubit gates ───────────────────────────────────────
+# -- Standard two-qubit gates ---------------------------------------
 
 def cnot() -> np.ndarray:
     """CNOT gate (control on qubit 0, target on qubit 1)."""
@@ -106,7 +106,7 @@ def swap() -> np.ndarray:
 
 
 def sqrt_swap() -> np.ndarray:
-    """√SWAP gate — native to exchange-coupled spin qubits."""
+    """sqrtSWAP gate - native to exchange-coupled spin qubits."""
     return np.array(
         [[1, 0, 0, 0],
          [0, (1 + 1j) / 2, (1 - 1j) / 2, 0],
@@ -116,16 +116,16 @@ def sqrt_swap() -> np.ndarray:
     )
 
 
-# ── Silicon spin qubit specific gates ───────────────────────────────
+# -- Silicon spin qubit specific gates -------------------------------
 
 def esr_rotation(theta: float, phi: float) -> np.ndarray:
     """Electron Spin Resonance (ESR) rotation.
 
     Single-qubit rotation driven by an oscillating magnetic field
-    at the Larmor frequency. Parameterized by rotation angle θ
-    and phase φ of the microwave drive.
+    at the Larmor frequency. Parameterized by rotation angle theta
+    and phase phi of the microwave drive.
 
-    U = Rz(φ) · Ry(θ) · Rz(-φ)
+    U = Rz(phi) * Ry(theta) * Rz(-phi)
     """
     return rz(phi) @ ry(theta) @ rz(-phi)
 
@@ -141,7 +141,7 @@ def edsr_rotation(theta: float, phi: float) -> np.ndarray:
 
 
 def exchange_gate(J: float, t: float) -> np.ndarray:
-    """Exchange interaction gate: U = exp(-i J t (σ₁·σ₂)/4).
+    """Exchange interaction gate: U = exp(-i J t (sigma_1*sigma_2)/4).
 
     Parameters
     ----------
@@ -152,7 +152,7 @@ def exchange_gate(J: float, t: float) -> np.ndarray:
 
     Returns
     -------
-    4×4 unitary matrix in the computational basis.
+    4x4 unitary matrix in the computational basis.
     """
     be = active_backend()
     # Heisenberg exchange: H = J/4 (XX + YY + ZZ)
@@ -165,17 +165,17 @@ def exchange_gate(J: float, t: float) -> np.ndarray:
 
 
 def exchange_sqrt_swap(J: float) -> np.ndarray:
-    """√SWAP via exchange interaction with calibrated timing.
+    """sqrtSWAP via exchange interaction with calibrated timing.
 
-    The timing t = π/(2J) gives a √SWAP gate.
+    The timing t = pi/(2J) gives a sqrtSWAP gate.
     """
     return exchange_gate(J, np.pi / (2 * J))
 
 
-# ── Gate-to-MPO conversion ─────────────────────────────────────────
+# -- Gate-to-MPO conversion -----------------------------------------
 
 def single_qubit_mpo_tensor(gate: np.ndarray) -> np.ndarray:
-    """Convert a 2×2 gate to a rank-4 MPO tensor (1, 2, 2, 1)."""
+    """Convert a 2x2 gate to a rank-4 MPO tensor (1, 2, 2, 1)."""
     return gate.reshape(1, 2, 2, 1)
 
 
@@ -183,19 +183,19 @@ def two_qubit_gate_to_mpo_tensors(
     gate: np.ndarray,
     max_bond: Optional[int] = None,
 ) -> tuple:
-    """Decompose a 4×4 two-qubit gate into two MPO tensors via SVD.
+    """Decompose a 4x4 two-qubit gate into two MPO tensors via SVD.
 
     Parameters
     ----------
     gate : ndarray
-        4×4 unitary matrix.
+        4x4 unitary matrix.
     max_bond : int, optional
         Maximum bond dimension for truncation.
 
     Returns
     -------
     (W0, W1) : tuple of ndarray
-        W0 has shape (1, 2, 2, χ), W1 has shape (χ, 2, 2, 1).
+        W0 has shape (1, 2, 2, chi), W1 has shape (chi, 2, 2, 1).
     """
     be = active_backend()
     # Reshape gate to (d_out0, d_out1, d_in0, d_in1)

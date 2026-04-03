@@ -1,13 +1,13 @@
 """
-Matrix Product State (MPS) — efficient representation of 1D quantum states.
+Matrix Product State (MPS) - efficient representation of 1D quantum states.
 
 An MPS represents an N-qubit pure state as a chain of rank-3 tensors:
 
-    |ψ⟩ = Σ A[0]^{s0} · A[1]^{s1} · ... · A[N-1]^{s_{N-1}} |s0 s1 ... s_{N-1}⟩
+    |psi> = Sum A[0]^{s0} * A[1]^{s1} * ... * A[N-1]^{s_{N-1}} |s0 s1 ... s_{N-1}>
 
-where each A[i] has shape (χ_{i-1}, d, χ_i) with:
+where each A[i] has shape (chi_{i-1}, d, chi_i) with:
     - d: local physical dimension (2 for qubits)
-    - χ_i: bond dimension between sites i and i+1
+    - chi_i: bond dimension between sites i and i+1
 """
 
 from __future__ import annotations
@@ -22,8 +22,8 @@ class MPS:
     Parameters
     ----------
     tensors : list of ndarray
-        List of rank-3 tensors [χ_left, d, χ_right] for each site.
-        Boundary tensors have χ_left=1 or χ_right=1.
+        List of rank-3 tensors [chi_left, d, chi_right] for each site.
+        Boundary tensors have chi_left=1 or chi_right=1.
     phys_dim : int
         Local physical dimension (default 2 for qubits).
     """
@@ -40,7 +40,7 @@ class MPS:
             if t.ndim != 3:
                 raise ValueError(
                     f"Tensor at site {i} has rank {t.ndim}, expected 3 "
-                    f"(χ_left, d, χ_right)"
+                    f"(chi_left, d, chi_right)"
                 )
             if t.shape[1] != self._phys_dim:
                 raise ValueError(
@@ -65,7 +65,7 @@ class MPS:
 
     @property
     def bond_dims(self) -> List[int]:
-        """Return the bond dimensions χ_1, ..., χ_{N-1}."""
+        """Return the bond dimensions chi_1, ..., chi_{N-1}."""
         return [self._tensors[i].shape[2] for i in range(self._n_sites - 1)]
 
     @property
@@ -86,7 +86,7 @@ class MPS:
         """Deep copy of the MPS."""
         return MPS([t.copy() for t in self._tensors], self._phys_dim)
 
-    # ── Creation methods ────────────────────────────────────────────
+    # -- Creation methods --------------------------------------------
 
     @classmethod
     def computational_basis(
@@ -99,7 +99,7 @@ class MPS:
         n_qubits : int
             Number of qubits.
         state : int
-            Integer representation of the basis state (e.g., 0 for |000...0⟩).
+            Integer representation of the basis state (e.g., 0 for |000...0>).
         """
         be = active_backend()
         tensors = []
@@ -112,7 +112,7 @@ class MPS:
 
     @classmethod
     def ghz_state(cls, n_qubits: int) -> MPS:
-        """Create a GHZ state: (|00...0⟩ + |11...1⟩) / √2."""
+        """Create a GHZ state: (|00...0> + |11...1>) / sqrt2."""
         be = active_backend()
         tensors = []
         # First site
@@ -135,16 +135,16 @@ class MPS:
 
     @classmethod
     def bell_state(cls, n_qubits: int = 2) -> MPS:
-        """Create a Bell-like state: (|00...0⟩ + |11...1⟩) / √2.
+        """Create a Bell-like state: (|00...0> + |11...1>) / sqrt2.
 
-        For n_qubits=2, this is the standard Bell state |Φ+⟩.
+        For n_qubits=2, this is the standard Bell state |Phi+>.
         For n_qubits>2, this is the GHZ state.
         """
         return cls.ghz_state(n_qubits)
 
     @classmethod
     def w_state(cls, n_qubits: int) -> MPS:
-        """Create a W state: (|100...0⟩ + |010...0⟩ + ... + |000...1⟩) / √n.
+        """Create a W state: (|100...0> + |010...0> + ... + |000...1>) / sqrtn.
 
         The W state has exactly one excitation shared equally among all qubits.
         """
@@ -157,22 +157,22 @@ class MPS:
 
         # First site: (1, 2, 2)
         t0 = be.zeros((1, 2, 2))
-        t0[0, 0, 0] = 1.0       # pass |0⟩, no excitation yet
+        t0[0, 0, 0] = 1.0       # pass |0>, no excitation yet
         t0[0, 1, 1] = coeff     # place excitation here
         tensors.append(t0)
 
         # Middle sites: (2, 2, 2)
         for i in range(1, n - 1):
             t = be.zeros((2, 2, 2))
-            t[0, 0, 0] = 1.0    # no excitation yet, pass |0⟩
+            t[0, 0, 0] = 1.0    # no excitation yet, pass |0>
             t[0, 1, 1] = coeff  # place excitation here
-            t[1, 0, 1] = 1.0    # excitation already placed, pass |0⟩
+            t[1, 0, 1] = 1.0    # excitation already placed, pass |0>
             tensors.append(t)
 
         # Last site: (2, 2, 1)
         tN = be.zeros((2, 2, 1))
         tN[0, 1, 0] = coeff     # place excitation here (last chance)
-        tN[1, 0, 0] = 1.0      # excitation already placed, pass |0⟩
+        tN[1, 0, 0] = 1.0      # excitation already placed, pass |0>
         tensors.append(tN)
 
         return cls(tensors)
@@ -202,17 +202,17 @@ class MPS:
         mps.normalize()
         return mps
 
-    # ── Operations ──────────────────────────────────────────────────
+    # -- Operations --------------------------------------------------
 
     def norm(self) -> float:
-        """Compute ⟨ψ|ψ⟩ via left-to-right contraction."""
+        """Compute <psi|psi> via left-to-right contraction."""
         be = active_backend()
         # Start with identity transfer matrix
         env = be.ones((1, 1))
         for i in range(self._n_sites):
-            A = self._tensors[i]       # (χ_l, d, χ_r)
-            A_conj = be.conj(A)        # (χ_l, d, χ_r)*
-            # Contract: env(χ_l, χ_l') × A(χ_l, d, χ_r) × A*(χ_l', d, χ_r')
+            A = self._tensors[i]       # (chi_l, d, chi_r)
+            A_conj = be.conj(A)        # (chi_l, d, chi_r)*
+            # Contract: env(chi_l, chi_l') x A(chi_l, d, chi_r) x A*(chi_l', d, chi_r')
             env = be.einsum("ab,adc,bde->ce", env, A, A_conj)
         return float(np.sqrt(abs(be.to_numpy(env)[0, 0])))
 
@@ -224,7 +224,7 @@ class MPS:
             self._tensors[0] = be.array(self._tensors[0] / n)
 
     def inner(self, other: MPS) -> complex:
-        """Compute ⟨self|other⟩."""
+        """Compute <self|other>."""
         be = active_backend()
         if self._n_sites != other._n_sites:
             raise ValueError("MPS must have the same number of sites.")
@@ -238,9 +238,9 @@ class MPS:
     def to_dense(self) -> np.ndarray:
         """Convert MPS to full state vector (exponential memory!)."""
         be = active_backend()
-        result = self._tensors[0]  # (1, d, χ)
+        result = self._tensors[0]  # (1, d, chi)
         for i in range(1, self._n_sites):
-            # result: (..., χ) × tensor_i: (χ, d, χ')
+            # result: (..., chi) x tensor_i: (chi, d, chi')
             result = be.tensordot(result, self._tensors[i], ([result.ndim - 1], [0]))
         # Squeeze boundary dimensions
         shape = tuple(self._phys_dim for _ in range(self._n_sites))
@@ -248,7 +248,7 @@ class MPS:
         return be.to_numpy(result)
 
     def expectation_local(self, op: np.ndarray, site: int) -> complex:
-        """Compute ⟨ψ|O_site|ψ⟩ for a single-site operator O."""
+        """Compute <psi|O_site|psi> for a single-site operator O."""
         be = active_backend()
         op = be.array(op)
         env = be.ones((1, 1))

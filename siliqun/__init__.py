@@ -1,5 +1,5 @@
 """
-SiliQun — Silicon Qubits Simulator
+SiliQun - Silicon Qubits Simulator
 
 A high-performance, modular simulator for silicon spin qubit quantum
 computers, built on tensor network methods (MPS/MPO) for scalable

@@ -113,7 +113,7 @@ class CUDABackend(ComputeBackend):
             f"cuquantum={'yes' if self._cutn else 'no'}"
         )
 
-    # ── Tensor Creation ────────────────────────────────────────────
+    # -- Tensor Creation --------------------------------------------
 
     def array(self, data, dtype=None) -> "cupy.ndarray":
         """Create a GPU tensor from data."""
@@ -142,7 +142,7 @@ class CUDABackend(ComputeBackend):
                 dtype or np.float64
             )
 
-    # ── Tensor Operations ──────────────────────────────────────────
+    # -- Tensor Operations ------------------------------------------
 
     def conj(self, a):
         return self._cp.conj(a)
@@ -208,14 +208,14 @@ class CUDABackend(ComputeBackend):
         """Matrix exponential on GPU.
 
         CuPy doesn't have expm natively, so we use eigendecomposition:
-            expm(A) = V @ diag(exp(λ)) @ V^{-1}
+            expm(A) = V @ diag(exp(lambda)) @ V^{-1}
         """
         with self._device:
             eigenvalues, V = self._cp.linalg.eigh(a)
             exp_eigenvalues = self._cp.exp(eigenvalues)
             return V @ self._cp.diag(exp_eigenvalues) @ self._cp.conj(V.T)
 
-    # ── Data Transfer ──────────────────────────────────────────────
+    # -- Data Transfer ----------------------------------------------
 
     def to_numpy(self, a) -> np.ndarray:
         """Transfer GPU tensor to CPU NumPy array."""
@@ -228,7 +228,7 @@ class CUDABackend(ComputeBackend):
         with self._device:
             return self._cp.asarray(a)
 
-    # ── Memory Management ──────────────────────────────────────────
+    # -- Memory Management ------------------------------------------
 
     def memory_info(self) -> dict:
         """Get GPU memory usage information."""

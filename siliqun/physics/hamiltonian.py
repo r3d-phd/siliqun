@@ -19,9 +19,9 @@ from ..tensor.mpo import MPO
 from . import gates
 
 
-# ── Physical constants ──────────────────────────────────────────────
+# -- Physical constants ----------------------------------------------
 
-HBAR = 1.054571817e-34       # J·s
+HBAR = 1.054571817e-34       # J*s
 MU_B = 9.2740100783e-24      # J/T (Bohr magneton)
 G_ELECTRON = 2.0023193        # electron g-factor in silicon
 GAMMA_E = G_ELECTRON * MU_B / HBAR  # electron gyromagnetic ratio
@@ -54,7 +54,7 @@ class DeviceParams:
     drive_phases : list of float
         Drive phases for each qubit (rad).
     crosstalk_matrix : ndarray, optional
-        N×N matrix of crosstalk coefficients between qubits.
+        NxN matrix of crosstalk coefficients between qubits.
     temperature : float
         Device temperature (Kelvin).
     """
@@ -103,10 +103,10 @@ class DeviceParams:
             self.crosstalk_matrix = np.eye(n)
 
 
-# ── Preset device configurations ───────────────────────────────────
+# -- Preset device configurations -----------------------------------
 
 def donor_2q_params() -> DeviceParams:
-    """2-qubit donor (P:Si) device — UNSW-style."""
+    """2-qubit donor (P:Si) device - UNSW-style."""
     return DeviceParams(
         n_qubits=2,
         device_type="donor",
@@ -118,7 +118,7 @@ def donor_2q_params() -> DeviceParams:
 
 
 def simos_4q_params() -> DeviceParams:
-    """4-qubit SiMOS device — Intel-style."""
+    """4-qubit SiMOS device - Intel-style."""
     return DeviceParams(
         n_qubits=4,
         device_type="simos",
@@ -130,7 +130,7 @@ def simos_4q_params() -> DeviceParams:
 
 
 def gaa_6q_params() -> DeviceParams:
-    """6-qubit GAA device — next-generation."""
+    """6-qubit GAA device - next-generation."""
     return DeviceParams(
         n_qubits=6,
         device_type="gaa",
@@ -141,7 +141,7 @@ def gaa_6q_params() -> DeviceParams:
     )
 
 
-# ── Hamiltonian MPO construction ────────────────────────────────────
+# -- Hamiltonian MPO construction ------------------------------------
 
 def build_hamiltonian_mpo(params: DeviceParams) -> MPO:
     """Build the system Hamiltonian as an MPO.
@@ -150,10 +150,10 @@ def build_hamiltonian_mpo(params: DeviceParams) -> MPO:
     encodes the local terms and nearest-neighbor couplings.
 
     The Hamiltonian is:
-        H = Σ_i ω_i/2 Z_i                    (Zeeman)
-          + Σ_i A_i/4 (X_i X_n + Y_i Y_n + Z_i Z_n)  (Hyperfine, donor)
-          + Σ_{⟨i,j⟩} J_{ij}/4 (X_i X_j + Y_i Y_j + Z_i Z_j)  (Exchange)
-          + Σ_i Ω_i cos(ω_d t + φ_i) X_i     (Drive, time-dependent)
+        H = Sum_i omega_i/2 Z_i                    (Zeeman)
+          + Sum_i A_i/4 (X_i X_n + Y_i Y_n + Z_i Z_n)  (Hyperfine, donor)
+          + Sum_{<i,j>} J_{ij}/4 (X_i X_j + Y_i Y_j + Z_i Z_j)  (Exchange)
+          + Sum_i Omega_i cos(omega_d t + phi_i) X_i     (Drive, time-dependent)
 
     For the static part (no drive), we build the MPO exactly.
     """
@@ -181,19 +181,19 @@ def build_hamiltonian_mpo(params: DeviceParams) -> MPO:
         # Row 0: identity propagation
         W[0, :, :, 0] = be.array(I)
 
-        # Row 0 → columns 1,2,3: start exchange coupling
+        # Row 0 -> columns 1,2,3: start exchange coupling
         if i < n - 1:
             J = 2 * np.pi * params.exchange_couplings[i]
             W[0, :, :, 1] = be.array((J / 4) * X)
             W[0, :, :, 2] = be.array((J / 4) * Y)
             W[0, :, :, 3] = be.array((J / 4) * Z)
 
-        # Rows 1,2,3 → column 4: complete exchange coupling
+        # Rows 1,2,3 -> column 4: complete exchange coupling
         W[1, :, :, 4] = be.array(X)
         W[2, :, :, 4] = be.array(Y)
         W[3, :, :, 4] = be.array(Z)
 
-        # Row 0 → column 4: local Zeeman term
+        # Row 0 -> column 4: local Zeeman term
         W[0, :, :, 4] = be.array(W[0, :, :, 4]) + be.array((omega_i / 2) * Z)
 
         # Add hyperfine (as additional local Z splitting for simplicity)
@@ -201,7 +201,7 @@ def build_hamiltonian_mpo(params: DeviceParams) -> MPO:
             A_hf = 2 * np.pi * params.hyperfine_couplings[i]
             W[0, :, :, 4] = be.array(W[0, :, :, 4]) + be.array((A_hf / 4) * Z)
 
-        # Row 4 → column 4: identity (accumulate)
+        # Row 4 -> column 4: identity (accumulate)
         W[4, :, :, 4] = be.array(I)
 
         tensors.append(W)
@@ -216,7 +216,7 @@ def build_hamiltonian_mpo(params: DeviceParams) -> MPO:
 def build_drive_mpo(params: DeviceParams, t: float) -> MPO:
     """Build the time-dependent drive Hamiltonian MPO at time t.
 
-    H_drive(t) = Σ_i Ω_i cos(ω_d,i · t + φ_i) X_i
+    H_drive(t) = Sum_i Omega_i cos(omega_d,i * t + phi_i) X_i
     """
     be = active_backend()
     n = params.n_qubits

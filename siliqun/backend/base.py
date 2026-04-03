@@ -16,7 +16,7 @@ class Backend(ABC):
 
     name: str = "abstract"
 
-    # ── Array creation ──────────────────────────────────────────────
+    # -- Array creation ----------------------------------------------
 
     @abstractmethod
     def zeros(self, shape: Tuple[int, ...], dtype=None) -> np.ndarray:
@@ -28,7 +28,7 @@ class Backend(ABC):
 
     @abstractmethod
     def eye(self, n: int, dtype=None) -> np.ndarray:
-        """Create an n×n identity matrix."""
+        """Create an nxn identity matrix."""
 
     @abstractmethod
     def array(self, data, dtype=None) -> np.ndarray:
@@ -42,7 +42,7 @@ class Backend(ABC):
     def real_dtype(self):
         """Return the default real dtype for this backend."""
 
-    # ── Linear algebra ──────────────────────────────────────────────
+    # -- Linear algebra ----------------------------------------------
 
     @abstractmethod
     def svd(
@@ -68,7 +68,7 @@ class Backend(ABC):
     def norm(self, tensor: np.ndarray) -> float:
         """Frobenius norm of a tensor."""
 
-    # ── Tensor operations ───────────────────────────────────────────
+    # -- Tensor operations -------------------------------------------
 
     @abstractmethod
     def tensordot(
@@ -103,7 +103,7 @@ class Backend(ABC):
     def kron(self, a: np.ndarray, b: np.ndarray) -> np.ndarray:
         """Kronecker product."""
 
-    # ── Utility ─────────────────────────────────────────────────────
+    # -- Utility -----------------------------------------------------
 
     @abstractmethod
     def to_numpy(self, tensor) -> np.ndarray:

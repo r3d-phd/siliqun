@@ -1,0 +1,71 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\emailauthor{ralshehri0468@stu.kau.edu.sa}{Raad Alshehri\corref {cor1}}
+\Newlabel{cor1}{1}
+\Newlabel{label1}{a}
+\citation{zwanenburg2013silicon,muhonen2014storing}
+\citation{yoneda2018quantum}
+\citation{noiri2022fast,xue2022quantum,mills2022two,madzik2022precision}
+\citation{sledge2019}
+\citation{connors2022charge}
+\citation{niu2019universal,fosel2018reinforcement}
+\newlabel{metadata}{{a}{2}{Metadata}{section*.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Code metadata (mandatory)}}{2}{table.1}\protected@file@percent }
+\newlabel{codeMetadata}{{1}{2}{Code metadata (mandatory)}{table.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Motivation and significance}{2}{section.1}\protected@file@percent }
+\newlabel{sec:motivation}{{1}{2}{Motivation and significance}{section.1}{}}
+\citation{schollwock2011density}
+\citation{gymnasium2023}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Software description}{3}{section.2}\protected@file@percent }
+\newlabel{sec:description}{{2}{3}{Software description}{section.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The SiliQun software architecture. This modular framework is divided into four distinct layers: a flexible numerical backend (supporting NumPy and CuPy), a dual simulation core featuring both an MPS engine for 1D chains and a GPU state vector engine for 2D grids, a dedicated physics engine containing calibrated device profiles and noise models, and an uppermost layer that provides a Gymnasium-compatible RL environment.}}{4}{figure.1}\protected@file@percent }
+\newlabel{fig:architecture}{{1}{4}{The SiliQun software architecture. This modular framework is divided into four distinct layers: a flexible numerical backend (supporting NumPy and CuPy), a dual simulation core featuring both an MPS engine for 1D chains and a GPU state vector engine for 2D grids, a dedicated physics engine containing calibrated device profiles and noise models, and an uppermost layer that provides a Gymnasium-compatible RL environment}{figure.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Architectural layers}{4}{subsection.2.1}\protected@file@percent }
+\citation{muhonen2014storing}
+\citation{yoneda2018quantum}
+\citation{geyer2022twoqubit}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces DFS logical subspace projection. Each logical qubit is encoded in three physical electron spins. The projection $\Pi $ maps the physical Hilbert space ($2^{3n}$ dimensions) to the logical subspace ($2^n$ dimensions), reducing the memory requirement for 25 logical qubits from an intractable $2^{75}$ to a manageable $2^{25}$ (512~MB).}}{5}{figure.2}\protected@file@percent }
+\newlabel{fig:dfs}{{2}{5}{DFS logical subspace projection. Each logical qubit is encoded in three physical electron spins. The projection $\Pi $ maps the physical Hilbert space ($2^{3n}$ dimensions) to the logical subspace ($2^n$ dimensions), reducing the memory requirement for 25 logical qubits from an intractable $2^{75}$ to a manageable $2^{25}$ (512~MB)}{figure.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces The SLEDGE 5$\times $5 grid architecture comprising 25 logical qubits (75 physical spins). Each node represents a logical qubit encoded in three physical electron spins. Lines indicate inter-qubit exchange couplings. The full grid requires a state vector of dimension $2^{25} = 33.5$~million.}}{6}{figure.3}\protected@file@percent }
+\newlabel{fig:sledge}{{3}{6}{The SLEDGE 5$\times $5 grid architecture comprising 25 logical qubits (75 physical spins). Each node represents a logical qubit encoded in three physical electron spins. Lines indicate inter-qubit exchange couplings. The full grid requires a state vector of dimension $2^{25} = 33.5$~million}{figure.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Built-in silicon spin qubit device profiles in SiliQun.}}{6}{table.2}\protected@file@percent }
+\newlabel{tab:devices}{{2}{6}{Built-in silicon spin qubit device profiles in SiliQun}{table.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Software functionalities}{7}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Illustrative examples}{7}{section.3}\protected@file@percent }
+\newlabel{sec:examples}{{3}{7}{Illustrative examples}{section.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Example 1: DRL training loop}{7}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Example 2: GPU Performance Benchmarks}{8}{subsection.3.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces SiliQun GPU Benchmark Results (NVIDIA A100). The crossover point where GPU outperforms CPU occurs at approximately 16 qubits due to kernel launch overhead.}}{8}{table.3}\protected@file@percent }
+\newlabel{tab:gpu_bench}{{3}{8}{SiliQun GPU Benchmark Results (NVIDIA A100). The crossover point where GPU outperforms CPU occurs at approximately 16 qubits due to kernel launch overhead}{table.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Impact}{8}{section.4}\protected@file@percent }
+\newlabel{sec:impact}{{4}{8}{Impact}{section.4}{}}
+\citation{qiskit}
+\citation{qutip}
+\citation{cuquantum}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces GPU acceleration benchmarks for the 25-qubit SiliQun SV engine on an NVIDIA A100. Left: execution time comparison between CPU (NumPy) and GPU (CuPy) backends on a logarithmic scale. Right: GPU speedup factors for each operation. The GPU delivers 30--93$\times $ speedups, reducing a 100-gate DRL episode from 32~seconds to 430~milliseconds.}}{9}{figure.4}\protected@file@percent }
+\newlabel{fig:benchmark}{{4}{9}{GPU acceleration benchmarks for the 25-qubit SiliQun SV engine on an NVIDIA A100. Left: execution time comparison between CPU (NumPy) and GPU (CuPy) backends on a logarithmic scale. Right: GPU speedup factors for each operation. The GPU delivers 30--93$\times $ speedups, reducing a 100-gate DRL episode from 32~seconds to 430~milliseconds}{figure.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Comparison of SiliQun with existing quantum simulation frameworks.}}{9}{table.4}\protected@file@percent }
+\newlabel{tab:comparison}{{4}{9}{Comparison of SiliQun with existing quantum simulation frameworks}{table.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusions}{10}{section.5}\protected@file@percent }
+\newlabel{sec:conclusions}{{5}{10}{Conclusions}{section.5}{}}
+\bibcite{zwanenburg2013silicon}{{1}{}{{}}{{}}}
+\bibcite{muhonen2014storing}{{2}{}{{}}{{}}}
+\bibcite{yoneda2018quantum}{{3}{}{{}}{{}}}
+\bibcite{noiri2022fast}{{4}{}{{}}{{}}}
+\bibcite{xue2022quantum}{{5}{}{{}}{{}}}
+\bibcite{mills2022two}{{6}{}{{}}{{}}}
+\bibcite{madzik2022precision}{{7}{}{{}}{{}}}
+\bibcite{sledge2019}{{8}{}{{}}{{}}}
+\bibcite{connors2022charge}{{9}{}{{}}{{}}}
+\bibcite{niu2019universal}{{10}{}{{}}{{}}}
+\bibcite{fosel2018reinforcement}{{11}{}{{}}{{}}}
+\bibcite{schollwock2011density}{{12}{}{{}}{{}}}
+\bibcite{gymnasium2023}{{13}{}{{}}{{}}}
+\bibcite{geyer2022twoqubit}{{14}{}{{}}{{}}}
+\bibcite{qiskit}{{15}{}{{}}{{}}}
+\bibcite{qutip}{{16}{}{{}}{{}}}
+\bibcite{cuquantum}{{17}{}{{}}{{}}}
+\providecommand\NAT@force@numbers{}\NAT@force@numbers
+\gdef \@abspage@last{12}

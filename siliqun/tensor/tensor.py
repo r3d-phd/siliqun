@@ -1,5 +1,5 @@
 """
-Core Tensor class — the fundamental building block of tensor networks.
+Core Tensor class - the fundamental building block of tensor networks.
 
 A Tensor wraps a multi-dimensional array with named indices (legs),
 enabling index-based contraction, decomposition, and reshaping.
@@ -106,7 +106,7 @@ class Tensor:
         return Tensor(self._data.copy(), self._inds, self._tags.copy())
 
     def __repr__(self) -> str:
-        shape_str = "×".join(str(s) for s in self.shape)
+        shape_str = "x".join(str(s) for s in self.shape)
         return f"Tensor(shape={shape_str}, inds={self._inds})"
 
 

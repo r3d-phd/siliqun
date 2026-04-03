@@ -104,7 +104,7 @@ class SiliQunSimulator:
         # Metrics history
         self._history: List[Dict] = []
 
-    # ── State access ────────────────────────────────────────────────
+    # -- State access ------------------------------------------------
 
     @property
     def state(self) -> MPS:
@@ -124,7 +124,7 @@ class SiliQunSimulator:
     def n_qubits(self) -> int:
         return self.device.n_qubits
 
-    # ── State initialization ────────────────────────────────────────
+    # -- State initialization ----------------------------------------
 
     def reset(self, initial_state: Optional[MPS] = None):
         """Reset the simulator to an initial state.
@@ -132,7 +132,7 @@ class SiliQunSimulator:
         Parameters
         ----------
         initial_state : MPS, optional
-            Custom initial state. Defaults to |00...0⟩.
+            Custom initial state. Defaults to |00...0>.
         """
         if initial_state is not None:
             self._state = initial_state.copy()
@@ -144,22 +144,22 @@ class SiliQunSimulator:
         if self._charge_noise is not None:
             self._charge_noise.reset(self.config.seed + 1)
 
-    # ── Single-qubit gate application ───────────────────────────────
+    # -- Single-qubit gate application -------------------------------
 
     def apply_single_gate(self, gate: np.ndarray, qubit: int):
-        """Apply a 2×2 unitary gate to a single qubit.
+        """Apply a 2x2 unitary gate to a single qubit.
 
         Parameters
         ----------
         gate : ndarray
-            2×2 unitary matrix.
+            2x2 unitary matrix.
         qubit : int
             Target qubit index.
         """
         be = self.be
-        A = self._state[qubit]  # (χ_l, d, χ_r)
+        A = self._state[qubit]  # (chi_l, d, chi_r)
         G = be.array(gate)
-        # Contract: new_A[a,s',b] = Σ_s G[s',s] A[a,s,b]
+        # Contract: new_A[a,s',b] = Sum_s G[s',s] A[a,s,b]
         new_A = be.einsum("ij,ajb->aib", G, A)
         self._state[qubit] = new_A
 
@@ -174,15 +174,15 @@ class SiliQunSimulator:
                 self.apply_single_gate(paulis[pauli_idx - 1], qubit)
 
     def apply_rx(self, theta: float, qubit: int):
-        """Apply Rx(θ) rotation to a qubit."""
+        """Apply Rx(theta) rotation to a qubit."""
         self.apply_single_gate(rx(theta), qubit)
 
     def apply_ry(self, theta: float, qubit: int):
-        """Apply Ry(θ) rotation to a qubit."""
+        """Apply Ry(theta) rotation to a qubit."""
         self.apply_single_gate(ry(theta), qubit)
 
     def apply_rz(self, theta: float, qubit: int):
-        """Apply Rz(θ) rotation to a qubit."""
+        """Apply Rz(theta) rotation to a qubit."""
         self.apply_single_gate(rz(theta), qubit)
 
     def apply_esr(self, theta: float, phi: float, qubit: int):
@@ -195,10 +195,10 @@ class SiliQunSimulator:
         self.apply_single_gate(edsr_rotation(theta, phi), qubit)
         self._time += self.device.gate_times.get("single", 200e-9)
 
-    # ── Two-qubit gate application ──────────────────────────────────
+    # -- Two-qubit gate application ----------------------------------
 
     def apply_two_qubit_gate(self, gate: np.ndarray, qubit_i: int, qubit_j: int):
-        """Apply a 4×4 unitary gate to two adjacent qubits.
+        """Apply a 4x4 unitary gate to two adjacent qubits.
 
         Uses SVD decomposition to maintain MPS form with bounded
         bond dimension.
@@ -206,7 +206,7 @@ class SiliQunSimulator:
         Parameters
         ----------
         gate : ndarray
-            4×4 unitary matrix.
+            4x4 unitary matrix.
         qubit_i, qubit_j : int
             Target qubit indices (must be adjacent: |i-j|=1).
         """
@@ -217,24 +217,24 @@ class SiliQunSimulator:
         # Ensure i < j
         if qubit_i > qubit_j:
             qubit_i, qubit_j = qubit_j, qubit_i
-            # Swap gate indices: SWAP · G · SWAP
+            # Swap gate indices: SWAP * G * SWAP
             from ..physics.gates import swap as swap_gate
             S = swap_gate()
             gate = S @ gate @ S
 
-        A_i = self._state[qubit_i]  # (χ_l, d, χ_m)
-        A_j = self._state[qubit_j]  # (χ_m, d, χ_r)
+        A_i = self._state[qubit_i]  # (chi_l, d, chi_m)
+        A_j = self._state[qubit_j]  # (chi_m, d, chi_r)
 
         chi_l = A_i.shape[0]
         d = A_i.shape[1]
         chi_r = A_j.shape[2]
 
         # Contract the two site tensors
-        # θ[a, s_i, s_j, b] = Σ_m A_i[a, s_i, m] A_j[m, s_j, b]
+        # theta[a, s_i, s_j, b] = Sum_m A_i[a, s_i, m] A_j[m, s_j, b]
         theta = be.einsum("asm,mtb->astb", A_i, A_j)
 
         # Apply the gate
-        # θ'[a, s_i', s_j', b] = Σ_{s_i,s_j} G[s_i's_j', s_i s_j] θ[a, s_i, s_j, b]
+        # theta'[a, s_i', s_j', b] = Sum_{s_i,s_j} G[s_i's_j', s_i s_j] theta[a, s_i, s_j, b]
         G = be.array(gate.reshape(d, d, d, d))
         theta_new = be.einsum("ijkl,akld->aijd", G, theta)
 
@@ -284,7 +284,7 @@ class SiliQunSimulator:
         self._time += self.device.gate_times.get("two", 100e-9)
 
     def apply_sqrt_swap(self, qubit_i: int, qubit_j: int):
-        """Apply √SWAP gate (native to exchange-coupled spin qubits)."""
+        """Apply sqrtSWAP gate (native to exchange-coupled spin qubits)."""
         self.apply_two_qubit_gate(sqrt_swap(), qubit_i, qubit_j)
         self._time += self.device.gate_times.get("two", 100e-9)
 
@@ -294,7 +294,7 @@ class SiliQunSimulator:
         self.apply_two_qubit_gate(gate, qubit_i, qubit_j)
         self._time += t
 
-    # ── Noise application ───────────────────────────────────────────
+    # -- Noise application -------------------------------------------
 
     def apply_idle_noise(self, duration: float):
         """Apply decoherence during idle time.
@@ -335,7 +335,7 @@ class SiliQunSimulator:
 
         self._time += duration
 
-    # ── Observables ─────────────────────────────────────────────────
+    # -- Observables -------------------------------------------------
 
     def measure_qubit(self, qubit: int) -> int:
         """Projective measurement of a single qubit.
@@ -343,10 +343,10 @@ class SiliQunSimulator:
         Returns 0 or 1, and collapses the state.
         """
         be = self.be
-        A = self._state[qubit]  # (χ_l, d, χ_r)
+        A = self._state[qubit]  # (chi_l, d, chi_r)
 
-        # Compute probability of |0⟩
-        # P(0) = Tr(|0⟩⟨0| ρ_qubit)
+        # Compute probability of |0>
+        # P(0) = Tr(|0><0| rho_qubit)
         # For MPS: contract environment tensors
         p0 = self._compute_local_probability(qubit, 0)
         p1 = 1.0 - p0
@@ -403,24 +403,25 @@ class SiliQunSimulator:
         # P = env_L * A[a,s,b] * proj[s] * A*[a',s',b'] * proj[s'] * env_R
         mid = be.einsum("xy,xsb,s,ysa->ba", left_env, A_q, proj, A_q_conj)
 
-        # Build right environment
+        # Build right environment: contract from right to left
+        # A[a,s,b], A_conj[c,s,d], right_env[b,d] -> new_right_env[a,c]
         right_env = be.array(np.ones((1, 1), dtype=np.complex128))
         for i in range(self.n_qubits - 1, qubit, -1):
             A = self._state[i]
             A_conj = be.conj(A)
-            right_env = be.einsum("asb,asc,bc->ac", A, A_conj, right_env)
+            right_env = be.einsum("asb,csd,bd->ac", A, A_conj, right_env)
 
         # Contract mid with right_env
         prob = float(np.real(be.to_numpy(be.einsum("ab,ab->", mid, right_env))))
         return max(0.0, min(1.0, prob))
 
     def expectation_z(self, qubit: int) -> float:
-        """Compute ⟨Z_i⟩ for a single qubit."""
+        """Compute <Z_i> for a single qubit."""
         p0 = self._compute_local_probability(qubit, 0)
-        return 2 * p0 - 1  # ⟨Z⟩ = P(0) - P(1)
+        return 2 * p0 - 1  # <Z> = P(0) - P(1)
 
     def expectation_zz(self, qubit_i: int, qubit_j: int) -> float:
-        """Compute ⟨Z_i Z_j⟩ two-point correlator."""
+        """Compute <Z_i Z_j> two-point correlator."""
         be = self.be
         Z = be.array(np.array([[1, 0], [0, -1]], dtype=np.complex128))
 
@@ -439,7 +440,7 @@ class SiliQunSimulator:
         return float(np.real(be.to_numpy(env[0, 0])))
 
     def compute_fidelity(self, target: MPS) -> float:
-        """Compute fidelity |⟨ψ_target|ψ_current⟩|² between current
+        """Compute fidelity |<psi_target|psi_current>|^2 between current
         state and a target state."""
         be = self.be
         overlap = be.array(np.ones((1, 1), dtype=np.complex128))
@@ -478,7 +479,7 @@ class SiliQunSimulator:
         entropy = -np.sum(eigenvalues * np.log2(eigenvalues + 1e-30))
         return float(entropy)
 
-    # ── Circuit execution ───────────────────────────────────────────
+    # -- Circuit execution -------------------------------------------
 
     def execute_circuit(self, circuit: List[Tuple]) -> Dict:
         """Execute a sequence of gate operations.
@@ -525,7 +526,7 @@ class SiliQunSimulator:
             "bond_dims": self._state.bond_dims,
         }
 
-    # ── Snapshot and metrics ────────────────────────────────────────
+    # -- Snapshot and metrics ----------------------------------------
 
     def snapshot(self) -> Dict:
         """Take a snapshot of the current simulator state."""

@@ -1,17 +1,17 @@
 """
-Matrix Product Operator (MPO) — efficient representation of operators
+Matrix Product Operator (MPO) - efficient representation of operators
 and mixed quantum states.
 
 An MPO represents an N-qubit operator as a chain of rank-4 tensors:
 
-    O = Σ W[0]^{s0,s0'} · W[1]^{s1,s1'} · ... · W[N-1]^{s_{N-1},s_{N-1}'}
+    O = Sum W[0]^{s0,s0'} * W[1]^{s1,s1'} * ... * W[N-1]^{s_{N-1},s_{N-1}'}
 
-where each W[i] has shape (χ_{i-1}, d, d, χ_i) with:
+where each W[i] has shape (chi_{i-1}, d, d, chi_i) with:
     - d: local physical dimension (2 for qubits)
-    - χ_i: bond dimension between sites i and i+1
+    - chi_i: bond dimension between sites i and i+1
     - First d index: "ket" (output), second d index: "bra" (input)
 
-For density matrices ρ, the MPO represents the mixed state directly,
+For density matrices rho, the MPO represents the mixed state directly,
 enabling efficient simulation of noisy quantum systems with bounded
 entanglement (as shown by Haah et al. 2024 for noisy circuits).
 """
@@ -29,7 +29,7 @@ class MPO:
     Parameters
     ----------
     tensors : list of ndarray
-        List of rank-4 tensors [χ_left, d_out, d_in, χ_right] for each site.
+        List of rank-4 tensors [chi_left, d_out, d_in, chi_right] for each site.
     phys_dim : int
         Local physical dimension (default 2 for qubits).
     """
@@ -45,7 +45,7 @@ class MPO:
             if t.ndim != 4:
                 raise ValueError(
                     f"Tensor at site {i} has rank {t.ndim}, expected 4 "
-                    f"(χ_left, d_out, d_in, χ_right)"
+                    f"(chi_left, d_out, d_in, chi_right)"
                 )
             if t.shape[1] != self._phys_dim or t.shape[2] != self._phys_dim:
                 raise ValueError(
@@ -88,11 +88,11 @@ class MPO:
     def copy(self) -> MPO:
         return MPO([t.copy() for t in self._tensors], self._phys_dim)
 
-    # ── Creation methods ────────────────────────────────────────────
+    # -- Creation methods --------------------------------------------
 
     @classmethod
     def identity(cls, n_sites: int, phys_dim: int = 2) -> MPO:
-        """Create the identity MPO: I = |0⟩⟨0| + |1⟩⟨1| + ..."""
+        """Create the identity MPO: I = |0><0| + |1><1| + ..."""
         be = active_backend()
         tensors = []
         for _ in range(n_sites):
@@ -111,7 +111,7 @@ class MPO:
         max_bond: Optional[int] = None,
         cutoff: float = 1e-12,
     ) -> MPO:
-        """Convert a dense 2^N × 2^N matrix to MPO via successive SVDs.
+        """Convert a dense 2^N x 2^N matrix to MPO via successive SVDs.
 
         Parameters
         ----------
@@ -190,14 +190,14 @@ class MPO:
 
     @classmethod
     def pure_state_dm(cls, mps: MPS) -> MPO:
-        """Create the density matrix MPO ρ = |ψ⟩⟨ψ| from an MPS."""
+        """Create the density matrix MPO rho = |psi><psi| from an MPS."""
         be = active_backend()
         tensors = []
         for i in range(mps.n_sites):
-            A = mps[i]  # (χ_l, d, χ_r)
+            A = mps[i]  # (chi_l, d, chi_r)
             A_conj = be.conj(A)
-            # ρ_i = A ⊗ A* → (χ_l*χ_l', d, d, χ_r*χ_r')
-            # einsum: 'asc,btc->abst cd' but we want (χ_l·χ_l', d_out, d_in, χ_r·χ_r')
+            # rho_i = A x A* -> (chi_l*chi_l', d, d, chi_r*chi_r')
+            # einsum: 'asc,btc->abst cd' but we want (chi_l*chi_l', d_out, d_in, chi_r*chi_r')
             W = be.einsum("asc,btc->abst", A, A_conj)
             chi_l = A.shape[0]
             chi_r = A.shape[2]
@@ -207,33 +207,33 @@ class MPO:
         # Correct: outer product on bond indices
         tensors_correct = []
         for i in range(mps.n_sites):
-            A = mps[i]  # (χ_l, d, χ_r)
+            A = mps[i]  # (chi_l, d, chi_r)
             A_conj = be.conj(A)
             # W[a,b,s,t,c,d] = A[a,s,c] * A*[b,t,d]
             W = be.einsum("asc,btd->abstcd", A, A_conj)
             chi_l = A.shape[0]
             d = A.shape[1]
             chi_r = A.shape[2]
-            # Reshape to (χ_l*χ_l', d, d, χ_r*χ_r')
+            # Reshape to (chi_l*chi_l', d, d, chi_r*chi_r')
             W = be.reshape(W, (chi_l**2, d, d, chi_r**2))
             tensors_correct.append(W)
         return cls(tensors_correct, mps.phys_dim)
 
-    # ── Operations ──────────────────────────────────────────────────
+    # -- Operations --------------------------------------------------
 
     def trace(self) -> complex:
         """Compute Tr(O) by contracting bra and ket indices."""
         be = active_backend()
         env = be.ones((1, 1))
         for i in range(self._n_sites):
-            W = self._tensors[i]  # (χ_l, d_out, d_in, χ_r)
-            # Trace over physical indices: δ_{s,s'}
-            traced = be.einsum("assc->ac", W)  # (χ_l, χ_r)
+            W = self._tensors[i]  # (chi_l, d_out, d_in, chi_r)
+            # Trace over physical indices: delta_{s,s'}
+            traced = be.einsum("assc->ac", W)  # (chi_l, chi_r)
             env = be.einsum("ab,bc->ac", env, traced)
         return complex(be.to_numpy(env)[0, 0])
 
     def apply_to_mps(self, mps: MPS) -> MPS:
-        """Apply this MPO to an MPS: |ψ'⟩ = O|ψ⟩.
+        """Apply this MPO to an MPS: |psi'> = O|psi>.
 
         Returns a new MPS with potentially larger bond dimension.
         """
@@ -243,14 +243,14 @@ class MPO:
 
         new_tensors = []
         for i in range(self._n_sites):
-            W = self._tensors[i]   # (χ_W_l, d_out, d_in, χ_W_r)
-            A = mps[i]             # (χ_A_l, d, χ_A_r)
+            W = self._tensors[i]   # (chi_W_l, d_out, d_in, chi_W_r)
+            A = mps[i]             # (chi_A_l, d, chi_A_r)
             # Contract over d_in = d:
             # B[a,b,s,c,d] = W[a,s,t,c] * A[b,t,d]
             B = be.einsum("astc,btd->abscd", W, A)
             chi_W_l, d_out, _, chi_W_r = W.shape
             chi_A_l, _, chi_A_r = A.shape
-            # Fuse bond indices: (χ_W_l*χ_A_l, d_out, χ_W_r*χ_A_r)
+            # Fuse bond indices: (chi_W_l*chi_A_l, d_out, chi_W_r*chi_A_r)
             B = be.reshape(B, (chi_W_l * chi_A_l, d_out, chi_W_r * chi_A_r))
             new_tensors.append(B)
 

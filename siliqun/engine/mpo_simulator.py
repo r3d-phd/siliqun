@@ -1,18 +1,18 @@
 """
-MPO Density Matrix Simulator — exact mixed-state simulation for SiliQun.
+MPO Density Matrix Simulator - exact mixed-state simulation for SiliQun.
 
 This module provides a simulator that represents quantum states as Matrix
 Product Operator (MPO) density matrices, enabling exact (non-stochastic)
 simulation of noisy quantum systems. This is the key upgrade over the
 MPS-based simulator, which uses quantum trajectories (approximate).
 
-The density matrix ρ is stored as an MPO with rank-4 tensors:
-    W[i] : (χ_left, d_out, d_in, χ_right)
+The density matrix rho is stored as an MPO with rank-4 tensors:
+    W[i] : (chi_left, d_out, d_in, chi_right)
 where d_out is the "ket" index and d_in is the "bra" index.
 
-Gate application:  ρ → U ρ U†
-Noise application: ρ → Σ_k K_k ρ K_k†  (exact, all Kraus operators)
-Measurement:       P(m) = Tr(Π_m ρ),  ρ → Π_m ρ Π_m / P(m)
+Gate application:  rho -> U rho Udag
+Noise application: rho -> Sum_k K_k rho K_kdag  (exact, all Kraus operators)
+Measurement:       P(m) = Tr(Pi_m rho),  rho -> Pi_m rho Pi_m / P(m)
 
 Reference:
     Votto et al., "Efficient learning of quantum states prepared with
@@ -58,7 +58,7 @@ class MPOSimConfig:
     seed : int or None
         Random seed for measurement outcomes and charge noise.
     track_purity : bool
-        Whether to track Tr(ρ²) at each step (adds overhead).
+        Whether to track Tr(rho^2) at each step (adds overhead).
     """
     noise_enabled: bool = True
     max_bond_dim: int = 64
@@ -73,7 +73,7 @@ class MPODensityMatrixSimulator:
     """Exact mixed-state simulator using MPO density matrices.
 
     Unlike the MPS simulator which uses stochastic quantum trajectories,
-    this simulator evolves the full density matrix ρ as an MPO. Noise
+    this simulator evolves the full density matrix rho as an MPO. Noise
     channels are applied exactly via the superoperator formalism, giving
     the true mixed state at every time step.
 
@@ -99,7 +99,7 @@ class MPODensityMatrixSimulator:
         # Random state
         self.rng = np.random.RandomState(self.config.seed)
 
-        # Initialize state as |0...0⟩⟨0...0|
+        # Initialize state as |0...0><0...0|
         self._state: MPO = self._init_pure_state()
         self._time: float = 0.0
         self._step_count: int = 0
@@ -119,18 +119,18 @@ class MPODensityMatrixSimulator:
             )
 
     def _init_pure_state(self) -> MPO:
-        """Initialize ρ = |0...0⟩⟨0...0| as an MPO."""
+        """Initialize rho = |0...0><0...0| as an MPO."""
         be = self.be
         tensors = []
         for _ in range(self.n_qubits):
-            # W[χ_l, d_out, d_in, χ_r] = |0⟩⟨0|
+            # W[chi_l, d_out, d_in, chi_r] = |0><0|
             W = np.zeros((1, 2, 2, 1), dtype=np.complex128)
-            W[0, 0, 0, 0] = 1.0  # |0⟩⟨0|
+            W[0, 0, 0, 0] = 1.0  # |0><0|
             tensors.append(be.array(W))
         return MPO(tensors)
 
     def reset(self):
-        """Reset the simulator to the initial state |0...0⟩⟨0...0|."""
+        """Reset the simulator to the initial state |0...0><0...0|."""
         self._state = self._init_pure_state()
         self._time = 0.0
         self._step_count = 0
@@ -149,7 +149,7 @@ class MPODensityMatrixSimulator:
         """Current simulation time in seconds."""
         return self._time
 
-    # ── Single-qubit gate application ──────────────────────────────
+    # -- Single-qubit gate application ------------------------------
 
     def _apply_single_gate_to_mpo(self, U: np.ndarray, site: int):
         """Apply a single-qubit unitary to the MPO: rho -> U rho U_dag.
@@ -188,15 +188,15 @@ class MPODensityMatrixSimulator:
                 self._apply_depolarizing_channel(site, error_rate)
 
     def apply_rx(self, theta: float, qubit: int):
-        """Apply Rx(θ) rotation."""
+        """Apply Rx(theta) rotation."""
         self.apply_single_gate(gates.rx(theta), qubit)
 
     def apply_ry(self, theta: float, qubit: int):
-        """Apply Ry(θ) rotation."""
+        """Apply Ry(theta) rotation."""
         self.apply_single_gate(gates.ry(theta), qubit)
 
     def apply_rz(self, theta: float, qubit: int):
-        """Apply Rz(θ) rotation."""
+        """Apply Rz(theta) rotation."""
         self.apply_single_gate(gates.rz(theta), qubit)
 
     def apply_esr(self, theta: float, phi: float, qubit: int):
@@ -209,14 +209,14 @@ class MPODensityMatrixSimulator:
         U = gates.edsr_rotation(theta, phi)
         self.apply_single_gate(U, qubit)
 
-    # ── Two-qubit gate application ─────────────────────────────────
+    # -- Two-qubit gate application ---------------------------------
 
     def _apply_two_qubit_gate_to_mpo(self, U: np.ndarray, site_i: int, site_j: int):
-        """Apply a two-qubit unitary to the MPO: ρ → U ρ U†.
+        """Apply a two-qubit unitary to the MPO: rho -> U rho Udag.
 
         For adjacent sites i, j = i+1:
         1. Contract W[i] and W[j] into a single rank-6 tensor
-        2. Apply U on ket indices and U† on bra indices
+        2. Apply U on ket indices and Udag on bra indices
         3. Split back via SVD with truncation
 
         U has shape (4, 4) acting on the joint space of qubits i and j.
@@ -234,29 +234,29 @@ class MPODensityMatrixSimulator:
         U_arr = be.array(U.reshape(2, 2, 2, 2).astype(np.complex128))
         U_dag = be.conj(be.transpose(U_arr, (2, 3, 0, 1)))
 
-        W_i = self._state[site_i]   # (χ_l, d, d, χ_m)
-        W_j = self._state[site_j]   # (χ_m, d, d, χ_r)
+        W_i = self._state[site_i]   # (chi_l, d, d, chi_m)
+        W_j = self._state[site_j]   # (chi_m, d, d, chi_r)
 
         # Contract the two tensors over the shared bond
-        # Θ[χ_l, s_i, t_i, s_j, t_j, χ_r] = W_i[χ_l, s_i, t_i, χ_m] * W_j[χ_m, s_j, t_j, χ_r]
+        # Theta[chi_l, s_i, t_i, s_j, t_j, chi_r] = W_i[chi_l, s_i, t_i, chi_m] * W_j[chi_m, s_j, t_j, chi_r]
         Theta = be.einsum("asbc,cdef->asbdef", W_i, W_j)
-        # Theta shape: (χ_l, d, d, d, d, χ_r) = (χ_l, s_i, t_i, s_j, t_j, χ_r)
+        # Theta shape: (chi_l, d, d, d, d, chi_r) = (chi_l, s_i, t_i, s_j, t_j, chi_r)
 
-        # Apply U on ket indices (s_i, s_j) and U† on bra indices (t_i, t_j)
-        # Θ'[χ_l, s_i', t_i', s_j', t_j', χ_r] =
-        #   U[s_i', s_j', s_i, s_j] * Θ[χ_l, s_i, t_i, s_j, t_j, χ_r] * U†[t_i', t_j', t_i, t_j]
+        # Apply U on ket indices (s_i, s_j) and Udag on bra indices (t_i, t_j)
+        # Theta'[chi_l, s_i', t_i', s_j', t_j', chi_r] =
+        #   U[s_i', s_j', s_i, s_j] * Theta[chi_l, s_i, t_i, s_j, t_j, chi_r] * Udag[t_i', t_j', t_i, t_j]
         Theta_new = be.einsum(
             "pqrs,arbsdf,uvbd->apuqvf",
             U_arr, Theta, U_dag
         )
-        # Theta_new shape: (χ_l, s_i', t_i', s_j', t_j', χ_r)
+        # Theta_new shape: (chi_l, s_i', t_i', s_j', t_j', chi_r)
 
         # Split back into two tensors via SVD
         chi_l = Theta_new.shape[0]
         chi_r = Theta_new.shape[5]
         d = 2
 
-        # Reshape: (χ_l * d * d, d * d * χ_r)
+        # Reshape: (chi_l * d * d, d * d * chi_r)
         mat = be.reshape(Theta_new, (chi_l * d * d, d * d * chi_r))
         U_svd, S, Vh = be.svd(mat, full_matrices=False)
 
@@ -309,25 +309,25 @@ class MPODensityMatrixSimulator:
                 self._apply_depolarizing_channel(qubit_j, error_rate / 2)
 
     def apply_sqrt_swap(self, qubit_i: int, qubit_j: int):
-        """Apply √SWAP gate."""
+        """Apply sqrtSWAP gate."""
         self._apply_two_qubit_gate_to_mpo(gates.sqrt_swap(), qubit_i, qubit_j)
         gate_time = self.device.gate_times.get("two", 10e-6)
         self._time += gate_time
 
-    # ── Noise channels (exact superoperator) ───────────────────────
+    # -- Noise channels (exact superoperator) -----------------------
 
     def _apply_kraus_channel(self, site: int, kraus_ops: List[np.ndarray]):
         """Apply a quantum channel via Kraus operators to the MPO.
 
-        ρ → Σ_k K_k ρ K_k†
+        rho -> Sum_k K_k rho K_kdag
 
         For the MPO tensor at the given site:
-            W'[χ_l, s', t', χ_r] = Σ_k Σ_{s,t} K_k[s',s] W[χ_l, s, t, χ_r] K_k*[t',t]
+            W'[chi_l, s', t', chi_r] = Sum_k Sum_{s,t} K_k[s',s] W[chi_l, s, t, chi_r] K_k*[t',t]
 
-        This is the EXACT application — no stochastic sampling.
+        This is the EXACT application - no stochastic sampling.
         """
         be = self.be
-        W = self._state[site]  # (χ_l, d_out, d_in, χ_r)
+        W = self._state[site]  # (chi_l, d_out, d_in, chi_r)
 
         W_new = be.zeros(W.shape)
         for K in kraus_ops:
@@ -341,7 +341,7 @@ class MPODensityMatrixSimulator:
         self._state[site] = W_new
 
     def _apply_depolarizing_channel(self, site: int, p: float):
-        """Apply depolarizing channel: ρ → (1-p)ρ + p/3(XρX + YρY + ZρZ)."""
+        """Apply depolarizing channel: rho -> (1-p)rho + p/3(XrhoX + YrhoY + ZrhoZ)."""
         kraus = depolarizing_kraus(p)
         self._apply_kraus_channel(site, kraus)
 
@@ -363,7 +363,7 @@ class MPODensityMatrixSimulator:
 
         Unlike the MPS version which applies a unitary Rz rotation,
         the MPO version applies it as a proper unitary channel:
-        ρ → Rz(δφ) ρ Rz(δφ)†
+        rho -> Rz(deltaphi) rho Rz(deltaphi)dag
         """
         for i in range(self.n_qubits):
             delta_phi = 2 * np.pi * sensitivity * noise_values[i] * dt
@@ -374,7 +374,7 @@ class MPODensityMatrixSimulator:
         """Apply decoherence during idle time.
 
         Applies T1 relaxation, T2 dephasing, and charge noise
-        for the specified duration — all exactly via superoperators.
+        for the specified duration - all exactly via superoperators.
         """
         if not self.config.noise_enabled:
             self._time += duration
@@ -404,7 +404,7 @@ class MPODensityMatrixSimulator:
         self._time += duration
         self._maybe_compress()
 
-    # ── MPO compression ────────────────────────────────────────────
+    # -- MPO compression --------------------------------------------
 
     def _maybe_compress(self):
         """Compress the MPO if enough gates have been applied."""
@@ -416,14 +416,14 @@ class MPODensityMatrixSimulator:
             )
             self._gate_count_since_compress = 0
 
-    # ── Observables ────────────────────────────────────────────────
+    # -- Observables ------------------------------------------------
 
     def trace(self) -> float:
-        """Compute Tr(ρ) — should be 1.0 for a valid density matrix."""
+        """Compute Tr(rho) - should be 1.0 for a valid density matrix."""
         return float(np.real(self._state.trace()))
 
     def expectation_z(self, qubit: int) -> float:
-        """Compute ⟨Z_q⟩ = Tr(Z_q ρ).
+        """Compute <Z_q> = Tr(Z_q rho).
 
         Insert Z at site q into the MPO trace contraction.
         """
@@ -432,22 +432,22 @@ class MPODensityMatrixSimulator:
 
         env = be.array(np.ones((1, 1), dtype=np.complex128))
         for i in range(self.n_qubits):
-            W = self._state[i]  # (χ_l, d_out, d_in, χ_r)
+            W = self._state[i]  # (chi_l, d_out, d_in, chi_r)
             if i == qubit:
-                # Tr(Z_q W) = Σ_{s,t} Z[s,t] * δ_{s,t} * W[a,s,t,b]
-                # → Σ_s Z[s,s] * W[a,s,s,b] but Z is diagonal
-                # More generally: Σ_{s,t} Z[t,s] * W[a,s,t,b]
+                # Tr(Z_q W) = Sum_{s,t} Z[s,t] * delta_{s,t} * W[a,s,t,b]
+                # -> Sum_s Z[s,s] * W[a,s,s,b] but Z is diagonal
+                # More generally: Sum_{s,t} Z[t,s] * W[a,s,t,b]
                 Z_arr = be.array(Z)
                 traced = be.einsum("astb,ts->ab", W, Z_arr)
             else:
-                # Just trace: Σ_s W[a,s,s,b]
+                # Just trace: Sum_s W[a,s,s,b]
                 traced = be.einsum("assb->ab", W)
             env = be.einsum("ab,bc->ac", env, traced)
 
         return float(np.real(be.to_numpy(env)[0, 0]))
 
     def expectation_zz(self, qubit_i: int, qubit_j: int) -> float:
-        """Compute ⟨Z_i Z_j⟩ = Tr(Z_i Z_j ρ)."""
+        """Compute <Z_i Z_j> = Tr(Z_i Z_j rho)."""
         be = self.be
         Z = np.array([[1, 0], [0, -1]], dtype=np.complex128)
 
@@ -464,25 +464,25 @@ class MPODensityMatrixSimulator:
         return float(np.real(be.to_numpy(env)[0, 0]))
 
     def compute_purity(self) -> float:
-        """Compute Tr(ρ²) — the purity of the state.
+        """Compute Tr(rho^2) - the purity of the state.
 
         Purity = 1 for pure states, 1/d for maximally mixed states.
         This is a key metric for DRL agents to understand decoherence.
         """
         be = self.be
 
-        # Tr(ρ²) = contract two copies of the MPO
-        # For each site: Σ_{s,t,u} W[a,s,t,b] * W[c,t,u,d] → (a*c, b*d)
-        # Wait — this is Tr(ρ²) which requires contracting ρ with itself.
-        # ρ² as MPO: for each site, contract the bra of first ρ with ket of second ρ
-        # (ρ²)[i] = Σ_t W[a,s,t,b] * W[c,t,u,d] → shape (a*c, s, u, b*d)
-        # Then Tr(ρ²) = trace over s=u for all sites
+        # Tr(rho^2) = contract two copies of the MPO
+        # For each site: Sum_{s,t,u} W[a,s,t,b] * W[c,t,u,d] -> (a*c, b*d)
+        # Wait - this is Tr(rho^2) which requires contracting rho with itself.
+        # rho^2 as MPO: for each site, contract the bra of first rho with ket of second rho
+        # (rho^2)[i] = Sum_t W[a,s,t,b] * W[c,t,u,d] -> shape (a*c, s, u, b*d)
+        # Then Tr(rho^2) = trace over s=u for all sites
 
         env = be.array(np.ones((1, 1), dtype=np.complex128))
         for i in range(self.n_qubits):
-            W = self._state[i]  # (χ_l, d, d, χ_r)
-            # Contract two copies: Σ_{s,t,u} W1[a,s,t,b] * W2[c,t,u,d] * δ_{s,u}
-            # = Σ_{s,t} W1[a,s,t,b] * W2[c,t,s,d]
+            W = self._state[i]  # (chi_l, d, d, chi_r)
+            # Contract two copies: Sum_{s,t,u} W1[a,s,t,b] * W2[c,t,u,d] * delta_{s,u}
+            # = Sum_{s,t} W1[a,s,t,b] * W2[c,t,s,d]
             # env_new[(a,c), (b,d)] = env[(a',c')] * W1[a',s,t,b] * W2[c',t,s,d]
             rho_sq_site = be.einsum("astb,ctsd->acbd", W, W)
             chi_l1, chi_l2, chi_r1, chi_r2 = rho_sq_site.shape
@@ -493,10 +493,10 @@ class MPODensityMatrixSimulator:
         return max(0.0, min(1.0, purity))
 
     def compute_fidelity(self, target: MPS) -> float:
-        """Compute fidelity F = ⟨ψ_target|ρ|ψ_target⟩.
+        """Compute fidelity F = <psi_target|rho|psi_target>.
 
         This uses the existing MPO.expectation_mps method.
-        For a pure target state |ψ⟩, this gives the overlap with ρ.
+        For a pure target state |psi>, this gives the overlap with rho.
         """
         result = self._state.expectation_mps(target)
         return float(np.real(result))
@@ -504,10 +504,10 @@ class MPODensityMatrixSimulator:
     def compute_entanglement_entropy(self, partition: int) -> float:
         """Compute the von Neumann entropy of the reduced state.
 
-        For an MPO density matrix, we compute S(ρ_A) where A is the
+        For an MPO density matrix, we compute S(rho_A) where A is the
         left partition (sites 0 to partition-1).
 
-        This requires computing the reduced density matrix ρ_A = Tr_B(ρ)
+        This requires computing the reduced density matrix rho_A = Tr_B(rho)
         by tracing out sites partition to N-1.
         """
         be = self.be
@@ -518,7 +518,7 @@ class MPODensityMatrixSimulator:
         right_env = be.array(np.ones((1, 1), dtype=np.complex128))
         for i in range(self.n_qubits - 1, partition - 1, -1):
             W = self._state[i]
-            # Trace over physical indices: Σ_s W[a,s,s,b]
+            # Trace over physical indices: Sum_s W[a,s,s,b]
             traced = be.einsum("assb->ab", W)
             right_env = be.einsum("ab,bc->ac", traced, right_env)
 
@@ -533,12 +533,12 @@ class MPODensityMatrixSimulator:
             traced = be.einsum("assb->ab", W)
             left_env = be.einsum("ab,bc->ac", left_env, traced)
 
-        # The entropy of the reduced state requires diagonalizing ρ_A
+        # The entropy of the reduced state requires diagonalizing rho_A
         # For an MPO, this is non-trivial. We approximate by computing
         # the spectrum of the transfer matrix at the partition cut.
-        # For now, use the simpler approach: Tr(ρ_A log ρ_A) ≈ bond entropy
+        # For now, use the simpler approach: Tr(rho_A log rho_A) ~ bond entropy
 
-        # Contract left_env with right_env to get Tr(ρ) as sanity check
+        # Contract left_env with right_env to get Tr(rho) as sanity check
         total_trace = float(np.real(be.to_numpy(
             be.einsum("ab,ba->", left_env, right_env)
         )))
@@ -560,12 +560,12 @@ class MPODensityMatrixSimulator:
 
         return 0.0
 
-    # ── Measurement ────────────────────────────────────────────────
+    # -- Measurement ------------------------------------------------
 
     def _compute_outcome_probability(self, qubit: int, outcome: int) -> float:
-        """Compute P(outcome) = Tr(Π_outcome ρ).
+        """Compute P(outcome) = Tr(Pi_outcome rho).
 
-        Π_0 = |0⟩⟨0|, Π_1 = |1⟩⟨1|
+        Pi_0 = |0><0|, Pi_1 = |1><1|
         """
         be = self.be
 
@@ -573,7 +573,7 @@ class MPODensityMatrixSimulator:
         for i in range(self.n_qubits):
             W = self._state[i]
             if i == qubit:
-                # Tr(Π_outcome W) = W[a, outcome, outcome, b]
+                # Tr(Pi_outcome W) = W[a, outcome, outcome, b]
                 traced = W[:, outcome, outcome, :]
             else:
                 traced = be.einsum("assb->ab", W)
@@ -586,7 +586,7 @@ class MPODensityMatrixSimulator:
         """Projective measurement of a single qubit.
 
         Returns 0 or 1, and collapses the state:
-        ρ → Π_m ρ Π_m / Tr(Π_m ρ Π_m)
+        rho -> Pi_m rho Pi_m / Tr(Pi_m rho Pi_m)
         """
         p0 = self._compute_outcome_probability(qubit, 0)
         p1 = 1.0 - p0
@@ -601,7 +601,7 @@ class MPODensityMatrixSimulator:
         # Sample outcome
         outcome = 0 if self.rng.random() < p0_noisy else 1
 
-        # Collapse: ρ → Π_m ρ Π_m / P(m)
+        # Collapse: rho -> Pi_m rho Pi_m / P(m)
         be = self.be
         W = self._state[qubit]
         # Zero out the non-outcome components
@@ -623,7 +623,7 @@ class MPODensityMatrixSimulator:
         """Measure all qubits."""
         return [self.measure_qubit(q) for q in range(self.n_qubits)]
 
-    # ── Circuit execution ──────────────────────────────────────────
+    # -- Circuit execution ------------------------------------------
 
     def execute_circuit(self, circuit: List[Tuple]) -> Dict:
         """Execute a sequence of gate operations on the MPO state.
@@ -659,7 +659,7 @@ class MPODensityMatrixSimulator:
             "trace": self.trace(),
         }
 
-    # ── Snapshot and metrics ───────────────────────────────────────
+    # -- Snapshot and metrics ---------------------------------------
 
     def snapshot(self) -> Dict:
         """Take a snapshot of the current simulator state."""

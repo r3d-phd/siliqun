@@ -316,7 +316,7 @@ echo "End: $(date)"
         logger.info(f"PBS script written to {script_path}")
 
         if dry_run:
-            logger.info("Dry run — script not submitted")
+            logger.info("Dry run - script not submitted")
             return None
 
         try:
@@ -334,7 +334,7 @@ echo "End: $(date)"
                 logger.error(f"qsub failed: {result.stderr}")
                 return None
         except FileNotFoundError:
-            logger.warning("qsub not found — not on an HPC cluster")
+            logger.warning("qsub not found - not on an HPC cluster")
             return None
         except subprocess.TimeoutExpired:
             logger.error("qsub timed out")

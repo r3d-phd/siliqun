@@ -8,7 +8,7 @@
 \usepackage{amsmath}
 \usepackage{booktabs}
 \usepackage{multirow}
-\setlength{\parindent}{0pt}
+
 
 \journal{SoftwareX}
 
@@ -22,7 +22,7 @@
 \author[label1]{Raad Alshehri\corref{cor1}}
 \cortext[cor1]{Corresponding author}
 \ead{ralshehri0468@stu.kau.edu.sa}
-\address[label1]{Faculty of Computing and Information Technology, King Abdulaziz University, Jeddah 21589, Saudi Arabia}
+\address[label1]{PhD Candidate, Faculty of Computing and Information Technology, King Abdulaziz University, Jeddah 21589, Saudi Arabia}
 
 \begin{abstract}
 Achieving high-fidelity control over silicon spin qubits under realistic noise conditions remains a formidable bottleneck in the path toward scalable quantum processors. While deep reinforcement learning (DRL) has emerged as a powerful, data-driven methodology for discovering noise-robust control policies, the field currently lacks simulation frameworks that simultaneously capture the nuances of silicon device physics, integrate seamlessly with modern DRL toolchains, and scale effectively to two-dimensional arrays. To address this, we introduce SiliQun, an open-source Python package designed specifically for this intersection. The software employs a dual-engine architecture: it utilizes a Matrix Product State (MPS) backend for one-dimensional chains, alongside a GPU-accelerated state vector (SV) backend optimized for 2D grids. A key innovation of the SV engine is its treatment of Decoherence-Free Subspace (DFS) encoded systems. By pre-projecting physical exchange interactions directly into the logical subspace and tracking leakage perturbatively, the simulator avoids the exponential memory penalty typically associated with the full physical spin space. Within this logical subspace, the projected dynamics are exact for intra-qubit operations, while inter-qubit coupling introduces leakage that scales as $O(\theta^2)$ and is continuously monitored. Consequently, SiliQun can simulate up to 25 logical qubits (representing 75 physical spins) in a 5$\times$5 grid on a single NVIDIA A100 GPU. Benchmarks demonstrate 30--93$\times$ speedups compared to CPU execution, cutting the time required to generate a typical DRL episode from 32 seconds down to just 430 milliseconds. Furthermore, the package includes experimentally calibrated profiles for three prominent silicon spin qubit architectures, physically motivated noise models, and a native OpenAI Gymnasium interface, making it an accessible and highly performant tool for the quantum control community.
@@ -202,7 +202,7 @@ model = PPO("MlpPolicy", env, verbose=1,
 model.learn(total_timesteps=1_000_000)
 \end{lstlisting}
 
-Figure~\ref{fig:learning} shows the resulting learning curves from a lightweight REINFORCE agent trained for 150 episodes on each task. On the 2-qubit Bell state preparation, the agent achieves gate fidelities exceeding 0.99 within approximately 50 episodes, demonstrating clear learning dynamics with monotonically increasing reward. The 4-qubit GHZ task, which requires coordinating entanglement across a larger Hilbert space, presents a substantially harder optimization landscape; the agent shows initial exploration but does not converge within the limited episode budget. This outcome is expected and consistent with the known difficulty of GHZ state preparation, which typically requires more sophisticated algorithms (e.g., PPO with larger networks) and significantly more training steps. These results confirm that the SiliQun environment produces meaningful gradients and supports standard DRL training workflows.
+The code snippet above demonstrates how to configure a SiliQun environment and connect it to a PPO agent from Stable-Baselines3 for large-scale training. To validate the environment's gradient signal, we additionally trained a lightweight REINFORCE agent for 150 episodes on two smaller tasks. Figure~\ref{fig:learning} shows the resulting learning curves. On the 2-qubit Bell state preparation, the agent achieves gate fidelities exceeding 0.99 within approximately 50 episodes, demonstrating clear learning dynamics with monotonically increasing reward. The 4-qubit GHZ task, which requires coordinating entanglement across a larger Hilbert space, presents a substantially harder optimization landscape; the agent shows initial exploration but does not converge within the limited episode budget. This outcome is expected and consistent with the known difficulty of GHZ state preparation, which typically requires more sophisticated algorithms (e.g., PPO with larger networks) and significantly more training steps. These results confirm that the SiliQun environment produces meaningful gradients and supports standard DRL training workflows.
 
 \begin{figure}[htbp]
 \centering

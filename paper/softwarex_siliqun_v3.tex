@@ -48,7 +48,7 @@ Quantum Computing \sep Silicon Spin Qubits \sep Tensor Networks \sep GPU Acceler
 \hline
 C1 & Current code version & v2.0.0 \\
 \hline
-C2 & Permanent link to code/repository used for this code version & \url{https://github.com/raad-alshehri/siliqun} \\
+C2 & Permanent link to code/repository used for this code version & \url{https://github.com/r3d-phd/siliqun} \\
 \hline
 C3 & Permanent link to Reproducible Capsule & -- \\
 \hline
@@ -60,7 +60,7 @@ C6 & Software code languages, tools, and services used & Python 3.8+, NumPy, CuP
 \hline
 C7 & Compilation requirements, operating environments \& dependencies & Python $\geq$ 3.8; Linux, macOS, or Windows; NumPy $\geq$ 1.21, CuPy $\geq$ 13.0.0 (optional, for GPU) \\
 \hline
-C8 & If available Link to developer documentation/manual & \url{https://github.com/raad-alshehri/siliqun\#readme} \\
+C8 & If available Link to developer documentation/manual & \url{https://github.com/r3d-phd/siliqun\#readme} \\
 \hline
 C9 & Support email for questions & \href{mailto:ralshehri0468@stu.kau.edu.sa}{ralshehri0468@stu.kau.edu.sa} \\
 \hline
@@ -116,9 +116,9 @@ SiliQun is built entirely in Python, comprising roughly 4,500 lines of code dist
 
 \subsection{Architectural layers}
 
-\textbf{The Backend Layer.} At the foundation of the stack, this layer abstracts the underlying numerical operations. By supporting NumPy, SiliQun ensures broad compatibility across standard CPU hardware. For more intensive tasks, it seamlessly integrates with CuPy to provide direct CUDA-based GPU acceleration, allowing researchers to scale their simulations effortlessly. CuPy is an optional dependency: if it is not installed, SiliQun falls back transparently to NumPy, so that the full feature set remains available on machines without a GPU.
+\noindent\textbf{The Backend Layer.} At the foundation of the stack, this layer abstracts the underlying numerical operations. By supporting NumPy, SiliQun ensures broad compatibility across standard CPU hardware. For more intensive tasks, it seamlessly integrates with CuPy to provide direct CUDA-based GPU acceleration, allowing researchers to scale their simulations effortlessly. CuPy is an optional dependency: if it is not installed, SiliQun falls back transparently to NumPy, so that the full feature set remains available on machines without a GPU.
 
-\textbf{The Simulation Core (MPS and SV).} The heart of SiliQun is its dual-engine core, which adapts to the specific demands of the simulated topology. The \textit{MPS engine} models quantum states using Matrix Product States and applies operations via Matrix Product Operator (MPO) contractions. This approach is highly efficient for linear chains where entanglement remains relatively contained. We note that the MPS backend is a lightweight, purpose-built implementation optimized for the specific gate set and noise channels of silicon spin qubits; it is not intended to compete with general-purpose tensor network libraries such as ITensor \cite{itensor} or quimb \cite{quimb}, but rather to provide a self-contained fallback that avoids external dependencies. For 2D grids where volume-law entanglement causes MPS bond dimensions to grow exponentially, SiliQun shifts to its \textit{State Vector (SV) engine}. This GPU-accelerated simulator represents a novel capability for DFS-encoded silicon spin qubits. Crucially, the SV engine confines its operations entirely to the encoded Hilbert space, ensuring exact dynamics within that regime. For a standard DFS encoding (where three physical spins constitute one encoded qubit), the engine pre-computes the encoded equivalents of physical exchange interactions. In this framework, intra-qubit exchanges map perfectly to encoded $Z$ and $X$ rotations, while inter-qubit exchanges translate into 4$\times$4 encoded unitaries. This strategic projection into the encoded subspace (illustrated in Figure~\ref{fig:dfs}) compresses the state vector dimension from $2^{3n}$ to $2^n$. As a result, simulating a 25-qubit 5$\times$5 grid requires only 512 MB of memory (using \texttt{complex128} precision) and yields exact results within the encoded subspace. Any leakage out of this subspace is continuously monitored using perturbative methods, serving as a diagnostic metric that avoids the computational cost of expanding the simulated Hilbert space. The validity of this projection is rigorously characterized in Section~\ref{sec:validation}.
+\noindent\textbf{The Simulation Core (MPS and SV).} The heart of SiliQun is its dual-engine core, which adapts to the specific demands of the simulated topology. The \textit{MPS engine} models quantum states using Matrix Product States and applies operations via Matrix Product Operator (MPO) contractions. This approach is highly efficient for linear chains where entanglement remains relatively contained. We note that the MPS backend is a lightweight, purpose-built implementation optimized for the specific gate set and noise channels of silicon spin qubits; it is not intended to compete with general-purpose tensor network libraries such as ITensor \cite{itensor} or quimb \cite{quimb}, but rather to provide a self-contained fallback that avoids external dependencies. For 2D grids where volume-law entanglement causes MPS bond dimensions to grow exponentially, SiliQun shifts to its \textit{State Vector (SV) engine}. This GPU-accelerated simulator represents a novel capability for DFS-encoded silicon spin qubits. Crucially, the SV engine confines its operations entirely to the encoded Hilbert space, ensuring exact dynamics within that regime. For a standard DFS encoding (where three physical spins constitute one encoded qubit), the engine pre-computes the encoded equivalents of physical exchange interactions. In this framework, intra-qubit exchanges map perfectly to encoded $Z$ and $X$ rotations, while inter-qubit exchanges translate into 4$\times$4 encoded unitaries. This strategic projection into the encoded subspace (illustrated in Figure~\ref{fig:dfs}) compresses the state vector dimension from $2^{3n}$ to $2^n$. As a result, simulating a 25-qubit 5$\times$5 grid requires only 512 MB of memory (using \texttt{complex128} precision) and yields exact results within the encoded subspace. Any leakage out of this subspace is continuously monitored using perturbative methods, serving as a diagnostic metric that avoids the computational cost of expanding the simulated Hilbert space. The validity of this projection is rigorously characterized in Section~\ref{sec:validation}.
 
 \begin{figure}[htbp]
 \centering
@@ -127,7 +127,7 @@ SiliQun is built entirely in Python, comprising roughly 4,500 lines of code dist
 \label{fig:dfs}
 \end{figure}
 
-\textbf{Physics Layer.} This layer encodes the specific characteristics of silicon hardware (Figure~\ref{fig:sledge}). It tracks inter-qubit exchange leakage perturbatively without expanding the simulated Hilbert space.
+\noindent\textbf{Physics Layer.} This layer encodes the specific characteristics of silicon hardware (Figure~\ref{fig:sledge}). It tracks inter-qubit exchange leakage perturbatively without expanding the simulated Hilbert space.
 
 \begin{figure}[htbp]
 \centering
@@ -157,7 +157,7 @@ Charge noise & 0.5\,$\mu$eV & 2\,$\mu$eV & 3\,$\mu$eV \\
 }
 \end{table}
 
-\textbf{Environment Layer.} The \texttt{SiliQunEnv} class implements the \texttt{gymnasium.Env} interface. At each step, the DRL agent selects a discrete action (e.g., $R_x, R_y, R_z, \text{CNOT}$). The environment applies the gate, applies noise, and returns an observation vector of Pauli expectation values $(\langle X_i \rangle, \langle Y_i \rangle, \langle Z_i \rangle)$ and bipartite entanglement entropy. The environment automatically selects the optimal backend: MPS for linear chains ($\leq 4$ qubits) and GPU SV for large 2D grids ($\geq 6$ qubits).
+\noindent\textbf{Environment Layer.} The \texttt{SiliQunEnv} class implements the \texttt{gymnasium.Env} interface. At each step, the DRL agent selects a discrete action (e.g., $R_x, R_y, R_z, \text{CNOT}$). The environment applies the gate, applies noise, and returns an observation vector of Pauli expectation values $(\langle X_i \rangle, \langle Y_i \rangle, \langle Z_i \rangle)$ and bipartite entanglement entropy. The environment automatically selects the optimal backend: MPS for linear chains ($\leq 4$ qubits) and GPU SV for large 2D grids ($\geq 6$ qubits).
 
 \subsection{Software functionalities}
 
@@ -174,7 +174,7 @@ SiliQun provides features designed to support practical DRL research workflows:
 SiliQun can be installed directly from the GitHub repository. For CPU-only usage, the minimal installation requires only NumPy and Gymnasium:
 
 \begin{lstlisting}[language=bash, basicstyle=\footnotesize\ttfamily, backgroundcolor=\color{gray!10}, frame=single]
-git clone https://github.com/raad-alshehri/siliqun.git
+git clone https://github.com/r3d-phd/siliqun.git
 cd siliqun
 pip install -e .
 \end{lstlisting}
@@ -355,7 +355,7 @@ In this paper, we have detailed the architecture and capabilities of SiliQun, an
 
 \section*{Code availability}
 
-The complete source code for SiliQun is publicly available under the MIT License at \url{https://github.com/raad-alshehri/siliqun}. The repository includes all simulation engines, device profiles, benchmark scripts, and example training configurations described in this paper. Installation instructions and a quick-start tutorial are provided in the repository README. The version described in this paper corresponds to release v2.0.0.
+The complete source code for SiliQun is publicly available under the MIT License at \url{https://github.com/r3d-phd/siliqun}. The repository includes all simulation engines, device profiles, benchmark scripts, and example training configurations described in this paper. Installation instructions and a quick-start tutorial are provided in the repository README. The version described in this paper corresponds to release v2.0.0.
 
 \section*{Acknowledgements}
 The authors acknowledge the use of the Aziz Supercomputer at King Abdulaziz University for computational benchmarking, and thank the anonymous reviewers for their constructive feedback.

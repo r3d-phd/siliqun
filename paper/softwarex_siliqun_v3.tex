@@ -8,6 +8,7 @@
 \usepackage{amsmath}
 \usepackage{booktabs}
 \usepackage{multirow}
+\emergencystretch=1em
 
 
 \journal{SoftwareX}
@@ -157,7 +158,7 @@ Charge noise & 0.5\,$\mu$eV & 2\,$\mu$eV & 3\,$\mu$eV \\
 }
 \end{table}
 
-\noindent\textbf{Environment Layer.} The \texttt{SiliQunEnv} class implements the \texttt{gymnasium.Env} interface. At each step, the DRL agent selects a discrete action (e.g., $R_x, R_y, R_z, \text{CNOT}$). The environment applies the gate, applies noise, and returns an observation vector of Pauli expectation values $(\langle X_i \rangle, \langle Y_i \rangle, \langle Z_i \rangle)$ and bipartite entanglement entropy. The environment automatically selects the optimal backend: MPS for linear chains ($\leq 4$ qubits) and GPU SV for large 2D grids ($\geq 6$ qubits).
+\noindent\textbf{Environment Layer.} The \textsf{SiliQunEnv} class implements the \textsf{gymnasium.Env} interface. At each step, the DRL agent selects a discrete action (e.g., $R_x$, $R_y$, $R_z$, CNOT). The environment applies the gate, applies noise, and returns an observation vector of Pauli expectation values ($\langle X_i \rangle$, $\langle Y_i \rangle$, $\langle Z_i \rangle$) and bipartite entanglement entropy. The environment automatically selects the optimal backend: MPS for linear chains ($\leq 4$ qubits) and GPU state vector for large 2D grids ($\geq 6$ qubits).
 
 \subsection{Software functionalities}
 

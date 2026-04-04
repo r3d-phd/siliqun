@@ -1,0 +1,978 @@
+2026-04-04 15:40:32,147 [aedb.orchestrator] INFO: ======================================================================
+2026-04-04 15:40:32,147 [aedb.orchestrator] INFO: AEDB Orchestrator v3: DEHB (meta) + AlphaEvolve (outer) + BRFD (inner)
+2026-04-04 15:40:32,147 [aedb.orchestrator] INFO: ======================================================================
+2026-04-04 15:40:32,147 [aedb.orchestrator] INFO:   Qubits:          3
+2026-04-04 15:40:32,147 [aedb.orchestrator] INFO:   Target gates:    ['ghz']
+2026-04-04 15:40:32,147 [aedb.orchestrator] INFO:   Noise:           0.5 rad/gate
+2026-04-04 15:40:32,147 [aedb.orchestrator] INFO:   AE generations:  20
+2026-04-04 15:40:32,147 [aedb.orchestrator] INFO:   AE pop/gen:      5
+2026-04-04 15:40:32,147 [aedb.orchestrator] INFO:   AE max LLM:      120
+2026-04-04 15:40:32,147 [aedb.orchestrator] INFO:   DEHB evals:      30
+2026-04-04 15:40:32,147 [aedb.orchestrator] INFO:   DEHB re-opt:     every 10 gens
+2026-04-04 15:40:32,147 [aedb.orchestrator] INFO:   BRFD top-k:      2
+2026-04-04 15:40:32,147 [aedb.orchestrator] INFO: 
+======================================================================
+2026-04-04 15:40:32,147 [aedb.orchestrator] INFO: Phase 1: DEHB Meta-Level Optimisation
+2026-04-04 15:40:32,148 [aedb.orchestrator] INFO:   Learning optimal hyperparameters for ALL components...
+2026-04-04 15:40:32,148 [aedb.orchestrator] INFO: ======================================================================
+2026-04-04 15:40:32,148 [aedb.orchestrator] INFO:   Running DEHB (initial): 30 evaluations...
+2026-04-04 15:40:32,193 [aedb.dehb] INFO: Starting DEHB optimization: 30 evaluations, budgets [1, 3, 9], 26 dimensions (full cross-component)
+2026-04-04 15:40:46,310 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.991147, time = 14.1s, dims = 26
+2026-04-04 15:40:46,310 [aedb.dehb] INFO:   Noise:   amp=0.0176, spacing=164.1, corr_len=100.8
+2026-04-04 15:40:46,310 [aedb.dehb] INFO:   LLM:     temp=1.06, top_p=0.84, mut_rate=0.49
+2026-04-04 15:40:46,310 [aedb.dehb] INFO:   BRFD:    reward_lr=0.04982, policy_lr=0.0060, outer=15
+2026-04-04 15:40:46,310 [aedb.dehb] INFO:   Fitness: samples=186, max_seq=139
+2026-04-04 15:40:46,310 [aedb.orchestrator] INFO:   DEHB best fidelity: 0.9911
+2026-04-04 15:40:46,310 [aedb.orchestrator] INFO:     Noise:  amp=0.0176, spacing=164.1
+2026-04-04 15:40:46,310 [aedb.orchestrator] INFO:     LLM:    temp=1.06, top_p=0.84, mut_rate=0.49
+2026-04-04 15:40:46,310 [aedb.orchestrator] INFO:     BRFD:   reward_lr=0.04982, policy_lr=0.0060, outer=15, hidden=112
+2026-04-04 15:40:46,310 [aedb.orchestrator] INFO:     Fitness: samples=186, max_seq=139
+2026-04-04 15:40:46,310 [aedb.orchestrator] INFO:   Phase 1 complete: 14.2s, 30 DEHB evals
+2026-04-04 15:40:46,311 [aedb.orchestrator] INFO: 
+======================================================================
+2026-04-04 15:40:46,311 [aedb.orchestrator] INFO: Phase 2: Seed Evaluation (DEHB configs + BRFD)
+2026-04-04 15:40:46,311 [aedb.orchestrator] INFO: ======================================================================
+2026-04-04 15:40:46,311 [aedb.llm_ensemble] INFO: LLM Ensemble: Ollama-only (qwen2.5-coder:7b-gpu @ http://localhost:11435)
+2026-04-04 15:40:47,711 [aedb.program_db] INFO: New global best: 0.3278 (island=0, gen=-1)
+2026-04-04 15:40:47,711 [aedb.alpha_evolve] INFO: Injected external strategy: score=0.3278 (source=dehb_optimised)
+2026-04-04 15:40:47,711 [aedb.orchestrator] INFO:   Injected DEHB strategy: fid=0.4040, combined=0.3278
+2026-04-04 15:40:47,863 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:40:47,971 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:40:48,070 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:40:48,167 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:40:48,270 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:40:48,370 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:40:48,469 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:40:48,568 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:40:48,666 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:40:48,768 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:40:48,868 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:40:48,969 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:40:49,072 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:40:49,175 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:40:49,276 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:40:49,378 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:40:49,379 [aedb.program_db] INFO: New global best: 0.7009 (island=1, gen=0)
+2026-04-04 15:40:49,379 [aedb.orchestrator] INFO:   Seed 'standard': fid=0.6984, dehb=0.9911, brfd=0.2719, combined=0.7009
+2026-04-04 15:40:49,459 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:40:49,562 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:40:49,664 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:40:49,793 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:40:49,893 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:40:49,995 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:40:50,097 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:40:50,194 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:40:50,294 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:40:50,393 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:40:50,491 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:40:50,596 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:40:50,709 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:40:50,810 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:40:50,907 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:40:51,004 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:40:51,005 [aedb.orchestrator] INFO:   Seed 'echo_cancel': fid=0.0000, dehb=0.9911, brfd=0.2719, combined=0.3517
+2026-04-04 15:40:51,351 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:40:51,461 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:40:51,561 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:40:51,660 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:40:51,769 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:40:51,871 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:40:51,975 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:40:52,077 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:40:52,178 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:40:52,276 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:40:52,375 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:40:52,478 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:40:52,583 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:40:52,696 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:40:52,796 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:40:52,900 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:40:52,900 [aedb.orchestrator] INFO:   Seed 'correlation_aware': fid=0.5442, dehb=0.9911, brfd=0.2719, combined=0.6238
+2026-04-04 15:40:53,052 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:40:53,150 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:40:53,274 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:40:53,421 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:40:53,544 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:40:53,670 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:40:53,799 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:40:53,957 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:40:54,073 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:40:54,167 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:40:54,271 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:40:54,370 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:40:54,491 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:40:54,592 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:40:54,725 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:40:54,823 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:40:54,823 [aedb.orchestrator] INFO:   Seed 'minimal': fid=0.6984, dehb=0.9911, brfd=0.2719, combined=0.7009
+2026-04-04 15:40:54,824 [aedb.orchestrator] INFO:   Phase 2 complete: 8.5s, db=5 programs, best=0.7009
+2026-04-04 15:40:54,824 [aedb.orchestrator] INFO: 
+======================================================================
+2026-04-04 15:40:54,824 [aedb.orchestrator] INFO: Phase 3: AlphaEvolve Evolution (MAP-Elites + LLM + BRFD)
+2026-04-04 15:40:54,824 [aedb.orchestrator] INFO: ======================================================================
+2026-04-04 15:41:10,633 [aedb.program_db] INFO: New global best: 0.7389 (island=1, gen=1)
+2026-04-04 15:41:40,736 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:41:40,844 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:41:40,950 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:41:41,060 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:41:41,171 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:41:41,279 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:41:41,389 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:41:41,492 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:41:41,598 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:41:41,728 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:41:41,839 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:41:41,945 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:41:42,052 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:41:42,159 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:41:42,265 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:41:42,370 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:41:42,372 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:41:42,484 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:41:42,597 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:41:42,717 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:41:42,828 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:41:42,939 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:41:43,048 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:41:43,154 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:41:43,257 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:41:43,363 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:41:43,469 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:41:43,576 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:41:43,691 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:41:43,796 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:41:43,898 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:41:44,004 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:41:44,005 [aedb.orchestrator] INFO:   Gen 1: best=0.7009, fid=0.6984, valid=3/5, db=11 (5 cells), LLM=5, DEHB=30, BRFD=90, time=49.2s
+2026-04-04 15:42:16,566 [aedb.program_db] INFO: New global best: 0.7441 (island=0, gen=2)
+2026-04-04 15:42:26,041 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:42:26,143 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:42:26,246 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:42:26,348 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:42:26,450 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:42:26,552 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:42:26,654 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:42:26,778 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:42:26,882 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:42:26,988 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:42:27,094 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:42:27,198 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:42:27,297 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:42:27,403 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:42:27,506 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:42:27,610 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:42:27,612 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:42:27,722 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:42:27,825 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:42:27,930 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:42:28,031 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:42:28,135 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:42:28,237 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:42:28,340 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:42:28,441 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:42:28,539 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:42:28,640 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:42:28,751 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:42:28,852 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:42:28,954 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:42:29,055 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:42:29,155 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:42:29,156 [aedb.orchestrator] INFO:   Gen 2: best=0.6690, fid=0.6345, valid=3/5, db=11 (5 cells), LLM=10, DEHB=30, BRFD=120, time=45.2s
+2026-04-04 15:43:05,883 [aedb.program_db] INFO: New global best: 0.7389 (island=0, gen=3)
+2026-04-04 15:43:14,738 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:43:14,844 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:43:14,951 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:43:15,055 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:43:15,159 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:43:15,263 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:43:15,366 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:43:15,470 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:43:15,576 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:43:15,700 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:43:15,808 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:43:15,913 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:43:16,023 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:43:16,128 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:43:16,230 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:43:16,330 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:43:16,332 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:43:16,434 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:43:16,539 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:43:16,641 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:43:16,752 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:43:16,854 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:43:16,956 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:43:17,062 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:43:17,171 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:43:17,278 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:43:17,380 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:43:17,480 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:43:17,580 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:43:17,694 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:43:17,797 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:43:17,901 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:43:17,902 [aedb.orchestrator] INFO:   Gen 3: best=0.7009, fid=0.6984, valid=2/5, db=11 (5 cells), LLM=15, DEHB=30, BRFD=150, time=48.7s
+2026-04-04 15:43:45,571 [aedb.program_db] INFO: New global best: 0.7389 (island=2, gen=4)
+2026-04-04 15:44:04,544 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:44:04,649 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:44:04,757 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:44:04,863 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:44:04,972 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:44:05,078 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:44:05,190 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:44:05,302 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:44:05,406 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:44:05,547 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:44:05,651 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:44:05,766 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:44:05,871 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:44:05,974 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:44:06,074 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:44:06,177 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:44:06,179 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:44:06,281 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:44:06,385 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:44:06,490 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:44:06,600 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:44:06,712 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:44:06,815 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:44:06,920 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:44:07,019 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:44:07,129 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:44:07,229 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:44:07,332 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:44:07,436 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:44:07,541 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:44:07,644 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:44:07,753 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:44:07,754 [aedb.orchestrator] INFO:   Gen 4: best=0.7009, fid=0.6984, valid=3/5, db=11 (5 cells), LLM=20, DEHB=30, BRFD=180, time=49.9s
+2026-04-04 15:44:16,760 [aedb.program_db] INFO: New global best: 0.7389 (island=0, gen=5)
+2026-04-04 15:45:15,637 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:45:15,755 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:45:15,873 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:45:15,992 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:45:16,121 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:45:16,266 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:45:16,386 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:45:16,527 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:45:16,636 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:45:16,758 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:45:16,861 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:45:16,970 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:45:17,079 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:45:17,194 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:45:17,303 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:45:17,409 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:45:17,411 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:45:17,548 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:45:17,697 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:45:17,811 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:45:17,928 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:45:18,037 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:45:18,175 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:45:18,324 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:45:18,429 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:45:18,535 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:45:18,641 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:45:18,754 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:45:18,858 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:45:18,962 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:45:19,064 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:45:19,169 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:45:19,170 [aedb.orchestrator] INFO:   Gen 5: best=0.7009, fid=0.6984, valid=5/5, db=12 (6 cells), LLM=25, DEHB=30, BRFD=210, time=71.4s
+2026-04-04 15:45:46,784 [aedb.program_db] INFO: New global best: 0.7889 (island=2, gen=6)
+2026-04-04 15:47:02,897 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:47:02,999 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:47:03,097 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:47:03,198 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:47:03,294 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:47:03,391 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:47:03,487 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:47:03,585 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:47:03,686 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:47:03,785 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:47:03,902 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:47:04,007 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:47:04,106 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:47:04,207 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:47:04,303 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:47:04,400 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:47:04,402 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:47:04,497 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:47:04,597 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:47:04,707 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:47:04,812 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:47:04,912 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:47:05,012 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:47:05,110 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:47:05,210 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:47:05,306 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:47:05,409 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:47:05,511 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:47:05,612 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:47:05,732 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:47:05,829 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:47:05,934 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:47:05,935 [aedb.orchestrator] INFO:   Gen 6: best=0.7009, fid=0.6984, valid=4/5, db=12 (6 cells), LLM=30, DEHB=30, BRFD=240, time=106.8s
+2026-04-04 15:47:31,903 [aedb.program_db] INFO: New global best: 0.7441 (island=1, gen=7)
+2026-04-04 15:48:55,829 [aedb.program_db] INFO: New global best: 0.7889 (island=0, gen=7)
+2026-04-04 15:49:23,617 [aedb.program_db] INFO: New global best: 0.7948 (island=0, gen=7)
+2026-04-04 15:49:23,619 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:49:23,777 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:49:23,902 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:49:24,003 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:49:24,102 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:49:24,202 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:49:24,301 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:49:24,403 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:49:24,506 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:49:24,617 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:49:24,720 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:49:24,836 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:49:24,935 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:49:25,036 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:49:25,137 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:49:25,235 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:49:25,237 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:49:25,340 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:49:25,442 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:49:25,546 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:49:25,650 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:49:25,764 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:49:25,869 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:49:25,976 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:49:26,080 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:49:26,183 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:49:26,287 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:49:26,391 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:49:26,495 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:49:26,599 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:49:26,716 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:49:26,820 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:49:26,821 [aedb.orchestrator] INFO:   Gen 7: best=0.7051, fid=0.7068, valid=4/5, db=12 (6 cells), LLM=35, DEHB=30, BRFD=270, time=140.9s  *** NEW BEST ***
+2026-04-04 15:49:53,638 [aedb.program_db] INFO: New global best: 0.7441 (island=2, gen=8)
+2026-04-04 15:51:04,238 [aedb.program_db] INFO: New global best: 0.7889 (island=2, gen=8)
+2026-04-04 15:52:16,530 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:52:16,655 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:52:16,777 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:52:16,913 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:52:17,033 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:52:17,172 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:52:17,303 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:52:17,425 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:52:17,555 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:52:17,686 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:52:17,803 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:52:17,924 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:52:18,068 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:52:18,206 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:52:18,324 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:52:18,442 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:52:18,444 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:52:18,561 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:52:18,692 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:52:18,810 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:52:18,934 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:52:19,047 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:52:19,164 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:52:19,283 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:52:19,399 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:52:19,514 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:52:19,629 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:52:19,751 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:52:19,871 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:52:19,989 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:52:20,103 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:52:20,217 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:52:20,218 [aedb.orchestrator] INFO:   Gen 8: best=0.7009, fid=0.6984, valid=3/5, db=12 (6 cells), LLM=40, DEHB=30, BRFD=300, time=173.4s
+2026-04-04 15:52:45,549 [aedb.program_db] INFO: New global best: 0.7889 (island=2, gen=9)
+2026-04-04 15:54:40,583 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:54:40,694 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:54:40,805 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:54:40,914 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:54:41,022 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:54:41,133 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:54:41,262 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:54:41,369 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:54:41,476 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:54:41,579 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:54:41,691 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:54:41,791 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:54:41,900 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:54:42,003 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:54:42,109 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:54:42,213 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:54:42,215 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:54:42,312 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:54:42,412 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:54:42,508 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:54:42,609 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:54:42,717 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:54:42,817 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:54:42,927 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:54:43,027 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:54:43,129 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:54:43,233 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:54:43,333 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:54:43,431 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:54:43,526 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:54:43,626 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:54:43,733 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:54:43,734 [aedb.orchestrator] INFO:   Gen 9: best=0.7009, fid=0.6984, valid=5/5, db=12 (6 cells), LLM=45, DEHB=30, BRFD=330, time=143.5s
+2026-04-04 15:54:43,734 [aedb.orchestrator] INFO: 
+  --- DEHB re-optimisation at gen 10 ---
+2026-04-04 15:54:43,734 [aedb.orchestrator] INFO:   Running DEHB (reopt_gen10): 30 evaluations...
+2026-04-04 15:54:43,778 [aedb.dehb] INFO: Starting DEHB optimization: 30 evaluations, budgets [1, 3, 9], 26 dimensions (full cross-component)
+2026-04-04 15:54:57,568 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.991147, time = 13.8s, dims = 26
+2026-04-04 15:54:57,568 [aedb.dehb] INFO:   Noise:   amp=0.0176, spacing=164.1, corr_len=100.8
+2026-04-04 15:54:57,568 [aedb.dehb] INFO:   LLM:     temp=1.06, top_p=0.84, mut_rate=0.49
+2026-04-04 15:54:57,568 [aedb.dehb] INFO:   BRFD:    reward_lr=0.04982, policy_lr=0.0060, outer=15
+2026-04-04 15:54:57,568 [aedb.dehb] INFO:   Fitness: samples=186, max_seq=139
+2026-04-04 15:54:57,568 [aedb.orchestrator] INFO:   DEHB best fidelity: 0.9911
+2026-04-04 15:54:57,568 [aedb.orchestrator] INFO:     Noise:  amp=0.0176, spacing=164.1
+2026-04-04 15:54:57,568 [aedb.orchestrator] INFO:     LLM:    temp=1.06, top_p=0.84, mut_rate=0.49
+2026-04-04 15:54:57,568 [aedb.orchestrator] INFO:     BRFD:   reward_lr=0.04982, policy_lr=0.0060, outer=15, hidden=112
+2026-04-04 15:54:57,568 [aedb.orchestrator] INFO:     Fitness: samples=186, max_seq=139
+2026-04-04 15:54:58,863 [aedb.alpha_evolve] INFO: Injected external strategy: score=0.3278 (source=dehb_optimised)
+2026-04-04 15:54:58,864 [aedb.orchestrator] INFO:   Injected DEHB strategy: fid=0.4040, combined=0.3278
+2026-04-04 15:56:37,666 [aedb.program_db] INFO: New global best: 0.7868 (island=1, gen=10)
+2026-04-04 15:57:25,225 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:57:25,327 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:57:25,430 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:57:25,535 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:57:25,644 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:57:25,750 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:57:25,852 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:57:25,972 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:57:26,077 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:57:26,194 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:57:26,296 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:57:26,402 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:57:26,506 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:57:26,606 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:57:26,715 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:57:26,812 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:57:26,813 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 15:57:26,910 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 15:57:27,003 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 15:57:27,096 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 15:57:27,190 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 15:57:27,286 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 15:57:27,382 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 15:57:27,481 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 15:57:27,580 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 15:57:27,687 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 15:57:27,790 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 15:57:27,883 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 15:57:27,981 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 15:57:28,078 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 15:57:28,174 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 15:57:28,267 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 15:57:28,268 [aedb.orchestrator] INFO:   Gen 10: best=0.6994, fid=0.6954, valid=3/5, db=13 (7 cells), LLM=50, DEHB=60, BRFD=360, time=164.5s
+2026-04-04 15:58:46,778 [aedb.program_db] INFO: New global best: 0.7889 (island=1, gen=11)
+2026-04-04 16:00:49,666 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 16:00:49,769 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 16:00:49,873 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 16:00:49,996 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 16:00:50,100 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 16:00:50,201 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 16:00:50,307 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 16:00:50,411 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 16:00:50,516 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 16:00:50,669 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 16:00:50,786 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 16:00:50,890 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 16:00:50,994 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 16:00:51,093 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 16:00:51,199 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 16:00:51,303 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 16:00:51,304 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 16:00:51,407 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 16:00:51,509 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 16:00:51,611 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 16:00:51,720 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 16:00:51,824 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 16:00:51,926 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 16:00:52,028 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 16:00:52,125 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 16:00:52,230 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 16:00:52,334 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 16:00:52,456 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 16:00:52,556 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 16:00:52,660 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 16:00:52,769 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 16:00:52,872 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 16:00:52,873 [aedb.orchestrator] INFO:   Gen 11: best=0.7009, fid=0.6984, valid=5/5, db=13 (7 cells), LLM=55, DEHB=60, BRFD=390, time=204.6s
+2026-04-04 16:04:00,344 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 16:04:00,456 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 16:04:00,564 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 16:04:00,671 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 16:04:00,779 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 16:04:00,888 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 16:04:00,998 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 16:04:01,107 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 16:04:01,217 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 16:04:01,338 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 16:04:01,444 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 16:04:01,548 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 16:04:01,687 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 16:04:01,791 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 16:04:01,895 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 16:04:01,998 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 16:04:02,000 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 16:04:02,097 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 16:04:02,196 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 16:04:02,294 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 16:04:02,393 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 16:04:02,492 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 16:04:02,592 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 16:04:02,706 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 16:04:02,809 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 16:04:02,912 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 16:04:03,012 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 16:04:03,111 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 16:04:03,213 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 16:04:03,318 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 16:04:03,420 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 16:04:03,523 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 16:04:03,524 [aedb.orchestrator] INFO:   Gen 12: best=0.7009, fid=0.6984, valid=5/5, db=13 (7 cells), LLM=60, DEHB=60, BRFD=420, time=190.7s
+2026-04-04 16:06:27,388 [aedb.llm_ensemble] WARNING: Ollama connection error (attempt 1/3): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-04-04 16:06:27,388 [aedb.llm_ensemble] INFO: Reconnecting SSH tunnel...
+2026-04-04 16:06:27,389 [aedb.llm_ensemble] INFO: Attempting SSH tunnel reconnect...
+2026-04-04 16:06:36,405 [aedb.llm_ensemble] WARNING: SSH tunnel reconnect failed
+2026-04-04 16:08:36,574 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 16:08:36,680 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 16:08:36,784 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 16:08:36,907 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 16:08:37,019 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 16:08:37,127 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 16:08:37,230 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 16:08:37,334 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 16:08:37,432 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 16:08:37,542 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 16:08:37,641 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 16:08:37,753 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 16:08:37,851 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 16:08:37,953 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 16:08:38,054 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 16:08:38,156 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 16:08:38,158 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 16:08:38,255 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 16:08:38,351 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 16:08:38,445 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 16:08:38,541 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 16:08:38,636 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 16:08:38,744 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 16:08:38,841 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 16:08:38,937 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 16:08:39,036 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 16:08:39,134 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 16:08:39,232 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 16:08:39,329 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 16:08:39,426 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 16:08:39,525 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 16:08:39,623 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 16:08:39,624 [aedb.orchestrator] INFO:   Gen 13: best=0.7009, fid=0.6984, valid=3/5, db=13 (7 cells), LLM=65, DEHB=60, BRFD=450, time=276.1s
+2026-04-04 16:08:51,219 [aedb.llm_ensemble] WARNING: Ollama connection error (attempt 1/3): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-04-04 16:08:51,220 [aedb.llm_ensemble] INFO: Reconnecting SSH tunnel...
+2026-04-04 16:08:51,221 [aedb.llm_ensemble] INFO: Attempting SSH tunnel reconnect...
+2026-04-04 16:08:55,234 [aedb.llm_ensemble] WARNING: SSH tunnel reconnect failed
+2026-04-04 16:08:57,236 [aedb.llm_ensemble] WARNING: Ollama connection error (attempt 2/3): HTTPConnectionPool(host='localhost', port=11435): Max retries exceeded with url: /api/generate (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fce972678d0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-04-04 16:08:57,236 [aedb.llm_ensemble] INFO: Reconnecting SSH tunnel...
+2026-04-04 16:09:56,808 [aedb.program_db] INFO: New global best: 0.7814 (island=1, gen=14)
+2026-04-04 16:10:19,737 [aedb.llm_ensemble] WARNING: Ollama connection error (attempt 1/3): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-04-04 16:10:19,737 [aedb.llm_ensemble] INFO: Reconnecting SSH tunnel...
+2026-04-04 16:10:19,739 [aedb.llm_ensemble] INFO: Attempting SSH tunnel reconnect...
+2026-04-04 16:10:23,752 [aedb.llm_ensemble] WARNING: SSH tunnel reconnect failed
+2026-04-04 16:10:52,096 [aedb.llm_ensemble] WARNING: Ollama connection error (attempt 2/3): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-04-04 16:10:52,096 [aedb.llm_ensemble] INFO: Reconnecting SSH tunnel...
+2026-04-04 16:10:52,098 [aedb.llm_ensemble] INFO: Attempting SSH tunnel reconnect...
+2026-04-04 16:11:01,114 [aedb.llm_ensemble] WARNING: SSH tunnel reconnect failed
+2026-04-04 16:11:56,364 [aedb.llm_ensemble] WARNING: Ollama connection error (attempt 3/3): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-04-04 16:11:56,364 [aedb.llm_ensemble] WARNING: Ollama failed after 3 attempts
+2026-04-04 16:11:56,367 [aedb.llm_ensemble] WARNING: Ollama connection error (attempt 1/3): HTTPConnectionPool(host='localhost', port=11435): Max retries exceeded with url: /api/generate (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fce9c528990>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-04-04 16:11:56,367 [aedb.llm_ensemble] INFO: Reconnecting SSH tunnel...
+2026-04-04 16:11:56,369 [aedb.llm_ensemble] INFO: Attempting SSH tunnel reconnect...
+2026-04-04 16:12:00,379 [aedb.llm_ensemble] WARNING: SSH tunnel reconnect failed
+2026-04-04 16:13:40,946 [aedb.program_db] INFO: New global best: 0.7889 (island=1, gen=14)
+2026-04-04 16:13:53,721 [aedb.llm_ensemble] WARNING: Ollama connection error (attempt 1/3): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-04-04 16:13:53,721 [aedb.llm_ensemble] INFO: Reconnecting SSH tunnel...
+2026-04-04 16:13:53,723 [aedb.llm_ensemble] INFO: Attempting SSH tunnel reconnect...
+2026-04-04 16:13:57,737 [aedb.llm_ensemble] WARNING: SSH tunnel reconnect failed
+2026-04-04 16:13:59,740 [aedb.llm_ensemble] WARNING: Ollama connection error (attempt 2/3): HTTPConnectionPool(host='localhost', port=11435): Max retries exceeded with url: /api/generate (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fce9719ba50>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-04-04 16:13:59,740 [aedb.llm_ensemble] INFO: Reconnecting SSH tunnel...
+2026-04-04 16:15:03,427 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 16:15:03,534 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 16:15:03,641 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 16:15:03,748 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 16:15:03,862 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 16:15:03,978 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 16:15:04,100 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 16:15:04,208 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 16:15:04,317 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 16:15:04,486 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 16:15:04,621 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 16:15:04,769 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 16:15:04,905 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 16:15:05,083 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 16:15:05,201 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 16:15:05,315 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 16:15:05,317 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 16:15:05,428 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 16:15:05,545 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 16:15:05,656 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 16:15:05,778 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 16:15:05,889 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 16:15:06,001 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 16:15:06,112 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 16:15:06,224 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 16:15:06,343 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 16:15:06,454 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 16:15:06,569 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 16:15:06,690 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 16:15:06,832 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 16:15:06,940 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 16:15:07,063 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 16:15:07,064 [aedb.orchestrator] INFO:   Gen 14: best=0.7009, fid=0.6984, valid=3/5, db=13 (7 cells), LLM=70, DEHB=60, BRFD=480, time=387.4s
+2026-04-04 16:16:07,653 [aedb.program_db] INFO: New global best: 0.7889 (island=1, gen=15)
+2026-04-04 16:18:22,438 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 16:18:22,547 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 16:18:22,654 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 16:18:22,761 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 16:18:22,868 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 16:18:22,975 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 16:18:23,083 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 16:18:23,194 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 16:18:23,302 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 16:18:23,417 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 16:18:23,524 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 16:18:23,629 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 16:18:23,748 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 16:18:23,889 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 16:18:24,056 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 16:18:24,215 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 16:18:24,217 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 16:18:24,358 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 16:18:24,499 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 16:18:24,642 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 16:18:24,781 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 16:18:24,895 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 16:18:25,007 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 16:18:25,124 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 16:18:25,237 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 16:18:25,356 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 16:18:25,467 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 16:18:25,582 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 16:18:25,706 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 16:18:25,855 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 16:18:25,967 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 16:18:26,080 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 16:18:26,081 [aedb.orchestrator] INFO:   Gen 15: best=0.7009, fid=0.6984, valid=5/5, db=13 (7 cells), LLM=75, DEHB=60, BRFD=510, time=199.0s
+2026-04-04 16:21:22,763 [aedb.program_db] INFO: New global best: 0.7948 (island=2, gen=16)
+2026-04-04 16:22:02,000 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 16:22:02,107 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 16:22:02,223 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 16:22:02,326 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 16:22:02,424 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 16:22:02,524 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 16:22:02,622 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 16:22:02,721 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 16:22:02,821 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 16:22:02,927 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 16:22:03,027 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 16:22:03,130 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 16:22:03,232 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 16:22:03,337 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 16:22:03,444 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 16:22:03,543 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 16:22:03,545 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 16:22:03,648 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 16:22:03,763 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 16:22:03,876 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 16:22:03,980 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 16:22:04,086 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 16:22:04,193 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 16:22:04,298 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 16:22:04,402 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 16:22:04,507 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 16:22:04,612 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 16:22:04,734 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 16:22:04,839 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 16:22:04,941 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 16:22:05,055 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 16:22:05,166 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 16:22:05,167 [aedb.orchestrator] INFO:   Gen 16: best=0.7051, fid=0.7068, valid=5/5, db=16 (9 cells), LLM=80, DEHB=60, BRFD=540, time=219.1s
+2026-04-04 16:22:32,840 [aedb.program_db] INFO: New global best: 0.7889 (island=1, gen=17)
+2026-04-04 16:25:21,222 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 16:25:21,324 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 16:25:21,428 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 16:25:21,529 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 16:25:21,631 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 16:25:21,737 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 16:25:21,845 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 16:25:21,952 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 16:25:22,061 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 16:25:22,184 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 16:25:22,293 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 16:25:22,405 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 16:25:22,516 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 16:25:22,625 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 16:25:22,745 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 16:25:22,854 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 16:25:22,856 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 16:25:22,969 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 16:25:23,079 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 16:25:23,189 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 16:25:23,302 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 16:25:23,412 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 16:25:23,525 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 16:25:23,638 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 16:25:23,759 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 16:25:23,873 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 16:25:23,986 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 16:25:24,101 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 16:25:24,213 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 16:25:24,339 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 16:25:24,455 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 16:25:24,571 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 16:25:24,572 [aedb.orchestrator] INFO:   Gen 17: best=0.7009, fid=0.6984, valid=3/5, db=17 (9 cells), LLM=85, DEHB=60, BRFD=570, time=199.4s
+2026-04-04 16:28:46,085 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 16:28:46,243 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 16:28:46,400 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 16:28:46,555 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 16:28:46,713 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 16:28:46,869 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 16:28:46,985 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 16:28:47,105 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 16:28:47,222 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 16:28:47,326 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 16:28:47,435 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 16:28:47,542 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 16:28:47,651 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 16:28:47,767 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 16:28:47,877 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 16:28:47,981 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 16:28:47,982 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 16:28:48,083 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 16:28:48,185 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 16:28:48,283 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 16:28:48,424 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 16:28:48,529 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 16:28:48,635 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 16:28:48,755 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 16:28:48,858 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 16:28:48,963 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 16:28:49,065 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 16:28:49,166 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 16:28:49,266 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 16:28:49,364 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 16:28:49,465 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 16:28:49,566 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 16:28:49,567 [aedb.orchestrator] INFO:   Gen 18: best=0.7009, fid=0.6984, valid=4/5, db=17 (9 cells), LLM=90, DEHB=60, BRFD=600, time=205.0s
+2026-04-04 16:32:14,352 [aedb.program_db] INFO: New global best: 0.7889 (island=1, gen=19)
+2026-04-04 16:32:14,353 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 16:32:14,463 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 16:32:14,590 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 16:32:14,716 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 16:32:14,838 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 16:32:14,944 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 16:32:15,052 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 16:32:15,158 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 16:32:15,273 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 16:32:15,379 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 16:32:15,483 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 16:32:15,587 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 16:32:15,700 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 16:32:15,805 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 16:32:15,909 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 16:32:16,016 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 16:32:16,017 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 16:32:16,120 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 16:32:16,224 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 16:32:16,326 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 16:32:16,429 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 16:32:16,531 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 16:32:16,650 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 16:32:16,788 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 16:32:16,912 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 16:32:17,044 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 16:32:17,181 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 16:32:17,317 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 16:32:17,449 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 16:32:17,579 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 16:32:17,719 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 16:32:17,853 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 16:32:17,854 [aedb.orchestrator] INFO:   Gen 19: best=0.7009, fid=0.6984, valid=2/5, db=17 (9 cells), LLM=95, DEHB=60, BRFD=630, time=208.3s
+2026-04-04 16:32:17,854 [aedb.orchestrator] INFO: 
+  --- DEHB re-optimisation at gen 20 ---
+2026-04-04 16:32:17,854 [aedb.orchestrator] INFO:   Running DEHB (reopt_gen20): 30 evaluations...
+2026-04-04 16:32:17,912 [aedb.dehb] INFO: Starting DEHB optimization: 30 evaluations, budgets [1, 3, 9], 26 dimensions (full cross-component)
+2026-04-04 16:32:33,011 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.991147, time = 15.1s, dims = 26
+2026-04-04 16:32:33,011 [aedb.dehb] INFO:   Noise:   amp=0.0176, spacing=164.1, corr_len=100.8
+2026-04-04 16:32:33,011 [aedb.dehb] INFO:   LLM:     temp=1.06, top_p=0.84, mut_rate=0.49
+2026-04-04 16:32:33,011 [aedb.dehb] INFO:   BRFD:    reward_lr=0.04982, policy_lr=0.0060, outer=15
+2026-04-04 16:32:33,011 [aedb.dehb] INFO:   Fitness: samples=186, max_seq=139
+2026-04-04 16:32:33,011 [aedb.orchestrator] INFO:   DEHB best fidelity: 0.9911
+2026-04-04 16:32:33,011 [aedb.orchestrator] INFO:     Noise:  amp=0.0176, spacing=164.1
+2026-04-04 16:32:33,011 [aedb.orchestrator] INFO:     LLM:    temp=1.06, top_p=0.84, mut_rate=0.49
+2026-04-04 16:32:33,011 [aedb.orchestrator] INFO:     BRFD:   reward_lr=0.04982, policy_lr=0.0060, outer=15, hidden=112
+2026-04-04 16:32:33,011 [aedb.orchestrator] INFO:     Fitness: samples=186, max_seq=139
+2026-04-04 16:32:34,495 [aedb.alpha_evolve] INFO: Injected external strategy: score=0.3278 (source=dehb_optimised)
+2026-04-04 16:32:34,496 [aedb.orchestrator] INFO:   Injected DEHB strategy: fid=0.4040, combined=0.3278
+2026-04-04 16:35:15,552 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 16:35:15,660 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 16:35:15,769 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 16:35:15,878 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 16:35:15,986 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 16:35:16,107 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 16:35:16,213 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 16:35:16,319 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 16:35:16,422 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 16:35:16,526 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 16:35:16,629 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 16:35:16,749 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 16:35:16,853 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 16:35:16,957 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 16:35:17,061 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 16:35:17,168 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 16:35:17,170 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 16:35:17,274 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 16:35:17,380 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 16:35:17,484 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 16:35:17,589 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 16:35:17,724 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 16:35:17,837 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 16:35:17,950 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 16:35:18,057 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 16:35:18,168 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 16:35:18,272 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 16:35:18,379 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 16:35:18,486 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 16:35:18,590 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 16:35:18,703 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 16:35:18,809 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 16:35:18,809 [aedb.orchestrator] INFO:   Gen 20: best=0.7009, fid=0.6984, valid=4/5, db=17 (9 cells), LLM=100, DEHB=90, BRFD=660, time=181.0s
+2026-04-04 16:35:18,809 [aedb.orchestrator] INFO:   Phase 3 complete: 3264.0s
+2026-04-04 16:35:18,809 [aedb.orchestrator] INFO: 
+======================================================================
+2026-04-04 16:35:18,810 [aedb.orchestrator] INFO: Phase 4: Final BRFD Refinement of Top Candidates
+2026-04-04 16:35:18,810 [aedb.orchestrator] INFO: ======================================================================
+2026-04-04 16:35:18,810 [aedb.orchestrator] INFO:   Refining top-1: score=0.7889 (source=evolution)
+2026-04-04 16:35:18,811 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 16:35:18,922 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 16:35:19,020 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 16:35:19,124 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 16:35:19,228 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 16:35:19,331 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 16:35:19,436 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 16:35:19,540 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 16:35:19,642 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 16:35:19,758 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 16:35:19,861 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 16:35:19,963 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 16:35:20,066 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 16:35:20,202 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 16:35:20,304 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 16:35:20,409 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 16:35:20,409 [aedb.orchestrator] INFO:     -> refined score=0.7009 (brfd=0.2719)
+2026-04-04 16:35:20,409 [aedb.orchestrator] INFO:   Refining top-2: score=0.7889 (source=evolution)
+2026-04-04 16:35:20,411 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 16:35:20,523 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 16:35:20,631 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 16:35:20,747 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 16:35:20,853 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 16:35:20,959 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 16:35:21,073 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 16:35:21,184 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 16:35:21,290 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 16:35:21,398 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 16:35:21,502 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 16:35:21,614 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 16:35:21,726 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 16:35:21,834 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 16:35:21,940 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 16:35:22,044 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 16:35:22,045 [aedb.orchestrator] INFO:     -> refined score=0.7009 (brfd=0.2719)
+2026-04-04 16:35:22,045 [aedb.orchestrator] INFO:   Refining top-3: score=0.7889 (source=evolution)
+2026-04-04 16:35:22,046 [aedb.brfd] INFO: BRFD training: 15 outer steps, 5 inner episodes, gamma=0.955, reward_lr=0.04982, policy_lr=0.0060, hidden=112, max_steps=18, n_qubits=3, target=ghz
+2026-04-04 16:35:22,152 [aedb.brfd] INFO:   Outer step 1/15: mean_fid=0.1677, best=0.1677
+2026-04-04 16:35:22,259 [aedb.brfd] INFO:   Outer step 2/15: mean_fid=0.1737, best=0.1737
+2026-04-04 16:35:22,364 [aedb.brfd] INFO:   Outer step 3/15: mean_fid=0.1232, best=0.1737
+2026-04-04 16:35:22,469 [aedb.brfd] INFO:   Outer step 4/15: mean_fid=0.2043, best=0.2043
+2026-04-04 16:35:22,574 [aedb.brfd] INFO:   Outer step 5/15: mean_fid=0.1977, best=0.2043
+2026-04-04 16:35:22,690 [aedb.brfd] INFO:   Outer step 6/15: mean_fid=0.2325, best=0.2325
+2026-04-04 16:35:22,796 [aedb.brfd] INFO:   Outer step 7/15: mean_fid=0.2719, best=0.2719
+2026-04-04 16:35:22,902 [aedb.brfd] INFO:   Outer step 8/15: mean_fid=0.2489, best=0.2719
+2026-04-04 16:35:23,007 [aedb.brfd] INFO:   Outer step 9/15: mean_fid=0.1995, best=0.2719
+2026-04-04 16:35:23,113 [aedb.brfd] INFO:   Outer step 10/15: mean_fid=0.2473, best=0.2719
+2026-04-04 16:35:23,219 [aedb.brfd] INFO:   Outer step 11/15: mean_fid=0.1911, best=0.2719
+2026-04-04 16:35:23,324 [aedb.brfd] INFO:   Outer step 12/15: mean_fid=0.1001, best=0.2719
+2026-04-04 16:35:23,428 [aedb.brfd] INFO:   Outer step 13/15: mean_fid=0.0748, best=0.2719
+2026-04-04 16:35:23,532 [aedb.brfd] INFO:   Outer step 14/15: mean_fid=0.1737, best=0.2719
+2026-04-04 16:35:23,636 [aedb.brfd] INFO:   Outer step 15/15: mean_fid=0.0473, best=0.2719
+2026-04-04 16:35:23,636 [aedb.orchestrator] INFO:     -> refined score=0.7009 (brfd=0.2719)
+2026-04-04 16:35:23,636 [aedb.orchestrator] INFO: 
+======================================================================
+2026-04-04 16:35:23,637 [aedb.orchestrator] INFO: Phase 5: Final Evaluation (500 samples)
+2026-04-04 16:35:23,637 [aedb.orchestrator] INFO: ======================================================================
+2026-04-04 16:35:23,946 [aedb.orchestrator] INFO: 
+======================================================================
+2026-04-04 16:35:23,946 [aedb.orchestrator] INFO: AEDB v3 COMPLETE
+2026-04-04 16:35:23,946 [aedb.orchestrator] INFO: ======================================================================
+2026-04-04 16:35:23,946 [aedb.orchestrator] INFO:   Best combined:     0.7009
+2026-04-04 16:35:23,946 [aedb.orchestrator] INFO:   Best fidelity:     0.6984
+2026-04-04 16:35:23,946 [aedb.orchestrator] INFO:   Final (500):       0.7109
+2026-04-04 16:35:23,946 [aedb.orchestrator] INFO:   Total programs:    17
+2026-04-04 16:35:23,946 [aedb.orchestrator] INFO:   LLM calls:         100
+2026-04-04 16:35:23,946 [aedb.orchestrator] INFO:   DEHB evals:        90
+2026-04-04 16:35:23,946 [aedb.orchestrator] INFO:   BRFD outer steps:  705
+2026-04-04 16:35:23,946 [aedb.orchestrator] INFO:   BRFD total steps:  3525
+2026-04-04 16:35:23,946 [aedb.orchestrator] INFO:   Phase 1 (DEHB):    14.2s
+2026-04-04 16:35:23,946 [aedb.orchestrator] INFO:   Phase 2 (Seeds):   8.5s
+2026-04-04 16:35:23,946 [aedb.orchestrator] INFO:   Phase 3 (Evolve):  3264.0s
+2026-04-04 16:35:23,946 [aedb.orchestrator] INFO:   Phase 4 (Refine):  4.8s
+2026-04-04 16:35:23,946 [aedb.orchestrator] INFO:   Total time:        3291.8s
+2026-04-04 16:35:23,946 [aedb.orchestrator] INFO: ======================================================================
+======================================================================
+AEDB v3: DEHB (meta) + AlphaEvolve (outer) + BRFD (inner)
+======================================================================
+Architecture: DEHB learns ALL hyperparameters
+  -> AlphaEvolve: MAP-Elites + LLM Ensemble + Evaluation Cascade
+  -> BRFD: Bilevel Reward Function Discovery
+Qubits: 3 (GHZ state)
+Noise: 0.5 rad/gate
+
+
+======================================================================
+FINAL RESULTS
+======================================================================
+Best combined score:  0.7009
+Best base fidelity:   0.6984
+Final fidelity (500): 0.7109
+Total programs:       17
+LLM calls:            100
+DEHB evals:           90
+BRFD outer steps:     705
+BRFD total steps:     3525
+Time:                 3291.8s
+
+DEHB-learned configs:
+  LLM:    {'temperature': 1.0588515586311, 'top_p': 0.8392022320618, 'num_predict': 898, 'repeat_penalty': 1.188048780404, 'mutation_rate': 0.4917436287525, 'n_inspirations': 2}
+  BRFD:   {'reward_lr': 0.0498160287042, 'policy_lr': 0.0060440774374, 'hidden_dim': 112, 'inner_episodes': 5, 'outer_steps': 15, 'max_steps': 18, 'gamma': 0.9545844496993}
+  Noise:  {'noise_amplitude': 0.0176072457167, 'qubit_spacing_nm': 164.0511920399102, 'tlf_correlation_length_nm': 100.8222188824742}
+
+Best strategy:
+def generate_gate_sequence(target_gate, n_qubits, nn_correlation, qubit_spacing_nm, corr_length_nm):
+    import numpy as np
+    gates = []
+    
+    if target_gate == "bell":
+        gates.append(Gate("h", [0]))
+        gates.append(Gate("cnot", [0, 1]))
+    elif target_gate == "cnot":
+        gates.append(Gate("cnot", [0, 1]))
+    elif target_gate == "ghz":
+        if nn_correlation < 0.5:
+            gates.append(Gate("h", [0]))
+            for i in range(n_qubits - 1):
+                gates.ap

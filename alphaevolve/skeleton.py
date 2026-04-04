@@ -40,9 +40,70 @@ class Gate:
     qubits: tuple
     params: dict = None
     
-    def __post_init__(self):
-        if self.params is None:
-            self.params = {}
+    def __init__(self, gate_type, *args, **kwargs):
+        # Flexible constructor: supports multiple calling conventions
+        # Gate('h', 0), Gate('h', (0,)), Gate('cnot', 0, 1),
+        # Gate('cnot', (0, 1)), Gate('rx', 0, {'theta': 0.5}),
+        # Gate('rx', (0,), {'theta': 0.5}), Gate('rx', [0], theta=0.5)
+        object.__setattr__(self, 'gate_type', gate_type)
+        
+        qubits = None
+        params = None
+        
+        if len(args) == 0:
+            qubits = kwargs.pop('qubits', ())
+            params = kwargs.pop('params', None)
+        elif len(args) == 1:
+            arg = args[0]
+            if isinstance(arg, (list, tuple)):
+                qubits = tuple(arg)
+            elif isinstance(arg, int):
+                qubits = (arg,)
+            else:
+                qubits = (arg,)
+            params = kwargs.pop('params', None)
+        elif len(args) == 2:
+            arg0, arg1 = args
+            if isinstance(arg1, dict):
+                # Gate('rx', 0, {'theta': 0.5}) or Gate('rx', (0,), {'theta': 0.5})
+                if isinstance(arg0, (list, tuple)):
+                    qubits = tuple(arg0)
+                elif isinstance(arg0, int):
+                    qubits = (arg0,)
+                else:
+                    qubits = (arg0,)
+                params = arg1
+            elif isinstance(arg0, int) and isinstance(arg1, int):
+                # Gate('cnot', 0, 1)
+                qubits = (arg0, arg1)
+                params = kwargs.pop('params', None)
+            elif isinstance(arg0, (list, tuple)):
+                qubits = tuple(arg0)
+                params = arg1 if isinstance(arg1, dict) else None
+            else:
+                qubits = (arg0, arg1)
+                params = kwargs.pop('params', None)
+        elif len(args) == 3:
+            # Gate('cnot', 0, 1, {'theta': ...})
+            qubits = (args[0], args[1])
+            params = args[2] if isinstance(args[2], dict) else None
+        
+        # Ensure qubits is always a tuple of ints
+        if isinstance(qubits, int):
+            qubits = (qubits,)
+        elif isinstance(qubits, list):
+            qubits = tuple(qubits)
+        elif qubits is None:
+            qubits = ()
+        
+        # Merge any remaining kwargs into params
+        if params is None:
+            params = {}
+        if kwargs:
+            params.update(kwargs)
+        
+        object.__setattr__(self, 'qubits', qubits)
+        object.__setattr__(self, 'params', params)
 
 
 # ======================================================================

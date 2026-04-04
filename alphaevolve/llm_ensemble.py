@@ -4,6 +4,9 @@ LLM Ensemble for AlphaEvolve -- Ollama-Only Edition.
 Uses the local Ollama GPU server on the user's RTX 2070 as the sole
 LLM backend.  Zero rate limits, zero external API dependencies.
 
+DEHB-learned parameters (temperature, top_p, num_predict, repeat_penalty)
+are applied as defaults and can be overridden per-call.
+
 Auto-reconnects the SSH tunnel if the connection drops.
 """
 
@@ -82,14 +85,24 @@ def _reconnect_tunnel() -> bool:
 
 
 # ──────────────────────────────────────────────────────────────────────
-# LLM Ensemble (Ollama-only)
+# LLM Ensemble (Ollama-only, DEHB-parameterised)
 # ──────────────────────────────────────────────────────────────────────
 
 class LLMEnsemble:
     """Ollama-only LLM backend for AlphaEvolve.
 
     Uses the local RTX 2070 GPU via SSH tunnel.
-    Zero rate limits, ~38 tok/s.
+    Zero rate limits, ~38 tok/s (7B) or ~20 tok/s (14B).
+
+    DEHB-learned parameters are stored as defaults and applied
+    to every LLM call unless overridden.
+
+    Parameters
+    ----------
+    flash_ratio : float
+        Ignored (single-model ensemble).
+    seed : int
+        Random seed.
     """
 
     def __init__(self, flash_ratio: float = 0.7, seed: int = 42):
@@ -98,6 +111,13 @@ class LLMEnsemble:
         self.failures = 0
         self.consecutive_failures = 0
         self._last_reconnect = 0.0
+
+        # DEHB-learned defaults (updated by orchestrator after DEHB runs)
+        self.default_temperature: float = 0.8
+        self.default_top_p: float = 0.95
+        self.default_num_predict: int = 800
+        self.default_repeat_penalty: float = 1.1
+
         logger.info(f"LLM Ensemble: Ollama-only ({OLLAMA_MODEL} @ {OLLAMA_URL})")
 
     def _ensure_tunnel(self):
@@ -115,8 +135,30 @@ class LLMEnsemble:
         user_prompt: str,
         max_tokens: int = 1500,
         prefer_tier: Optional[str] = None,
+        temperature: Optional[float] = None,
+        top_p: Optional[float] = None,
+        repeat_penalty: Optional[float] = None,
     ) -> Tuple[Optional[str], str]:
         """Call Ollama and return the response.
+
+        Uses DEHB-learned defaults unless overridden by explicit params.
+
+        Parameters
+        ----------
+        system_prompt : str
+            System-level instructions.
+        user_prompt : str
+            User-level prompt with code context.
+        max_tokens : int
+            Maximum tokens to generate.
+        prefer_tier : str, optional
+            Ignored (single model).
+        temperature : float, optional
+            Override DEHB-learned temperature.
+        top_p : float, optional
+            Override DEHB-learned top_p.
+        repeat_penalty : float, optional
+            Override DEHB-learned repeat_penalty.
 
         Returns
         -------
@@ -124,6 +166,12 @@ class LLMEnsemble:
         model_name : str
         """
         self.total_calls += 1
+
+        # Apply DEHB-learned defaults with optional overrides
+        temp = temperature if temperature is not None else self.default_temperature
+        tp = top_p if top_p is not None else self.default_top_p
+        rp = repeat_penalty if repeat_penalty is not None else self.default_repeat_penalty
+        np_ = max_tokens if max_tokens > 0 else self.default_num_predict
 
         # Try up to 3 times with reconnect
         for attempt in range(3):
@@ -136,9 +184,10 @@ class LLMEnsemble:
                         "prompt": full_prompt,
                         "stream": False,
                         "options": {
-                            "temperature": 0.8,
-                            "num_predict": max_tokens,
-                            "repeat_penalty": 1.1,
+                            "temperature": temp,
+                            "top_p": tp,
+                            "num_predict": np_,
+                            "repeat_penalty": rp,
                         },
                     },
                     timeout=300,
@@ -154,7 +203,8 @@ class LLMEnsemble:
                         self.consecutive_failures = 0
                         logger.debug(
                             f"Ollama: {eval_count} tok in {eval_dur:.1f}s "
-                            f"({tok_per_s:.1f} tok/s)"
+                            f"({tok_per_s:.1f} tok/s) "
+                            f"[temp={temp:.2f}, top_p={tp:.2f}]"
                         )
                         return text, "ollama-gpu"
                 # Empty response
@@ -178,7 +228,7 @@ class LLMEnsemble:
         return None, "none"
 
     def get_stats(self) -> Dict:
-        """Return usage statistics."""
+        """Return usage statistics including DEHB-learned params."""
         return {
             "ollama-gpu": {
                 "tier": "flash",
@@ -186,5 +236,11 @@ class LLMEnsemble:
                 "tokens": self.total_tokens,
                 "failures": self.failures,
                 "consecutive_failures": self.consecutive_failures,
+                "dehb_params": {
+                    "temperature": self.default_temperature,
+                    "top_p": self.default_top_p,
+                    "num_predict": self.default_num_predict,
+                    "repeat_penalty": self.default_repeat_penalty,
+                },
             }
         }

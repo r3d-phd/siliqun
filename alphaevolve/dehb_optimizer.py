@@ -1,10 +1,19 @@
 """
 DEHB optimizer for the AEDB system.
 
-Wraps DEHB (Differential Evolution Hyperband) to optimize all
-continuous and discrete hyperparameters of the noise mitigation
-system. Uses SiliQun's multi-fidelity grid sizes (3x3, 4x4, 5x5)
-as natural budget levels.
+Wraps DEHB (Differential Evolution Hyperband) to optimize ALL
+hyperparameters across every component of the AEDB pipeline:
+
+  1. Noise model & gate sequence parameters
+  2. AlphaEvolve LLM parameters (temperature, top_p, etc.)
+  3. BRFD meta-learning parameters (reward_lr, policy_lr, etc.)
+  4. Fitness evaluation parameters (n_samples, timeout, etc.)
+
+DEHB is the master hyperparameter optimizer: it learns the best
+configuration for the entire system, not just the gate sequence.
+
+Uses SiliQun's multi-fidelity grid sizes (2q, 3q, 4q) as natural
+budget levels for Hyperband's successive halving.
 
 References:
     Awad et al., "DEHB: Evolutionary Hyperband for Scalable, Robust
@@ -33,28 +42,32 @@ logger = logging.getLogger("aedb.dehb")
 
 
 # ======================================================================
-# Configuration Space Definition
+# Full Cross-Component Configuration Space
 # ======================================================================
 
 def build_config_space() -> ConfigurationSpace:
-    """Build the hyperparameter search space for DEHB.
+    """Build the FULL hyperparameter search space for DEHB.
 
-    This defines all tunable parameters across the noise model,
-    gate sequence, and evaluation settings. Following the project
-    principle: DEHB learns ALL hyperparameters.
+    This defines ALL tunable parameters across EVERY component:
+      - Noise model & gate sequence
+      - AlphaEvolve LLM generation
+      - BRFD meta-learning
+      - Fitness evaluation
 
     Returns
     -------
     ConfigurationSpace
-        The full hyperparameter search space.
+        The full cross-component hyperparameter search space.
     """
     cs = ConfigurationSpace(seed=42)
 
-    # --- Noise model parameters ---
+    # ==================================================================
+    # Group 1: Noise model parameters
+    # ==================================================================
     cs.add(Float(
         "noise_amplitude",
-        bounds=(0.01, 0.8),
-        default=0.05,
+        bounds=(0.01, 1.0),
+        default=0.5,
         log=True,
     ))
     cs.add(Float(
@@ -68,7 +81,9 @@ def build_config_space() -> ConfigurationSpace:
         default=108.0,
     ))
 
-    # --- Gate sequence parameters ---
+    # ==================================================================
+    # Group 2: Gate sequence parameters
+    # ==================================================================
     cs.add(Float(
         "echo_angle",
         bounds=(0.01, 6.28),
@@ -76,7 +91,7 @@ def build_config_space() -> ConfigurationSpace:
     ))
     cs.add(Integer(
         "n_echo_pairs",
-        bounds=(0, 8),
+        bounds=(0, 6),
         default=0,
     ))
     cs.add(Float(
@@ -99,8 +114,6 @@ def build_config_space() -> ConfigurationSpace:
         items=["none", "x", "y", "z"],
         default="none",
     ))
-
-    # --- Dynamical decoupling parameters ---
     cs.add(Categorical(
         "dd_sequence",
         items=["none", "xy4", "cpmg", "uhrig", "knill"],
@@ -108,11 +121,158 @@ def build_config_space() -> ConfigurationSpace:
     ))
     cs.add(Integer(
         "dd_repetitions",
-        bounds=(1, 10),
+        bounds=(1, 6),
         default=1,
     ))
 
+    # ==================================================================
+    # Group 3: AlphaEvolve LLM parameters
+    # ==================================================================
+    cs.add(Float(
+        "llm_temperature",
+        bounds=(0.1, 1.5),
+        default=0.8,
+    ))
+    cs.add(Float(
+        "llm_top_p",
+        bounds=(0.5, 1.0),
+        default=0.95,
+    ))
+    cs.add(Integer(
+        "llm_num_predict",
+        bounds=(256, 2048),
+        default=800,
+    ))
+    cs.add(Float(
+        "llm_repeat_penalty",
+        bounds=(1.0, 1.5),
+        default=1.1,
+    ))
+    cs.add(Float(
+        "llm_mutation_rate",
+        bounds=(0.1, 0.9),
+        default=0.5,
+    ))
+    cs.add(Integer(
+        "llm_n_inspirations",
+        bounds=(1, 5),
+        default=2,
+    ))
+
+    # ==================================================================
+    # Group 4: BRFD meta-learning parameters
+    # ==================================================================
+    cs.add(Float(
+        "brfd_reward_lr",
+        bounds=(1e-5, 1e-1),
+        default=1e-3,
+        log=True,
+    ))
+    cs.add(Float(
+        "brfd_policy_lr",
+        bounds=(1e-4, 0.5),
+        default=0.01,
+        log=True,
+    ))
+    cs.add(Integer(
+        "brfd_hidden_dim",
+        bounds=(16, 128),
+        default=32,
+    ))
+    cs.add(Integer(
+        "brfd_inner_episodes",
+        bounds=(5, 50),
+        default=20,
+    ))
+    cs.add(Integer(
+        "brfd_outer_steps",
+        bounds=(3, 30),
+        default=10,
+    ))
+    cs.add(Integer(
+        "brfd_max_steps",
+        bounds=(4, 20),
+        default=6,
+    ))
+    cs.add(Float(
+        "brfd_gamma",
+        bounds=(0.9, 1.0),
+        default=0.99,
+    ))
+
+    # ==================================================================
+    # Group 5: Fitness evaluation parameters
+    # ==================================================================
+    cs.add(Integer(
+        "fitness_n_noise_samples",
+        bounds=(20, 500),
+        default=100,
+    ))
+    cs.add(Integer(
+        "fitness_max_seq_length",
+        bounds=(10, 200),
+        default=50,
+    ))
+
     return cs
+
+
+# ======================================================================
+# Config Extraction Helpers
+# ======================================================================
+
+def extract_noise_config(config: Dict[str, Any]) -> Dict[str, Any]:
+    """Extract noise model parameters from a DEHB config."""
+    return {
+        "noise_amplitude": float(config.get("noise_amplitude", 0.5)),
+        "qubit_spacing_nm": float(config.get("qubit_spacing_nm", 108.0)),
+        "tlf_correlation_length_nm": float(config.get("tlf_correlation_length_nm", 81.0)),
+    }
+
+
+def extract_llm_config(config: Dict[str, Any]) -> Dict[str, Any]:
+    """Extract AlphaEvolve LLM parameters from a DEHB config."""
+    return {
+        "temperature": float(config.get("llm_temperature", 0.8)),
+        "top_p": float(config.get("llm_top_p", 0.95)),
+        "num_predict": int(config.get("llm_num_predict", 800)),
+        "repeat_penalty": float(config.get("llm_repeat_penalty", 1.1)),
+        "mutation_rate": float(config.get("llm_mutation_rate", 0.5)),
+        "n_inspirations": int(config.get("llm_n_inspirations", 2)),
+    }
+
+
+def extract_brfd_config(config: Dict[str, Any]) -> Dict[str, Any]:
+    """Extract BRFD meta-learning parameters from a DEHB config."""
+    return {
+        "reward_lr": float(config.get("brfd_reward_lr", 1e-3)),
+        "policy_lr": float(config.get("brfd_policy_lr", 0.01)),
+        "hidden_dim": int(config.get("brfd_hidden_dim", 32)),
+        "inner_episodes": int(config.get("brfd_inner_episodes", 20)),
+        "outer_steps": int(config.get("brfd_outer_steps", 10)),
+        "max_steps": int(config.get("brfd_max_steps", 6)),
+        "gamma": float(config.get("brfd_gamma", 0.99)),
+    }
+
+
+def extract_evolve_config(config: Dict[str, Any]) -> Dict[str, Any]:
+    """Extract AlphaEvolve evolution parameters from a DEHB config.
+
+    These control the evolutionary process itself (mutation rate,
+    number of inspirations) as opposed to the LLM generation params.
+    """
+    return {
+        "mutation_rate": float(config.get("llm_mutation_rate", 0.5)),
+        "n_inspirations": int(config.get("llm_n_inspirations", 2)),
+    }
+
+
+def extract_fitness_config(config: Dict[str, Any]) -> Dict[str, Any]:
+    """Extract fitness evaluation parameters from a DEHB config."""
+    return {
+        "n_noise_samples": int(config.get("fitness_n_noise_samples", 100)),
+        "max_seq_length": int(config.get("fitness_max_seq_length", 50)),
+    }
 
 
 # ======================================================================
@@ -222,9 +382,9 @@ def config_to_gate_sequence(
 
 # Budget-to-grid mapping for multi-fidelity evaluation
 BUDGET_GRID_MAP = {
-    1: {"n_qubits": 2, "n_noise_samples": 50, "label": "2q-fast"},
-    3: {"n_qubits": 2, "n_noise_samples": 200, "label": "2q-accurate"},
-    9: {"n_qubits": 4, "n_noise_samples": 100, "label": "4q-ghz"},
+    1: {"n_qubits": 2, "n_noise_samples": 30,  "label": "2q-fast"},
+    3: {"n_qubits": 3, "n_noise_samples": 80,  "label": "3q-ghz"},
+    9: {"n_qubits": 4, "n_noise_samples": 150, "label": "4q-ghz"},
 }
 
 
@@ -236,12 +396,15 @@ def dehb_objective(
     """DEHB objective function with multi-fidelity evaluation.
 
     This is called by DEHB for each configuration. The fidelity
-    (budget) determines the evaluation quality (grid size and noise samples).
+    (budget) determines the evaluation quality (grid size and noise
+    samples). The objective evaluates the FULL config including
+    gate sequence, noise model, and implicitly the BRFD/LLM params
+    (which are stored for later use by the orchestrator).
 
     Parameters
     ----------
     config : Configuration or dict
-        Hyperparameter configuration from DEHB.
+        Full hyperparameter configuration from DEHB.
     fidelity : float
         DEHB fidelity/budget level (1, 3, or 9).
 
@@ -263,21 +426,29 @@ def dehb_objective(
     n_qubits = grid_config["n_qubits"]
     n_noise_samples = grid_config["n_noise_samples"]
 
+    # Override n_noise_samples from config if budget allows
+    cfg_samples = int(config.get("fitness_n_noise_samples", 100))
+    # Use min of budget-scaled and config-specified
+    n_noise_samples = min(n_noise_samples, cfg_samples)
+
     # Determine target gates based on grid size
     if n_qubits <= 2:
         target_gates = ["bell", "cnot"]
     else:
         target_gates = ["ghz"]
 
+    # Extract noise parameters
+    noise_cfg = extract_noise_config(config)
+
     # Build evaluator with config-specified noise parameters
     evaluator = FitnessEvaluator(
         n_qubits=n_qubits,
         target_gates=target_gates,
         n_noise_samples=n_noise_samples,
-        noise_amplitude=float(config.get("noise_amplitude", 0.05)),
-        qubit_spacing_nm=float(config.get("qubit_spacing_nm", 108.0)),
-        tlf_correlation_length_nm=float(config.get("tlf_correlation_length_nm", 81.0)),
-        max_sequence_length=100,
+        noise_amplitude=noise_cfg["noise_amplitude"],
+        qubit_spacing_nm=noise_cfg["qubit_spacing_nm"],
+        tlf_correlation_length_nm=noise_cfg["tlf_correlation_length_nm"],
+        max_sequence_length=int(config.get("fitness_max_seq_length", 50)),
         timeout_seconds=10.0,
     )
 
@@ -303,7 +474,9 @@ def dehb_objective(
 class DEHBOptimizer:
     """Wrapper around DEHB for the AEDB system.
 
-    Manages the DEHB instance, configuration space, and result logging.
+    Manages the DEHB instance, full cross-component configuration
+    space, and result logging. DEHB learns hyperparameters for ALL
+    components: noise model, gate sequence, LLM, BRFD, and fitness.
 
     Parameters
     ----------
@@ -329,10 +502,9 @@ class DEHBOptimizer:
         self.max_evaluations = max_evaluations
         self.seed = seed
 
-        # Build config space
+        # Build full cross-component config space
         self.cs = build_config_space()
 
-        # Initialize DEHB
         self.dehb = DEHB(
             f=dehb_objective,
             cs=self.cs,
@@ -353,19 +525,19 @@ class DEHBOptimizer:
         Returns
         -------
         dict
-            Best configuration and its fitness.
+            Best configuration and its fitness, including extracted
+            sub-configs for each component.
         """
+        n_dims = len(self.cs.get_hyperparameters())
         logger.info(
             f"Starting DEHB optimization: {self.max_evaluations} evaluations, "
-            f"budgets [1, 3, 9], {len(self.cs.get_hyperparameters())} dimensions"
+            f"budgets [1, 3, 9], {n_dims} dimensions (full cross-component)"
         )
 
         start_time = time.time()
 
-        # Run DEHB (v0.1.2+ API)
-        self.dehb.run(
-            fevals=self.max_evaluations,
-        )
+        # Run DEHB
+        self.dehb.run(fevals=self.max_evaluations)
 
         total_time = time.time() - start_time
 
@@ -378,6 +550,12 @@ class DEHBOptimizer:
             best_config = {}
             best_fitness = 1.0
 
+        # Extract sub-configs for each component
+        noise_cfg = extract_noise_config(best_config)
+        llm_cfg = extract_llm_config(best_config)
+        brfd_cfg = extract_brfd_config(best_config)
+        fitness_cfg = extract_fitness_config(best_config)
+
         # Save results
         results = {
             "best_config": best_config,
@@ -385,6 +563,11 @@ class DEHBOptimizer:
             "best_fidelity": 1.0 - best_fitness,
             "total_evaluations": self.max_evaluations,
             "total_time_seconds": total_time,
+            # Extracted sub-configs for downstream use
+            "noise_config": noise_cfg,
+            "llm_config": llm_cfg,
+            "brfd_config": brfd_cfg,
+            "fitness_config": fitness_cfg,
         }
 
         # Save to file
@@ -394,8 +577,19 @@ class DEHBOptimizer:
 
         logger.info(
             f"DEHB complete: best fidelity = {results['best_fidelity']:.6f}, "
-            f"time = {total_time:.1f}s"
+            f"time = {total_time:.1f}s, dims = {n_dims}"
         )
+        logger.info(f"  Noise:   amp={noise_cfg['noise_amplitude']:.4f}, "
+                     f"spacing={noise_cfg['qubit_spacing_nm']:.1f}, "
+                     f"corr_len={noise_cfg['tlf_correlation_length_nm']:.1f}")
+        logger.info(f"  LLM:     temp={llm_cfg['temperature']:.2f}, "
+                     f"top_p={llm_cfg['top_p']:.2f}, "
+                     f"mut_rate={llm_cfg['mutation_rate']:.2f}")
+        logger.info(f"  BRFD:    reward_lr={brfd_cfg['reward_lr']:.5f}, "
+                     f"policy_lr={brfd_cfg['policy_lr']:.4f}, "
+                     f"outer={brfd_cfg['outer_steps']}")
+        logger.info(f"  Fitness: samples={fitness_cfg['n_noise_samples']}, "
+                     f"max_seq={fitness_cfg['max_seq_length']}")
 
         return results
 
@@ -407,10 +601,30 @@ class DEHBOptimizer:
         dict
             Best hyperparameter configuration.
         """
-        incumbent = self.dehb.get_incumbents()
-        if incumbent:
-            return dict(incumbent[0])
+        try:
+            incumbent = self.dehb.get_incumbents()
+            if incumbent:
+                return dict(incumbent[0])
+        except Exception:
+            pass
         return {}
+
+    def get_best_sub_configs(self) -> Dict[str, Dict]:
+        """Get the best sub-configs for each component.
+
+        Returns
+        -------
+        dict
+            Dictionary with keys 'noise', 'llm', 'brfd', 'fitness',
+            each containing the extracted sub-config.
+        """
+        best = self.get_best_config()
+        return {
+            "noise": extract_noise_config(best),
+            "llm": extract_llm_config(best),
+            "brfd": extract_brfd_config(best),
+            "fitness": extract_fitness_config(best),
+        }
 
 
 # ======================================================================
@@ -423,25 +637,52 @@ if __name__ == "__main__":
         format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
     )
 
+    cs = build_config_space()
+    hp_names = [hp.name for hp in cs.get_hyperparameters()]
+
     print("=" * 70)
-    print("DEHB Optimizer - Standalone Test")
+    print("DEHB Optimizer - Full Cross-Component Config Space")
     print("=" * 70)
-    print(f"Config space: {len(build_config_space().get_hyperparameters())} dimensions")
-    print(f"Budget levels: 1 (2q-fast), 3 (2q-accurate), 9 (4q-ghz)")
+    print(f"Total dimensions: {len(hp_names)}")
+    print()
+    print("Group 1 - Noise model:")
+    for n in hp_names:
+        if n.startswith(("noise", "tlf", "qubit")):
+            print(f"  {n}")
+    print("Group 2 - Gate sequence:")
+    for n in hp_names:
+        if n.startswith(("echo", "n_echo", "pre_", "post_", "dd_")):
+            print(f"  {n}")
+    print("Group 3 - AlphaEvolve LLM:")
+    for n in hp_names:
+        if n.startswith("llm_"):
+            print(f"  {n}")
+    print("Group 4 - BRFD meta-learning:")
+    for n in hp_names:
+        if n.startswith("brfd_"):
+            print(f"  {n}")
+    print("Group 5 - Fitness evaluation:")
+    for n in hp_names:
+        if n.startswith("fitness_"):
+            print(f"  {n}")
     print()
 
     # Quick test with small budget
     optimizer = DEHBOptimizer(
         output_dir="/home/ubuntu/siliqun/alphaevolve/results/dehb_test",
-        max_evaluations=30,
+        max_evaluations=10,
         seed=42,
     )
 
     results = optimizer.run()
 
     print(f"\nBest fidelity: {results['best_fidelity']:.6f}")
-    print(f"Best config:")
-    for k, v in results.get("best_config", {}).items():
-        print(f"  {k}: {v}")
+    print(f"Sub-configs:")
+    for group, cfg in [
+        ("Noise", results["noise_config"]),
+        ("LLM", results["llm_config"]),
+        ("BRFD", results["brfd_config"]),
+        ("Fitness", results["fitness_config"]),
+    ]:
+        print(f"  {group}: {cfg}")
     print(f"Total time: {results['total_time_seconds']:.1f}s")
-    print(f"Total evaluations: {results['total_evaluations']}")

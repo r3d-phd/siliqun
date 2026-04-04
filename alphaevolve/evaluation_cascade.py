@@ -15,6 +15,10 @@ Multi-metric scoring:
   - gate_efficiency  : penalty for excessive gate count
   - correlation_use  : bonus for using correlation parameters
   - combined         : weighted combination (primary score)
+
+Supports both 2-qubit (Bell/CNOT) and 3+-qubit (GHZ) targets.
+DEHB-learned parameters (noise_amplitude, n_samples, etc.) can be
+injected at construction time.
 """
 
 from __future__ import annotations
@@ -34,13 +38,27 @@ logger = logging.getLogger("aedb.eval_cascade")
 # Code compilation and validation
 # ──────────────────────────────────────────────────────────────────────
 
-def compile_strategy(code: str) -> Optional[Callable]:
+def compile_strategy(
+    code: str,
+    n_qubits: int = 3,
+    target_gates: Optional[List[str]] = None,
+) -> Optional[Callable]:
     """Compile a strategy string into a callable function.
 
     Validates that the function:
       - has the correct signature
       - returns a list of Gate objects
-      - does not crash on a simple test call
+      - does not crash on the specified target gates
+
+    Parameters
+    ----------
+    code : str
+        Python source code containing generate_gate_sequence.
+    n_qubits : int
+        Number of qubits for smoke tests.
+    target_gates : list of str, optional
+        Gates to smoke-test. Defaults to ["ghz"] for n_qubits>=3,
+        ["bell"] for n_qubits==2.
     """
     if not code or "def generate_gate_sequence" not in code:
         return None
@@ -55,19 +73,24 @@ def compile_strategy(code: str) -> Optional[Callable]:
     if fn is None or not callable(fn):
         return None
 
-    # Quick smoke test
-    try:
-        result = fn("bell", 2, 0.5, 108.0, 81.0)
-        if not isinstance(result, list):
-            return None
-        if len(result) == 0:
-            return None
-        for g in result:
-            if not hasattr(g, "gate_type"):
+    # Determine which gates to smoke-test
+    if target_gates is None:
+        target_gates = ["ghz"] if n_qubits >= 3 else ["bell"]
+
+    # Smoke test each target gate
+    for gate_name in target_gates:
+        test_nq = n_qubits if gate_name == "ghz" else 2
+        try:
+            result = fn(gate_name, test_nq, 0.5, 108.0, 81.0)
+            if not isinstance(result, list) or len(result) == 0:
                 return None
-        return fn
-    except Exception:
-        return None
+            for g in result:
+                if not hasattr(g, "gate_type"):
+                    return None
+        except Exception:
+            return None
+
+    return fn
 
 
 def extract_function(response: str) -> Optional[str]:
@@ -135,18 +158,25 @@ def extract_function(response: str) -> Optional[str]:
 class EvaluationCascade:
     """Multi-stage evaluation with early pruning and multi-metric scoring.
 
+    Supports both 2-qubit (Bell/CNOT) and 3+-qubit (GHZ) targets.
+    DEHB-learned parameters can be injected at construction time.
+
     Parameters
     ----------
     n_qubits : int
-        Number of qubits.
+        Number of qubits (2 for Bell, 3+ for GHZ).
     target_gates : list of str
-        Target gates to evaluate.
+        Target gates to evaluate (e.g., ["bell","cnot"] or ["ghz"]).
     noise_amplitude : float
-        Noise strength per gate.
+        Noise strength per gate (DEHB-learned).
     qubit_spacing_nm : float
-        Physical qubit spacing.
+        Physical qubit spacing (DEHB-learned).
     tlf_correlation_length_nm : float
-        TLF noise correlation length.
+        TLF noise correlation length (DEHB-learned).
+    max_sequence_length : int
+        Maximum allowed gate sequence length (DEHB-learned).
+    stage_samples : list of int
+        Number of noise samples per stage [quick, medium, full].
     stage_thresholds : list of float
         Minimum score to advance to the next stage.
     seed : int
@@ -155,32 +185,42 @@ class EvaluationCascade:
 
     def __init__(
         self,
-        n_qubits: int = 2,
+        n_qubits: int = 3,
         target_gates: List[str] = None,
         noise_amplitude: float = 0.5,
         qubit_spacing_nm: float = 108.0,
         tlf_correlation_length_nm: float = 81.0,
+        max_sequence_length: int = 50,
+        stage_samples: List[int] = None,
         stage_thresholds: List[float] = None,
         seed: int = 42,
     ):
+        # Default targets based on qubit count
         if target_gates is None:
-            target_gates = ["bell", "cnot"]
+            if n_qubits <= 2:
+                target_gates = ["bell", "cnot"]
+            else:
+                target_gates = ["ghz"]
+
+        if stage_samples is None:
+            stage_samples = [10, 50, 200]
         if stage_thresholds is None:
-            stage_thresholds = [0.0, 0.3, 0.5]  # stages 1-3 thresholds
+            stage_thresholds = [0.0, 0.2, 0.4]
 
         self.n_qubits = n_qubits
         self.target_gates = target_gates
         self.noise_amplitude = noise_amplitude
         self.qubit_spacing_nm = qubit_spacing_nm
         self.tlf_correlation_length_nm = tlf_correlation_length_nm
+        self.max_sequence_length = max_sequence_length
         self.stage_thresholds = stage_thresholds
         self.seed = seed
 
         # Create evaluators for each stage with increasing sample counts
         self._stage_configs = [
-            {"n_samples": 10, "label": "quick"},
-            {"n_samples": 50, "label": "medium"},
-            {"n_samples": 200, "label": "full"},
+            {"n_samples": stage_samples[0], "label": "quick"},
+            {"n_samples": stage_samples[1], "label": "medium"},
+            {"n_samples": stage_samples[2], "label": "full"},
         ]
 
         self._evaluators = {}
@@ -192,8 +232,8 @@ class EvaluationCascade:
                 noise_amplitude=noise_amplitude,
                 qubit_spacing_nm=qubit_spacing_nm,
                 tlf_correlation_length_nm=tlf_correlation_length_nm,
-                max_sequence_length=50,
-                timeout_seconds=5.0,
+                max_sequence_length=max_sequence_length,
+                timeout_seconds=10.0,
             )
 
         # Statistics
@@ -222,14 +262,14 @@ class EvaluationCascade:
         self.stats["total"] += 1
         t0 = time.time()
 
-        # Stage 0: Compile check
-        fn = compile_strategy(code)
+        # Stage 0: Compile check (includes GHZ smoke test)
+        fn = compile_strategy(code, n_qubits=self.n_qubits, target_gates=self.target_gates)
         if fn is None:
             logger.debug("Cascade: failed compile")
             return None, None
         self.stats["passed_compile"] += 1
 
-        # Stage 1: Quick fidelity (10 samples)
+        # Stage 1: Quick fidelity
         try:
             quick_result = self._evaluators["quick"].evaluate(fn, seed=self.seed)
             if not quick_result["valid"]:
@@ -244,7 +284,7 @@ class EvaluationCascade:
             return None, None
         self.stats["passed_quick"] += 1
 
-        # Stage 2: Medium fidelity (50 samples)
+        # Stage 2: Medium fidelity
         try:
             med_result = self._evaluators["medium"].evaluate(fn, seed=self.seed)
             med_score = med_result["fitness"] if med_result["valid"] else 0.0
@@ -256,7 +296,7 @@ class EvaluationCascade:
             return None, None
         self.stats["passed_medium"] += 1
 
-        # Stage 3: Full fidelity (200 samples)
+        # Stage 3: Full fidelity
         try:
             full_result = self._evaluators["full"].evaluate(fn, seed=self.seed)
             full_score = full_result["fitness"] if full_result["valid"] else 0.0
@@ -295,24 +335,36 @@ class EvaluationCascade:
         """
         base_fidelity = full_result.get("fitness", 0.0)
 
-        # Gate efficiency: penalise strategies with many gates
+        # Gate efficiency: test with the primary target
+        primary_target = self.target_gates[0]
         try:
-            gates = fn("bell", self.n_qubits, 0.5, 108.0, 81.0)
+            gates = fn(primary_target, self.n_qubits, 0.5, 108.0, 81.0)
             gate_count = len(gates) if gates else 0
         except Exception:
             gate_count = 50
 
-        # Optimal is 2 gates (H + CNOT for bell), penalise above 4
-        if gate_count <= 4:
-            gate_efficiency = 1.0
-        elif gate_count <= 8:
-            gate_efficiency = 1.0 - 0.05 * (gate_count - 4)
+        # Optimal gate count depends on target:
+        #   bell: 2 (H + CNOT)
+        #   cnot: 1
+        #   ghz(n): n (H + (n-1) CNOTs)
+        if primary_target == "ghz":
+            optimal = self.n_qubits  # H + (n-1) CNOTs
+        elif primary_target == "bell":
+            optimal = 2
         else:
-            gate_efficiency = max(0.5, 1.0 - 0.1 * (gate_count - 4))
+            optimal = 1
+
+        # Penalise above 2x optimal
+        if gate_count <= optimal * 2:
+            gate_efficiency = 1.0
+        elif gate_count <= optimal * 4:
+            excess = gate_count - optimal * 2
+            gate_efficiency = 1.0 - 0.05 * excess
+        else:
+            gate_efficiency = max(0.3, 1.0 - 0.1 * (gate_count - optimal * 2))
 
         # Correlation usage: bonus for adaptive strategies
         corr_keywords = ["nn_correlation", "corr_length_nm", "qubit_spacing_nm"]
-        # Check if the function actually uses these parameters (not just receives them)
         code_body = code.split(":", 1)[-1] if ":" in code else code
         corr_usage = sum(1 for kw in corr_keywords if kw in code_body) / len(corr_keywords)
 
@@ -342,7 +394,7 @@ class EvaluationCascade:
 
     def evaluate_quick(self, code: str) -> float:
         """Quick single-score evaluation (for DEHB/BRFD integration)."""
-        fn = compile_strategy(code)
+        fn = compile_strategy(code, n_qubits=self.n_qubits, target_gates=self.target_gates)
         if fn is None:
             return 0.0
         try:

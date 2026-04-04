@@ -6,6 +6,10 @@ in SiliQun's noisy quantum environment. Uses meta-gradient descent
 to learn a reward network R_omega that maximizes the true task
 objective (gate fidelity) when used to train a DRL policy.
 
+ALL hyperparameters (reward_lr, policy_lr, hidden_dim, inner_episodes,
+outer_steps, max_steps, gamma) are learned by DEHB and passed in
+via the config dictionary.
+
 References:
     Zheng et al., "Bilevel Reward Function Discovery", Nature
     Communications, 2026.
@@ -45,19 +49,18 @@ class RewardNetwork:
 
     The observation vector contains:
         [fidelity, leakage, entropy, step_fraction,
-         zz_correlator_0, zz_correlator_1, ...,
-         noise_realization_0, noise_realization_1, ...]
+         zz_correlator, noise_0, noise_1, gate_entropy]
 
     Parameters
     ----------
     obs_dim : int
         Dimension of the observation vector.
     hidden_dim : int
-        Width of hidden layers.
+        Width of hidden layers (learned by DEHB).
     n_hidden : int
         Number of hidden layers.
     lr : float
-        Learning rate for meta-gradient updates.
+        Learning rate for meta-gradient updates (learned by DEHB).
     """
 
     def __init__(
@@ -96,26 +99,13 @@ class RewardNetwork:
         self.biases.append(np.zeros(1))
 
     def forward(self, obs: np.ndarray) -> Tuple[float, List[np.ndarray]]:
-        """Forward pass with cached activations for backprop.
-
-        Parameters
-        ----------
-        obs : np.ndarray
-            Observation vector of shape (obs_dim,).
-
-        Returns
-        -------
-        float
-            Scalar reward value.
-        list of np.ndarray
-            Cached activations for each layer.
-        """
+        """Forward pass with cached activations for backprop."""
         activations = [obs]
         x = obs
 
         for i in range(len(self.weights) - 1):
             x = x @ self.weights[i] + self.biases[i]
-            x = np.tanh(x)  # Smooth activation for gradient flow
+            x = np.tanh(x)
             activations.append(x)
 
         # Output layer (no activation, raw scalar)
@@ -129,20 +119,7 @@ class RewardNetwork:
         activations: List[np.ndarray],
         grad_output: float,
     ) -> Tuple[List[np.ndarray], List[np.ndarray]]:
-        """Backward pass to compute gradients.
-
-        Parameters
-        ----------
-        activations : list of np.ndarray
-            Cached activations from forward pass.
-        grad_output : float
-            Gradient of loss w.r.t. reward output.
-
-        Returns
-        -------
-        tuple of (list of np.ndarray, list of np.ndarray)
-            Gradients for weights and biases.
-        """
+        """Backward pass to compute gradients."""
         n_layers = len(self.weights)
         grad_w = [np.zeros_like(w) for w in self.weights]
         grad_b = [np.zeros_like(b) for b in self.biases]
@@ -165,15 +142,7 @@ class RewardNetwork:
         grad_w: List[np.ndarray],
         grad_b: List[np.ndarray],
     ):
-        """Apply gradient update (gradient ascent for reward maximization).
-
-        Parameters
-        ----------
-        grad_w : list of np.ndarray
-            Weight gradients.
-        grad_b : list of np.ndarray
-            Bias gradients.
-        """
+        """Apply gradient update (gradient ascent for reward maximization)."""
         for i in range(len(self.weights)):
             self.weights[i] += self.lr * np.clip(grad_w[i], -1.0, 1.0)
             self.biases[i] += self.lr * np.clip(grad_b[i], -1.0, 1.0)
@@ -199,17 +168,16 @@ class SimplePolicy:
     """Tabular softmax policy for gate selection.
 
     For the PoC, we use a simple policy that selects from a fixed
-    set of gate actions at each step. This is sufficient to demonstrate
-    BRFD's reward shaping capability.
+    set of gate actions at each step.
 
     Parameters
     ----------
     n_actions : int
         Number of available gate actions.
     n_steps : int
-        Maximum number of steps per episode.
+        Maximum number of steps per episode (learned by DEHB).
     lr : float
-        Policy learning rate.
+        Policy learning rate (learned by DEHB).
     """
 
     def __init__(
@@ -227,8 +195,9 @@ class SimplePolicy:
 
     def get_action_probs(self, step: int) -> np.ndarray:
         """Get action probabilities for a given step."""
+        if step >= self.n_steps:
+            step = self.n_steps - 1
         logits = self.logits[step]
-        # Softmax with temperature
         exp_logits = np.exp(logits - np.max(logits))
         return exp_logits / exp_logits.sum()
 
@@ -243,20 +212,11 @@ class SimplePolicy:
         actions: List[int],
         advantages: List[float],
     ):
-        """REINFORCE update with advantages.
-
-        Parameters
-        ----------
-        steps : list of int
-            Step indices.
-        actions : list of int
-            Actions taken.
-        advantages : list of float
-            Advantage values (from BRFD reward or true reward).
-        """
+        """REINFORCE update with advantages."""
         for step, action, adv in zip(steps, actions, advantages):
+            if step >= self.n_steps:
+                step = self.n_steps - 1
             probs = self.get_action_probs(step)
-            # Policy gradient: increase probability of good actions
             grad = -probs.copy()
             grad[action] += 1.0
             self.logits[step] += self.lr * adv * grad
@@ -267,24 +227,45 @@ class SimplePolicy:
 
 
 # ======================================================================
-# Gate Action Space
+# Gate Action Space (extended for 3+ qubits)
 # ======================================================================
 
-# Available gate actions for the DRL agent
-GATE_ACTIONS = [
-    lambda q: Gate("h", [q]),
-    lambda q: Gate("rx", [q], {"theta": np.pi / 2}),
-    lambda q: Gate("ry", [q], {"theta": np.pi / 2}),
-    lambda q: Gate("rz", [q], {"theta": np.pi / 2}),
-    lambda q: Gate("rx", [q], {"theta": np.pi}),
-    lambda q: Gate("identity", [0]),
-]
+def build_gate_actions(n_qubits: int):
+    """Build the gate action space for a given number of qubits.
 
-TWO_QUBIT_ACTIONS = [
-    lambda: Gate("cnot", [0, 1]),
-    lambda: Gate("cz", [0, 1]),
-    lambda: Gate("swap", [0, 1]),
-]
+    For n_qubits >= 3, we include multi-qubit CNOT gates for
+    GHZ state preparation.
+
+    Parameters
+    ----------
+    n_qubits : int
+        Number of qubits.
+
+    Returns
+    -------
+    tuple of (single_qubit_actions, two_qubit_actions)
+    """
+    single_qubit_actions = [
+        lambda q: Gate("h", [q]),
+        lambda q: Gate("rx", [q], {"theta": np.pi / 2}),
+        lambda q: Gate("ry", [q], {"theta": np.pi / 2}),
+        lambda q: Gate("rz", [q], {"theta": np.pi / 2}),
+        lambda q: Gate("rx", [q], {"theta": np.pi}),
+        lambda q: Gate("identity", [0]),
+    ]
+
+    two_qubit_actions = []
+    for i in range(n_qubits - 1):
+        # Capture i in closure
+        two_qubit_actions.append(
+            (lambda ci: lambda: Gate("cnot", [ci, ci + 1]))(i)
+        )
+    # Add CZ and SWAP for first pair
+    two_qubit_actions.append(lambda: Gate("cz", [0, 1]))
+    if n_qubits >= 2:
+        two_qubit_actions.append(lambda: Gate("swap", [0, 1]))
+
+    return single_qubit_actions, two_qubit_actions
 
 
 # ======================================================================
@@ -298,8 +279,9 @@ class BRFDTrainer:
     - Inner loop: Train DRL policy under learned reward R_omega
     - Outer loop: Update R_omega via meta-gradient to maximize true fidelity
 
-    The meta-gradient uses the advantage product:
-        grad_omega = E[A^R(s,a) * A^pi(s,a) * grad_omega R(s)]
+    ALL hyperparameters can be provided via a DEHB config dict,
+    or set individually. When a dehb_config is provided, it overrides
+    the individual parameters.
 
     Parameters
     ----------
@@ -309,25 +291,35 @@ class BRFDTrainer:
         Target operation.
     noise_amplitude : float
         Noise strength.
+    qubit_spacing_nm : float
+        Qubit spacing.
+    tlf_correlation_length_nm : float
+        TLF correlation length.
     reward_hidden_dim : int
-        Reward network hidden dimension.
+        Reward network hidden dimension (DEHB: brfd_hidden_dim).
     reward_lr : float
-        Reward network learning rate.
+        Reward network learning rate (DEHB: brfd_reward_lr).
     policy_lr : float
-        Policy learning rate.
+        Policy learning rate (DEHB: brfd_policy_lr).
     n_inner_episodes : int
-        Episodes per inner loop iteration.
+        Episodes per inner loop (DEHB: brfd_inner_episodes).
     n_outer_steps : int
-        Number of outer loop (meta) updates.
+        Outer loop meta-updates (DEHB: brfd_outer_steps).
     max_steps : int
-        Maximum steps per episode.
+        Max steps per episode (DEHB: brfd_max_steps).
+    gamma : float
+        Discount factor (DEHB: brfd_gamma).
+    dehb_config : dict or None
+        If provided, overrides individual parameters with DEHB-learned values.
+    seed : int
+        Random seed.
     """
 
     def __init__(
         self,
         n_qubits: int = 2,
         target_gate: str = "bell",
-        noise_amplitude: float = 0.3,
+        noise_amplitude: float = 0.5,
         qubit_spacing_nm: float = 108.0,
         tlf_correlation_length_nm: float = 81.0,
         reward_hidden_dim: int = 32,
@@ -336,8 +328,26 @@ class BRFDTrainer:
         n_inner_episodes: int = 20,
         n_outer_steps: int = 10,
         max_steps: int = 6,
+        gamma: float = 0.99,
+        dehb_config: Optional[Dict] = None,
         seed: int = 42,
     ):
+        # Apply DEHB config overrides if provided
+        if dehb_config is not None:
+            reward_hidden_dim = int(dehb_config.get("brfd_hidden_dim", reward_hidden_dim))
+            reward_lr = float(dehb_config.get("brfd_reward_lr", reward_lr))
+            policy_lr = float(dehb_config.get("brfd_policy_lr", policy_lr))
+            n_inner_episodes = int(dehb_config.get("brfd_inner_episodes", n_inner_episodes))
+            n_outer_steps = int(dehb_config.get("brfd_outer_steps", n_outer_steps))
+            max_steps = int(dehb_config.get("brfd_max_steps", max_steps))
+            gamma = float(dehb_config.get("brfd_gamma", gamma))
+            # Also override noise params if present
+            noise_amplitude = float(dehb_config.get("noise_amplitude", noise_amplitude))
+            qubit_spacing_nm = float(dehb_config.get("qubit_spacing_nm", qubit_spacing_nm))
+            tlf_correlation_length_nm = float(dehb_config.get(
+                "tlf_correlation_length_nm", tlf_correlation_length_nm
+            ))
+
         self.n_qubits = n_qubits
         self.target_gate = target_gate
         self.noise_amplitude = noise_amplitude
@@ -346,14 +356,15 @@ class BRFDTrainer:
         self.max_steps = max_steps
         self.n_inner_episodes = n_inner_episodes
         self.n_outer_steps = n_outer_steps
+        self.gamma = gamma
         self.seed = seed
         self.rng = np.random.RandomState(seed)
 
         # Observation: [fidelity, leakage_proxy, step_frac, n_gates,
-        #               zz_01, noise_0, noise_1, gate_type_onehot_avg]
+        #               zz_01, noise_0, noise_1, entropy]
         self.obs_dim = 8
 
-        # Reward network
+        # Reward network (DEHB-parameterized)
         self.reward_net = RewardNetwork(
             obs_dim=self.obs_dim,
             hidden_dim=reward_hidden_dim,
@@ -361,8 +372,11 @@ class BRFDTrainer:
             lr=reward_lr,
         )
 
-        # DRL policy
-        n_actions = len(GATE_ACTIONS) + len(TWO_QUBIT_ACTIONS)
+        # Build gate action space for n_qubits
+        self.single_actions, self.two_qubit_actions = build_gate_actions(n_qubits)
+        n_actions = len(self.single_actions) + len(self.two_qubit_actions)
+
+        # DRL policy (DEHB-parameterized)
         self.policy = SimplePolicy(
             n_actions=n_actions,
             n_steps=max_steps,
@@ -389,28 +403,11 @@ class BRFDTrainer:
         n_gates: int,
         noise_angles: np.ndarray,
     ) -> np.ndarray:
-        """Build observation vector for the reward network.
-
-        Parameters
-        ----------
-        state : np.ndarray
-            Current quantum state.
-        step : int
-            Current step index.
-        n_gates : int
-            Number of gates applied so far.
-        noise_angles : np.ndarray
-            Latest noise realization.
-
-        Returns
-        -------
-        np.ndarray
-            Observation vector of shape (obs_dim,).
-        """
+        """Build observation vector for the reward network."""
         # Current fidelity
         fid = state_fidelity(state, self.target_state)
 
-        # Leakage proxy (deviation from unit norm, should be ~0)
+        # Leakage proxy
         leakage = 1.0 - float(np.abs(np.vdot(state, state)))
 
         # Step fraction
@@ -421,7 +418,6 @@ class BRFDTrainer:
 
         # ZZ correlator between qubits 0 and 1
         if self.n_qubits >= 2:
-            # <Z0 Z1> = sum_i (-1)^(b0_i + b1_i) |c_i|^2
             dim = 2 ** self.n_qubits
             zz = 0.0
             for i in range(dim):
@@ -449,29 +445,17 @@ class BRFDTrainer:
 
     def _action_to_gate(self, action: int) -> Gate:
         """Convert action index to a Gate object."""
-        n_single = len(GATE_ACTIONS)
+        n_single = len(self.single_actions)
         if action < n_single:
-            return GATE_ACTIONS[action](0)
+            return self.single_actions[action](0)
         else:
-            return TWO_QUBIT_ACTIONS[action - n_single]()
+            return self.two_qubit_actions[action - n_single]()
 
     def _run_episode(
         self,
         use_learned_reward: bool = True,
     ) -> Dict:
-        """Run a single episode and collect trajectory data.
-
-        Parameters
-        ----------
-        use_learned_reward : bool
-            If True, use the learned reward network.
-            If False, use the true fidelity as reward.
-
-        Returns
-        -------
-        dict
-            Episode data including observations, actions, rewards, etc.
-        """
+        """Run a single episode and collect trajectory data."""
         state = self.initial_state.copy()
         trajectory = {
             "observations": [],
@@ -507,7 +491,7 @@ class BRFDTrainer:
 
             # Compute rewards
             current_fidelity = state_fidelity(state, self.target_state)
-            true_reward = current_fidelity - prev_fidelity  # Incremental
+            true_reward = current_fidelity - prev_fidelity
 
             # Learned reward
             learned_reward, activations = self.reward_net.forward(obs)
@@ -531,22 +515,15 @@ class BRFDTrainer:
     def _compute_advantages(
         self,
         rewards: List[float],
-        gamma: float = 0.99,
+        gamma: Optional[float] = None,
     ) -> List[float]:
         """Compute GAE-like advantages from rewards.
 
-        Parameters
-        ----------
-        rewards : list of float
-            Per-step rewards.
-        gamma : float
-            Discount factor.
-
-        Returns
-        -------
-        list of float
-            Advantage values.
+        Uses the DEHB-learned gamma discount factor.
         """
+        if gamma is None:
+            gamma = self.gamma
+
         n = len(rewards)
         advantages = [0.0] * n
         running = 0.0
@@ -572,7 +549,14 @@ class BRFDTrainer:
         """
         logger.info(
             f"BRFD training: {self.n_outer_steps} outer steps, "
-            f"{self.n_inner_episodes} inner episodes each"
+            f"{self.n_inner_episodes} inner episodes, "
+            f"gamma={self.gamma:.3f}, "
+            f"reward_lr={self.reward_net.lr:.5f}, "
+            f"policy_lr={self.policy.lr:.4f}, "
+            f"hidden={self.reward_net.hidden_dim}, "
+            f"max_steps={self.max_steps}, "
+            f"n_qubits={self.n_qubits}, "
+            f"target={self.target_gate}"
         )
 
         best_fidelity = 0.0
@@ -608,7 +592,6 @@ class BRFDTrainer:
             mean_fidelity = np.mean(episode_fidelities)
 
             # ---- Outer loop: meta-gradient for reward network ----
-            # Collect trajectories with current policy for meta-gradient
             meta_grad_w = [np.zeros_like(w) for w in self.reward_net.weights]
             meta_grad_b = [np.zeros_like(b) for b in self.reward_net.biases]
             n_meta_samples = 5
@@ -616,12 +599,12 @@ class BRFDTrainer:
             for _ in range(n_meta_samples):
                 traj = self._run_episode(use_learned_reward=True)
 
-                # Compute true advantages (from true fidelity signal)
+                # True advantages (from true fidelity signal)
                 true_advantages = self._compute_advantages(
                     traj["true_rewards"]
                 )
 
-                # Compute learned advantages
+                # Learned advantages
                 learned_advantages = self._compute_advantages(
                     traj["learned_rewards"]
                 )
@@ -671,6 +654,18 @@ class BRFDTrainer:
             "final_mean_fidelity": float(mean_fidelity),
             "reward_params": best_reward_params,
             "history": history,
+            "config": {
+                "n_qubits": self.n_qubits,
+                "target_gate": self.target_gate,
+                "noise_amplitude": self.noise_amplitude,
+                "reward_hidden_dim": self.reward_net.hidden_dim,
+                "reward_lr": self.reward_net.lr,
+                "policy_lr": self.policy.lr,
+                "n_inner_episodes": self.n_inner_episodes,
+                "n_outer_steps": self.n_outer_steps,
+                "max_steps": self.max_steps,
+                "gamma": self.gamma,
+            },
         }
 
         return results
@@ -690,46 +685,46 @@ if __name__ == "__main__":
     print("BRFD Reward Function Discovery - Standalone Test")
     print("=" * 70)
 
-    # Test with moderate noise (0.3 rad/gate)
-    trainer = BRFDTrainer(
+    # Test with DEHB-style config
+    dehb_config = {
+        "brfd_hidden_dim": 48,
+        "brfd_reward_lr": 5e-4,
+        "brfd_policy_lr": 0.02,
+        "brfd_inner_episodes": 15,
+        "brfd_outer_steps": 8,
+        "brfd_max_steps": 8,
+        "brfd_gamma": 0.97,
+        "noise_amplitude": 0.5,
+    }
+
+    # Test 2-qubit Bell state
+    print("\n--- 2-qubit Bell state ---")
+    trainer_2q = BRFDTrainer(
         n_qubits=2,
         target_gate="bell",
-        noise_amplitude=0.3,
-        reward_hidden_dim=32,
-        reward_lr=1e-3,
-        policy_lr=0.01,
-        n_inner_episodes=20,
-        n_outer_steps=10,
-        max_steps=6,
+        dehb_config=dehb_config,
         seed=42,
     )
 
     start = time.time()
-    results = trainer.train()
+    results_2q = trainer_2q.train()
     elapsed = time.time() - start
-
-    print(f"\nBest fidelity: {results['best_fidelity']:.4f}")
-    print(f"Final mean fidelity: {results['final_mean_fidelity']:.4f}")
+    print(f"Best fidelity: {results_2q['best_fidelity']:.4f}")
     print(f"Time: {elapsed:.1f}s")
-    print(f"\nFidelity trajectory:")
-    for step, fid in zip(
-        results["history"]["outer_step"],
-        results["history"]["mean_fidelity"],
-    ):
-        bar = "#" * int(fid * 40)
-        print(f"  Step {step + 1:2d}: {fid:.4f} |{bar}")
 
-    # Compare with hand-designed reward (just fidelity)
-    print("\n--- Baseline (hand-designed reward) ---")
-    baseline_trainer = BRFDTrainer(
-        n_qubits=2,
-        target_gate="bell",
-        noise_amplitude=0.3,
-        n_inner_episodes=20,
-        n_outer_steps=1,  # No meta-learning
-        max_steps=6,
+    # Test 3-qubit GHZ state
+    print("\n--- 3-qubit GHZ state ---")
+    trainer_3q = BRFDTrainer(
+        n_qubits=3,
+        target_gate="ghz",
+        dehb_config=dehb_config,
         seed=42,
     )
-    baseline_results = baseline_trainer.train()
-    print(f"Baseline fidelity: {baseline_results['best_fidelity']:.4f}")
-    print(f"BRFD improvement: {results['best_fidelity'] - baseline_results['best_fidelity']:.4f}")
+
+    start = time.time()
+    results_3q = trainer_3q.train()
+    elapsed = time.time() - start
+    print(f"Best fidelity: {results_3q['best_fidelity']:.4f}")
+    print(f"Time: {elapsed:.1f}s")
+
+    print(f"\nConfig used: {results_3q['config']}")

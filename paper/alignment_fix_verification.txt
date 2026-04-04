@@ -1,0 +1,11 @@
+Alignment fix verification:
+
+Page 5: "The Simulation Core (MPS and SV)." - now starts flush left with \noindent, consistent with body text. Looks clean.
+
+Page 6: "Physics Layer." - starts flush left with \noindent after the DFS figure. Clean and consistent.
+
+Page 7: "Environment Layer." - now starts flush left with \noindent after the device profiles table. The bold heading aligns perfectly with the left margin of the subsequent text lines. The alignment issue from the user's screenshot is FIXED.
+
+All four layer headings (Backend, Simulation Core, Physics, Environment) are now consistently formatted with \noindent, creating uniform left-aligned bold paragraph headings throughout the Architectural Layers subsection.
+
+Also note: Figure 2 on page 6 still says "25 logical qubits" in the image itself - this is an AI-generated image that wasn't regenerated when we changed terminology. However, the caption correctly says "encoded qubits". This is a minor inconsistency in the figure image.

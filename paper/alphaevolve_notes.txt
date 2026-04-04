@@ -1,0 +1,70 @@
+AlphaEvolve Paper Analysis (arXiv:2602.16928v2)
+================================================
+
+Title: "Discovering Multiagent Learning Algorithms with Large Language Models"
+Authors: Zun Li, John Schultz, Daniel Hennes, Marc Lanctot (Google DeepMind)
+Date: Feb 21, 2026
+
+CORE IDEA:
+- AlphaEvolve is an evolutionary coding agent powered by LLMs
+- It automatically discovers NEW multiagent learning algorithms
+- Uses LLMs as "intelligent genetic operators" for semantic code evolution
+- NOT hyperparameter tuning - it discovers entirely new algorithmic logic
+
+HOW IT WORKS (Section 3.1):
+1. Population Initialization: Start with standard algorithm implementations (e.g., CFR code)
+2. LLM-Driven Mutation: Select parent algorithm A, feed source code to LLM (e.g., Gemini)
+   with prompt "Modify the following code to improve fitness (reduce exploitability)"
+   LLM generates new candidate variant A' with several lines of code changes
+3. Automated Evaluation: Execute candidate on proxy games, compute fitness scores
+4. Evolutionary Selection: Valid candidates added to population P
+   Loop repeats, discovering complex non-intuitive optimizations
+
+KEY RESULTS:
+- Discovered VAD-CFR: Volatility-Adaptive Discounted CFR with non-intuitive mechanisms
+  (volatility-sensitive discounting, consistency-enforced optimism, hard warm-start)
+  Outperforms state-of-the-art DCFR and PCFR+
+- Discovered SHOR-PSRO: Smoothed Hybrid Optimistic Regret PSRO
+  Hybrid meta-solver blending Optimistic Regret Matching with temperature-controlled distribution
+  Superior empirical convergence vs standard static meta-solvers
+
+WHAT MAKES IT POWERFUL:
+- Supports multi-objective optimization (multiple fitness metrics)
+- Discovers NON-INTUITIVE solutions humans wouldn't design
+- Search space is Python code itself (not just parameters)
+- Automated evaluation loop = no human in the loop
+
+APPLICATION TO OUR PROBLEM:
+The key insight is that AlphaEvolve treats algorithm source code as the "genome" and
+uses LLMs to perform semantically meaningful mutations. The fitness function is the
+automated evaluator. This means we could:
+1. Define a "noise mitigation strategy" as evolvable Python code
+2. Use SiliQun as the automated evaluator (fitness = gate fidelity under correlated noise)
+3. Let AlphaEvolve discover novel noise mitigation strategies
+
+ADDITIONAL DETAILS (pages 6-10):
+
+SEARCH SPACE DESIGN:
+- AlphaEvolve evolves Python CLASS METHODS, not just parameters
+- For CFR: evolves RegretAccumulator, PolicyFromRegretAccumulator, PolicyAccumulator
+- For PSRO: evolves TrainMetaStrategySolver and EvalMetaStrategySolver
+- The code skeleton is designed so standard algorithms are special cases
+- LLM (Gemini 2.5 Pro) generates code mutations
+
+FITNESS EVALUATION:
+- Multi-objective: fitness = negative exploitability across multiple proxy games
+- Training set: 4 games (3-player Kuhn Poker, 2-player Leduc Poker, 4-card Goofspiel, 5-sided Liars Dice)
+- Test set: 4 larger games (4-player Kuhn, 3-player Leduc, 5-card Goofspiel, 6-sided Liars Dice)
+- Full sweep: 11 games total
+
+KEY RESULT: VAD-CFR matches or surpasses SOTA in 10 of 11 games
+
+DISCOVERED NON-INTUITIVE MECHANISMS:
+1. Volatility-Adaptive Discounting: EWMA of regret magnitudes -> dynamic alpha/beta
+2. Asymmetric Instantaneous Boosting: positive regrets boosted by 1.1x
+3. Hard Warm-Start: no policy averaging until iteration 500
+4. Regret-Magnitude Weighting: policies weighted by regret magnitude, not just time
+5. Non-Linear Probability Scaling: proj_R ** 1.5 instead of linear
+6. Negative Cap: max(-20.0, new_R) instead of max(0, new_R)
+
+These are EXACTLY the kind of non-intuitive solutions we'd want for noise mitigation!

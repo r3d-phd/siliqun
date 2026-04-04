@@ -1,0 +1,100 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\emailauthor{ralshehri0468@stu.kau.edu.sa}{Raad Alshehri\corref {cor1}}
+\Newlabel{cor1}{1}
+\Newlabel{label1}{a}
+\citation{zwanenburg2013silicon,muhonen2014storing}
+\citation{yoneda2018quantum}
+\citation{noiri2022fast,xue2022quantum,mills2022two,madzik2022precision}
+\citation{sledge2019}
+\newlabel{metadata}{{a}{2}{Metadata}{section*.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Code metadata (mandatory)}}{2}{table.1}\protected@file@percent }
+\newlabel{codeMetadata}{{1}{2}{Code metadata (mandatory)}{table.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Motivation and significance}{2}{section.1}\protected@file@percent }
+\newlabel{sec:motivation}{{1}{2}{Motivation and significance}{section.1}{}}
+\citation{connors2022charge}
+\citation{rojasarias2026correlated}
+\citation{niu2019universal,fosel2018reinforcement}
+\citation{schollwock2011density}
+\citation{hiraoka2026chemqulacs}
+\citation{gymnasium2023}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Software description}{4}{section.2}\protected@file@percent }
+\newlabel{sec:description}{{2}{4}{Software description}{section.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The SiliQun software architecture. This modular framework is divided into four distinct layers: a flexible numerical backend (supporting NumPy and CuPy), a dual simulation core featuring both an MPS engine for 1D chains and a GPU state vector engine for 2D grids, a dedicated physics engine containing calibrated device profiles and noise models, and an uppermost layer that provides a Gymnasium-compatible RL environment.}}{4}{figure.1}\protected@file@percent }
+\newlabel{fig:architecture}{{1}{4}{The SiliQun software architecture. This modular framework is divided into four distinct layers: a flexible numerical backend (supporting NumPy and CuPy), a dual simulation core featuring both an MPS engine for 1D chains and a GPU state vector engine for 2D grids, a dedicated physics engine containing calibrated device profiles and noise models, and an uppermost layer that provides a Gymnasium-compatible RL environment}{figure.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Architectural layers}{4}{subsection.2.1}\protected@file@percent }
+\citation{itensor}
+\citation{quimb}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces SiliQun public API: key modules and their primary classes and functions.}}{5}{table.2}\protected@file@percent }
+\newlabel{tab:api}{{2}{5}{SiliQun public API: key modules and their primary classes and functions}{table.2}{}}
+\citation{muhonen2014storing}
+\citation{yoneda2018quantum}
+\citation{geyer2022twoqubit}
+\citation{rojasarias2026correlated}
+\citation{rojasarias2026correlated}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces DFS encoded subspace projection. Each encoded qubit is defined by three physical electron spins. The projection $\Pi $ maps the physical Hilbert space ($2^{3n}$ dimensions) to the encoded subspace ($2^n$ dimensions), reducing the memory requirement for 25 encoded qubits from an intractable $2^{75}$ to a manageable $2^{25}$ (512~MB).}}{6}{figure.2}\protected@file@percent }
+\newlabel{fig:dfs}{{2}{6}{DFS encoded subspace projection. Each encoded qubit is defined by three physical electron spins. The projection $\Pi $ maps the physical Hilbert space ($2^{3n}$ dimensions) to the encoded subspace ($2^n$ dimensions), reducing the memory requirement for 25 encoded qubits from an intractable $2^{75}$ to a manageable $2^{25}$ (512~MB)}{figure.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Multi-scale SLEDGE grid architectures supported by SiliQun. Each node represents a DFS-encoded qubit defined by three physical electron spins (shown as three dots within each circle); lines indicate inter-qubit exchange couplings. Panels (a)--(c) show configurations benchmarked on a single A100 GPU: the 3$\times $3 grid (9 encoded qubits, 27 spins), the 4$\times $4 grid (16 encoded qubits, 48 spins), and the 5$\times $5 grid (25 encoded qubits, 75 spins; 430~ms per 100-gate episode). Panel (d) shows the 6$\times $6 grid (36 encoded qubits, 108 spins), which exceeds A100 memory but is projected to be feasible on an H200 GPU ($\sim $110~s per episode). The scaling analysis in Section~\ref {sec:limitations} provides further detail on memory and timing constraints.}}{7}{figure.3}\protected@file@percent }
+\newlabel{fig:sledge}{{3}{7}{Multi-scale SLEDGE grid architectures supported by SiliQun. Each node represents a DFS-encoded qubit defined by three physical electron spins (shown as three dots within each circle); lines indicate inter-qubit exchange couplings. Panels (a)--(c) show configurations benchmarked on a single A100 GPU: the 3$\times $3 grid (9 encoded qubits, 27 spins), the 4$\times $4 grid (16 encoded qubits, 48 spins), and the 5$\times $5 grid (25 encoded qubits, 75 spins; 430~ms per 100-gate episode). Panel (d) shows the 6$\times $6 grid (36 encoded qubits, 108 spins), which exceeds A100 memory but is projected to be feasible on an H200 GPU ($\sim $110~s per episode). The scaling analysis in Section~\ref {sec:limitations} provides further detail on memory and timing constraints}{figure.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Built-in silicon spin qubit device profiles in SiliQun.}}{7}{table.3}\protected@file@percent }
+\newlabel{tab:devices}{{3}{7}{Built-in silicon spin qubit device profiles in SiliQun}{table.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Software functionalities}{8}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Installation}{8}{subsection.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Illustrative examples}{8}{section.3}\protected@file@percent }
+\newlabel{sec:examples}{{3}{8}{Illustrative examples}{section.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Example 1: DRL training with learning curves}{8}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Example 2: DFS projection validation}{9}{subsection.3.2}\protected@file@percent }
+\newlabel{sec:validation}{{3.2}{9}{Example 2: DFS projection validation}{subsection.3.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces DRL training results using SiliQun. (a) Episode reward and (b) gate fidelity learning curves for a REINFORCE agent trained on 2-qubit Bell state (blue) and 4-qubit GHZ state (red) preparation tasks over 150 episodes. The 2-qubit agent converges to fidelities above 0.99, while the 4-qubit task illustrates the increased difficulty of larger entangled states.}}{10}{figure.4}\protected@file@percent }
+\newlabel{fig:learning}{{4}{10}{DRL training results using SiliQun. (a) Episode reward and (b) gate fidelity learning curves for a REINFORCE agent trained on 2-qubit Bell state (blue) and 4-qubit GHZ state (red) preparation tasks over 150 episodes. The 2-qubit agent converges to fidelities above 0.99, while the 4-qubit task illustrates the increased difficulty of larger entangled states}{figure.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Example 3: GPU performance benchmarks}{10}{subsection.3.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces DFS projection validation for a 2-encoded-qubit system (6 physical spins). (a) Perturbative regime: inter-qubit leakage scales as $O(\theta ^2)$ (measured exponent = 2.00), remaining below 2\% for coupling angles under $17^\circ $. (b) Full coupling range: projected fidelity and DFS population as a function of inter-qubit coupling angle. The dashed line marks the perturbative regime boundary. (c) Encoded SWAP verification: the transfer matrix confirms exact encoded state permutation with zero leakage.}}{11}{figure.5}\protected@file@percent }
+\newlabel{fig:validation}{{5}{11}{DFS projection validation for a 2-encoded-qubit system (6 physical spins). (a) Perturbative regime: inter-qubit leakage scales as $O(\theta ^2)$ (measured exponent = 2.00), remaining below 2\% for coupling angles under $17^\circ $. (b) Full coupling range: projected fidelity and DFS population as a function of inter-qubit coupling angle. The dashed line marks the perturbative regime boundary. (c) Encoded SWAP verification: the transfer matrix confirms exact encoded state permutation with zero leakage}{figure.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces SiliQun GPU benchmark results on NVIDIA A100 (GPU times) vs.\ single-threaded NumPy on AMD EPYC 7763 (CPU times). The crossover point where GPU outperforms CPU occurs at approximately 16 qubits due to kernel launch overhead.}}{11}{table.4}\protected@file@percent }
+\newlabel{tab:gpu_bench}{{4}{11}{SiliQun GPU benchmark results on NVIDIA A100 (GPU times) vs.\ single-threaded NumPy on AMD EPYC 7763 (CPU times). The crossover point where GPU outperforms CPU occurs at approximately 16 qubits due to kernel launch overhead}{table.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces GPU acceleration benchmarks for the 25-qubit SiliQun SV engine on an NVIDIA A100. Left: execution time comparison between CPU (NumPy) and GPU (CuPy) backends on a logarithmic scale. Right: GPU speedup factors for each operation. The GPU delivers 30--93$\times $ speedups, reducing a 100-gate DRL episode from 32~seconds to 430~milliseconds.}}{12}{figure.6}\protected@file@percent }
+\newlabel{fig:benchmark}{{6}{12}{GPU acceleration benchmarks for the 25-qubit SiliQun SV engine on an NVIDIA A100. Left: execution time comparison between CPU (NumPy) and GPU (CuPy) backends on a logarithmic scale. Right: GPU speedup factors for each operation. The GPU delivers 30--93$\times $ speedups, reducing a 100-gate DRL episode from 32~seconds to 430~milliseconds}{figure.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Computational complexity}{12}{subsection.3.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Computational complexity of the SiliQun SV engine. $n$ denotes the number of encoded qubits. Memory and operation costs refer to the encoded subspace; the full physical space would require $2^{3n}$.}}{12}{table.5}\protected@file@percent }
+\newlabel{tab:complexity}{{5}{12}{Computational complexity of the SiliQun SV engine. $n$ denotes the number of encoded qubits. Memory and operation costs refer to the encoded subspace; the full physical space would require $2^{3n}$}{table.5}{}}
+\citation{qiskit}
+\citation{qutip}
+\citation{cuquantum}
+\citation{pennylane}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Impact}{13}{section.4}\protected@file@percent }
+\newlabel{sec:impact}{{4}{13}{Impact}{section.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Comparison of SiliQun with existing quantum simulation frameworks. Checkmarks indicate native support; ``Manual'' indicates the feature is achievable but requires significant user effort.}}{13}{table.6}\protected@file@percent }
+\newlabel{tab:comparison}{{6}{13}{Comparison of SiliQun with existing quantum simulation frameworks. Checkmarks indicate native support; ``Manual'' indicates the feature is achievable but requires significant user effort}{table.6}{}}
+\citation{hiraoka2026chemqulacs}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Limitations and future work}{14}{section.5}\protected@file@percent }
+\newlabel{sec:limitations}{{5}{14}{Limitations and future work}{section.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces SiliQun scaling analysis. (a) Memory requirements for the DFS-projected state vector (blue) versus the full physical Hilbert space (red) as a function of encoded qubit count. Horizontal lines indicate GPU memory capacities; markers show the maximum encoded qubit count for each configuration. The red star marks the Osaka/Fixstars result (41 qubits, full space, 1,024 GPUs). (b) Estimated wall time for $10^6$ DRL training episodes on a single A100 GPU, with feasibility zones indicated. The practical DRL training limit on a single GPU is approximately 27--28 encoded qubits.}}{15}{figure.7}\protected@file@percent }
+\newlabel{fig:scaling}{{7}{15}{SiliQun scaling analysis. (a) Memory requirements for the DFS-projected state vector (blue) versus the full physical Hilbert space (red) as a function of encoded qubit count. Horizontal lines indicate GPU memory capacities; markers show the maximum encoded qubit count for each configuration. The red star marks the Osaka/Fixstars result (41 qubits, full space, 1,024 GPUs). (b) Estimated wall time for $10^6$ DRL training episodes on a single A100 GPU, with feasibility zones indicated. The practical DRL training limit on a single GPU is approximately 27--28 encoded qubits}{figure.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusions}{15}{section.6}\protected@file@percent }
+\newlabel{sec:conclusions}{{6}{15}{Conclusions}{section.6}{}}
+\bibcite{zwanenburg2013silicon}{{1}{}{{}}{{}}}
+\bibcite{muhonen2014storing}{{2}{}{{}}{{}}}
+\bibcite{yoneda2018quantum}{{3}{}{{}}{{}}}
+\bibcite{noiri2022fast}{{4}{}{{}}{{}}}
+\bibcite{xue2022quantum}{{5}{}{{}}{{}}}
+\bibcite{mills2022two}{{6}{}{{}}{{}}}
+\bibcite{madzik2022precision}{{7}{}{{}}{{}}}
+\bibcite{sledge2019}{{8}{}{{}}{{}}}
+\bibcite{connors2022charge}{{9}{}{{}}{{}}}
+\bibcite{niu2019universal}{{10}{}{{}}{{}}}
+\bibcite{fosel2018reinforcement}{{11}{}{{}}{{}}}
+\bibcite{schollwock2011density}{{12}{}{{}}{{}}}
+\bibcite{gymnasium2023}{{13}{}{{}}{{}}}
+\bibcite{geyer2022twoqubit}{{14}{}{{}}{{}}}
+\bibcite{qiskit}{{15}{}{{}}{{}}}
+\bibcite{qutip}{{16}{}{{}}{{}}}
+\bibcite{cuquantum}{{17}{}{{}}{{}}}
+\bibcite{itensor}{{18}{}{{}}{{}}}
+\bibcite{quimb}{{19}{}{{}}{{}}}
+\bibcite{pennylane}{{20}{}{{}}{{}}}
+\bibcite{hiraoka2026chemqulacs}{{21}{}{{}}{{}}}
+\bibcite{rojasarias2026correlated}{{22}{}{{}}{{}}}
+\providecommand\NAT@force@numbers{}\NAT@force@numbers
+\gdef \@abspage@last{18}

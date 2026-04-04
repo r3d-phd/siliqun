@@ -1,0 +1,7 @@
+Metadata table issues observed on page 2:
+1. Table is left-aligned, not centered on the page
+2. Column widths could be better balanced - the Nr. column is narrow but the description and metadata columns are equal width (6.5cm each)
+3. URLs are breaking awkwardly and showing in cyan/highlighted boxes
+4. The table doesn't use \centering
+5. No \resizebox to fit the full text width
+6. Should match the professional style of other tables in the paper (using booktabs with toprule/midrule/bottomrule)

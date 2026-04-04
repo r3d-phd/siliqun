@@ -1,0 +1,1 @@
+Fixed multi-scale figure: 5x5 now has green background (benchmarked). All three benchmarked panels (a,b,c) are green, and the projected panel (d) is yellow with dashed border. The timing text still slightly overlaps with badge text - need to increase vertical spacing. Otherwise the figure is publication-quality and clearly communicates the scaling story.

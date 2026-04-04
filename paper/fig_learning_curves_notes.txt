@@ -1,0 +1,7 @@
+Learning Curves Figure Notes:
+- Left panel: Reward Learning Curves - 2q (bell) in blue shows clear learning with rewards reaching 1.5+, 4q (ghz) in red stays flat around -0.4
+- Right panel: Fidelity Learning Curves - 2q (bell) reaches up to ~0.99 fidelity with upward trend, 4q (ghz) stays low around 0.05-0.1
+- 150 episodes shown
+- The 2q results clearly demonstrate learning capability
+- The 4q results show the challenge of larger systems (expected with simple REINFORCE, needs PPO)
+- This figure addresses DeepSeek Critical Issue #2: "No actual DRL training results shown"

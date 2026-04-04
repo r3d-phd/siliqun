@@ -1,0 +1,15 @@
+Pages 13-17 Review:
+
+Page 13: Expanded comparison table (Table 6) with PennyLane added, 7 features including "Perturbative Leakage Tracking" and "HPC Job Generation". Looks professional.
+
+Page 14: Limitations and future work section - discusses single-GPU limitation, leakage regime boundaries (17 degrees), MPS scope, and device profile extensibility. Conclusions updated to mention "exact intra-qubit dynamics and quantified inter-qubit leakage".
+
+Page 15: Code availability section with GitHub URL and version info. Acknowledgements thanking Aziz HPC and anonymous reviewers. References [1]-[5] look correct.
+
+Page 16: References [6]-[15] - Schaal et al. [8] now has full author list and correct citation info (Nature Electronics, 2(6), 236-242). All references properly formatted.
+
+Page 17: References [16]-[20] - new refs for QuTiP, cuQuantum, ITensor, quimb, PennyLane. All properly cited.
+
+Paper is 17 pages, 7 figures (including 2 new: learning curves + DFS validation), 6 tables (including 3 new: API, complexity, expanded comparison). Total 20 references.
+
+VERDICT: All 10 DeepSeek issues comprehensively addressed. Paper ready for push to GitHub.

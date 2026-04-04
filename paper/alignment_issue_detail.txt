@@ -1,0 +1,13 @@
+Detailed alignment issue from user screenshot:
+
+1. The "Environment Layer." paragraph has its first line indented (standard LaTeX paragraph indent), which pushes the bold heading "Environment Layer." to the right. But the subsequent lines of the same paragraph are NOT indented - they start at the left margin. This creates a visual mismatch where the first line with the bold heading is shifted right while the body text is flush left.
+
+2. The paragraph text appears to have a narrower right margin than the figure caption above it. The figure caption text extends further to the right edge. This makes the "Environment Layer" paragraph look like it's in a narrower column.
+
+3. Looking at the text: "The SiliQunEnv class implements the gymnasium.Env" - the monospace font (\texttt) text is wider than proportional text, which may be causing the right margin to appear uneven.
+
+The core issue: The "Environment Layer" paragraph follows a table float. After a float in elsarticle, the first paragraph gets indented. The indentation of the first line makes the bold heading appear offset from the left margin of the body text below.
+
+Fix options:
+A) Remove the indent after the table: add \noindent before \textbf{Environment Layer.}
+B) Better: make all the layer headings consistent by using a paragraph-level command like \paragraph{Environment Layer}

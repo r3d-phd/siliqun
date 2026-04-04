@@ -1,0 +1,11 @@
+Final Verification of v3 Minor Fixes:
+
+Page 1: Affiliation now reads "PhD Candidate, Faculty of Computing and Information Technology, King Abdulaziz University, Jeddah 21589, Saudi Arabia" - FIXED
+
+Page 8: Code snippet clearly shows PPO from stable_baselines3. Text below now reads: "The code snippet above demonstrates how to configure a SiliQun environment and connect it to a PPO agent from Stable-Baselines3 for large-scale training. To validate the environment's gradient signal, we additionally trained a lightweight REINFORCE agent for 150 episodes on two smaller tasks." - FIXED, no more PPO/REINFORCE confusion.
+
+Page 8: Paragraph indentation is now restored (parindent fix applied) - paragraphs have proper indentation.
+
+Page 9: Figure 4 caption and learning curves look correct.
+
+All three minor fixes successfully applied. Paper ready for final push.

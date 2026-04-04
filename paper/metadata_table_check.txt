@@ -1,0 +1,8 @@
+Metadata table check after adding \centering and \resizebox:
+- The table now spans the full text width (resized to \textwidth)
+- Nr. column is centered (changed from 'l' to 'c')
+- Table is centered on the page via \centering
+- The table looks properly centered and professional
+- URLs still show cyan highlighting (this is from hyperref package default - standard for Elsevier)
+- Caption "Table 1: Code metadata (mandatory)" is centered below
+- Overall improvement: table now fills the text width properly

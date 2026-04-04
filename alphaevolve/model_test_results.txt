@@ -1,0 +1,27 @@
+Model Test Results (2026-04-04)
+================================
+
+WORKING (confirmed OK):
+  nvidia/nemotron-3-super-120b-a12b:free  (120B, 262K ctx)
+  google/gemma-3-27b-it:free              (27B, 131K ctx)
+  google/gemma-3-12b-it:free              (12B, 32K ctx)
+  arcee-ai/trinity-large-preview:free     (131K ctx)
+
+RATE-LIMITED (429 - may work with longer delays):
+  qwen/qwen3-coder:free                   (262K ctx)
+  qwen/qwen3.6-plus:free                  (1M ctx)
+  qwen/qwen3-next-80b-a3b-instruct:free   (262K ctx)
+  meta-llama/llama-3.3-70b-instruct:free   (65K ctx)
+  nousresearch/hermes-3-llama-3.1-405b:free (131K ctx)
+
+BROKEN (404/error):
+  z-ai/glm-4.5-air:free                   (NoneType error)
+  nvidia/nemotron-3-nano-30b-a3b:free      (NoneType error)
+  minimax/minimax-m2.5:free                (404)
+  openai/gpt-oss-120b:free                 (404)
+  deepseek/deepseek-r1-0528:free           (404)
+  deepseek/deepseek-chat-v3-0324:free      (404)
+  stepfun/step-3.5-flash:free              (NoneType error)
+
+STRATEGY: Use the 4 working models as primary, with rate-limited models
+as fallback with 15-30s delays. Increase LLM_CALL_DELAY to 10s.

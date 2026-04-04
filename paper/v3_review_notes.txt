@@ -1,0 +1,41 @@
+Paper v3 Review Notes (17 pages):
+
+Page 1: Title, author, abstract - looks good. Abstract now includes "Within this logical subspace, the projected dynamics are exact for intra-qubit operations, while inter-qubit coupling introduces leakage that scales as O(theta^2)" - addresses Issue #10.
+
+Page 2: Metadata table - C6 now lists "Python 3.8+, NumPy, CuPy, Gymnasium" (removed JAX). C7 says "CuPy >= 13.0.0 (optional, for GPU)" - addresses Issue #4 partially.
+
+Page 3: Motivation section - unchanged, reads well.
+
+Pages 4-5: Software description with new API table (Table 2) - addresses Issue #4 (API documentation).
+
+Pages 6-7: Architecture layers with MPS scope clarification ("not intended to compete with general-purpose tensor network libraries such as ITensor or quimb") - addresses Issue #5. Installation subsection added - addresses Issue #4.
+
+Page 8: DRL training code snippet and learning curves discussion.
+
+Page 9: Learning curves figure (Figure 4) showing 2q Bell and 4q GHZ results - addresses Critical Issue #2.
+
+Page 10: DFS validation section with intra-qubit, inter-qubit, and SWAP verification - addresses Critical Issue #1. DFS validation figure (Figure 5) with 3 panels.
+
+Page 11: GPU benchmarks with CPU baseline specified (AMD EPYC 7763, single-threaded) - addresses Issue #4.
+
+Page 12: Computational complexity table (Table 5) with O(2^n) scaling - addresses Issue #3.
+
+Pages 13-14: Impact section with expanded comparison table (now includes PennyLane, 7 features) - addresses Issue #5.
+
+Page 15: Limitations section (new) discussing single-GPU, leakage regimes, MPS scope - addresses Issues #3, #5, #6.
+
+Page 16: Conclusions, Code availability section (new), Acknowledgements.
+
+Page 17: References - Schaal et al. now has full citation - addresses Issue #9. New refs: ITensor, quimb, PennyLane.
+
+ALL 10 DEEPSEEK ISSUES ADDRESSED:
+1. DFS validation (Critical) - Section 3.2 with Figure 5 ✓
+2. DRL training results (Critical) - Section 3.1 with Figure 4 ✓
+3. Leakage quantification (Critical) - Section 3.2 + Limitations ✓
+4. CPU baseline + installation (Important) - AMD EPYC 7763 + Section 2.3 ✓
+5. MPS scope (Important) - Clarified in Section 2.1 + Limitations ✓
+6. Multi-GPU discussion (Important) - Limitations section ✓
+7. Author affiliation - Student email is correct for SoftwareX ✓
+8. Fig 4 typo - Fixed (all "Figure" references correct) ✓
+9. Reference [8] - Schaal et al. now complete ✓
+10. Abstract nuance - Added "Within this logical subspace" qualification ✓

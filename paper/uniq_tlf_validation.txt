@@ -1,0 +1,32 @@
+Uniq Simulation Results - TLF Correlation Model Validation
+==========================================================
+
+1. GHZ state on 5-qubit linear chain: PERFECT (|00000> = 2060, |11111> = 2036)
+   - Confirms Uniq simulator handles the 5Q linear topology correctly
+   - No noise in this run (ideal simulation)
+
+2. TLF Noise Parameters (Rojas-Arias et al., 2026):
+   - TLF density: rho_TLF = 3e10 cm^-2
+   - Correlation length: l_c = 81 nm
+   - Qubit spacing: L_q = 108 nm
+   - N_c = l_c / L_q = 0.7500
+
+3. Pairwise Correlation Predictions using c(i,j) = exp(-|r_i - r_j| / l_c):
+   Q1-Q2 (108 nm): 0.2636 (nearest neighbor)
+   Q1-Q3 (216 nm): 0.0695 (next-nearest)
+   Q1-Q4 (324 nm): 0.0183 (3rd neighbor)
+   Q1-Q5 (432 nm): 0.0048 (4th neighbor)
+   Q2-Q3 (108 nm): 0.2636
+   Q2-Q4 (216 nm): 0.0695
+   Q2-Q5 (324 nm): 0.0183
+   Q3-Q4 (108 nm): 0.2636
+   Q3-Q5 (216 nm): 0.0695
+   Q4-Q5 (108 nm): 0.2636
+
+4. SLEDGE vs RIKEN comparison:
+   SLEDGE spacing: 80 nm -> NN correlation = exp(-80/81) = 0.3716
+   RIKEN spacing: 108 nm -> NN correlation = exp(-108/81) = 0.2636
+   SLEDGE has 1.41x stronger NN correlations (closer dots)
+
+5. Correlation matrix is positive definite (required for Cholesky decomposition)
+   - This confirms the TLF model produces valid correlation matrices for SiliQun

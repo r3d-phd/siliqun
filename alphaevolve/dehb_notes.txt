@@ -1,0 +1,49 @@
+DEHB: Evolutionary Hyberband for Scalable, Robust and Efficient HPO
+Authors: Awad, Mallik, Hutter (IJCAI-21)
+DOI: University of Freiburg / Bosch Center for AI
+
+CORE IDEA:
+- Combines Differential Evolution (DE) with Hyperband (HB) for hyperparameter optimization
+- DE provides evolutionary search (mutation, crossover, selection)
+- HB provides multi-fidelity evaluation (cheap approximations first, expensive later)
+- Result: up to 1000x faster than random search, 32x faster than BOHB
+
+KEY MECHANISM:
+1. Maintains subpopulations at each budget level (fidelity)
+2. Information flows TOP-DOWN: good configs from low budgets seed higher budgets
+3. DE mutation: v_i = x_r1 + F * (x_r2 - x_r3), F=0.5
+4. Crossover rate p=0.5 (binomial)
+5. Parent Pool: top performers from lower budget feed into higher budget evolution
+6. Global Population Pool: all subpopulations combined for edge cases
+
+MULTI-FIDELITY ASPECT:
+- Budget = computational cost proxy (e.g., training epochs, data fraction)
+- Low budget = cheap but noisy evaluation
+- High budget = expensive but accurate
+- Successive Halving: keep top 1/η fraction at each level
+- η typically = 3 (keep top 1/3)
+
+PARALLELIZATION:
+- SH brackets can be distributed across workers
+- DEHB Orchestrator keeps global population pool
+- Linear speedup with number of workers
+- Asynchronous, immediate DE updates
+
+RESULTS:
+- Toy functions: 33,440x speedup over RS (64-dim, 32 categorical + 32 continuous)
+- Neural networks: Similar to BOHB, 2x faster than RS
+- RL (PPO cartpole): 2x faster than RS, similar to BOHB
+- NAS benchmarks: Continues improving where BOHB stagnates
+- Handles mixed discrete/continuous dimensions well
+
+RELEVANCE TO OUR PROJECT:
+- DEHB should optimize ALL hyperparameters in the AlphaEvolve+BRFD system:
+  * LLM temperature, top_p for mutations
+  * Population size, tournament size
+  * Noise amplitude, correlation parameters
+  * DRL learning rate, gamma, entropy coefficient
+  * BRFD reward network architecture
+  * Gate sequence length limits
+- Multi-fidelity: Use small grids (3x3) as cheap proxy, 5x5 as expensive evaluation
+- Budget levels: 3x3 (1ms/eval) → 4x4 (5ms/eval) → 5x5 (430ms/eval)
+- This is a PERFECT multi-fidelity setup for DEHB

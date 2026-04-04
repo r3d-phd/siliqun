@@ -1,0 +1,65 @@
+BRFD Paper Notes (Nature Communications, 2025)
+"Discovery of the reward function for embodied reinforcement learning agents"
+Lu et al., Nature Communications 16:11064
+
+CORE IDEA:
+- Bilevel optimization framework for automatic reward function discovery
+- Lower level: Standard RL policy optimization (agent learns policy given reward)
+- Upper level: Reward function optimization via regret minimization
+- The reward function is LEARNED, not hand-designed
+
+KEY MECHANISM:
+- Optimal reward function defined via REGRET MINIMIZATION
+- Regret = difference between optimal policy performance and current policy performance
+- Reward meta-gradient: ∇_ω J^upper = E_{p_π,k} [∇_ω [A^R_θ(s,a) · A^π_θ(s,a)]]
+- A^R_θ = advantage under reward function R
+- A^π_θ = advantage under policy π
+- This gradient approximation enables simultaneous optimization of reward and policy
+
+BILEVEL STRUCTURE:
+- Lower level: Agent interacts with world, collects trajectories, optimizes policy
+- Upper level: Sample mini-batch from trajectory buffer, decompose into steps,
+  estimate policy distribution and advantage, compute reward meta-gradient
+- Alternating optimization: reward update → policy update → repeat
+
+RESULTS:
+- Sparse-reward tasks (CartPole, Acrobot, FourRoom, LunarLander): 
+  Outperforms LIRBO, Tomax, SASR baselines
+- Discovered reward functions are DENSE (not sparse), accelerating learning
+- High-dimensional tasks (Reacher, Hopper, HalfCheetah, Humanoid):
+  Works with complex continuous control
+- Real-world: Data center energy management, UAV control
+- Key finding: Discovered reward functions reveal intrinsic state-action relationships
+
+RELEVANCE TO OUR WORK:
+- SiliQun's DRL agent currently uses a hand-designed reward (fidelity-based)
+- BRFD could AUTOMATICALLY discover the optimal reward function for quantum gate control
+- The bilevel structure fits perfectly: 
+  Lower = DRL agent learning gate sequences in SiliQun
+  Upper = BRFD discovering what reward signal best guides the agent
+- Could discover non-obvious reward shaping (e.g., rewarding intermediate entanglement,
+  penalizing leakage in specific ways, weighting different observables)
+
+ADDITIONAL FINDINGS (pages 6-10):
+
+MATHEMATICAL FORMULATION:
+- Optimal reward R* minimizes regret: R* = argmin_R Regret(π_R*)
+- Regret = G^π* - G^π_R* (gap between true optimal and learned optimal under R)
+- Reward meta-gradient uses advantage product: A^R(s,a) * A^π(s,a)
+- This is a bilevel optimization: inner loop = policy, outer loop = reward
+- Works with both value-based (DQN) and policy-gradient (PPO, SAC) agents
+
+KEY RESULTS:
+- Sparse reward tasks: Outperforms LIRBO, Tomax, SASR across all 4 tasks
+- High-dim control: Works on Humanoid-v2 (17 joints, complex dynamics)
+- Real-world: Data center cooling (21-76% energy reduction over 1 year)
+- UAV tracking: Successfully discovers reward that captures waypoint attainment
+- Discovered rewards are DENSE and SMOOTH vs sparse originals
+- t-SNE visualization shows discovered rewards capture critical states
+
+IMPLEMENTATION DETAILS:
+- Reward function R_ω parameterized as neural network
+- Upper-level update every 2048 interactions
+- Agent trains for 10^6 steps total
+- 5 random seeds per experiment
+- Compatible with DQN, PPO, SAC, TD3 algorithms

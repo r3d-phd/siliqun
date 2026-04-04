@@ -14,6 +14,7 @@ MPO-based quantum channels:
 
 Calibrated to experimental data from:
     Weinstein et al., Nature 615, 817-822 (2023) - HRL SLEDGE device
+    Rojas-Arias et al., arXiv:2603.03051 (2026) - Correlated noise in Si/SiGe
 
 Each channel can be applied to an MPS (pure state) or MPO (density
 matrix) representation.
@@ -82,6 +83,23 @@ class NoiseParams:
     n_exchange_oscillations : float
         Number of coherent exchange oscillations N_osc before decay.
         Characterises the exchange gate quality factor.
+    tlf_density : float
+        Two-level fluctuator (TLF) areal density (cm^-2).
+        Experimentally measured as 3e10 cm^-2 in Si/SiGe devices.
+        Rojas-Arias et al., arXiv:2603.03051 (2026).
+    tlf_correlation_length : float
+        Charge noise spatial correlation length (nm).
+        Measured as l_c = 81 nm (exponential decay).
+        Rojas-Arias et al., arXiv:2603.03051 (2026).
+    qubit_spacing : float
+        Average nearest-neighbor qubit spacing (nm).
+        L_q = 108 nm for the RIKEN 5-qubit device.
+    magnetic_drift_rate : float
+        Global magnetic field drift rate (Hz/s).
+        Measured as ~8 Hz/s from superconducting magnet.
+    correlation_model : str
+        Spatial correlation model: "exponential" (default, simple),
+        "tlf" (physically motivated TLF model from Rojas-Arias et al.).
     """
     t1_times: Optional[List[float]] = None
     t2_star_times: Optional[List[float]] = None
@@ -101,6 +119,11 @@ class NoiseParams:
     dfs_encoded: bool = False
     dfs_leakage_rate: float = 0.0
     n_exchange_oscillations: float = 50.0
+    tlf_density: float = 3e10  # cm^-2 (Rojas-Arias et al., 2026)
+    tlf_correlation_length: float = 81.0  # nm (Rojas-Arias et al., 2026)
+    qubit_spacing: float = 108.0  # nm (RIKEN 5Q device)
+    magnetic_drift_rate: float = 8.0  # Hz/s
+    correlation_model: str = "exponential"  # or "tlf"
 
     def __post_init__(self):
         if self.gate_error_rates is None:
@@ -200,12 +223,13 @@ def default_noise_params(n_qubits: int, device_type: str = "donor") -> NoisePara
         # -- HRL SLEDGE device (Weinstein et al., Nature 2023) --
         # Exchange-only encoded qubits in Si/SiGe quantum dots
         # DFS encoding with 3 physical spins per logical qubit
+        # Correlated noise calibrated to Rojas-Arias et al. (2026)
         return NoiseParams(
             t1_times=[100.0] * n_qubits,         # Very long T1 in Si/SiGe
             t2_star_times=[3.5e-6] * n_qubits,   # 3.5 us (Gaussian decay)
             t2_echo_times=[30e-6] * n_qubits,    # ~30 us with echo
             charge_noise_amplitude=1e-6,          # Moderate charge noise
-            charge_noise_correlation_length=2,
+            charge_noise_correlation_length=2,    # Legacy (integer spacings)
             measurement_fidelity=0.960,           # 96% SPAM fidelity
             dephasing_model="gaussian",           # Gaussian from nuclear spins
             crosstalk_decay_exponent=3.0,         # 1/r^3 capacitive crosstalk
@@ -216,6 +240,12 @@ def default_noise_params(n_qubits: int, device_type: str = "donor") -> NoisePara
             dfs_encoded=True,                     # DFS encoding active
             dfs_leakage_rate=1e4,                 # Leakage from gradients
             n_exchange_oscillations=57.6,         # N_osc ~ 57.6 at 100 MHz
+            # TLF correlation model (Rojas-Arias et al., 2026)
+            tlf_density=3e10,                     # 3e10 cm^-2
+            tlf_correlation_length=81.0,          # l_c = 81 nm
+            qubit_spacing=80.0,                   # 80 nm (SLEDGE dot spacing)
+            magnetic_drift_rate=8.0,              # ~8 Hz/s global drift
+            correlation_model="tlf",              # Use TLF model by default
             gate_error_rates={
                 "single": 1.1e-3,                 # (1.1+/-0.1)x10-^3 (RB)
                 "two": 3.7e-2,                    # FW-CNOT: 96.3% fidelity
@@ -225,6 +255,29 @@ def default_noise_params(n_qubits: int, device_type: str = "donor") -> NoisePara
                 "lccz": 6.2e-2,                   # 93.8% fidelity
                 "clifford_2q": 2.9e-2,            # 97.1% fidelity (RB)
             },
+        )
+    elif device_type == "riken_5q":
+        # -- RIKEN 5Q device (Rojas-Arias et al., arXiv:2603.03051, 2026) --
+        # Linear array of 5 single-spin qubits on Si/SiGe
+        # Noise correlations experimentally characterised
+        return NoiseParams(
+            t1_times=[50.0] * n_qubits,
+            t2_star_times=[20e-6] * n_qubits,
+            t2_echo_times=[100e-6] * n_qubits,
+            charge_noise_amplitude=1.5e-6,
+            charge_noise_correlation_length=1,
+            measurement_fidelity=0.990,
+            dephasing_model="gaussian",
+            exchange_frequency=50e6,
+            pulse_duration=100e-9,
+            idle_duration=50e-9,
+            n_exchange_oscillations=20.0,
+            # TLF correlation model
+            tlf_density=3e10,                     # 3e10 cm^-2
+            tlf_correlation_length=81.0,          # l_c = 81 nm
+            qubit_spacing=108.0,                  # 108 nm spacing
+            magnetic_drift_rate=8.0,              # ~8 Hz/s
+            correlation_model="tlf",
         )
     else:
         raise ValueError(f"Unknown device type: {device_type}")
@@ -455,6 +508,181 @@ class CrosstalkModel:
 
 
 # ======================================================================
+# TLF spatial correlation model
+# ======================================================================
+
+class TLFCorrelationModel:
+    """Two-level fluctuator (TLF) spatial correlation model.
+
+    Computes the charge noise spatial correlation matrix based on
+    the experimentally measured TLF parameters from:
+        Rojas-Arias et al., arXiv:2603.03051 (2026)
+
+    The model assumes an exponential decay of charge noise correlations
+    with physical distance between qubits:
+
+        c(i, j) = exp(-|r_i - r_j| / l_c)
+
+    where l_c is the TLF correlation length (81 nm for Si/SiGe).
+
+    Three noise regimes are captured:
+        1. Perfectly correlated global magnetic drift (~8 Hz/s)
+           -> Naturally suppressed by DFS encoding
+        2. Partially correlated charge noise from TLFs
+           -> l_c = 81 nm, rho_TLF = 3e10 cm^-2
+        3. Uncorrelated nuclear spin noise
+           -> Captured by T2* dephasing model
+
+    Parameters
+    ----------
+    n_qubits : int
+        Number of qubits in the array.
+    qubit_positions : list of tuple or ndarray, optional
+        Physical (x, y) coordinates of each qubit (nm).
+        If None, assumes a linear chain with given spacing.
+    qubit_spacing : float
+        Nearest-neighbor spacing (nm). Used only if qubit_positions
+        is None. Default 80 nm (SLEDGE device).
+    tlf_correlation_length : float
+        Charge noise spatial correlation length (nm).
+        Default 81 nm from Rojas-Arias et al. (2026).
+    tlf_density : float
+        TLF areal density (cm^-2). Default 3e10 cm^-2.
+    magnetic_drift_rate : float
+        Global magnetic field drift rate (Hz/s). Default 8.0.
+    """
+
+    def __init__(
+        self,
+        n_qubits: int,
+        qubit_positions: Optional[List[Tuple[float, float]]] = None,
+        qubit_spacing: float = 80.0,
+        tlf_correlation_length: float = 81.0,
+        tlf_density: float = 3e10,
+        magnetic_drift_rate: float = 8.0,
+    ):
+        self.n_qubits = n_qubits
+        self.l_c = tlf_correlation_length
+        self.rho_tlf = tlf_density
+        self.magnetic_drift_rate = magnetic_drift_rate
+
+        # Compute physical positions
+        if qubit_positions is not None:
+            self.positions = np.array(qubit_positions)
+        else:
+            # Linear chain with given spacing
+            self.positions = np.array(
+                [(i * qubit_spacing, 0.0) for i in range(n_qubits)]
+            )
+
+        # Precompute distance matrix (nm)
+        self._distance_matrix = np.zeros((n_qubits, n_qubits))
+        for i in range(n_qubits):
+            for j in range(n_qubits):
+                dx = self.positions[i, 0] - self.positions[j, 0]
+                dy = self.positions[i, 1] - self.positions[j, 1]
+                self._distance_matrix[i, j] = np.sqrt(dx**2 + dy**2)
+
+        # Precompute correlation matrix
+        self._correlation_matrix = np.exp(
+            -self._distance_matrix / self.l_c
+        )
+
+        # Precompute Cholesky factor for efficient sampling
+        self._cholesky_L = np.linalg.cholesky(self._correlation_matrix)
+
+    @property
+    def correlation_matrix(self) -> np.ndarray:
+        """Return the spatial correlation matrix."""
+        return self._correlation_matrix.copy()
+
+    @property
+    def distance_matrix(self) -> np.ndarray:
+        """Return the pairwise distance matrix (nm)."""
+        return self._distance_matrix.copy()
+
+    @property
+    def nn_correlation(self) -> float:
+        """Return the nearest-neighbor correlation coefficient."""
+        if self.n_qubits < 2:
+            return 1.0
+        # Find minimum nonzero distance
+        dists = self._distance_matrix[0, 1:]
+        min_dist = np.min(dists[dists > 0])
+        return float(np.exp(-min_dist / self.l_c))
+
+    @property
+    def n_c(self) -> float:
+        """Return N_c = l_c / L_q (correlation in qubit spacings)."""
+        if self.n_qubits < 2:
+            return float('inf')
+        min_dist = np.min(
+            self._distance_matrix[0, 1:][self._distance_matrix[0, 1:] > 0]
+        )
+        return self.l_c / min_dist
+
+    def apply_correlations(self, white_noise: np.ndarray) -> np.ndarray:
+        """Apply TLF spatial correlations to white noise samples.
+
+        Parameters
+        ----------
+        white_noise : ndarray of shape (n_qubits, n_samples)
+            Uncorrelated noise samples.
+
+        Returns
+        -------
+        ndarray of shape (n_qubits, n_samples)
+            Spatially correlated noise samples.
+        """
+        return self._cholesky_L @ white_noise
+
+    def global_drift_phase(self, dt: float) -> float:
+        """Compute the global magnetic drift phase accumulated over dt.
+
+        This phase is identical for all qubits and is naturally
+        suppressed by DFS encoding.
+
+        Parameters
+        ----------
+        dt : float
+            Time interval (seconds).
+
+        Returns
+        -------
+        float
+            Phase angle (radians) from global drift.
+        """
+        return 2 * np.pi * self.magnetic_drift_rate * dt
+
+    @classmethod
+    def from_noise_params(
+        cls,
+        noise_params: 'NoiseParams',
+        qubit_positions: Optional[List[Tuple[float, float]]] = None,
+        n_qubits: int = 5,
+    ) -> 'TLFCorrelationModel':
+        """Create a TLFCorrelationModel from a NoiseParams instance.
+
+        Parameters
+        ----------
+        noise_params : NoiseParams
+            Noise parameters containing TLF fields.
+        qubit_positions : list of tuple, optional
+            Physical qubit positions. If None, uses linear chain.
+        n_qubits : int
+            Number of qubits (used for linear chain layout).
+        """
+        return cls(
+            n_qubits=n_qubits,
+            qubit_positions=qubit_positions,
+            qubit_spacing=noise_params.qubit_spacing,
+            tlf_correlation_length=noise_params.tlf_correlation_length,
+            tlf_density=noise_params.tlf_density,
+            magnetic_drift_rate=noise_params.magnetic_drift_rate,
+        )
+
+
+# ======================================================================
 # 1/f charge noise generator
 # ======================================================================
 
@@ -463,6 +691,13 @@ class ChargeNoiseGenerator:
 
     The noise has a power spectral density S(f) ~ 1/f^alpha with
     spatial correlations between nearby qubits.
+
+    Supports two correlation models:
+        - "exponential": Simple exponential decay with integer
+          correlation length (legacy, in qubit spacings).
+        - "tlf": Physically motivated TLF model using real
+          qubit positions and measured correlation length l_c = 81 nm
+          (Rojas-Arias et al., arXiv:2603.03051, 2026).
 
     Parameters
     ----------
@@ -473,11 +708,14 @@ class ChargeNoiseGenerator:
     alpha : float
         Spectral exponent (1.0 for pure 1/f noise).
     correlation_length : int
-        Spatial correlation length in qubit spacings.
+        Spatial correlation length in qubit spacings (legacy model).
     dt : float
         Time step for noise generation (seconds).
     seed : int, optional
         Random seed for reproducibility.
+    tlf_model : TLFCorrelationModel, optional
+        If provided, uses the TLF correlation model instead of the
+        simple exponential decay. Overrides correlation_length.
     """
 
     def __init__(
@@ -488,6 +726,7 @@ class ChargeNoiseGenerator:
         correlation_length: int = 2,
         dt: float = 1e-9,
         seed: Optional[int] = None,
+        tlf_model: Optional[TLFCorrelationModel] = None,
     ):
         self.n_qubits = n_qubits
         self.amplitude = amplitude
@@ -498,6 +737,20 @@ class ChargeNoiseGenerator:
         self._buffer_size = 1024
         self._buffer = None
         self._buffer_idx = 0
+        self.tlf_model = tlf_model
+
+        # Precompute Cholesky factor for legacy model
+        if tlf_model is None:
+            corr_matrix = np.zeros((n_qubits, n_qubits))
+            for i in range(n_qubits):
+                for j in range(n_qubits):
+                    dist = abs(i - j)
+                    corr_matrix[i, j] = np.exp(
+                        -dist / max(self.correlation_length, 1e-10)
+                    )
+            self._cholesky_L = np.linalg.cholesky(corr_matrix)
+        else:
+            self._cholesky_L = tlf_model._cholesky_L
 
     def _generate_buffer(self):
         """Generate a buffer of correlated 1/f noise samples."""
@@ -519,16 +772,8 @@ class ChargeNoiseGenerator:
             spectrum *= filt
             colored[q] = np.fft.irfft(spectrum, n=n)
 
-        # Apply spatial correlations
-        corr_matrix = np.zeros((nq, nq))
-        for i in range(nq):
-            for j in range(nq):
-                dist = abs(i - j)
-                corr_matrix[i, j] = np.exp(-dist / self.correlation_length)
-
-        # Cholesky decomposition for correlated noise
-        L = np.linalg.cholesky(corr_matrix)
-        correlated = L @ colored
+        # Apply spatial correlations via precomputed Cholesky factor
+        correlated = self._cholesky_L @ colored
 
         self._buffer = self.amplitude * correlated
         self._buffer_idx = 0

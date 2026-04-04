@@ -1,0 +1,19 @@
+Rojas-Arias Integration Verification (April 4, 2026)
+=====================================================
+
+Page 3: Motivation section
+- TLF correlation text added correctly: "Recent experimental characterisation of a 5-qubit Si/SiGe array..."
+- Citation [22] correctly placed
+- DFS encoding motivation reinforced
+
+Page 7: Physics Layer + Device Table
+- Table 3 now has 4 columns: Donor, SiMOS, GAA, RIKEN 5Q (Si/SiGe)
+- RIKEN 5Q column shows: T1=50s, T2*=20μs, 1Q=100ns, 2Q=200ns, charge=1.5μeV, NN corr=0.26
+- TLF noise model description added: c(i,j) = exp(-|r_i - r_j|/l_c), l_c=81nm, ρ_TLF=3e10 cm^-2
+- SLEDGE NN correlation = 0.37, RIKEN = 0.26 (both correct)
+- Global magnetic drift ~8 Hz/s mentioned
+
+Page 8: Installation section
+- GitHub URL correctly shows r3d-phd/siliqun
+
+All looks correct. Paper is 18 pages, 22 references.

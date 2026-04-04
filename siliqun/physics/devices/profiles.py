@@ -372,6 +372,85 @@ def sledge_device(
     )
 
 
+def riken_5q_device(
+    n_qubits: int = 5,
+) -> DeviceProfile:
+    """RIKEN 5-qubit Si/SiGe spin qubit device.
+
+    Based on the noise characterization by Rojas-Arias et al.,
+    arXiv:2603.03051 (2026). This is a linear array of 5 single-spin
+    qubits (NOT DFS-encoded) on a Si/SiGe heterostructure.
+
+    Key experimental parameters:
+    ----------------------------
+    Qubit spacing:               108 nm
+    TLF correlation length:      81 nm (l_c)
+    TLF areal density:           3e10 cm^-2
+    NN charge noise correlation: 0.26 (measured: 0.33-0.57 tunable)
+    Global magnetic drift:       ~8 Hz/s
+    N_c (correlation in spacings): 0.75
+    """
+    connectivity = [(i, i + 1) for i in range(n_qubits - 1)]
+    spacing = 108.0  # nm (RIKEN device)
+    qubit_layout = [(i * spacing, 0.0) for i in range(n_qubits)]
+
+    n_edges = len(connectivity)
+    exchange_couplings_list = [
+        50e6 + np.random.uniform(-3e6, 3e6) for _ in range(n_edges)
+    ]
+
+    params = DeviceParams(
+        n_qubits=n_qubits,
+        device_type="riken_5q",
+        B_field=0.8,  # External B field (T)
+        exchange_couplings=exchange_couplings_list,
+        hyperfine_couplings=[0.0] * n_qubits,  # Isotopically purified Si-28
+        soc_strengths=[0.0] * n_qubits,
+        temperature=0.02,  # 20 mK
+    )
+
+    noise = NoiseParams(
+        t1_times=[50.0] * n_qubits,
+        t2_star_times=[20e-6] * n_qubits,
+        t2_echo_times=[100e-6] * n_qubits,
+        charge_noise_amplitude=1.5e-6,
+        charge_noise_correlation_length=1,
+        measurement_fidelity=0.990,
+        dephasing_model="gaussian",
+        exchange_frequency=50e6,
+        pulse_duration=100e-9,
+        idle_duration=50e-9,
+        n_exchange_oscillations=20.0,
+        # TLF correlation model (Rojas-Arias et al., 2026)
+        tlf_density=3e10,
+        tlf_correlation_length=81.0,
+        qubit_spacing=108.0,
+        magnetic_drift_rate=8.0,
+        correlation_model="tlf",
+    )
+
+    return DeviceProfile(
+        name=f"RIKEN-{n_qubits}Q",
+        device_type="riken_5q",
+        n_qubits=n_qubits,
+        hamiltonian_params=params,
+        noise_params=noise,
+        connectivity=connectivity,
+        native_gates=["CZ", "Rx", "Ry", "Rz"],
+        gate_times={
+            "single": 100e-9,
+            "two": 200e-9,
+            "readout": 5e-6,
+            "idle": 50e-9,
+        },
+        qubit_layout=qubit_layout,
+        grid_shape=None,
+        dfs_encoded=False,
+        n_physical_qubits=n_qubits,
+        sequential_pulsing=True,
+    )
+
+
 # ======================================================================
 # Profile registry
 # ======================================================================
@@ -381,6 +460,7 @@ DEVICE_REGISTRY = {
     "simos": simos_device,
     "gaa": gaa_device,
     "sledge": sledge_device,
+    "riken_5q": riken_5q_device,
 }
 
 

@@ -8,6 +8,7 @@ from .channels import (
     amplitude_damping_kraus,
     phase_damping_kraus,
     depolarizing_kraus,
+    TLFCorrelationModel,
     ChargeNoiseGenerator,
     apply_t1_noise,
     apply_dephasing_noise,

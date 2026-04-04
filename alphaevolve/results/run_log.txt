@@ -1,0 +1,215 @@
+2026-04-04 08:51:23,206 [INFO] ============================================================
+2026-04-04 08:51:23,207 [INFO] AlphaEvolve Noise Mitigation Discovery v2
+2026-04-04 08:51:23,207 [INFO] ============================================================
+2026-04-04 08:51:23,207 [INFO] Pop=10 | Gens=20 | Noise=0.05 | NN_corr=0.264
+2026-04-04 08:51:23,207 [INFO] Models: ['deepseek-chat', 'gemini-2.5-flash', 'claude-sonnet-4']
+2026-04-04 08:51:23,207 [INFO] Max LLM calls: 150 | Retries: 1
+2026-04-04 08:51:23,207 [INFO] ============================================================
+2026-04-04 08:51:23,263 [INFO] Seed 'standard': fitness=0.997401, valid=True
+2026-04-04 08:51:23,344 [INFO] Seed 'correlation_aware': fitness=0.995877, valid=True
+2026-04-04 08:51:23,437 [INFO] Seed 'sqrt_swap_native': fitness=0.621478, valid=True
+2026-04-04 08:51:37,547 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 08:52:05,515 [INFO] Init (deepseek-chat): INVALID (Compilation: unindent does not match any outer indentation l), fitness=0.000000
+2026-04-04 08:52:18,454 [INFO] Init (gemini-2.5-flash): VALID, fitness=0.997401
+2026-04-04 08:52:35,848 [INFO] Init (claude-sonnet-4): VALID, fitness=0.368500
+2026-04-04 08:53:05,597 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 08:53:21,518 [INFO] Init (deepseek-chat): INVALID (Compilation: unindent does not match any outer indentation l), fitness=0.000000
+2026-04-04 08:53:30,838 [INFO] Init (gemini-2.5-flash): VALID, fitness=0.619259
+2026-04-04 08:53:42,775 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 08:53:52,558 [INFO] Init (claude-sonnet-4): INVALID (Compilation: unindent does not match any outer indentation l), fitness=0.000000
+2026-04-04 08:54:07,216 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 08:54:34,768 [INFO] Init (deepseek-chat): INVALID (Compilation: unindent does not match any outer indentation l), fitness=0.000000
+2026-04-04 08:54:34,769 [INFO] *** NEW BEST: fitness=0.997401 (hash=b87bb664, model=seed:standard)
+2026-04-04 08:54:34,769 [INFO] === Gen 0 === best=0.997401 | mean=0.459992 | valid=6/10 | LLM=11 | 192s
+2026-04-04 08:54:54,735 [INFO]   Attempting repair (error: Compilation: closing parenthesis ')' does not match opening parenthesis '{' (<st...)
+2026-04-04 08:55:10,103 [INFO] Gen 1 | VALID | claude-sonnet-4 | fitness=0.996401 | improve | seqs={'bell': 2, 'cnot': 3}
+2026-04-04 08:55:53,650 [INFO] Gen 1 | VALID | deepseek-chat | fitness=0.118816 | creative | seqs={'bell': 8, 'cnot': 6}
+2026-04-04 08:56:09,845 [INFO]   Attempting repair (error: Compilation: expected an indented block after function definition on line 32 (<s...)
+2026-04-04 08:56:17,773 [INFO] Gen 1 | INVALID | gemini-2.5-flash | improve | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 08:56:30,011 [INFO] Gen 1 | VALID | claude-sonnet-4 | fitness=0.992482 | improve | seqs={'bell': 6, 'cnot': 5}
+2026-04-04 08:57:06,677 [INFO] Gen 1 | VALID | deepseek-chat | fitness=0.180666 | creative | seqs={'bell': 5, 'cnot': 7}
+2026-04-04 08:57:16,313 [INFO] Gen 1 | VALID | gemini-2.5-flash | fitness=0.495803 | creative | seqs={'bell': 2, 'cnot': 6}
+2026-04-04 08:57:27,952 [INFO] Gen 1 | VALID | claude-sonnet-4 | fitness=0.997401 | improve | seqs={'bell': 2, 'cnot': 1}
+2026-04-04 08:58:09,800 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 08:58:42,906 [INFO] Gen 1 | INVALID | deepseek-chat | improve | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 08:58:42,906 [INFO] === Gen 1 === best=0.997401 | mean=0.577637 | valid=8/10 | LLM=22 | 440s
+2026-04-04 08:58:53,390 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 08:59:02,429 [INFO] Gen 2 | INVALID | claude-sonnet-4 | improve | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 08:59:28,412 [INFO] Gen 2 | VALID | deepseek-chat | fitness=0.996401 | crossover | seqs={'bell': 2, 'cnot': 3}
+2026-04-04 08:59:40,225 [INFO] Gen 2 | VALID | gemini-2.5-flash | fitness=0.996401 | crossover | seqs={'bell': 2, 'cnot': 3}
+2026-04-04 08:59:50,504 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 08:59:57,472 [INFO] Gen 2 | INVALID | claude-sonnet-4 | improve | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:00:30,955 [INFO] Gen 2 | VALID | deepseek-chat | fitness=0.244852 | creative | seqs={'bell': 6, 'cnot': 6}
+2026-04-04 09:00:38,470 [INFO] Gen 2 | VALID | gemini-2.5-flash | fitness=0.997401 | crossover | seqs={'bell': 2, 'cnot': 1}
+2026-04-04 09:00:52,214 [INFO] Gen 2 | VALID | claude-sonnet-4 | fitness=0.996401 | crossover | seqs={'bell': 2, 'cnot': 3}
+2026-04-04 09:01:09,078 [INFO] Gen 2 | VALID | deepseek-chat | fitness=0.123524 | improve | seqs={'bell': 3, 'cnot': 3}
+2026-04-04 09:01:09,078 [INFO] === Gen 2 === best=0.997401 | mean=0.634978 | valid=8/10 | LLM=32 | 586s
+2026-04-04 09:01:17,666 [INFO] Gen 3 | VALID | claude-sonnet-4 | fitness=0.996401 | crossover | seqs={'bell': 2, 'cnot': 3}
+2026-04-04 09:01:40,835 [INFO] Gen 3 | VALID | deepseek-chat | fitness=0.997401 | crossover | seqs={'bell': 2, 'cnot': 1}
+2026-04-04 09:01:45,583 [INFO] Gen 3 | VALID | gemini-2.5-flash | fitness=0.997401 | crossover | seqs={'bell': 2, 'cnot': 1}
+2026-04-04 09:01:55,596 [INFO] Gen 3 | VALID | claude-sonnet-4 | fitness=0.497170 | improve | seqs={'bell': 6, 'cnot': 5}
+2026-04-04 09:02:21,627 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 09:02:39,380 [INFO] Gen 3 | INVALID | deepseek-chat | improve | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:02:43,093 [INFO] Gen 3 | VALID | gemini-2.5-flash | fitness=0.996401 | crossover | seqs={'bell': 2, 'cnot': 3}
+2026-04-04 09:02:54,797 [INFO] Gen 3 | VALID | claude-sonnet-4 | fitness=0.497170 | improve | seqs={'bell': 6, 'cnot': 5}
+2026-04-04 09:03:40,244 [INFO] Gen 3 | VALID | deepseek-chat | fitness=0.120500 | creative | seqs={'bell': 5, 'cnot': 4}
+2026-04-04 09:03:40,244 [INFO] === Gen 3 === best=0.997401 | mean=0.709725 | valid=9/10 | LLM=41 | 737s
+2026-04-04 09:03:44,978 [INFO] Gen 4 | VALID | claude-sonnet-4 | fitness=0.996401 | crossover | seqs={'bell': 2, 'cnot': 3}
+2026-04-04 09:04:39,024 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 09:04:59,243 [INFO] Gen 4 | INVALID | deepseek-chat | crossover | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:05:12,008 [INFO]   Attempting repair (error: Compilation: unexpected indent (<string>, line 63)...)
+2026-04-04 09:05:17,450 [INFO] Gen 4 | INVALID | gemini-2.5-flash | creative | err=Compilation: unexpected indent (<string>, line 63)
+2026-04-04 09:05:26,206 [INFO] Gen 4 | VALID | claude-sonnet-4 | fitness=0.996401 | crossover | seqs={'bell': 2, 'cnot': 3}
+2026-04-04 09:06:18,730 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 09:07:09,638 [INFO] Gen 4 | INVALID | deepseek-chat | improve | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:07:20,512 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 09:07:27,263 [INFO] Gen 4 | INVALID | gemini-2.5-flash | improve | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:07:40,883 [INFO] Gen 4 | VALID | claude-sonnet-4 | fitness=0.180746 | creative | seqs={'bell': 6, 'cnot': 7}
+2026-04-04 09:08:16,388 [INFO] Gen 4 | VALID | deepseek-chat | fitness=0.498535 | improve | seqs={'bell': 4, 'cnot': 3}
+2026-04-04 09:08:16,388 [INFO] === Gen 4 === best=0.997401 | mean=0.466689 | valid=6/10 | LLM=53 | 1013s
+2026-04-04 09:08:21,974 [INFO] Gen 5 | VALID | claude-sonnet-4 | fitness=0.996401 | crossover | seqs={'bell': 2, 'cnot': 3}
+2026-04-04 09:08:43,203 [INFO] Gen 5 | VALID | deepseek-chat | fitness=0.244000 | crossover | seqs={'bell': 6, 'cnot': 6}
+2026-04-04 09:08:51,444 [INFO] Gen 5 | VALID | gemini-2.5-flash | fitness=0.498535 | improve | seqs={'bell': 4, 'cnot': 3}
+2026-04-04 09:09:03,186 [INFO] Gen 5 | VALID | claude-sonnet-4 | fitness=0.995879 | improve | seqs={'bell': 2, 'cnot': 3}
+2026-04-04 09:09:21,465 [INFO] Gen 5 | VALID | deepseek-chat | fitness=0.991577 | improve | seqs={'bell': 6, 'cnot': 5}
+2026-04-04 09:09:37,679 [INFO]   Attempting repair (error: Compilation: expected an indented block after 'if' statement on line 50 (<string...)
+2026-04-04 09:09:51,003 [INFO] Gen 5 | INVALID | gemini-2.5-flash | improve | err=Compilation: expected an indented block after 'if' statement on line 5
+2026-04-04 09:10:01,089 [INFO] Gen 5 | VALID | claude-sonnet-4 | fitness=0.996401 | crossover | seqs={'bell': 2, 'cnot': 3}
+2026-04-04 09:10:33,669 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 09:10:39,813 [INFO] Gen 5 | INVALID | deepseek-chat | crossover | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:10:39,813 [INFO] === Gen 5 === best=0.997401 | mean=0.671760 | valid=8/10 | LLM=63 | 1157s
+2026-04-04 09:10:51,591 [INFO] Gen 6 | VALID | claude-sonnet-4 | fitness=0.991840 | creative | seqs={'bell': 6, 'cnot': 5}
+2026-04-04 09:11:26,688 [INFO] Gen 6 | VALID | deepseek-chat | fitness=0.996401 | crossover | seqs={'bell': 2, 'cnot': 3}
+2026-04-04 09:11:34,418 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 09:11:40,856 [INFO] Gen 6 | INVALID | gemini-2.5-flash | improve | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:11:52,856 [INFO] Gen 6 | VALID | claude-sonnet-4 | fitness=0.245425 | creative | seqs={'bell': 6, 'cnot': 5}
+2026-04-04 09:12:23,736 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 09:12:29,450 [INFO] Gen 6 | INVALID | deepseek-chat | improve | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:12:41,210 [INFO]   Attempting repair (error: Compilation: unexpected indent (<string>, line 41)...)
+2026-04-04 09:12:50,958 [INFO] Gen 6 | INVALID | gemini-2.5-flash | improve | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:13:00,691 [INFO] Gen 6 | VALID | claude-sonnet-4 | fitness=0.995879 | crossover | seqs={'bell': 2, 'cnot': 3}
+2026-04-04 09:13:11,314 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 09:13:18,699 [INFO] Gen 6 | INVALID | deepseek-chat | improve | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:13:18,700 [INFO] === Gen 6 === best=0.997401 | mean=0.522435 | valid=6/10 | LLM=75 | 1315s
+2026-04-04 09:13:30,550 [INFO] Gen 7 | VALID | claude-sonnet-4 | fitness=0.243162 | creative | seqs={'bell': 6, 'cnot': 7}
+2026-04-04 09:13:44,132 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 09:14:13,840 [INFO] Gen 7 | INVALID | deepseek-chat | crossover | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:14:23,747 [INFO] Gen 7 | VALID | gemini-2.5-flash | fitness=0.991840 | crossover | seqs={'bell': 6, 'cnot': 5}
+2026-04-04 09:14:35,257 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 09:14:44,885 [INFO] Gen 7 | INVALID | claude-sonnet-4 | improve | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:15:35,967 [INFO] Gen 7 | VALID | deepseek-chat | fitness=0.299203 | creative | seqs={'bell': 6, 'cnot': 7}
+2026-04-04 09:15:42,918 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 09:15:50,815 [INFO] Gen 7 | INVALID | gemini-2.5-flash | crossover | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:16:07,793 [INFO] Gen 7 | VALID | claude-sonnet-4 | fitness=0.997401 | crossover | seqs={'bell': 2, 'cnot': 1}
+2026-04-04 09:16:36,507 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 09:16:51,858 [INFO] Gen 7 | INVALID | deepseek-chat | improve | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:16:51,858 [INFO] === Gen 7 === best=0.997401 | mean=0.452641 | valid=6/10 | LLM=87 | 1529s
+2026-04-04 09:17:06,831 [INFO] Gen 8 | VALID | claude-sonnet-4 | fitness=0.119164 | creative | seqs={'bell': 6, 'cnot': 6}
+2026-04-04 09:17:54,669 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 09:18:08,746 [INFO] Gen 8 | INVALID | deepseek-chat | improve | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:18:19,573 [INFO] Gen 8 | VALID | gemini-2.5-flash | fitness=0.120152 | creative | seqs={'bell': 6, 'cnot': 5}
+2026-04-04 09:18:39,597 [INFO] Gen 8 | VALID | claude-sonnet-4 | fitness=0.991299 | creative | seqs={'bell': 7, 'cnot': 5}
+2026-04-04 09:19:22,657 [INFO] Gen 8 | VALID | deepseek-chat | fitness=0.991840 | creative | seqs={'bell': 6, 'cnot': 5}
+2026-04-04 09:19:33,694 [INFO] Gen 8 | VALID | gemini-2.5-flash | fitness=0.997401 | crossover | seqs={'bell': 2, 'cnot': 1}
+2026-04-04 09:19:41,088 [INFO] Gen 8 | VALID | claude-sonnet-4 | fitness=0.997401 | crossover | seqs={'bell': 2, 'cnot': 1}
+2026-04-04 09:19:56,869 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 09:20:07,038 [INFO] Gen 8 | INVALID | deepseek-chat | improve | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:20:07,038 [INFO] === Gen 8 === best=0.997401 | mean=0.621206 | valid=8/10 | LLM=97 | 1724s
+2026-04-04 09:20:28,003 [INFO] Gen 9 | VALID | claude-sonnet-4 | fitness=0.989045 | creative | seqs={'bell': 8, 'cnot': 7}
+2026-04-04 09:20:49,337 [INFO] Gen 9 | VALID | deepseek-chat | fitness=0.114762 | creative | seqs={'bell': 10, 'cnot': 10}
+2026-04-04 09:21:05,919 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 09:21:18,451 [INFO] Gen 9 | INVALID | gemini-2.5-flash | improve | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:21:31,441 [INFO] Gen 9 | VALID | claude-sonnet-4 | fitness=0.995401 | improve | seqs={'bell': 2, 'cnot': 5}
+2026-04-04 09:21:40,982 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 09:21:46,191 [INFO] Gen 9 | INVALID | deepseek-chat | improve | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:21:51,310 [INFO] Gen 9 | VALID | gemini-2.5-flash | fitness=0.997401 | crossover | seqs={'bell': 2, 'cnot': 1}
+2026-04-04 09:22:15,283 [INFO] Gen 9 | VALID | claude-sonnet-4 | fitness=0.937812 | creative | seqs={'bell': 8, 'cnot': 7}
+2026-04-04 09:22:24,865 [INFO] Gen 9 | VALID | deepseek-chat | fitness=0.366357 | creative | seqs={'bell': 8, 'cnot': 8}
+2026-04-04 09:22:24,865 [INFO] === Gen 9 === best=0.997401 | mean=0.639558 | valid=8/10 | LLM=107 | 1862s
+2026-04-04 09:22:35,188 [INFO] Gen 10 | VALID | claude-sonnet-4 | fitness=0.995879 | improve | seqs={'bell': 2, 'cnot': 3}
+2026-04-04 09:22:56,418 [INFO] Gen 10 | VALID | deepseek-chat | fitness=0.985094 | improve | seqs={'bell': 7, 'cnot': 7}
+2026-04-04 09:23:10,117 [INFO]   Attempting repair (error: Compilation: expected an indented block after 'elif' statement on line 55 (<stri...)
+2026-04-04 09:23:16,077 [INFO] Gen 10 | VALID | gemini-2.5-flash | fitness=0.997401 | improve | seqs={'bell': 2, 'cnot': 1}
+2026-04-04 09:23:33,294 [INFO] Gen 10 | VALID | claude-sonnet-4 | fitness=0.615502 | creative | seqs={'bell': 6, 'cnot': 7}
+2026-04-04 09:23:54,993 [INFO] Gen 10 | VALID | deepseek-chat | fitness=0.992840 | improve | seqs={'bell': 6, 'cnot': 3}
+2026-04-04 09:24:08,164 [INFO] Gen 10 | VALID | gemini-2.5-flash | fitness=0.495401 | improve | seqs={'bell': 2, 'cnot': 5}
+2026-04-04 09:24:25,813 [INFO] Gen 10 | VALID | claude-sonnet-4 | fitness=0.983303 | creative | seqs={'bell': 5, 'cnot': 5}
+2026-04-04 09:24:46,057 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 09:24:56,095 [INFO] Gen 10 | INVALID | deepseek-chat | creative | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:24:56,096 [INFO] === Gen 10 === best=0.997401 | mean=0.806022 | valid=9/10 | LLM=117 | 2013s
+2026-04-04 09:25:13,681 [INFO] Gen 11 | VALID | claude-sonnet-4 | fitness=0.993130 | creative | seqs={'bell': 6, 'cnot': 3}
+2026-04-04 09:25:33,451 [INFO] Gen 11 | VALID | deepseek-chat | fitness=0.997401 | creative | seqs={'bell': 2, 'cnot': 1}
+2026-04-04 09:25:45,604 [INFO] Gen 11 | VALID | gemini-2.5-flash | fitness=0.997401 | improve | seqs={'bell': 2, 'cnot': 1}
+2026-04-04 09:26:03,742 [INFO] Gen 11 | VALID | claude-sonnet-4 | fitness=0.997401 | creative | seqs={'bell': 2, 'cnot': 1}
+2026-04-04 09:26:22,334 [INFO] Gen 11 | VALID | deepseek-chat | fitness=0.621388 | improve | seqs={'bell': 3, 'cnot': 5}
+2026-04-04 09:26:39,532 [INFO]   Attempting repair (error: Compilation: invalid syntax (<string>, line 149)...)
+2026-04-04 09:26:51,598 [INFO] Gen 11 | VALID | gemini-2.5-flash | fitness=0.997401 | improve | seqs={'bell': 2, 'cnot': 1}
+2026-04-04 09:27:06,317 [INFO] Gen 11 | VALID | claude-sonnet-4 | fitness=0.995879 | improve | seqs={'bell': 2, 'cnot': 3}
+2026-04-04 09:27:30,649 [INFO] Gen 11 | VALID | deepseek-chat | fitness=0.367896 | creative | seqs={'bell': 6, 'cnot': 6}
+2026-04-04 09:27:30,649 [INFO] === Gen 11 === best=0.997401 | mean=0.896270 | valid=10/10 | LLM=126 | 2167s
+2026-04-04 09:27:47,649 [INFO] Gen 12 | VALID | claude-sonnet-4 | fitness=0.493402 | improve | seqs={'bell': 2, 'cnot': 9}
+2026-04-04 09:28:07,983 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 09:28:18,308 [INFO] Gen 12 | INVALID | deepseek-chat | improve | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:28:31,526 [INFO]   Attempting repair (error: Compilation: unexpected indent (<string>, line 59)...)
+2026-04-04 09:28:43,009 [INFO] Gen 12 | INVALID | gemini-2.5-flash | creative | err=Compilation: unexpected indent (<string>, line 59)
+2026-04-04 09:29:01,227 [INFO] Gen 12 | VALID | claude-sonnet-4 | fitness=0.602382 | improve | seqs={'bell': 7, 'cnot': 5}
+2026-04-04 09:29:46,362 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 09:29:54,854 [INFO] Gen 12 | INVALID | deepseek-chat | improve | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:30:11,773 [INFO] Gen 12 | VALID | gemini-2.5-flash | fitness=0.995879 | improve | seqs={'bell': 2, 'cnot': 3}
+2026-04-04 09:30:24,924 [INFO] Gen 12 | VALID | claude-sonnet-4 | fitness=0.997401 | crossover | seqs={'bell': 2, 'cnot': 1}
+2026-04-04 09:30:50,623 [INFO] Gen 12 | VALID | deepseek-chat | fitness=0.482451 | improve | seqs={'bell': 6, 'cnot': 7}
+2026-04-04 09:30:50,623 [INFO] === Gen 12 === best=0.997401 | mean=0.556632 | valid=7/10 | LLM=137 | 2367s
+2026-04-04 09:31:08,861 [INFO] Gen 13 | VALID | claude-sonnet-4 | fitness=0.923364 | improve | seqs={'bell': 4, 'cnot': 3}
+2026-04-04 09:31:23,453 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 09:33:18,386 [WARNING] Repair call failed (deepseek/deepseek-chat): HTTPSConnectionPool(host='openrouter.ai', port=443): Read timed out.
+2026-04-04 09:33:18,088 [INFO] Gen 13 | INVALID | deepseek-chat | improve | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:33:25,500 [INFO] Gen 13 | VALID | gemini-2.5-flash | fitness=0.997401 | improve | seqs={'bell': 2, 'cnot': 1}
+2026-04-04 09:33:31,813 [INFO] Gen 13 | VALID | claude-sonnet-4 | fitness=0.997401 | crossover | seqs={'bell': 2, 'cnot': 1}
+2026-04-04 09:33:51,068 [INFO] Gen 13 | VALID | deepseek-chat | fitness=0.739205 | creative | seqs={'bell': 7, 'cnot': 8}
+2026-04-04 09:34:01,581 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 09:34:11,199 [INFO] Gen 13 | INVALID | gemini-2.5-flash | creative | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:34:32,316 [INFO] Gen 13 | VALID | claude-sonnet-4 | fitness=0.119000 | improve | seqs={'bell': 6, 'cnot': 6}
+2026-04-04 09:34:59,727 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 09:35:24,586 [INFO] Gen 13 | INVALID | deepseek-chat | improve | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:35:24,587 [INFO] === Gen 13 === best=0.997401 | mean=0.577117 | valid=7/10 | LLM=147 | 2641s
+2026-04-04 09:35:41,721 [INFO] Gen 14 | VALID | claude-sonnet-4 | fitness=0.992479 | improve | seqs={'bell': 4, 'cnot': 5}
+2026-04-04 09:35:49,658 [INFO]   Attempting repair (error: Compilation: unindent does not match any outer indentation level (<string>, line...)
+2026-04-04 09:36:50,470 [WARNING] Repair call failed (deepseek/deepseek-chat): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-04-04 09:36:50,471 [INFO] Gen 14 | INVALID | deepseek-chat | crossover | err=Compilation: unindent does not match any outer indentation level (<str
+2026-04-04 09:37:01,111 [INFO] Gen 14 | VALID | gemini-2.5-flash | fitness=0.997401 | improve | seqs={'bell': 2, 'cnot': 1}
+2026-04-04 09:37:01,112 [WARNING] LLM budget exhausted
+2026-04-04 09:37:01,112 [INFO] === Gen 14 === best=0.997401 | mean=0.796936 | valid=4/5 | LLM=150 | 2738s
+2026-04-04 09:37:01,112 [WARNING] LLM budget exhausted. Stopping.
+2026-04-04 09:37:01,113 [INFO] ============================================================
+2026-04-04 09:37:01,113 [INFO] EVOLUTION COMPLETE
+2026-04-04 09:37:01,113 [INFO] Time: 2738s | LLM calls: 150 | Tokens: 353409
+2026-04-04 09:37:01,113 [INFO] Best fitness: 0.997401 | Raw fidelity: 0.998901
+2026-04-04 09:37:01,113 [INFO] Per-target: {'bell': 0.9978022805406266, 'cnot': 1.0}
+2026-04-04 09:37:01,113 [INFO] Seq lengths: {'bell': 2, 'cnot': 1}
+2026-04-04 09:37:01,113 [INFO] Model: seed:standard
+2026-04-04 09:37:01,113 [INFO] ============================================================
+2026-04-04 09:37:01,113 [INFO] Best strategy code:
+2026-04-04 09:37:01,113 [INFO]         """Generate a noise-mitigating gate sequence."""
+        if target_gate == "bell":
+            return [
+                Gate("h", (0,)),
+                Gate("cnot", (0, 1)),
+            ]
+        elif target_gate == "ghz":
+            seq = [Gate("h", (0,))]
+            for q in range(1, n_qubits):
+                seq.append(Gate("cnot", (0, q)))
+            return seq
+        elif target_gate == "cnot":
+            return [Gate("cnot", (0, 1))]
+        elif target_gate == "swap":
+            return [
+                Gate("cnot", (0, 1)),
+                Gate("cnot", (1, 0)),
+                Gate("cnot", (0, 1)),
+            ]
+        elif target_gate == "h":
+            return [Gate("h", (0,))]
+        else:
+            return [Gate("identity", (0,))]
+

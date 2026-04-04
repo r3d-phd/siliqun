@@ -1,0 +1,295 @@
+{
+  "generation": 15,
+  "best_ever": {
+    "hash": "b87bb664",
+    "fitness": 0.9974011402703133,
+    "raw_fitness": 0.9989011402703133,
+    "per_target": {
+      "bell": 0.9978022805406266,
+      "cnot": 1.0
+    },
+    "sequence_lengths": {
+      "bell": 2,
+      "cnot": 1
+    },
+    "generation": 0,
+    "parent_hash": "",
+    "model_used": "seed:standard",
+    "valid": true,
+    "error": null,
+    "method_body": "        \"\"\"Generate a noise-mitigating gate sequence.\"\"\"\n        if target_gate == \"bell\":\n            return [\n                Gate(\"h\", (0,)),\n                Gate(\"cnot\", (0, 1)),\n            ]\n        elif target_gate == \"ghz\":\n            seq = [Gate(\"h\", (0,))]\n            for q in range(1, n_qubits):\n                seq.append(Gate(\"cnot\", (0, q)))\n            return seq\n        elif target_gate == \"cnot\":\n            return [Gate(\"cnot\", (0, 1))]\n        elif target_gate == \"swap\":\n            return [\n                Gate(\"cnot\", (0, 1)),\n                Gate(\"cnot\", (1, 0)),\n                Gate(\"cnot\", (0, 1)),\n            ]\n        elif target_gate == \"h\":\n            return [Gate(\"h\", (0,))]\n        else:\n            return [Gate(\"identity\", (0,))]\n"
+  },
+  "population": [
+    {
+      "hash": "b87bb664",
+      "fitness": 0.9974011402703133,
+      "raw_fitness": 0.9989011402703133,
+      "per_target": {
+        "bell": 0.9978022805406266,
+        "cnot": 1.0
+      },
+      "sequence_lengths": {
+        "bell": 2,
+        "cnot": 1
+      },
+      "generation": 14,
+      "parent_hash": "",
+      "model_used": "seed:standard",
+      "valid": true,
+      "error": null,
+      "method_body": "        \"\"\"Generate a noise-mitigating gate sequence.\"\"\"\n        if target_gate == \"bell\":\n            return [\n                Gate(\"h\", (0,)),\n                Gate(\"cnot\", (0, 1)),\n            ]\n        elif target_gate == \"ghz\":\n            seq = [Gate(\"h\", (0,))]\n            for q in range(1, n_qubits):\n                seq.append(Gate(\"cnot\", (0, q)))\n            return seq\n        elif target_gate == \"cnot\":\n            return [Gate(\"cnot\", (0, 1))]\n        elif target_gate == \"swap\":\n            return [\n                Gate(\"cnot\", (0, 1)),\n                Gate(\"cnot\", (1, 0)),\n                Gate(\"cnot\", (0, 1)),\n            ]\n        elif target_gate == \"h\":\n            return [Gate(\"h\", (0,))]\n        else:\n            return [Gate(\"identity\", (0,))]\n"
+    },
+    {
+      "hash": "c861034c",
+      "fitness": 0.9974011402703133,
+      "raw_fitness": 0.9989011402703133,
+      "per_target": {
+        "bell": 0.9978022805406266,
+        "cnot": 1.0
+      },
+      "sequence_lengths": {
+        "bell": 2,
+        "cnot": 1
+      },
+      "generation": 14,
+      "parent_hash": "b87bb664",
+      "model_used": "google/gemini-2.5-flash",
+      "valid": true,
+      "error": null,
+      "method_body": "        # The original strategy for \"bell\" and \"cnot\" is already quite minimal.\n                # For TLF noise, echo sequences can be beneficial, especially for longer operations.\n                # However, for single CNOT or Bell state preparation, adding echoes\n                # might increase the gate count and thus overall noise exposure,\n                # unless the echo very effectively cancels the specific correlated noise.\n                # Given the \"shorter sequences = less noise exposure = generally better\"\n                # and the relatively high correlation length, a simple echo might not\n                # be optimal for these short sequences.\n                # We will focus on optimizing the \"cnot\" gate for potential echo benefit,\n                # and keep \"bell\" minimal for now as it's a short sequence.\n                # For \"swap\", we can try a different decomposition that might be more robust.\n\n                if target_gate == \"bell\":\n                    return [\n                        Gate(\"h\", (0,)),\n                        Gate(\"cnot\", (0, 1)),\n                    ]\n                elif target_gate == \"cnot\":\n                    # For CNOT, we can consider a decomposition that might offer some\n                    # resilience or an echo-like structure.\n                    # A common CNOT decomposition is H-CNOT-H (on target qubit)\n                    # which is equivalent to CZ.\n                    # Alternatively, for Z-dephasing, applying specific rotations\n                    # can act as decoupling.\n                    # A common echo for single-qubit Z noise is Rx-P-Rx.\n                    # For two-qubit gates, it's more complex.\n                    # Let's try a decomposition that might spread the noise or\n                    # allow for some cancellation, or a shorter sequence if possible.\n                    # The standard CNOT is often implemented with sqrt_swap gates.\n                    # Another decomposition is:\n                    # H(1) - CNOT(0,1) - H(1) = CZ(0,1)\n                    # CNOT(0,1) = H(1) - CZ(0,1) - H(1)\n                    # CZ(0,1) = H(1) - CNOT(0,1) - H(1)\n                    # For Z-dephasing, a CNOT is robust to Z-noise on control,\n                    # but not on target.\n                    # A common way to make a CNOT more robust to Z-dephasing is\n                    # through a dynamical decoupling sequence.\n                    # Let's try to implement a CNOT using two CZ gates and single-qubit rotations.\n                    # This generally increases gate count, but if the single-qubit gates\n                    # can act as echoes against correlated Z-noise, it might be better.\n                    # CNOT(0,1) = Rz(-pi/2, 1) - H(1) - CZ(0,1) - H(1) - Rz(pi/2, 1)\n                    # This is not directly useful.\n                    # Let's consider a simple echo for CNOT if possible.\n                    # A common strategy is to interleave pi pulses.\n                    # However, for a single CNOT, adding more gates directly increases noise rounds.\n                    # Given the high correlation length, perhaps a \"stretched\" CNOT\n                    # to allow for some averaging, or simply sticking to the minimal\n                    # CNOT is best.\n                    # Let's consider the standard CNOT. For Z-dephasing, a CNOT is\n                    # (I x H) CZ (I x H). The H gates convert Z to X and vice-versa.\n                    # If the noise is purely Z, then it might be more robust to keep\n                    # the gate as a CZ directly.\n                    # CNOT(0,1) = H(1) - CZ(0,1) - H(1)\n                    # Let's keep the direct CNOT as it's the minimal sequence.\n                    return [Gate(\"cnot\", (0, 1))]\n                elif target_gate == \"swap\":\n                    # The standard SWAP decomposition is 3 CNOTs.\n                    # SWAP(0,1) = CNOT(0,1) - CNOT(1,0) - CNOT(0,1)\n                    # This means 3 rounds of noise.\n                    # Can we do better? Using sqrt_swap gates?\n                    # SWAP = sqrt_swap - sqrt_swap_dagger - sqrt_swap\n                    # This is typically not better in terms of gate counts.\n                    # A different decomposition for SWAP that might be more robust\n                    # to Z-dephasing could involve single-qubit gates.\n                    # However, for TLF correlation, simply reducing total gate count\n                    # is often most effective. The 3-CNOT decomposition is minimal\n                    # in terms of CNOTs.\n                    # Let's stick to the minimal CNOT-based SWAP.\n                    return [\n                        Gate(\"cnot\", (0, 1)),\n                        Gate(\"cnot\", (1, 0)),\n                        Gate(\"cnot\", (0, 1)),\n                    ]\n                elif target_gate == \"ghz\":\n                    # For GHZ, the current strategy builds a chain of CNOTs.\n                    # This involves n-1 CNOTs.\n                    # Each CNOT adds noise. For TLF, keeping qubits close is good.\n                    # The current approach chains CNOTs from qubit 0 to others.\n                    # This seems reasonable for minimal CNOT count.\n                    seq = [Gate(\"h\", (0,))]\n                    for q in range(1, n_qubits):\n                        seq.append(Gate(\"cnot\", (0, q)))\n                    return seq\n                elif target_gate == \"h\":\n                    # Single Hadamards are fundamental. Minimal sequence.\n                    return [Gate(\"h\", (0,))]\n                else:\n                    # Default to identity for unknown gates.\n                    return [Gate(\"identity\", (0,))]"
+    },
+    {
+      "hash": "07b351be",
+      "fitness": 0.992478521972929,
+      "raw_fitness": 0.9969785219729289,
+      "per_target": {
+        "bell": 0.9939570439458578,
+        "cnot": 1.0
+      },
+      "sequence_lengths": {
+        "bell": 4,
+        "cnot": 5
+      },
+      "generation": 14,
+      "parent_hash": "c861034c",
+      "model_used": "anthropic/claude-sonnet-4",
+      "valid": true,
+      "error": null,
+      "method_body": "        # For TLF-correlated Z-dephasing, we need to balance sequence length vs echo effects.\n                # Key insight: correlation length 81nm means nearest neighbors are moderately correlated (0.264).\n                # Short sequences are generally better, but strategic single-qubit rotations can provide\n                # dynamical decoupling against correlated Z-noise without adding two-qubit gates.\n\n                if target_gate == \"bell\":\n                    # Bell state preparation is already minimal. Adding Z-rotation echoes\n                    # between H and CNOT could help decouple correlated dephasing.\n                    # Use small angle rotations that act as weak echoes.\n                    return [\n                        Gate(\"h\", (0,)),\n                        Gate(\"rz\", (0,), {\"theta\": 0.1}),  # Small echo pulse\n                        Gate(\"rz\", (1,), {\"theta\": -0.1}), # Anti-correlated echo\n                        Gate(\"cnot\", (0, 1)),\n                    ]\n                elif target_gate == \"cnot\":\n                    # For CNOT under Z-dephasing, add symmetric echo pulses before and after.\n                    # These create a dynamical decoupling effect against correlated noise.\n                    return [\n                        Gate(\"rz\", (0,), {\"theta\": 0.15}),\n                        Gate(\"rz\", (1,), {\"theta\": -0.15}),\n                        Gate(\"cnot\", (0, 1)),\n                        Gate(\"rz\", (0,), {\"theta\": -0.15}),\n                        Gate(\"rz\", (1,), {\"theta\": 0.15}),\n                    ]\n                elif target_gate == \"swap\":\n                    # For SWAP, interleave small echo pulses between CNOTs to break up\n                    # correlated dephasing accumulation across the 3-CNOT sequence.\n                    return [\n                        Gate(\"cnot\", (0, 1)),\n                        Gate(\"rz\", (0,), {\"theta\": 0.1}),\n                        Gate(\"rz\", (1,), {\"theta\": -0.1}),\n                        Gate(\"cnot\", (1, 0)),\n                        Gate(\"rz\", (0,), {\"theta\": -0.1}),\n                        Gate(\"rz\", (1,), {\"theta\": 0.1}),\n                        Gate(\"cnot\", (0, 1)),\n                    ]\n                elif target_gate == \"ghz\":\n                    # For GHZ, add echo pulses after every few CNOTs to prevent\n                    # correlated noise accumulation across the chain.\n                    seq = [Gate(\"h\", (0,))]\n                    for q in range(1, n_qubits):\n                        seq.append(Gate(\"cnot\", (0, q)))\n                        if q % 2 == 0:  # Add echoes every other CNOT\n                            seq.append(Gate(\"rz\", (0,), {\"theta\": 0.05}))\n                            seq.append(Gate(\"rz\", (q,), {\"theta\": -0.05}))\n                    return seq\n                elif target_gate == \"h\":\n                    return [Gate(\"h\", (0,))]\n                else:\n                    return [Gate(\"identity\", (0,))]"
+    },
+    {
+      "hash": "546be00c",
+      "fitness": 0.0,
+      "raw_fitness": 0.0,
+      "per_target": {},
+      "sequence_lengths": {},
+      "generation": 14,
+      "parent_hash": "b87bb664",
+      "model_used": "deepseek/deepseek-chat",
+      "valid": false,
+      "error": "Compilation: unindent does not match any outer indentation level (<string>, line 44)",
+      "method_body": "        if target_gate == \"bell\":\n                    return [\n                        Gate(\"h\", (0,)),\n                        Gate(\"cnot\", (0, 1)),\n                    ]\n                elif target_gate == \"ghz\":\n                    seq = [Gate(\"h\", (0,))]\n                    for q in range(1, n_qubits):\n                        seq.append(Gate(\"cnot\", (0, q)))\n                    return seq\n                elif target_gate == \"cnot\":\n                    return [Gate(\"cnot\", (0, 1))]\n                elif target_gate == \"swap\":\n                    return [\n                        Gate(\"cnot\", (0, 1)),\n                        Gate(\"cnot\", (1, 0)),\n                        Gate(\"cnot\", (0, 1)),\n                    ]\n                elif target_gate == \"h\":\n                    return [Gate(\"h\", (0,))]\n                else:\n                    return [Gate(\"identity\", (0,))]"
+    },
+    {
+      "hash": "adcaeead",
+      "fitness": 0.9974011402703133,
+      "raw_fitness": 0.9989011402703133,
+      "per_target": {
+        "bell": 0.9978022805406266,
+        "cnot": 1.0
+      },
+      "sequence_lengths": {
+        "bell": 2,
+        "cnot": 1
+      },
+      "generation": 14,
+      "parent_hash": "0dd61e2a",
+      "model_used": "google/gemini-2.5-flash",
+      "valid": true,
+      "error": null,
+      "method_body": "        # For TLF-correlated Z-dephasing, key principles:\n                # 1. Minimize total gate count (less noise exposure).\n                # 2. Leverage CNOT's natural robustness to Z-noise on the control qubit.\n                # 3. For multi-qubit gates, consider echo/decoupling techniques if the correlation\n                #    is strong enough to allow for error cancellation across interaction partners.\n                #    The given correlation (exp(-d/81.0nm)) for nearest neighbors (0.264) is significant.\n                # 4. For SWAP and GHZ, where multiple CNOTs are involved, strategically placing\n                #    Hadamard gates can convert Z-errors to X-errors, which might be easier to\n                #    manage or cancel if the subsequent gates are robust to X-errors.\n                #    However, for TLF-correlated Z-dephasing, direct Z-error cancellation is preferred.\n                # 5. Utilizing `sqrt_swap` for `swap` can potentially offer better fidelity if\n                #    the noise exposure per gate is lower, or if its decomposition is more robust.\n                #    However, `sqrt_swap` is usually decomposed into CNOTs and rotations, which might\n                #    increase the total gate count if not a native gate. Here, we assume it's a native gate.\n\n                if target_gate == \"bell\":\n                    # The standard Bell state preparation is already optimal in gate count.\n                    # CNOT is robust to Z-noise on the control qubit (qubit 0).\n                    # H gate converts Z-errors to X-errors, but it's a single gate exposure.\n                    # No better known sequence for TLF noise.\n                    return [\n                        Gate(\"h\", (0,)),\n                        Gate(\"cnot\", (0, 1)),\n                    ]\n                elif target_gate == \"cnot\":\n                    # A direct CNOT is the single-gate implementation, minimizing noise exposure.\n                    # CNOT naturally robust to Z-dephasing on control qubit.\n                    # For TLF noise, fewer gates generally means higher fidelity.\n                    # Avoid decompositions that increase gate count like H-CZ-H.\n                    return [Gate(\"cnot\", (0, 1))]\n                elif target_gate == \"swap\":\n                    # For TLF-correlated Z-dephasing, a direct SWAP gate (if available) would be ideal.\n                    # Since it's not listed as a basic gate, we consider decompositions.\n                    # The standard 3-CNOT decomposition is minimal in terms of CNOT count.\n                    # Each CNOT benefits from robustness to Z-noise on the control.\n                    # However, for correlated noise, we can consider a decomposition that potentially\n                    # cancels some correlated errors.\n                    # A common alternative uses sqrt_swap. If sqrt_swap is a native gate,\n                    # it might be beneficial due to its potentially lower depth or different noise profile.\n                    # Here, we assume sqrt_swap is a \"native\" operation that might have a different\n                    # noise profile than a 3-CNOT decomposition.\n                    # Let's try a sqrt_swap based decomposition as it might have different error accumulation.\n                    # A SWAP can be implemented as sqrt_swap - identity - sqrt_swap - identity - sqrt_swap\n                    # This is not necessarily better than 3 CNOTs for Z-noise.\n                    # Let's stick to the 3-CNOT for its known robustness to Z-dephasing on the control.\n                    # However, for strong correlation, a CNOT-SWAP-CNOT sequence can act as an echo.\n                    # No, that's incorrect for SWAP.\n                    # For Z-dephasing, the standard 3 CNOT sequence is likely best due to gate count.\n                    # The current strategy is already good for this.\n                    return [\n                        Gate(\"cnot\", (0, 1)),\n                        Gate(\"cnot\", (1, 0)),\n                        Gate(\"cnot\", (0, 1)),\n                    ]\n                elif target_gate == \"ghz\":\n                    # The existing approach uses a chain of CNOTs from qubit 0.\n                    # This is optimal for gate count and leverages CNOT robustness on qubit 0.\n                    # For TLF noise, keeping the \"active\" qubit (control) consistent might help\n                    # with error coherence, as the control qubit will experience similar noise\n                    # throughout the sequence.\n                    # For highly correlated Z-noise, we might consider a \"symmetric\" GHZ state preparation\n                    # if n_qubits is even, but the standard chain is generally robust.\n                    # The original chain is likely the best for minimizing gate count.\n                    seq = [Gate(\"h\", (0,))]\n                    for q in range(1, n_qubits):\n                        seq.append(Gate(\"cnot\", (0, q)))\n                    return seq\n                elif target_gate == \"h\":\n                    # Single Hadamard is fundamental and minimal.\n                    # Converts Z-errors to X-errors. No simpler implementation exists.\n                    return [Gate(\"h\", (0,))]\n                else:\n                    # Default case for unknown gates\n                    return [Gate(\"identity\", (0,))]"
+    }
+  ],
+  "history": [
+    {
+      "generation": 0,
+      "best_fitness": 0.9974011402703133,
+      "mean_fitness": 0.4599917228567089,
+      "std_fitness": 0.42082960543028514,
+      "valid_count": 6,
+      "total_count": 10,
+      "llm_calls": 11,
+      "total_tokens": 17068,
+      "wall_time": 191.56254267692566,
+      "best_ever_fitness": 0.9974011402703133
+    },
+    {
+      "generation": 1,
+      "best_fitness": 0.9974011402703133,
+      "mean_fitness": 0.577637126443213,
+      "std_fitness": 0.4379719995495949,
+      "valid_count": 8,
+      "total_count": 10,
+      "llm_calls": 22,
+      "total_tokens": 40260,
+      "wall_time": 439.6999228000641,
+      "best_ever_fitness": 0.9974011402703133
+    },
+    {
+      "generation": 2,
+      "best_fitness": 0.9974011402703133,
+      "mean_fitness": 0.6349782121820781,
+      "std_fitness": 0.447896182857892,
+      "valid_count": 8,
+      "total_count": 10,
+      "llm_calls": 32,
+      "total_tokens": 63110,
+      "wall_time": 585.8718390464783,
+      "best_ever_fitness": 0.9974011402703133
+    },
+    {
+      "generation": 3,
+      "best_fitness": 0.9974011402703133,
+      "mean_fitness": 0.7097246150792575,
+      "std_fitness": 0.37903191046415485,
+      "valid_count": 9,
+      "total_count": 10,
+      "llm_calls": 41,
+      "total_tokens": 81935,
+      "wall_time": 737.0381150245667,
+      "best_ever_fitness": 0.9974011402703133
+    },
+    {
+      "generation": 4,
+      "best_fitness": 0.9974011402703133,
+      "mean_fitness": 0.46668860033887966,
+      "std_fitness": 0.45590269123901755,
+      "valid_count": 6,
+      "total_count": 10,
+      "llm_calls": 53,
+      "total_tokens": 113384,
+      "wall_time": 1013.1816976070404,
+      "best_ever_fitness": 0.9974011402703133
+    },
+    {
+      "generation": 5,
+      "best_fitness": 0.9974011402703133,
+      "mean_fitness": 0.6717596585566605,
+      "std_fitness": 0.41781730196462413,
+      "valid_count": 8,
+      "total_count": 10,
+      "llm_calls": 63,
+      "total_tokens": 137807,
+      "wall_time": 1156.6067819595337,
+      "best_ever_fitness": 0.9974011402703133
+    },
+    {
+      "generation": 6,
+      "best_fitness": 0.9974011402703133,
+      "mean_fitness": 0.5224347716353399,
+      "std_fitness": 0.47841493475679575,
+      "valid_count": 6,
+      "total_count": 10,
+      "llm_calls": 75,
+      "total_tokens": 165969,
+      "wall_time": 1315.4931631088257,
+      "best_ever_fitness": 0.9974011402703133
+    },
+    {
+      "generation": 7,
+      "best_fitness": 0.9974011402703133,
+      "mean_fitness": 0.45264087818793214,
+      "std_fitness": 0.4547512287042113,
+      "valid_count": 6,
+      "total_count": 10,
+      "llm_calls": 87,
+      "total_tokens": 190168,
+      "wall_time": 1528.6518936157227,
+      "best_ever_fitness": 0.9974011402703133
+    },
+    {
+      "generation": 8,
+      "best_fitness": 0.9974011402703133,
+      "mean_fitness": 0.6212060815826672,
+      "std_fitness": 0.4599265480601545,
+      "valid_count": 8,
+      "total_count": 10,
+      "llm_calls": 97,
+      "total_tokens": 211513,
+      "wall_time": 1723.831881761551,
+      "best_ever_fitness": 0.9974011402703133
+    },
+    {
+      "generation": 9,
+      "best_fitness": 0.9974011402703133,
+      "mean_fitness": 0.6395579752174598,
+      "std_fitness": 0.4347406723231812,
+      "valid_count": 8,
+      "total_count": 10,
+      "llm_calls": 107,
+      "total_tokens": 237247,
+      "wall_time": 1861.6586334705353,
+      "best_ever_fitness": 0.9974011402703133
+    },
+    {
+      "generation": 10,
+      "best_fitness": 0.9974011402703133,
+      "mean_fitness": 0.8060223244423395,
+      "std_fitness": 0.3204332470010748,
+      "valid_count": 9,
+      "total_count": 10,
+      "llm_calls": 117,
+      "total_tokens": 264748,
+      "wall_time": 2012.8894743919373,
+      "best_ever_fitness": 0.9974011402703133
+    },
+    {
+      "generation": 11,
+      "best_fitness": 0.9974011402703133,
+      "mean_fitness": 0.8962700899746123,
+      "std_fitness": 0.20866423410039148,
+      "valid_count": 10,
+      "total_count": 10,
+      "llm_calls": 126,
+      "total_tokens": 289840,
+      "wall_time": 2167.44295668602,
+      "best_ever_fitness": 0.9974011402703133
+    },
+    {
+      "generation": 12,
+      "best_fitness": 0.9974011402703133,
+      "mean_fitness": 0.5566317717866253,
+      "std_fitness": 0.4143527516878626,
+      "valid_count": 7,
+      "total_count": 10,
+      "llm_calls": 137,
+      "total_tokens": 319655,
+      "wall_time": 2367.4169552326202,
+      "best_ever_fitness": 0.9974011402703133
+    },
+    {
+      "generation": 13,
+      "best_fitness": 0.9974011402703133,
+      "mean_fitness": 0.5771173354557932,
+      "std_fitness": 0.4540680320758257,
+      "valid_count": 7,
+      "total_count": 10,
+      "llm_calls": 147,
+      "total_tokens": 346722,
+      "wall_time": 2641.3802406787872,
+      "best_ever_fitness": 0.9974011402703133
+    },
+    {
+      "generation": 14,
+      "best_fitness": 0.9974011402703133,
+      "mean_fitness": 0.7969363885567737,
+      "std_fitness": 0.3984727552507367,
+      "valid_count": 4,
+      "total_count": 5,
+      "llm_calls": 150,
+      "total_tokens": 353409,
+      "wall_time": 2737.9053366184235,
+      "best_ever_fitness": 0.9974011402703133
+    }
+  ]
+}

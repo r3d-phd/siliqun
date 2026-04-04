@@ -1,0 +1,46 @@
+2026-04-04 08:40:42,001 [INFO] ============================================================
+2026-04-04 08:40:42,001 [INFO] AlphaEvolve Noise Mitigation Discovery
+2026-04-04 08:40:42,001 [INFO] ============================================================
+2026-04-04 08:40:42,001 [INFO] Population: 10
+2026-04-04 08:40:42,001 [INFO] Generations: 20
+2026-04-04 08:40:42,001 [INFO] Models: ['deepseek/deepseek-chat', 'google/gemini-2.5-flash', 'anthropic/claude-sonnet-4']
+2026-04-04 08:40:42,001 [INFO] Noise amplitude: 0.05
+2026-04-04 08:40:42,002 [INFO] NN correlation: 0.264
+2026-04-04 08:40:42,002 [INFO] Max LLM calls: 150
+2026-04-04 08:40:42,002 [INFO] ============================================================
+2026-04-04 08:40:42,002 [INFO] Initializing population...
+2026-04-04 08:40:42,085 [INFO] Seed 'standard': fitness=0.997401, valid=True
+2026-04-04 08:40:42,193 [INFO] Seed 'correlation_aware': fitness=0.995877, valid=True
+2026-04-04 08:40:42,306 [INFO] Seed 'sqrt_swap_native': fitness=0.621478, valid=True
+2026-04-04 08:41:19,253 [INFO] Init mutant (deepseek/deepseek-chat): fitness=0.000000, valid=False
+2026-04-04 08:41:31,195 [INFO] Init mutant (anthropic/claude-sonnet-4): fitness=0.000000, valid=False
+2026-04-04 08:41:41,985 [INFO] Init mutant (anthropic/claude-sonnet-4): fitness=0.000000, valid=False
+2026-04-04 08:41:51,513 [INFO] Init mutant (google/gemini-2.5-flash): fitness=0.000000, valid=False
+2026-04-04 08:42:35,965 [INFO] Init mutant (deepseek/deepseek-chat): fitness=0.000000, valid=False
+2026-04-04 08:42:44,502 [INFO] Init mutant (google/gemini-2.5-flash): fitness=0.000000, valid=False
+2026-04-04 08:42:53,523 [INFO] Init mutant (anthropic/claude-sonnet-4): fitness=0.000000, valid=False
+2026-04-04 08:42:53,523 [INFO] NEW BEST: fitness=0.997401 (hash=b87bb664)
+2026-04-04 08:42:53,524 [INFO] === Gen 0 Summary === best=0.997401 | mean=0.261476 | valid=3/10 | LLM calls=7 | time=131.5s
+2026-04-04 08:42:57,809 [INFO] Gen 1 | INVALID | claude-sonnet-4 | fitness=0.000000 | type=crossover
+2026-04-04 08:43:22,380 [INFO] Gen 1 | INVALID | deepseek-chat | fitness=0.000000 | type=creative
+2026-04-04 08:43:29,212 [INFO] Gen 1 | INVALID | gemini-2.5-flash | fitness=0.000000 | type=improve
+2026-04-04 08:43:41,381 [INFO] Gen 1 | INVALID | claude-sonnet-4 | fitness=0.000000 | type=creative
+2026-04-04 08:43:49,409 [INFO] Gen 1 | INVALID | deepseek-chat | fitness=0.000000 | type=crossover
+2026-04-04 08:43:56,464 [INFO] Gen 1 | INVALID | gemini-2.5-flash | fitness=0.000000 | type=improve
+2026-04-04 08:44:08,328 [INFO] Gen 1 | INVALID | claude-sonnet-4 | fitness=0.000000 | type=improve
+2026-04-04 08:44:47,636 [INFO] Gen 1 | INVALID | deepseek-chat | fitness=0.000000 | type=improve
+2026-04-04 08:44:47,636 [INFO] === Gen 1 Summary === best=0.997401 | mean=0.199328 | valid=2/10 | LLM calls=15 | time=245.6s
+2026-04-04 08:45:08,763 [INFO] Gen 2 | VALID | claude-sonnet-4 | fitness=-0.012189 | type=improve
+2026-04-04 08:45:25,477 [INFO] Gen 2 | INVALID | deepseek-chat | fitness=0.000000 | type=improve
+2026-04-04 08:45:40,353 [INFO] Gen 2 | INVALID | gemini-2.5-flash | fitness=0.000000 | type=creative
+2026-04-04 08:45:57,053 [INFO] Gen 2 | INVALID | claude-sonnet-4 | fitness=0.000000 | type=creative
+2026-04-04 08:46:02,058 [WARNING] LLM call failed (deepseek/deepseek-chat): HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by SSLError(SSLZeroReturnError(6, 'TLS/SSL connection has been closed (EOF) (_ssl.c:992)')))
+2026-04-04 08:46:02,136 [INFO] Gen 2 | VALID | deepseek-chat | fitness=0.995877 | type=creative
+2026-04-04 08:46:18,541 [INFO] Gen 2 | INVALID | gemini-2.5-flash | fitness=0.000000 | type=improve
+2026-04-04 08:46:30,548 [INFO] Gen 2 | INVALID | claude-sonnet-4 | fitness=0.000000 | type=improve
+2026-04-04 08:46:47,940 [INFO] Gen 2 | INVALID | deepseek-chat | fitness=0.000000 | type=improve
+2026-04-04 08:46:47,941 [INFO] === Gen 2 Summary === best=0.997401 | mean=0.297697 | valid=4/10 | LLM calls=22 | time=365.9s
+2026-04-04 08:46:58,189 [INFO] Gen 3 | INVALID | claude-sonnet-4 | fitness=0.000000 | type=crossover
+2026-04-04 08:47:41,469 [INFO] Gen 3 | INVALID | deepseek-chat | fitness=0.000000 | type=creative
+2026-04-04 08:47:49,030 [INFO] Gen 3 | INVALID | gemini-2.5-flash | fitness=0.000000 | type=improve
+2026-04-04 08:48:00,940 [INFO] Gen 3 | INVALID | claude-sonnet-4 | fitness=0.000000 | type=improve

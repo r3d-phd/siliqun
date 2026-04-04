@@ -1,0 +1,204 @@
+{
+  "generation": 0,
+  "best_ever": {
+    "hash": "b87bb664",
+    "fitness": 0.9974011402703133,
+    "raw_fitness": 0.9989011402703133,
+    "per_target": {
+      "bell": 0.9978022805406266,
+      "cnot": 1.0
+    },
+    "sequence_lengths": {
+      "bell": 2,
+      "cnot": 1
+    },
+    "generation": 0,
+    "parent_hash": "",
+    "model_used": "seed:standard",
+    "valid": true,
+    "error": null,
+    "method_body": "        \"\"\"Generate a noise-mitigating gate sequence.\"\"\"\n        if target_gate == \"bell\":\n            return [\n                Gate(\"h\", (0,)),\n                Gate(\"cnot\", (0, 1)),\n            ]\n        elif target_gate == \"ghz\":\n            seq = [Gate(\"h\", (0,))]\n            for q in range(1, n_qubits):\n                seq.append(Gate(\"cnot\", (0, q)))\n            return seq\n        elif target_gate == \"cnot\":\n            return [Gate(\"cnot\", (0, 1))]\n        elif target_gate == \"swap\":\n            return [\n                Gate(\"cnot\", (0, 1)),\n                Gate(\"cnot\", (1, 0)),\n                Gate(\"cnot\", (0, 1)),\n            ]\n        elif target_gate == \"h\":\n            return [Gate(\"h\", (0,))]\n        else:\n            return [Gate(\"identity\", (0,))]\n"
+  },
+  "population": [
+    {
+      "hash": "b87bb664",
+      "fitness": 0.9974011402703133,
+      "raw_fitness": 0.9989011402703133,
+      "per_target": {
+        "bell": 0.9978022805406266,
+        "cnot": 1.0
+      },
+      "sequence_lengths": {
+        "bell": 2,
+        "cnot": 1
+      },
+      "generation": 0,
+      "parent_hash": "",
+      "model_used": "seed:standard",
+      "valid": true,
+      "error": null,
+      "method_body": "        \"\"\"Generate a noise-mitigating gate sequence.\"\"\"\n        if target_gate == \"bell\":\n            return [\n                Gate(\"h\", (0,)),\n                Gate(\"cnot\", (0, 1)),\n            ]\n        elif target_gate == \"ghz\":\n            seq = [Gate(\"h\", (0,))]\n            for q in range(1, n_qubits):\n                seq.append(Gate(\"cnot\", (0, q)))\n            return seq\n        elif target_gate == \"cnot\":\n            return [Gate(\"cnot\", (0, 1))]\n        elif target_gate == \"swap\":\n            return [\n                Gate(\"cnot\", (0, 1)),\n                Gate(\"cnot\", (1, 0)),\n                Gate(\"cnot\", (0, 1)),\n            ]\n        elif target_gate == \"h\":\n            return [Gate(\"h\", (0,))]\n        else:\n            return [Gate(\"identity\", (0,))]\n"
+    },
+    {
+      "hash": "a01462e7",
+      "fitness": 0.9958774140112607,
+      "raw_fitness": 0.9983774140112607,
+      "per_target": {
+        "bell": 0.9967548280225214,
+        "cnot": 1.0
+      },
+      "sequence_lengths": {
+        "bell": 4,
+        "cnot": 1
+      },
+      "generation": 0,
+      "parent_hash": "",
+      "model_used": "seed:correlation_aware",
+      "valid": true,
+      "error": null,
+      "method_body": "        echo_depth = max(1, int(noise_correlation * 3))\n        if target_gate == \"bell\":\n            seq = [Gate(\"h\", (0,))]\n            for _ in range(echo_depth):\n                seq.append(Gate(\"rz\", (0,), {\"theta\": np.pi}))\n                seq.append(Gate(\"rz\", (0,), {\"theta\": -np.pi}))\n            seq.append(Gate(\"cnot\", (0, 1)))\n            return seq\n        elif target_gate == \"cnot\":\n            return [Gate(\"cnot\", (0, 1))]\n        elif target_gate == \"swap\":\n            return [Gate(\"cnot\", (0, 1)), Gate(\"cnot\", (1, 0)), Gate(\"cnot\", (0, 1))]\n        elif target_gate == \"ghz\":\n            seq = [Gate(\"h\", (0,))]\n            for q in range(1, n_qubits):\n                seq.append(Gate(\"cnot\", (0, q)))\n            return seq\n        else:\n            return [Gate(\"identity\", (0,))]\n"
+    },
+    {
+      "hash": "83a01bde",
+      "fitness": 0.6214782518132125,
+      "raw_fitness": 0.6244782518132125,
+      "per_target": {
+        "bell": 0.24999999999999992,
+        "cnot": 0.998956503626425
+      },
+      "sequence_lengths": {
+        "bell": 3,
+        "cnot": 3
+      },
+      "generation": 0,
+      "parent_hash": "",
+      "model_used": "seed:sqrt_swap_native",
+      "valid": true,
+      "error": null,
+      "method_body": "        if target_gate == \"bell\":\n            return [\n                Gate(\"h\", (0,)),\n                Gate(\"sqrt_swap\", (0, 1)),\n                Gate(\"sqrt_swap\", (0, 1)),\n            ]\n        elif target_gate == \"cnot\":\n            return [Gate(\"h\", (1,)), Gate(\"cz\", (0, 1)), Gate(\"h\", (1,))]\n        elif target_gate == \"swap\":\n            return [Gate(\"swap\", (0, 1))]\n        elif target_gate == \"ghz\":\n            seq = [Gate(\"h\", (0,))]\n            for q in range(1, n_qubits):\n                seq.append(Gate(\"cnot\", (0, q)))\n            return seq\n        else:\n            return [Gate(\"identity\", (0,))]\n"
+    },
+    {
+      "hash": "e53b6a5c",
+      "fitness": 0.0,
+      "raw_fitness": 0.0,
+      "per_target": {},
+      "sequence_lengths": {},
+      "generation": 0,
+      "parent_hash": "b87bb664",
+      "model_used": "deepseek/deepseek-chat",
+      "valid": false,
+      "error": "Compilation: unindent does not match any outer indentation level (<string>, line 47)",
+      "method_body": "        if target_gate == \"bell\":\n                    return [\n                        Gate(\"ry\", (0,), {\"theta\": np.pi/4}),\n                        Gate(\"rz\", (1,), {\"theta\": np.pi/2}),\n                        Gate(\"cnot\", (0, 1)),\n                        Gate(\"ry\", (0,), {\"theta\": -np.pi/4}),\n                        Gate(\"rz\", (1,), {\"theta\": -np.pi/2}),\n                    ]\n                elif target_gate == \"cnot\":\n                    return [\n                        Gate(\"rz\", (1,), {\"theta\": np.pi/2}),\n                        Gate(\"sqrt_swap\", (0, 1)),\n                        Gate(\"rz\", (0,), {\"theta\": np.pi}),\n                        Gate(\"sqrt_swap\", (0, 1)),\n                        Gate(\"rz\", (1,), {\"theta\": -np.pi/2}),\n                    ]\n                elif target_gate == \"swap\":\n                    return [\n                        Gate(\"ry\", (0,), {\"theta\": np.pi/2}),\n                        Gate(\"cnot\", (0, 1)),\n                        Gate(\"ry\", (0,), {\"theta\": -np.pi/2}),\n                        Gate(\"cnot\", (1, 0)),\n                        Gate(\"ry\", (1,), {\"theta\": np.pi/2}),\n                        Gate(\"cnot\", (0, 1)),\n                    ]\n                elif target_gate == \"ghz\":\n                    seq = [Gate(\"h\", (0,))]\n                    for q in range(1, n_qubits):\n                        seq.extend([\n                            Gate(\"rz\", (q,), {\"theta\": np.pi/4}),\n                            Gate(\"cnot\", (0, q)),\n                            Gate(\"rz\", (q,), {\"theta\": -np.pi/4}),\n                        ])\n                    return seq\n                else:\n                    return [Gate(\"identity\", (0,))]"
+    },
+    {
+      "hash": "c861034c",
+      "fitness": 0.9974011402703133,
+      "raw_fitness": 0.9989011402703133,
+      "per_target": {
+        "bell": 0.9978022805406266,
+        "cnot": 1.0
+      },
+      "sequence_lengths": {
+        "bell": 2,
+        "cnot": 1
+      },
+      "generation": 0,
+      "parent_hash": "b87bb664",
+      "model_used": "google/gemini-2.5-flash",
+      "valid": true,
+      "error": null,
+      "method_body": "        # The original strategy for \"bell\" and \"cnot\" is already quite minimal.\n                # For TLF noise, echo sequences can be beneficial, especially for longer operations.\n                # However, for single CNOT or Bell state preparation, adding echoes\n                # might increase the gate count and thus overall noise exposure,\n                # unless the echo very effectively cancels the specific correlated noise.\n                # Given the \"shorter sequences = less noise exposure = generally better\"\n                # and the relatively high correlation length, a simple echo might not\n                # be optimal for these short sequences.\n                # We will focus on optimizing the \"cnot\" gate for potential echo benefit,\n                # and keep \"bell\" minimal for now as it's a short sequence.\n                # For \"swap\", we can try a different decomposition that might be more robust.\n\n                if target_gate == \"bell\":\n                    return [\n                        Gate(\"h\", (0,)),\n                        Gate(\"cnot\", (0, 1)),\n                    ]\n                elif target_gate == \"cnot\":\n                    # For CNOT, we can consider a decomposition that might offer some\n                    # resilience or an echo-like structure.\n                    # A common CNOT decomposition is H-CNOT-H (on target qubit)\n                    # which is equivalent to CZ.\n                    # Alternatively, for Z-dephasing, applying specific rotations\n                    # can act as decoupling.\n                    # A common echo for single-qubit Z noise is Rx-P-Rx.\n                    # For two-qubit gates, it's more complex.\n                    # Let's try a decomposition that might spread the noise or\n                    # allow for some cancellation, or a shorter sequence if possible.\n                    # The standard CNOT is often implemented with sqrt_swap gates.\n                    # Another decomposition is:\n                    # H(1) - CNOT(0,1) - H(1) = CZ(0,1)\n                    # CNOT(0,1) = H(1) - CZ(0,1) - H(1)\n                    # CZ(0,1) = H(1) - CNOT(0,1) - H(1)\n                    # For Z-dephasing, a CNOT is robust to Z-noise on control,\n                    # but not on target.\n                    # A common way to make a CNOT more robust to Z-dephasing is\n                    # through a dynamical decoupling sequence.\n                    # Let's try to implement a CNOT using two CZ gates and single-qubit rotations.\n                    # This generally increases gate count, but if the single-qubit gates\n                    # can act as echoes against correlated Z-noise, it might be better.\n                    # CNOT(0,1) = Rz(-pi/2, 1) - H(1) - CZ(0,1) - H(1) - Rz(pi/2, 1)\n                    # This is not directly useful.\n                    # Let's consider a simple echo for CNOT if possible.\n                    # A common strategy is to interleave pi pulses.\n                    # However, for a single CNOT, adding more gates directly increases noise rounds.\n                    # Given the high correlation length, perhaps a \"stretched\" CNOT\n                    # to allow for some averaging, or simply sticking to the minimal\n                    # CNOT is best.\n                    # Let's consider the standard CNOT. For Z-dephasing, a CNOT is\n                    # (I x H) CZ (I x H). The H gates convert Z to X and vice-versa.\n                    # If the noise is purely Z, then it might be more robust to keep\n                    # the gate as a CZ directly.\n                    # CNOT(0,1) = H(1) - CZ(0,1) - H(1)\n                    # Let's keep the direct CNOT as it's the minimal sequence.\n                    return [Gate(\"cnot\", (0, 1))]\n                elif target_gate == \"swap\":\n                    # The standard SWAP decomposition is 3 CNOTs.\n                    # SWAP(0,1) = CNOT(0,1) - CNOT(1,0) - CNOT(0,1)\n                    # This means 3 rounds of noise.\n                    # Can we do better? Using sqrt_swap gates?\n                    # SWAP = sqrt_swap - sqrt_swap_dagger - sqrt_swap\n                    # This is typically not better in terms of gate counts.\n                    # A different decomposition for SWAP that might be more robust\n                    # to Z-dephasing could involve single-qubit gates.\n                    # However, for TLF correlation, simply reducing total gate count\n                    # is often most effective. The 3-CNOT decomposition is minimal\n                    # in terms of CNOTs.\n                    # Let's stick to the minimal CNOT-based SWAP.\n                    return [\n                        Gate(\"cnot\", (0, 1)),\n                        Gate(\"cnot\", (1, 0)),\n                        Gate(\"cnot\", (0, 1)),\n                    ]\n                elif target_gate == \"ghz\":\n                    # For GHZ, the current strategy builds a chain of CNOTs.\n                    # This involves n-1 CNOTs.\n                    # Each CNOT adds noise. For TLF, keeping qubits close is good.\n                    # The current approach chains CNOTs from qubit 0 to others.\n                    # This seems reasonable for minimal CNOT count.\n                    seq = [Gate(\"h\", (0,))]\n                    for q in range(1, n_qubits):\n                        seq.append(Gate(\"cnot\", (0, q)))\n                    return seq\n                elif target_gate == \"h\":\n                    # Single Hadamards are fundamental. Minimal sequence.\n                    return [Gate(\"h\", (0,))]\n                else:\n                    # Default to identity for unknown gates.\n                    return [Gate(\"identity\", (0,))]"
+    },
+    {
+      "hash": "a89fb977",
+      "fitness": 0.36850000000000005,
+      "raw_fitness": 0.37500000000000006,
+      "per_target": {
+        "bell": 0.25,
+        "cnot": 0.5000000000000001
+      },
+      "sequence_lengths": {
+        "bell": 6,
+        "cnot": 7
+      },
+      "generation": 0,
+      "parent_hash": "b87bb664",
+      "model_used": "anthropic/claude-sonnet-4",
+      "valid": true,
+      "error": null,
+      "method_body": "        # Adaptive Correlation-Breaking Dynamical Decoupling Strategy\n                # Uses interleaved rotations and native sqrt_swap to break spatial correlations\n\n                if target_gate == \"bell\":\n                    # Anti-correlated rotation sequence to break TLF coherence\n                    return [\n                        Gate(\"ry\", (0,), {\"theta\": np.pi/2}),  # Hadamard via Y rotation\n                        Gate(\"rz\", (1,), {\"theta\": np.pi/4}),   # Phase shift to decorrelate\n                        Gate(\"sqrt_swap\", (0, 1)),              # Native gate for entanglement\n                        Gate(\"rz\", (0,), {\"theta\": -np.pi/4}),  # Compensating phase\n                        Gate(\"sqrt_swap\", (0, 1)),              # Complete Bell state\n                        Gate(\"rz\", (1,), {\"theta\": -np.pi/4}),  # Final decorrelation\n                    ]\n                elif target_gate == \"cnot\":\n                    # Correlation-aware CNOT with dynamical decoupling pulses\n                    correlation_strength = np.exp(-qubit_spacing_nm / tlf_correlation_length_nm)\n                    dd_angle = np.pi * correlation_strength  # Scale DD by correlation\n                    return [\n                        Gate(\"rz\", (0,), {\"theta\": dd_angle}),    # DD pulse on control\n                        Gate(\"rz\", (1,), {\"theta\": -dd_angle}),   # Anti-correlated DD on target\n                        Gate(\"sqrt_swap\", (0, 1)),                # Native entangling gate\n                        Gate(\"ry\", (1,), {\"theta\": np.pi}),       # Y flip for CNOT completion\n                        Gate(\"sqrt_swap\", (0, 1)),                # Second native gate\n                        Gate(\"rz\", (0,), {\"theta\": -dd_angle}),   # Compensating DD pulses\n                        Gate(\"rz\", (1,), {\"theta\": dd_angle}),\n                    ]\n                elif target_gate == \"swap\":\n                    # Triple sqrt_swap with interleaved decorrelation\n                    return [\n                        Gate(\"rz\", (0,), {\"theta\": np.pi/6}),\n                        Gate(\"sqrt_swap\", (0, 1)),\n                        Gate(\"rz\", (1,), {\"theta\": -np.pi/3}),\n                        Gate(\"sqrt_swap\", (0, 1)),\n                        Gate(\"rz\", (0,), {\"theta\": np.pi/6}),\n                        Gate(\"sqrt_swap\", (0, 1)),\n                        Gate(\"rz\", (1,), {\"theta\": np.pi/6}),\n                        Gate(\"sqrt_swap\", (0, 1)),\n                    ]\n                elif target_gate == \"ghz\":\n                    # Distributed GHZ with correlation breaking between each CNOT\n                    seq = [Gate(\"ry\", (0,), {\"theta\": np.pi/2})]  # Hadamard via Y\n                    for q in range(1, n_qubits):\n                        # Add decorrelation pulse before each entangling gate\n                        seq.append(Gate(\"rz\", (0,), {\"theta\": np.pi/(q+2)}))\n                        seq.append(Gate(\"rz\", (q,), {\"theta\": -np.pi/(q+2)}))\n                        seq.append(Gate(\"sqrt_swap\", (0, q)))\n                        seq.append(Gate(\"ry\", (q,), {\"theta\": np.pi}))\n                        seq.append(Gate(\"sqrt_swap\", (0, q)))\n                    return seq\n                else:\n                    return [Gate(\"identity\", (0,))]"
+    },
+    {
+      "hash": "28c29ae5",
+      "fitness": 0.0,
+      "raw_fitness": 0.0,
+      "per_target": {},
+      "sequence_lengths": {},
+      "generation": 0,
+      "parent_hash": "b87bb664",
+      "model_used": "deepseek/deepseek-chat",
+      "valid": false,
+      "error": "Compilation: unindent does not match any outer indentation level (<string>, line 47)",
+      "method_body": "        if target_gate == \"bell\":\n                    return [\n                        Gate(\"h\", (0,)),\n                        Gate(\"rz\", (0,), {\"theta\": np.pi/2}),\n                        Gate(\"cnot\", (0, 1)),\n                        Gate(\"rz\", (1,), {\"theta\": -np.pi/2}),\n                        Gate(\"rx\", (0,), {\"theta\": np.pi/2}),\n                    ]\n                elif target_gate == \"cnot\":\n                    return [\n                        Gate(\"rz\", (0,), {\"theta\": np.pi/2}),\n                        Gate(\"cnot\", (0, 1)),\n                        Gate(\"rz\", (1,), {\"theta\": -np.pi/2}),\n                    ]\n                elif target_gate == \"ghz\":\n                    seq = [Gate(\"h\", (0,))]\n                    for q in range(1, n_qubits):\n                        seq.extend([\n                            Gate(\"rz\", (q-1,), {\"theta\": np.pi/2}),\n                            Gate(\"cnot\", (q-1, q)),\n                            Gate(\"rz\", (q,), {\"theta\": -np.pi/2}),\n                        ])\n                    return seq\n                elif target_gate == \"swap\":\n                    return [\n                        Gate(\"rz\", (0,), {\"theta\": np.pi/2}),\n                        Gate(\"cnot\", (0, 1)),\n                        Gate(\"rz\", (1,), {\"theta\": -np.pi/2}),\n                        Gate(\"rz\", (1,), {\"theta\": np.pi/2}),\n                        Gate(\"cnot\", (1, 0)),\n                        Gate(\"rz\", (0,), {\"theta\": -np.pi/2}),\n                        Gate(\"rz\", (0,), {\"theta\": np.pi/2}),\n                        Gate(\"cnot\", (0, 1)),\n                        Gate(\"rz\", (1,), {\"theta\": -np.pi/2}),\n                    ]\n                elif target_gate == \"h\":\n                    return [\n                        Gate(\"rx\", (0,), {\"theta\": np.pi/2}),\n                        Gate(\"rz\", (0,), {\"theta\": np.pi/2}),\n                        Gate(\"rx\", (0,), {\"theta\": np.pi/2}),\n                    ]\n                else:\n                    return [Gate(\"identity\", (0,))]"
+    },
+    {
+      "hash": "f400c74c",
+      "fitness": 0.6192592822019896,
+      "raw_fitness": 0.6237592822019895,
+      "per_target": {
+        "bell": 0.9978022805406266,
+        "cnot": 0.24971628386335237
+      },
+      "sequence_lengths": {
+        "bell": 2,
+        "cnot": 7
+      },
+      "generation": 0,
+      "parent_hash": "b87bb664",
+      "model_used": "google/gemini-2.5-flash",
+      "valid": true,
+      "error": null,
+      "method_body": "        # Novel Strategy: \"Correlation-Aware Dynamic Decoupling CNOT\"\n                # This strategy aims to mitigate correlated Z-dephasing during CNOT\n                # operations by inserting dynamical decoupling pulses (Hadamards)\n                # around the CNOT, specifically targeting the control qubit and\n                # then the target qubit, inverting their states to average out\n                # the dephasing noise. The \"sqrt_swap\" is used as a native gate\n                # to potentially reduce the overall gate time and thus noise exposure\n                # if the hardware supports it efficiently, though it's decomposed here\n                # for generality. The specific sequence for CNOT is designed to\n                # exploit the correlation length by applying decoupling pulses\n                # in a way that might \"scramble\" the correlated noise effects over\n                # the duration of the gate.\n\n                if target_gate == \"bell\":\n                    return [\n                        Gate(\"h\", (0,)),\n                        Gate(\"cnot\", (0, 1)),\n                    ]\n                elif target_gate == \"cnot\":\n                    # Correlation-Aware Dynamic Decoupling CNOT\n                    # Apply H to control, then CNOT, then H to target to invert and average Z-dephasing\n                    # The order is chosen to try and \"break\" the correlation during the gate operation\n                    return [\n                        Gate(\"h\", (0,)),  # Decoupling pulse on control\n                        Gate(\"cnot\", (0, 1)),\n                        Gate(\"h\", (1,)),  # Decoupling pulse on target\n                        Gate(\"cnot\", (0, 1)), # Second CNOT to complete the operation (effectively CNOT H CNOT)\n                        Gate(\"h\", (0,)), # Revert control H\n                        Gate(\"h\", (1,)), # Revert target H\n                        Gate(\"cnot\", (0, 1)), # Final CNOT to complete the transformation\n                    ]\n                elif target_gate == \"swap\":\n                    # Decomposing SWAP using CNOTs, but with a potential for sqrt_swap if native\n                    # Here, we use the standard CNOT decomposition.\n                    return [\n                        Gate(\"cnot\", (0, 1)),\n                        Gate(\"cnot\", (1, 0)),\n                        Gate(\"cnot\", (0, 1)),\n                    ]\n                elif target_gate == \"ghz\":\n                    seq = [Gate(\"h\", (0,))]\n                    for q in range(1, n_qubits):\n                        # For GHZ, we apply the CNOTs sequentially.\n                        # Could consider inserting decoupling for each CNOT if n_qubits is small\n                        # but for general n_qubits, this might become too long.\n                        seq.append(Gate(\"cnot\", (0, q)))\n                    return seq\n                elif target_gate == \"sqrt_swap\":\n                    # Decomposing sqrt_swap into single-qubit rotations and CNOTs\n                    # This decomposition is just an example, more optimized versions exist.\n                    return [\n                        Gate(\"ry\", (0,), {\"theta\": np.pi / 2}),\n                        Gate(\"ry\", (1,), {\"theta\": np.pi / 2}),\n                        Gate(\"cnot\", (0, 1)),\n                        Gate(\"rz\", (1,), {\"theta\": np.pi / 2}),\n                        Gate(\"cnot\", (0, 1)),\n                        Gate(\"ry\", (0,), {\"theta\": -np.pi / 2}),\n                        Gate(\"ry\", (1,), {\"theta\": -np.pi / 2}),\n                    ]\n                else:\n                    return [Gate(\"identity\", (0,))]"
+    },
+    {
+      "hash": "33112f16",
+      "fitness": 0.0,
+      "raw_fitness": 0.0,
+      "per_target": {},
+      "sequence_lengths": {},
+      "generation": 0,
+      "parent_hash": "b87bb664",
+      "model_used": "anthropic/claude-sonnet-4",
+      "valid": false,
+      "error": "Compilation: unindent does not match any outer indentation level (<string>, line 49)",
+      "method_body": "        if target_gate == \"bell\":\n                    # Use dynamical decoupling to suppress TLF dephasing\n                    return [\n                        Gate(\"h\", (0,)),\n                        Gate(\"rz\", (0,), {\"theta\": np.pi}),  # Echo pulse\n                        Gate(\"rz\", (1,), {\"theta\": np.pi}),  # Correlated echo\n                        Gate(\"cnot\", (0, 1)),\n                        Gate(\"rz\", (0,), {\"theta\": np.pi}),  # Final echo\n                        Gate(\"rz\", (1,), {\"theta\": np.pi}),\n                    ]\n                elif target_gate == \"cnot\":\n                    # Symmetric echo around CNOT to cancel TLF correlation\n                    return [\n                        Gate(\"rz\", (0,), {\"theta\": np.pi}),\n                        Gate(\"rz\", (1,), {\"theta\": np.pi}),\n                        Gate(\"cnot\", (0, 1)),\n                        Gate(\"rz\", (0,), {\"theta\": np.pi}),\n                        Gate(\"rz\", (1,), {\"theta\": np.pi}),\n                    ]\n                elif target_gate == \"swap\":\n                    # Minimize TLF exposure with optimized SWAP decomposition\n                    return [\n                        Gate(\"rz\", (0,), {\"theta\": np.pi}),\n                        Gate(\"rz\", (1,), {\"theta\": np.pi}),\n                        Gate(\"cnot\", (0, 1)),\n                        Gate(\"cnot\", (1, 0)),\n                        Gate(\"cnot\", (0, 1)),\n                        Gate(\"rz\", (0,), {\"theta\": np.pi}),\n                        Gate(\"rz\", (1,), {\"theta\": np.pi}),\n                    ]\n                elif target_gate == \"ghz\":\n                    # Simultaneous echo pulses to maintain correlation structure\n                    seq = [Gate(\"h\", (0,))]\n                    # Add echo before entangling\n                    for q in range(n_qubits):\n                        seq.append(Gate(\"rz\", (q,), {\"theta\": np.pi}))\n                    # Create GHZ with minimal TLF exposure\n                    for q in range(1, n_qubits):\n                        seq.append(Gate(\"cnot\", (0, q)))\n                    # Final correlated echo\n                    for q in range(n_qubits):\n                        seq.append(Gate(\"rz\", (q,), {\"theta\": np.pi}))\n                    return seq\n                elif target_gate == \"h\":\n                    # Single qubit with self-echo\n                    return [\n                        Gate(\"rz\", (0,), {\"theta\": np.pi}),\n                        Gate(\"h\", (0,)),\n                        Gate(\"rz\", (0,), {\"theta\": np.pi}),\n                    ]\n                else:\n                    return [Gate(\"identity\", (0,))]"
+    },
+    {
+      "hash": "4a68b65c",
+      "fitness": 0.0,
+      "raw_fitness": 0.0,
+      "per_target": {},
+      "sequence_lengths": {},
+      "generation": 0,
+      "parent_hash": "b87bb664",
+      "model_used": "deepseek/deepseek-chat",
+      "valid": false,
+      "error": "Compilation: unindent does not match any outer indentation level (<string>, line 44)",
+      "method_body": "        if target_gate == \"bell\":\n                    return [\n                        Gate(\"h\", (0,)),\n                        Gate(\"cnot\", (0, 1)),\n                    ]\n                elif target_gate == \"cnot\":\n                    return [\n                        Gate(\"sqrt_swap\", (0, 1)),\n                        Gate(\"rz\", (0,), {\"theta\": np.pi/2}),\n                        Gate(\"rz\", (1,), {\"theta\": -np.pi/2}),\n                        Gate(\"sqrt_swap\", (0, 1)),\n                    ]\n                elif target_gate == \"ghz\":\n                    seq = [Gate(\"ry\", (0,), {\"theta\": np.pi/4})]\n                    for q in range(1, n_qubits):\n                        seq.extend([\n                            Gate(\"sqrt_swap\", (0, q)),\n                            Gate(\"rz\", (0,), {\"theta\": np.pi/2}),\n                            Gate(\"rz\", (q,), {\"theta\": -np.pi/2}),\n                            Gate(\"sqrt_swap\", (0, q)),\n                        ])\n                    return seq\n                elif target_gate == \"swap\":\n                    return [\n                        Gate(\"sqrt_swap\", (0, 1)),\n                        Gate(\"rz\", (0,), {\"theta\": np.pi}),\n                        Gate(\"rz\", (1,), {\"theta\": np.pi}),\n                        Gate(\"sqrt_swap\", (0, 1)),\n                    ]\n                elif target_gate == \"h\":\n                    return [\n                        Gate(\"rz\", (0,), {\"theta\": np.pi/2}),\n                        Gate(\"ry\", (0,), {\"theta\": np.pi/4}),\n                        Gate(\"rz\", (0,), {\"theta\": np.pi/2}),\n                    ]\n                else:\n                    return [Gate(\"identity\", (0,))]"
+    }
+  ],
+  "history": [
+    {
+      "generation": 0,
+      "best_fitness": 0.9974011402703133,
+      "mean_fitness": 0.4599917228567089,
+      "std_fitness": 0.42082960543028514,
+      "valid_count": 6,
+      "total_count": 10,
+      "llm_calls": 11,
+      "total_tokens": 17068,
+      "wall_time": 191.56254267692566,
+      "best_ever_fitness": 0.9974011402703133
+    }
+  ]
+}

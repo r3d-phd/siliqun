@@ -1,0 +1,36 @@
+Veritas Hallucination Detection Feedback on Scaling Claims
+============================================================
+
+FLAGGED CLAIMS (3):
+
+1. "Practical limit is approximately 27-28 logical qubits on a single A100"
+   Issue: exaggerated - specific benchmarks without external validation
+   Fix: Provide detailed methodology, clarify these are extrapolations from measured 25-qubit benchmarks
+
+2. "Beyond 30 logical qubits, episode times exceed 13 seconds, making DRL infeasible"
+   Issue: exaggerated - "infeasible" is too strong without defining "standard DRL training"
+   Fix: Soften language, define what we mean by standard training campaign
+
+3. "126 physical spins vs 41 physical qubits - compression advantage of 2^(2n)"
+   Issue: potentially misleading - SiliQun simulates 42 LOGICAL qubits (2^42 state vector),
+          Osaka simulates 41 PHYSICAL qubits (2^41 state vector). The actual state vectors
+          are similar in size! The 2^(2n) advantage is vs a hypothetical full-space simulation
+          of 126 physical spins, not vs Osaka's actual simulation.
+   Fix: CRITICAL - must clarify that the comparison is about what physical system each
+        approach can represent, not about state vector sizes. SiliQun represents a LARGER
+        physical system (126 spins) with a SIMILAR state vector size (2^42 vs 2^41).
+
+SAFE CLAIMS (6):
+- Three distinct scaling regimes: SAFE
+- A100-80GB: 32 logical qubits (96 physical, 64 GB): SAFE
+- H200/B200: 33 logical qubits (99 physical): SAFE
+- DGX 8x H100: 35 logical qubits (105 physical): SAFE
+- 1024x H100: 42 logical qubits (126 physical): SAFE
+- Osaka/Fixstars 41-qubit reference: SAFE
+
+KEY INSIGHT FROM VERITAS:
+The comparison with Osaka must be carefully framed. Both approaches use similar
+state vector sizes (~2^41 vs 2^42). The advantage of SiliQun is that it can
+REPRESENT a much larger physical system (126 spins vs 41 qubits) because the
+DFS projection compresses the representation. This is NOT the same as saying
+SiliQun is 2^(2n) times faster or uses 2^(2n) less memory than Osaka.

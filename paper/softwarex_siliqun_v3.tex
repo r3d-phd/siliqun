@@ -128,7 +128,7 @@ SiliQun is built entirely in Python, comprising roughly 4,500 lines of code dist
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{fig_multiscale_grid.png}
+\includegraphics[width=\textwidth]{fig_multiscale_grid_v2.png}
 \caption{Multi-scale SLEDGE grid architectures supported by SiliQun. Each node represents a DFS logical qubit encoded in three physical electron spins (shown as three dots within each circle); lines indicate inter-qubit exchange couplings. Panels (a)--(c) show configurations benchmarked on a single A100 GPU: the 3$\times$3 grid (9 logical qubits, 27 spins), the 4$\times$4 grid (16 logical qubits, 48 spins), and the 5$\times$5 grid (25 logical qubits, 75 spins; 430~ms per 100-gate episode). Panel (d) shows the 6$\times$6 grid (36 logical qubits, 108 spins), which exceeds A100 memory but is projected to be feasible on an H200 GPU ($\sim$110~s per episode). The scaling analysis in Section~\ref{sec:limitations} provides further detail on memory and timing constraints.}
 \label{fig:sledge}
 \end{figure}
@@ -340,7 +340,7 @@ Several limitations of the current release should be noted, and a scaling analys
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{fig_scaling_analysis.png}
+\includegraphics[width=\textwidth]{fig_scaling_analysis_v2.png}
 \caption{SiliQun scaling analysis. (a) Memory requirements for the DFS-projected state vector (blue) versus the full physical Hilbert space (red) as a function of logical qubit count. Horizontal lines indicate GPU memory capacities; markers show the maximum logical qubit count for each configuration. The red star marks the Osaka/Fixstars result (41 qubits, full space, 1,024 GPUs). (b) Estimated wall time for $10^6$ DRL training episodes on a single A100 GPU, with feasibility zones indicated. The practical DRL training limit on a single GPU is approximately 27--28 logical qubits.}
 \label{fig:scaling}
 \end{figure}

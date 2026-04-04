@@ -128,8 +128,8 @@ SiliQun is built entirely in Python, comprising roughly 4,500 lines of code dist
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.75\textwidth]{fig3_sledge_grid.png}
-\caption{The SLEDGE 5$\times$5 grid architecture comprising 25 logical qubits (75 physical spins). Each node represents a logical qubit encoded in three physical electron spins. Lines indicate inter-qubit exchange couplings. The full grid requires a state vector of dimension $2^{25} = 33.5$~million.}
+\includegraphics[width=\textwidth]{fig_multiscale_grid.png}
+\caption{Multi-scale SLEDGE grid architectures supported by SiliQun. Each node represents a DFS logical qubit encoded in three physical electron spins (shown as three dots within each circle); lines indicate inter-qubit exchange couplings. Panels (a)--(c) show configurations benchmarked on a single A100 GPU: the 3$\times$3 grid (9 logical qubits, 27 spins), the 4$\times$4 grid (16 logical qubits, 48 spins), and the 5$\times$5 grid (25 logical qubits, 75 spins; 430~ms per 100-gate episode). Panel (d) shows the 6$\times$6 grid (36 logical qubits, 108 spins), which exceeds A100 memory but is projected to be feasible on an H200 GPU ($\sim$110~s per episode). The scaling analysis in Section~\ref{sec:limitations} provides further detail on memory and timing constraints.}
 \label{fig:sledge}
 \end{figure}
 

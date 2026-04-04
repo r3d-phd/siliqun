@@ -1,46 +1,45 @@
 """
-AEDB Orchestrator: AlphaEvolve + DEHB + BRFD integrated tri-level optimization.
+AEDB Orchestrator: AlphaEvolve + DEHB + BRFD integrated tri-level optimisation.
 
-Architecture:
-    AlphaEvolve (outer): Evolves gate sequence ALGORITHMS (Python code)
-    DEHB (middle): Optimizes HYPERPARAMETERS for each algorithm
-    BRFD (inner): Discovers optimal REWARD FUNCTIONS for DRL training
+Architecture (three nested optimisation layers):
+    AlphaEvolve (outer) -- evolves gate-sequence ALGORITHMS (Python code)
+        using MAP-Elites + island model + LLM ensemble + evaluation cascade
+    DEHB (middle) -- optimises HYPERPARAMETERS for each algorithm
+    BRFD (inner) -- discovers optimal REWARD FUNCTIONS for DRL training
 
-The three layers interact as follows:
-    1. AlphaEvolve generates a candidate gate sequence algorithm
-    2. DEHB finds the best hyperparameters for that algorithm
-    3. BRFD discovers the best reward function for DRL training with
-       that algorithm + those hyperparameters
-    4. The combined fitness feeds back to AlphaEvolve's selection
+Interaction protocol:
+    1. AlphaEvolve generates a candidate gate-sequence algorithm.
+    2. The evaluation cascade quickly filters obviously bad candidates.
+    3. Promising candidates are refined by DEHB (hyperparameter tuning).
+    4. Top candidates are further evaluated by BRFD (reward shaping).
+    5. Multi-metric scores feed back into the AlphaEvolve Program Database.
+    6. DEHB/BRFD-improved strategies are injected back into the database
+       so the LLM can learn from them.
 
 References:
-    - AlphaEvolve: Fawzi et al., arXiv:2602.16928, 2025
+    - AlphaEvolve: Novikov et al., 2025
     - DEHB: Awad et al., IJCAI 2021
     - BRFD: Nature Communications, 2025
 """
 
 from __future__ import annotations
+
+import json
+import logging
 import os
 import sys
-import json
 import time
-import logging
-import numpy as np
-from typing import Dict, Optional, Any
 from pathlib import Path
+from typing import Any, Dict, Optional
+
+import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from fitness import FitnessEvaluator, Gate
-from evolve_v2 import (
-    AlphaEvolveV2,
-    Individual,
-    compile_strategy,
-    call_llm,
-    extract_function,
-    FREE_MODELS,
-    SEED_STRATEGIES,
-)
+from alpha_evolve import AlphaEvolve, SEED_STRATEGIES
+from program_database import Program
+from evaluation_cascade import compile_strategy
 from dehb_optimizer import DEHBOptimizer
 from brfd_reward import BRFDTrainer
 
@@ -48,7 +47,7 @@ logger = logging.getLogger("aedb.orchestrator")
 
 
 class AEDBOrchestrator:
-    """Tri-level optimization orchestrator.
+    """Tri-level optimisation orchestrator integrating AlphaEvolve, DEHB, and BRFD.
 
     Parameters
     ----------
@@ -58,16 +57,26 @@ class AEDBOrchestrator:
         Base noise amplitude (rad/gate).
     ae_generations : int
         Number of AlphaEvolve generations.
-    ae_population : int
-        AlphaEvolve population size.
+    ae_population_per_gen : int
+        New candidates per AlphaEvolve generation.
     ae_max_llm_calls : int
         Maximum LLM calls for AlphaEvolve.
+    ae_n_islands : int
+        Number of MAP-Elites islands.
+    ae_n_inspirations : int
+        Number of inspiration programs per prompt.
+    ae_flash_ratio : float
+        Fraction of LLM calls routed to flash models.
     dehb_evaluations : int
-        Number of DEHB evaluations per algorithm.
+        Number of DEHB evaluations per top candidate.
     brfd_outer_steps : int
-        Number of BRFD outer optimization steps.
+        Number of BRFD outer optimisation steps.
     brfd_inner_episodes : int
         Number of BRFD inner training episodes.
+    dehb_top_k : int
+        Number of top candidates per generation to refine with DEHB.
+    brfd_top_k : int
+        Number of top candidates per generation to refine with BRFD.
     output_dir : str
         Directory for saving results.
     seed : int
@@ -77,396 +86,393 @@ class AEDBOrchestrator:
     def __init__(
         self,
         n_qubits: int = 2,
-        noise_amplitude: float = 0.3,
-        ae_generations: int = 10,
-        ae_population: int = 8,
-        ae_max_llm_calls: int = 60,
-        dehb_evaluations: int = 15,
-        brfd_outer_steps: int = 8,
-        brfd_inner_episodes: int = 15,
+        noise_amplitude: float = 0.5,
+        ae_generations: int = 15,
+        ae_population_per_gen: int = 5,
+        ae_max_llm_calls: int = 80,
+        ae_n_islands: int = 3,
+        ae_n_inspirations: int = 2,
+        ae_flash_ratio: float = 0.8,
+        dehb_evaluations: int = 10,
+        brfd_outer_steps: int = 5,
+        brfd_inner_episodes: int = 10,
+        dehb_top_k: int = 2,
+        brfd_top_k: int = 1,
         output_dir: str = "results/aedb",
         seed: int = 42,
     ):
         self.n_qubits = n_qubits
         self.noise_amplitude = noise_amplitude
-        self.ae_generations = ae_generations
-        self.ae_population = ae_population
-        self.ae_max_llm_calls = ae_max_llm_calls
         self.dehb_evaluations = dehb_evaluations
         self.brfd_outer_steps = brfd_outer_steps
         self.brfd_inner_episodes = brfd_inner_episodes
+        self.dehb_top_k = dehb_top_k
+        self.brfd_top_k = brfd_top_k
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
         self.seed = seed
-        self.rng = np.random.RandomState(seed)
 
-        # Base fitness evaluator
-        self.base_evaluator = FitnessEvaluator(
+        # Core AlphaEvolve engine (full architecture)
+        self.alpha_evolve = AlphaEvolve(
+            n_generations=ae_generations,
+            population_per_gen=ae_population_per_gen,
+            max_llm_calls=ae_max_llm_calls,
+            noise_amplitude=noise_amplitude,
+            n_qubits=n_qubits,
+            n_islands=ae_n_islands,
+            n_inspirations=ae_n_inspirations,
+            flash_ratio=ae_flash_ratio,
+            diff_probability=0.25,
+            output_dir=str(self.output_dir / "alpha_evolve"),
+            seed=seed,
+        )
+
+        # High-fidelity evaluator for final assessment
+        self.final_evaluator = FitnessEvaluator(
             n_qubits=n_qubits,
             target_gates=["bell", "cnot"],
-            n_noise_samples=100,
+            n_noise_samples=500,
             noise_amplitude=noise_amplitude,
             qubit_spacing_nm=108.0,
             tlf_correlation_length_nm=81.0,
             max_sequence_length=50,
-            timeout_seconds=5.0,
+            timeout_seconds=10.0,
         )
 
         # Tracking
-        self.total_llm_calls = 0
         self.total_dehb_evals = 0
         self.total_brfd_steps = 0
-        self.history = []
-        self.best_ever = None
-        self.best_fitness = 0.0
+        self.history: list = []
 
-    def _evaluate_with_dehb(
-        self,
-        strategy_code: str,
-        strategy_fn: callable,
-    ) -> Dict:
-        """Evaluate a strategy with DEHB hyperparameter optimization.
+    # ──────────────────────────────────────────────────────────────────
+    # DEHB refinement
+    # ──────────────────────────────────────────────────────────────────
+
+    def _refine_with_dehb(self, program: Program) -> Dict:
+        """Refine a strategy with DEHB hyperparameter optimisation.
 
         Parameters
         ----------
-        strategy_code : str
-            Source code of the strategy.
-        strategy_fn : callable
-            Compiled strategy function.
+        program : Program
+            The program to refine.
 
         Returns
         -------
         dict
-            Results including best fitness and optimal hyperparameters.
+            DEHB results including best fitness and config.
         """
+        import hashlib
+        code_hash = hashlib.md5(program.code.encode()).hexdigest()[:8]
+        dehb_dir = str(
+            self.output_dir / f"dehb_{code_hash}_{int(time.time())}"
+        )
+
         try:
-            # Use unique DEHB output dir to avoid checkpoint reuse
-            import hashlib
-            code_hash = hashlib.md5(strategy_code.encode()).hexdigest()[:8]
-            dehb_dir = str(self.output_dir / f"dehb_{code_hash}_{int(time.time())}")
             dehb = DEHBOptimizer(
                 output_dir=dehb_dir,
                 max_evaluations=self.dehb_evaluations,
                 seed=self.seed,
             )
-
             results = dehb.run()
             self.total_dehb_evals += self.dehb_evaluations
 
             return {
-                "dehb_best_fitness": results["best_fidelity"],
-                "dehb_best_config": results["best_config"],
-                "dehb_n_evals": results["total_evaluations"],
+                "dehb_fitness": results["best_fidelity"],
+                "dehb_config": results["best_config"],
+                "dehb_evals": results["total_evaluations"],
             }
-
         except Exception as e:
-            logger.warning(f"DEHB failed: {e}")
-            # Fall back to base evaluation
-            result = self.base_evaluator.evaluate(strategy_fn, seed=self.seed)
-            return {
-                "dehb_best_fitness": result["fitness"] if result["valid"] else 0.0,
-                "dehb_best_config": None,
-                "dehb_n_evals": 0,
-            }
+            logger.warning(f"DEHB failed for {program.uid}: {e}")
+            return {"dehb_fitness": 0.0, "dehb_config": None, "dehb_evals": 0}
 
-    def _evaluate_with_brfd(
-        self,
-        strategy_fn: callable,
-        noise_amplitude: float,
-    ) -> Dict:
-        """Evaluate with BRFD reward function discovery.
+    # ──────────────────────────────────────────────────────────────────
+    # BRFD refinement
+    # ──────────────────────────────────────────────────────────────────
+
+    def _refine_with_brfd(self, program: Program) -> Dict:
+        """Refine a strategy with BRFD reward function discovery.
 
         Parameters
         ----------
-        strategy_fn : callable
-            Compiled strategy function.
-        noise_amplitude : float
-            Noise amplitude for evaluation.
+        program : Program
+            The program to refine.
 
         Returns
         -------
         dict
-            Results including BRFD-optimized fidelity.
+            BRFD results including best fidelity and improvement.
         """
         try:
             brfd = BRFDTrainer(
                 n_qubits=self.n_qubits,
-                noise_amplitude=noise_amplitude,
+                noise_amplitude=self.noise_amplitude,
                 n_outer_steps=self.brfd_outer_steps,
                 n_inner_episodes=self.brfd_inner_episodes,
                 seed=self.seed,
             )
-
             result = brfd.train()
             self.total_brfd_steps += self.brfd_outer_steps
 
             return {
-                "brfd_best_fidelity": result["best_fidelity"],
+                "brfd_fidelity": result["best_fidelity"],
                 "brfd_improvement": result.get("improvement", 0.0),
             }
-
         except Exception as e:
-            logger.warning(f"BRFD failed: {e}")
-            return {
-                "brfd_best_fidelity": 0.0,
-                "brfd_improvement": 0.0,
-            }
+            logger.warning(f"BRFD failed for {program.uid}: {e}")
+            return {"brfd_fidelity": 0.0, "brfd_improvement": 0.0}
 
-    def _combined_fitness(
+    # ──────────────────────────────────────────────────────────────────
+    # Combined scoring
+    # ──────────────────────────────────────────────────────────────────
+
+    def _compute_combined_score(
         self,
-        base_fitness: float,
+        base_scores: Dict[str, float],
         dehb_fitness: float,
         brfd_fidelity: float,
-    ) -> float:
-        """Compute combined tri-level fitness score.
+    ) -> Dict[str, float]:
+        """Compute combined tri-level scores.
 
-        Parameters
-        ----------
-        base_fitness : float
-            Raw strategy fitness.
-        dehb_fitness : float
-            DEHB-optimized fitness.
-        brfd_fidelity : float
-            BRFD-discovered reward fidelity.
-
-        Returns
-        -------
-        float
-            Combined fitness score.
+        The combined score weights:
+          - 50% AlphaEvolve base fidelity
+          - 30% DEHB-optimised fitness
+          - 20% BRFD reward fidelity
         """
-        # Weighted combination:
-        # - 50% from DEHB-optimized fitness (best hyperparams for this algo)
-        # - 30% from base fitness (algorithm quality without tuning)
-        # - 20% from BRFD (reward function quality)
-        return 0.5 * dehb_fitness + 0.3 * base_fitness + 0.2 * brfd_fidelity
+        base_fid = base_scores.get("base_fidelity", 0.0)
+        combined = (
+            0.50 * base_fid
+            + 0.30 * dehb_fitness
+            + 0.20 * brfd_fidelity
+        )
+
+        scores = dict(base_scores)
+        scores["dehb_fitness"] = dehb_fitness
+        scores["brfd_fidelity"] = brfd_fidelity
+        scores["combined"] = combined
+        return scores
+
+    # ──────────────────────────────────────────────────────────────────
+    # Main orchestration loop
+    # ──────────────────────────────────────────────────────────────────
 
     def run(self) -> Dict:
-        """Run the full AEDB tri-level optimization.
+        """Run the full AEDB tri-level optimisation.
+
+        The orchestration proceeds in four phases:
+
+        Phase 1 -- Seed evaluation with full AEDB pipeline.
+        Phase 2 -- AlphaEvolve evolution (MAP-Elites + LLM ensemble).
+        Phase 3 -- DEHB/BRFD refinement of top candidates.
+        Phase 4 -- Final high-fidelity evaluation.
 
         Returns
         -------
         dict
-            Complete results from all three optimization levels.
+            Complete results from all three optimisation levels.
         """
         start_time = time.time()
 
         logger.info("=" * 70)
-        logger.info("AEDB Orchestrator: AlphaEvolve + DEHB + BRFD")
+        logger.info("AEDB Orchestrator v2: AlphaEvolve + DEHB + BRFD")
         logger.info("=" * 70)
-        logger.info(f"  Qubits: {self.n_qubits}")
-        logger.info(f"  Noise: {self.noise_amplitude} rad/gate")
-        logger.info(f"  AE: {self.ae_generations} gens, pop={self.ae_population}")
-        logger.info(f"  DEHB: {self.dehb_evaluations} evals per strategy")
-        logger.info(f"  BRFD: {self.brfd_outer_steps} outer steps")
-        logger.info(f"  Free LLMs: {len(FREE_MODELS)} models")
+        logger.info(f"  Qubits:        {self.n_qubits}")
+        logger.info(f"  Noise:         {self.noise_amplitude} rad/gate")
+        logger.info(f"  AE gens:       {self.alpha_evolve.n_generations}")
+        logger.info(f"  AE pop/gen:    {self.alpha_evolve.population_per_gen}")
+        logger.info(f"  AE max calls:  {self.alpha_evolve.max_llm_calls}")
+        logger.info(f"  AE islands:    {len(self.alpha_evolve.database.islands)}")
+        logger.info(f"  DEHB evals:    {self.dehb_evaluations} per top-{self.dehb_top_k}")
+        logger.info(f"  BRFD steps:    {self.brfd_outer_steps} per top-{self.brfd_top_k}")
 
         # ============================================================
-        # Phase 1: Evaluate seed strategies with full AEDB pipeline
+        # Phase 1: Seed evaluation with DEHB + BRFD
         # ============================================================
-        logger.info("\n--- Phase 1: Seed Strategy Evaluation ---")
+        logger.info("\n--- Phase 1: Seed Evaluation (DEHB + BRFD) ---")
 
-        population = []
         for name, code in SEED_STRATEGIES.items():
             fn = compile_strategy(code)
             if fn is None:
+                logger.warning(f"Seed '{name}' failed to compile")
                 continue
 
-            # Base fitness
-            base_result = self.base_evaluator.evaluate(fn, seed=self.seed)
-            base_fitness = base_result["fitness"] if base_result["valid"] else 0.0
+            # Base evaluation through cascade
+            scores, _ = self.alpha_evolve.evaluator.evaluate(code)
+            if scores is None:
+                scores = {"combined": 0.0, "base_fidelity": 0.0}
 
-            # DEHB optimization
-            dehb_result = self._evaluate_with_dehb(code, fn)
+            # DEHB refinement
+            seed_prog = Program(code=code, scores=scores, source=f"seed:{name}")
+            dehb_result = self._refine_with_dehb(seed_prog)
 
-            # BRFD reward discovery
-            brfd_result = self._evaluate_with_brfd(fn, self.noise_amplitude)
+            # BRFD refinement
+            brfd_result = self._refine_with_brfd(seed_prog)
 
-            # Combined fitness
-            combined = self._combined_fitness(
-                base_fitness,
-                dehb_result["dehb_best_fitness"],
-                brfd_result["brfd_best_fidelity"],
+            # Combined scoring
+            combined_scores = self._compute_combined_score(
+                scores,
+                dehb_result["dehb_fitness"],
+                brfd_result["brfd_fidelity"],
             )
 
-            ind = Individual(
+            # Add to AlphaEvolve database with enriched scores
+            program = Program(
                 code=code,
-                fitness=combined,
-                source=f"seed:{name}",
+                scores=combined_scores,
+                primary_score=combined_scores["combined"],
                 generation=0,
+                source=f"seed:{name}",
             )
-            population.append(ind)
+            self.alpha_evolve.database.add(program)
 
             logger.info(
-                f"  Seed '{name}': base={base_fitness:.4f}, "
-                f"dehb={dehb_result['dehb_best_fitness']:.4f}, "
-                f"brfd={brfd_result['brfd_best_fidelity']:.4f}, "
-                f"combined={combined:.4f}"
+                f"  Seed '{name}': fid={scores.get('base_fidelity', 0):.4f}, "
+                f"dehb={dehb_result['dehb_fitness']:.4f}, "
+                f"brfd={brfd_result['brfd_fidelity']:.4f}, "
+                f"combined={combined_scores['combined']:.4f}"
             )
 
-        if not population:
-            logger.error("No valid seed strategies!")
-            return {"error": "No valid seeds"}
-
-        self.best_ever = max(population, key=lambda x: x.fitness)
-        self.best_fitness = self.best_ever.fitness
-
-        # Fill population
-        while len(population) < self.ae_population:
-            population.append(Individual(
-                code=self.best_ever.code,
-                fitness=self.best_ever.fitness,
-                source="seed:clone",
-                generation=0,
-            ))
+        db_stats = self.alpha_evolve.database.get_stats()
+        best = self.alpha_evolve.database.best_program
+        logger.info(
+            f"  Database: {db_stats['total']} programs, "
+            f"best={best.primary_score:.4f}"
+        )
 
         # ============================================================
-        # Phase 2: LLM-driven evolution with DEHB+BRFD evaluation
+        # Phase 2: AlphaEvolve evolution
         # ============================================================
-        logger.info("\n--- Phase 2: LLM-Driven Evolution ---")
+        logger.info("\n--- Phase 2: AlphaEvolve Evolution ---")
+        logger.info("  (MAP-Elites + LLM ensemble + evaluation cascade)")
 
-        for gen in range(1, self.ae_generations + 1):
-            if self.total_llm_calls >= self.ae_max_llm_calls:
-                logger.info(f"LLM budget exhausted at gen {gen}")
+        # The AlphaEvolve engine already has the seeded database.
+        # We skip its internal seeding and run the evolution loop directly.
+        ae_best_before = best.primary_score if best else 0.0
+
+        for gen in range(1, self.alpha_evolve.n_generations + 1):
+            if self.alpha_evolve.llm_calls >= self.alpha_evolve.max_llm_calls:
+                logger.info(f"  LLM budget exhausted at gen {gen}")
                 break
 
             gen_start = time.time()
-            new_individuals = []
+            new_programs = []
+            valid_count = 0
 
-            # Generate mutants
-            n_mutants = min(
-                self.ae_population // 2,
-                self.ae_max_llm_calls - self.total_llm_calls,
+            n_candidates = min(
+                self.alpha_evolve.population_per_gen,
+                self.alpha_evolve.max_llm_calls - self.alpha_evolve.llm_calls,
             )
 
-            for i in range(n_mutants):
-                if self.total_llm_calls >= self.ae_max_llm_calls:
-                    break
+            for _ in range(n_candidates):
+                child = self.alpha_evolve._evolve_one(generation=gen)
+                if child is not None:
+                    new_programs.append(child)
+                    if child.primary_score > 0:
+                        valid_count += 1
 
-                # Tournament selection
-                candidates = self.rng.choice(
-                    len(population), size=min(3, len(population)), replace=False
+            # DEHB/BRFD refinement for top-k new candidates
+            if new_programs:
+                new_programs.sort(
+                    key=lambda p: p.primary_score, reverse=True
                 )
-                parent = max(
-                    [population[c] for c in candidates],
-                    key=lambda x: x.fitness,
-                )
 
-                # LLM mutation
-                model = FREE_MODELS[self.total_llm_calls % len(FREE_MODELS)]
-                prompt = self._build_aedb_prompt(parent, self.best_ever, gen)
+                for prog in new_programs[:self.dehb_top_k]:
+                    dehb_result = self._refine_with_dehb(prog)
+                    brfd_result = self._refine_with_brfd(prog)
 
-                self.total_llm_calls += 1
-                response = call_llm(prompt, model)
-
-                if response is None:
-                    continue
-
-                code = extract_function(response)
-                if code is None:
-                    continue
-
-                fn = compile_strategy(code)
-                if fn is None:
-                    continue
-
-                # Evaluate with base fitness only for speed
-                # (full DEHB+BRFD only for top candidates)
-                base_result = self.base_evaluator.evaluate(fn, seed=self.seed)
-                base_fitness = base_result["fitness"] if base_result["valid"] else 0.0
-
-                if base_fitness > 0:
-                    new_individuals.append(Individual(
-                        code=code,
-                        fitness=base_fitness,
-                        source="mutation",
-                        model=model.split("/")[-1],
-                        generation=gen,
-                    ))
-
-            # Full AEDB evaluation for top new candidates
-            if new_individuals:
-                new_individuals.sort(key=lambda x: x.fitness, reverse=True)
-                top_k = min(2, len(new_individuals))
-
-                for ind in new_individuals[:top_k]:
-                    fn = compile_strategy(ind.code)
-                    if fn is None:
-                        continue
-
-                    dehb_result = self._evaluate_with_dehb(ind.code, fn)
-                    brfd_result = self._evaluate_with_brfd(
-                        fn, self.noise_amplitude
+                    combined_scores = self._compute_combined_score(
+                        prog.scores,
+                        dehb_result["dehb_fitness"],
+                        brfd_result["brfd_fidelity"],
                     )
+                    prog.scores = combined_scores
+                    prog.primary_score = combined_scores["combined"]
 
-                    ind.fitness = self._combined_fitness(
-                        ind.fitness,
-                        dehb_result["dehb_best_fitness"],
-                        brfd_result["brfd_best_fidelity"],
-                    )
-
-            # Selection
-            combined_pop = population + new_individuals
-            combined_pop.sort(key=lambda x: x.fitness, reverse=True)
-            population = combined_pop[:self.ae_population]
-
-            # Update best
-            gen_best = population[0]
-            if gen_best.fitness > self.best_fitness:
-                self.best_ever = gen_best
-                self.best_fitness = gen_best.fitness
-                logger.info(
-                    f"  NEW BEST at gen {gen}: {gen_best.fitness:.4f} "
-                    f"(model={gen_best.model})"
-                )
+                    # Re-add with updated scores
+                    self.alpha_evolve.database.add(prog)
 
             gen_time = time.time() - gen_start
-            valid_new = [x for x in new_individuals if x.fitness > 0]
+            db_stats = self.alpha_evolve.database.get_stats()
+            best = self.alpha_evolve.database.best_program
 
-            gen_stats = {
+            is_new_best = (
+                best and best.primary_score > ae_best_before
+            )
+            if is_new_best:
+                ae_best_before = best.primary_score
+
+            gen_record = {
                 "generation": gen,
-                "best_fitness": self.best_fitness,
-                "gen_mean": np.mean([x.fitness for x in population]),
-                "new_valid": len(valid_new),
-                "new_total": n_mutants,
-                "llm_calls": self.total_llm_calls,
+                "best_score": best.primary_score if best else 0.0,
+                "best_fidelity": best.scores.get("base_fidelity", 0) if best else 0.0,
+                "valid": valid_count,
+                "total": n_candidates,
+                "llm_calls": self.alpha_evolve.llm_calls,
                 "dehb_evals": self.total_dehb_evals,
                 "brfd_steps": self.total_brfd_steps,
+                "db_programs": db_stats.get("total", 0),
+                "db_cells": db_stats.get("cells", 0),
                 "time_seconds": gen_time,
             }
-            self.history.append(gen_stats)
+            self.history.append(gen_record)
 
+            new_best_marker = "  *** NEW BEST ***" if is_new_best else ""
             logger.info(
-                f"Gen {gen}: best={self.best_fitness:.4f}, "
-                f"mean={gen_stats['gen_mean']:.4f}, "
-                f"valid={len(valid_new)}/{n_mutants}, "
-                f"LLM={self.total_llm_calls}, "
+                f"  Gen {gen}: best={best.primary_score:.4f}, "
+                f"fid={best.scores.get('base_fidelity', 0):.4f}, "
+                f"valid={valid_count}/{n_candidates}, "
+                f"db={db_stats.get('total', 0)} ({db_stats.get('cells', 0)} cells), "
+                f"LLM={self.alpha_evolve.llm_calls}, "
                 f"DEHB={self.total_dehb_evals}, "
                 f"BRFD={self.total_brfd_steps}, "
-                f"time={gen_time:.1f}s"
+                f"time={gen_time:.1f}s{new_best_marker}"
             )
 
         # ============================================================
-        # Phase 3: Final evaluation of best strategy
+        # Phase 3: Final DEHB+BRFD refinement of global top candidates
         # ============================================================
-        logger.info("\n--- Phase 3: Final Evaluation ---")
+        logger.info("\n--- Phase 3: Final Refinement ---")
 
-        fn = compile_strategy(self.best_ever.code)
+        all_programs = self.alpha_evolve.database.get_all_programs()
+        all_programs.sort(key=lambda p: p.primary_score, reverse=True)
+
+        top_final = min(3, len(all_programs))
+        for i, prog in enumerate(all_programs[:top_final]):
+            logger.info(
+                f"  Refining top-{i+1}: score={prog.primary_score:.4f} "
+                f"(source={prog.source})"
+            )
+            dehb_result = self._refine_with_dehb(prog)
+            brfd_result = self._refine_with_brfd(prog)
+
+            combined_scores = self._compute_combined_score(
+                prog.scores,
+                dehb_result["dehb_fitness"],
+                brfd_result["brfd_fidelity"],
+            )
+            prog.scores = combined_scores
+            prog.primary_score = combined_scores["combined"]
+            self.alpha_evolve.database.add(prog)
+
+            logger.info(
+                f"    -> refined score={prog.primary_score:.4f} "
+                f"(dehb={dehb_result['dehb_fitness']:.4f}, "
+                f"brfd={brfd_result['brfd_fidelity']:.4f})"
+            )
+
+        # ============================================================
+        # Phase 4: Final high-fidelity evaluation
+        # ============================================================
+        logger.info("\n--- Phase 4: Final Evaluation (500 samples) ---")
+
+        best = self.alpha_evolve.database.best_program
+        fn = compile_strategy(best.code) if best else None
         if fn:
-            # High-fidelity evaluation
-            final_evaluator = FitnessEvaluator(
-                n_qubits=self.n_qubits,
-                target_gates=["bell", "cnot"],
-                n_noise_samples=500,
-                noise_amplitude=self.noise_amplitude,
-                qubit_spacing_nm=108.0,
-                tlf_correlation_length_nm=81.0,
-                max_sequence_length=50,
-                timeout_seconds=10.0,
+            final_result = self.final_evaluator.evaluate(fn, seed=self.seed)
+            final_fitness = (
+                final_result["fitness"] if final_result["valid"] else 0.0
             )
-            final_result = final_evaluator.evaluate(fn, seed=self.seed)
-            final_fitness = final_result["fitness"] if final_result["valid"] else 0.0
         else:
-            final_fitness = self.best_fitness
+            final_fitness = best.primary_score if best else 0.0
 
         total_time = time.time() - start_time
 
@@ -474,36 +480,46 @@ class AEDBOrchestrator:
         # Save results
         # ============================================================
         results = {
-            "best_fitness": float(self.best_fitness),
-            "final_fitness": float(final_fitness),
-            "best_code": self.best_ever.code,
-            "best_model": self.best_ever.model,
-            "best_generation": self.best_ever.generation,
-            "best_source": self.best_ever.source,
-            "total_llm_calls": self.total_llm_calls,
+            "best_combined_score": float(best.primary_score) if best else 0.0,
+            "best_base_fidelity": float(
+                best.scores.get("base_fidelity", 0.0)
+            ) if best else 0.0,
+            "final_fidelity_500": float(final_fitness),
+            "best_code": best.code if best else "",
+            "best_scores": best.scores if best else {},
+            "best_model": best.model if best else "",
+            "best_generation": best.generation if best else 0,
+            "best_source": best.source if best else "",
+            "total_llm_calls": self.alpha_evolve.llm_calls,
             "total_dehb_evals": self.total_dehb_evals,
             "total_brfd_steps": self.total_brfd_steps,
             "total_time_seconds": total_time,
+            "total_programs": self.alpha_evolve.database.total_programs,
             "noise_amplitude": self.noise_amplitude,
             "n_qubits": self.n_qubits,
             "history": self.history,
+            "cascade_stats": self.alpha_evolve.evaluator.get_stats(),
+            "llm_stats": self.alpha_evolve.llm_ensemble.get_stats(),
+            "database_stats": self.alpha_evolve.database.get_stats(),
         }
 
         # Save best strategy
-        best_file = self.output_dir / "aedb_best_strategy.py"
-        with open(best_file, "w") as f:
-            f.write(f"# Best strategy found by AEDB Orchestrator\n")
-            f.write(f"# Combined fitness: {self.best_fitness:.6f}\n")
-            f.write(f"# Final fitness (500 samples): {final_fitness:.6f}\n")
-            f.write(f"# Model: {self.best_ever.model}\n")
-            f.write(f"# Generation: {self.best_ever.generation}\n")
-            f.write(f"# Source: {self.best_ever.source}\n")
-            f.write(f"# Total LLM calls: {self.total_llm_calls}\n")
-            f.write(f"# Total DEHB evals: {self.total_dehb_evals}\n")
-            f.write(f"# Total BRFD steps: {self.total_brfd_steps}\n")
-            f.write(f"# Total time: {total_time:.1f}s\n\n")
-            f.write(f"from fitness import Gate\n\n")
-            f.write(self.best_ever.code)
+        if best:
+            best_file = self.output_dir / "aedb_best_strategy.py"
+            with open(best_file, "w") as f:
+                f.write("# Best strategy found by AEDB Orchestrator v2\n")
+                f.write(f"# Combined score: {best.primary_score:.6f}\n")
+                f.write(f"# Base fidelity:  {best.scores.get('base_fidelity', 0):.6f}\n")
+                f.write(f"# Final (500):    {final_fitness:.6f}\n")
+                f.write(f"# Model:          {best.model}\n")
+                f.write(f"# Generation:     {best.generation}\n")
+                f.write(f"# Source:         {best.source}\n")
+                f.write(f"# LLM calls:     {self.alpha_evolve.llm_calls}\n")
+                f.write(f"# DEHB evals:    {self.total_dehb_evals}\n")
+                f.write(f"# BRFD steps:    {self.total_brfd_steps}\n")
+                f.write(f"# Time:          {total_time:.1f}s\n\n")
+                f.write("from fitness import Gate\n\n")
+                f.write(best.code)
 
         # Save full results
         results_file = self.output_dir / "aedb_results.json"
@@ -516,71 +532,19 @@ class AEDBOrchestrator:
             json.dump(self.history, f, indent=2)
 
         logger.info(f"\n{'=' * 70}")
-        logger.info(f"AEDB COMPLETE")
+        logger.info("AEDB v2 COMPLETE")
         logger.info(f"{'=' * 70}")
-        logger.info(f"Best combined fitness: {self.best_fitness:.4f}")
-        logger.info(f"Final fitness (500 samples): {final_fitness:.4f}")
-        logger.info(f"Total LLM calls: {self.total_llm_calls}")
-        logger.info(f"Total DEHB evaluations: {self.total_dehb_evals}")
-        logger.info(f"Total BRFD steps: {self.total_brfd_steps}")
-        logger.info(f"Total time: {total_time:.1f}s")
+        logger.info(f"  Best combined:   {best.primary_score:.4f}" if best else "  No best")
+        logger.info(f"  Best fidelity:   {best.scores.get('base_fidelity', 0):.4f}" if best else "")
+        logger.info(f"  Final (500):     {final_fitness:.4f}")
+        logger.info(f"  Total programs:  {self.alpha_evolve.database.total_programs}")
+        logger.info(f"  LLM calls:       {self.alpha_evolve.llm_calls}")
+        logger.info(f"  DEHB evals:      {self.total_dehb_evals}")
+        logger.info(f"  BRFD steps:      {self.total_brfd_steps}")
+        logger.info(f"  Total time:      {total_time:.1f}s")
+        logger.info(f"{'=' * 70}")
 
         return results
-
-    def _build_aedb_prompt(
-        self,
-        parent: Individual,
-        best: Individual,
-        generation: int,
-    ) -> str:
-        """Build an AEDB-aware mutation prompt.
-
-        Parameters
-        ----------
-        parent : Individual
-            Parent strategy.
-        best : Individual
-            Best strategy found so far.
-        generation : int
-            Current generation.
-
-        Returns
-        -------
-        str
-            Prompt for the LLM.
-        """
-        return f"""You are designing gate sequences for silicon spin qubits under
-TLF-correlated noise (amplitude={self.noise_amplitude} rad/gate).
-
-The noise has spatial correlations: nearby qubits experience similar noise
-with correlation ~ exp(-distance / 81nm). Qubit spacing is 108nm, so
-nearest-neighbor correlation is ~0.26.
-
-CURRENT STRATEGY (fitness={parent.fitness:.4f}):
-```python
-{parent.code}
-```
-
-BEST STRATEGY SO FAR (fitness={best.fitness:.4f}):
-```python
-{best.code}
-```
-
-Generation {generation}/{self.ae_generations}. The noise is STRONG
-({self.noise_amplitude} rad/gate), so each extra gate adds significant noise.
-The key challenge: find gate sequences that CANCEL correlated noise
-without adding too many extra gates.
-
-Ideas to explore:
-- Symmetric echo pairs that cancel correlated Z-noise
-- Adaptive rotations proportional to exp(-spacing/corr_length)
-- Interleaving identity gates to create noise-cancellation windows
-- Using the correlation structure to design parity-check-like sequences
-- Minimal-depth decompositions that avoid unnecessary gates
-
-Return ONLY the improved Python function:
-def generate_gate_sequence(target_gate, n_qubits, nn_correlation, qubit_spacing_nm, corr_length_nm):
-"""
 
 
 # ======================================================================
@@ -594,9 +558,9 @@ if __name__ == "__main__":
     )
 
     print("=" * 70)
-    print("AEDB: AlphaEvolve + DEHB + BRFD Orchestrator")
+    print("AEDB v2: AlphaEvolve + DEHB + BRFD Orchestrator")
     print("=" * 70)
-    print(f"Free LLMs: {', '.join(m.split('/')[-1] for m in FREE_MODELS)}")
+    print(f"Architecture: MAP-Elites + LLM Ensemble + Evaluation Cascade")
     print(f"Noise: 0.5 rad/gate (hard regime)")
     print(f"Target: Discover novel noise mitigation strategies")
     print()
@@ -604,28 +568,33 @@ if __name__ == "__main__":
     orchestrator = AEDBOrchestrator(
         n_qubits=2,
         noise_amplitude=0.5,
-        ae_generations=6,
-        ae_population=6,
-        ae_max_llm_calls=30,
+        ae_generations=10,
+        ae_population_per_gen=3,
+        ae_max_llm_calls=40,
+        ae_n_islands=3,
+        ae_n_inspirations=2,
+        ae_flash_ratio=0.8,
         dehb_evaluations=8,
         brfd_outer_steps=4,
         brfd_inner_episodes=8,
-        output_dir="/home/ubuntu/siliqun/alphaevolve/results/aedb_run2",
+        dehb_top_k=2,
+        brfd_top_k=1,
+        output_dir="/home/ubuntu/siliqun/alphaevolve/results/aedb_v2",
         seed=42,
     )
 
     results = orchestrator.run()
 
     print(f"\n{'=' * 70}")
-    print(f"FINAL RESULTS")
+    print("FINAL RESULTS")
     print(f"{'=' * 70}")
-    print(f"Best combined fitness: {results['best_fitness']:.4f}")
-    print(f"Final fitness (500 samples): {results['final_fitness']:.4f}")
-    print(f"Best model: {results['best_model']}")
-    print(f"Best generation: {results['best_generation']}")
-    print(f"Total LLM calls: {results['total_llm_calls']}")
-    print(f"Total DEHB evals: {results['total_dehb_evals']}")
-    print(f"Total BRFD steps: {results['total_brfd_steps']}")
-    print(f"Total time: {results['total_time_seconds']:.1f}s")
+    print(f"Best combined score: {results['best_combined_score']:.4f}")
+    print(f"Best base fidelity:  {results['best_base_fidelity']:.4f}")
+    print(f"Final fidelity (500): {results['final_fidelity_500']:.4f}")
+    print(f"Total programs:      {results['total_programs']}")
+    print(f"LLM calls:           {results['total_llm_calls']}")
+    print(f"DEHB evals:          {results['total_dehb_evals']}")
+    print(f"BRFD steps:          {results['total_brfd_steps']}")
+    print(f"Time:                {results['total_time_seconds']:.1f}s")
     print(f"\nBest strategy:")
     print(results['best_code'])

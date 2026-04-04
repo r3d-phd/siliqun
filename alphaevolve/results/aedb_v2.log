@@ -1,0 +1,154 @@
+nohup: ignoring input
+2026-04-04 14:11:06,359 [aedb.llm_ensemble] INFO: LLM Ensemble: 2 flash, 4 pro backends
+2026-04-04 14:11:06,359 [aedb.orchestrator] INFO: ======================================================================
+2026-04-04 14:11:06,359 [aedb.orchestrator] INFO: AEDB Orchestrator v2: AlphaEvolve + DEHB + BRFD
+2026-04-04 14:11:06,359 [aedb.orchestrator] INFO: ======================================================================
+2026-04-04 14:11:06,359 [aedb.orchestrator] INFO:   Qubits:        2
+2026-04-04 14:11:06,359 [aedb.orchestrator] INFO:   Noise:         0.5 rad/gate
+2026-04-04 14:11:06,359 [aedb.orchestrator] INFO:   AE gens:       10
+2026-04-04 14:11:06,359 [aedb.orchestrator] INFO:   AE pop/gen:    3
+2026-04-04 14:11:06,359 [aedb.orchestrator] INFO:   AE max calls:  40
+2026-04-04 14:11:06,360 [aedb.orchestrator] INFO:   AE islands:    3
+2026-04-04 14:11:06,360 [aedb.orchestrator] INFO:   DEHB evals:    8 per top-2
+2026-04-04 14:11:06,360 [aedb.orchestrator] INFO:   BRFD steps:    4 per top-1
+2026-04-04 14:11:06,360 [aedb.orchestrator] INFO: 
+--- Phase 1: Seed Evaluation (DEHB + BRFD) ---
+2026-04-04 14:11:06,457 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:11:09,427 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.0s
+2026-04-04 14:11:09,428 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:11:09,458 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:11:09,490 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:11:09,520 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:11:09,550 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:11:09,550 [aedb.program_db] INFO: New global best: 0.7684 (island=0, gen=0)
+2026-04-04 14:11:09,550 [aedb.orchestrator] INFO:   Seed 'standard': fid=0.9097, dehb=0.8157, brfd=0.3443, combined=0.7684
+2026-04-04 14:11:09,632 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:11:12,585 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.0s
+2026-04-04 14:11:12,586 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:11:12,614 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:11:12,642 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:11:12,669 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:11:12,698 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:11:12,699 [aedb.orchestrator] INFO:   Seed 'echo_cancel': fid=0.0000, dehb=0.8157, brfd=0.3443, combined=0.3136
+2026-04-04 14:11:12,941 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:11:15,883 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 2.9s
+2026-04-04 14:11:15,884 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:11:15,913 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:11:15,941 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:11:15,969 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:11:15,998 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:11:15,999 [aedb.orchestrator] INFO:   Seed 'correlation_aware': fid=0.8466, dehb=0.8157, brfd=0.3443, combined=0.7369
+2026-04-04 14:11:16,093 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:11:19,070 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.0s
+2026-04-04 14:11:19,071 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:11:19,101 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:11:19,131 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:11:19,161 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:11:19,191 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:11:19,191 [aedb.orchestrator] INFO:   Seed 'minimal': fid=0.9097, dehb=0.8157, brfd=0.3443, combined=0.7684
+2026-04-04 14:11:19,191 [aedb.orchestrator] INFO:   Database: 4 programs, best=0.7684
+2026-04-04 14:11:19,191 [aedb.orchestrator] INFO: 
+--- Phase 2: AlphaEvolve Evolution ---
+2026-04-04 14:11:19,191 [aedb.orchestrator] INFO:   (MAP-Elites + LLM ensemble + evaluation cascade)
+2026-04-04 14:11:23,282 [aedb.llm_ensemble] INFO: OpenRouter google/gemma-3-27b-it:free rate limited
+2026-04-04 14:11:24,800 [aedb.llm_ensemble] INFO: OpenRouter qwen/qwen3-coder:free rate limited
+2026-04-04 14:11:25,428 [aedb.llm_ensemble] INFO: OpenRouter meta-llama/llama-3.3-70b-instruct:free rate limited
+2026-04-04 14:11:39,951 [aedb.orchestrator] INFO:   Gen 1: best=0.7684, fid=0.9097, valid=0/3, db=4 (3 cells), LLM=5, DEHB=32, BRFD=16, time=20.8s
+2026-04-04 14:11:44,248 [google_genai.models] INFO: AFC is enabled with max remote calls: 10.
+2026-04-04 14:11:44,758 [httpx] INFO: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-04 14:11:44,759 [aedb.llm_ensemble] INFO: Gemini rate limited
+2026-04-04 14:11:45,183 [aedb.llm_ensemble] INFO: OpenRouter google/gemma-3-27b-it:free rate limited
+2026-04-04 14:11:46,408 [aedb.llm_ensemble] INFO: OpenRouter qwen/qwen3-coder:free rate limited
+2026-04-04 14:11:47,065 [aedb.llm_ensemble] INFO: OpenRouter meta-llama/llama-3.3-70b-instruct:free rate limited
+2026-04-04 14:11:51,537 [aedb.llm_ensemble] WARNING: All LLM backends failed
+2026-04-04 14:11:54,294 [google_genai.models] INFO: AFC is enabled with max remote calls: 10.
+2026-04-04 14:11:54,604 [httpx] INFO: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-04 14:11:54,605 [aedb.llm_ensemble] INFO: Gemini rate limited
+2026-04-04 14:11:55,152 [aedb.llm_ensemble] INFO: OpenRouter google/gemma-3-27b-it:free rate limited
+2026-04-04 14:11:55,155 [aedb.llm_ensemble] INFO: Backend gemma-3-27b-it:free: 3 failures, cooldown 10s
+2026-04-04 14:11:55,784 [aedb.llm_ensemble] INFO: Backend gemma-3-12b-it:free: 3 failures, cooldown 10s
+2026-04-04 14:11:56,424 [aedb.llm_ensemble] INFO: OpenRouter qwen/qwen3-coder:free rate limited
+2026-04-04 14:11:56,426 [aedb.llm_ensemble] INFO: Backend qwen3-coder:free: 3 failures, cooldown 10s
+2026-04-04 14:11:57,111 [aedb.llm_ensemble] INFO: OpenRouter meta-llama/llama-3.3-70b-instruct:free rate limited
+2026-04-04 14:11:57,113 [aedb.llm_ensemble] INFO: Backend llama-3.3-70b-instruct:free: 3 failures, cooldown 10s
+2026-04-04 14:12:00,283 [aedb.llm_ensemble] WARNING: All LLM backends failed
+2026-04-04 14:12:05,061 [google_genai.models] INFO: AFC is enabled with max remote calls: 10.
+2026-04-04 14:12:05,398 [httpx] INFO: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-04 14:12:05,399 [aedb.llm_ensemble] INFO: Gemini rate limited
+2026-04-04 14:12:05,399 [aedb.llm_ensemble] INFO: Backend gemini-flash: 3 failures, cooldown 10s
+2026-04-04 14:12:05,774 [aedb.llm_ensemble] INFO: OpenRouter google/gemma-3-27b-it:free rate limited
+2026-04-04 14:12:05,775 [aedb.llm_ensemble] INFO: Backend gemma-3-27b-it:free: 4 failures, cooldown 20s
+2026-04-04 14:12:09,851 [aedb.orchestrator] INFO:   Gen 2: best=0.7684, fid=0.9097, valid=0/3, db=4 (3 cells), LLM=9, DEHB=32, BRFD=16, time=29.9s
+2026-04-04 14:12:16,271 [aedb.program_db] INFO: New global best: 0.7868 (island=2, gen=3)
+2026-04-04 14:12:19,247 [aedb.llm_ensemble] INFO: OpenRouter google/gemma-3-12b-it:free rate limited
+2026-04-04 14:12:19,249 [aedb.llm_ensemble] INFO: Backend gemma-3-12b-it:free: 4 failures, cooldown 20s
+2026-04-04 14:12:19,908 [aedb.llm_ensemble] INFO: OpenRouter qwen/qwen3-coder:free rate limited
+2026-04-04 14:12:19,909 [aedb.llm_ensemble] INFO: Backend qwen3-coder:free: 4 failures, cooldown 20s
+2026-04-04 14:12:20,541 [aedb.llm_ensemble] INFO: OpenRouter meta-llama/llama-3.3-70b-instruct:free rate limited
+2026-04-04 14:12:20,542 [aedb.llm_ensemble] INFO: Backend llama-3.3-70b-instruct:free: 4 failures, cooldown 20s
+2026-04-04 14:13:03,425 [aedb.llm_ensemble] INFO: OpenRouter google/gemma-3-27b-it:free rate limited
+2026-04-04 14:13:03,426 [aedb.llm_ensemble] INFO: Backend gemma-3-27b-it:free: 5 failures, cooldown 40s
+2026-04-04 14:13:04,035 [aedb.llm_ensemble] INFO: Backend gemma-3-12b-it:free: 5 failures, cooldown 40s
+2026-04-04 14:13:04,665 [aedb.llm_ensemble] INFO: OpenRouter qwen/qwen3-coder:free rate limited
+2026-04-04 14:13:04,666 [aedb.llm_ensemble] INFO: Backend qwen3-coder:free: 5 failures, cooldown 40s
+2026-04-04 14:13:05,315 [aedb.llm_ensemble] INFO: OpenRouter meta-llama/llama-3.3-70b-instruct:free rate limited
+2026-04-04 14:13:05,316 [aedb.llm_ensemble] INFO: Backend llama-3.3-70b-instruct:free: 5 failures, cooldown 40s
+2026-04-04 14:13:13,968 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:13:17,069 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.1s
+2026-04-04 14:13:17,070 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:13:17,099 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:13:17,127 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:13:17,155 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:13:17,183 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:13:17,183 [aedb.orchestrator] INFO:   Gen 3: best=0.7684, fid=0.9097, valid=1/3, db=6 (4 cells), LLM=14, DEHB=40, BRFD=20, time=67.3s
+2026-04-04 14:13:26,939 [google_genai.models] INFO: AFC is enabled with max remote calls: 10.
+2026-04-04 14:13:27,451 [httpx] INFO: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-04 14:13:27,451 [aedb.llm_ensemble] INFO: Gemini rate limited
+2026-04-04 14:13:27,451 [aedb.llm_ensemble] INFO: Backend gemini-flash: 4 failures, cooldown 20s
+2026-04-04 14:13:31,944 [aedb.llm_ensemble] WARNING: All LLM backends failed
+2026-04-04 14:13:36,018 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:13:38,967 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 2.9s
+2026-04-04 14:13:38,968 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:13:38,997 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:13:39,024 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:13:39,052 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:13:39,079 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:13:39,080 [aedb.orchestrator] INFO:   Gen 4: best=0.7684, fid=0.9097, valid=1/3, db=7 (4 cells), LLM=17, DEHB=48, BRFD=24, time=21.9s
+2026-04-04 14:13:54,532 [google_genai.models] INFO: AFC is enabled with max remote calls: 10.
+2026-04-04 14:13:54,826 [httpx] INFO: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-04 14:13:54,826 [aedb.llm_ensemble] INFO: Gemini rate limited
+2026-04-04 14:13:54,827 [aedb.llm_ensemble] INFO: Backend gemini-flash: 5 failures, cooldown 40s
+2026-04-04 14:13:57,356 [aedb.llm_ensemble] INFO: OpenRouter google/gemma-3-27b-it:free rate limited
+2026-04-04 14:13:57,357 [aedb.llm_ensemble] INFO: Backend gemma-3-27b-it:free: 6 failures, cooldown 80s
+2026-04-04 14:13:59,442 [aedb.llm_ensemble] INFO: OpenRouter google/gemma-3-12b-it:free rate limited
+2026-04-04 14:13:59,444 [aedb.llm_ensemble] INFO: Backend gemma-3-12b-it:free: 6 failures, cooldown 80s
+2026-04-04 14:14:01,568 [aedb.llm_ensemble] INFO: OpenRouter qwen/qwen3-coder:free rate limited
+2026-04-04 14:14:01,569 [aedb.llm_ensemble] INFO: Backend qwen3-coder:free: 6 failures, cooldown 80s
+2026-04-04 14:14:07,011 [aedb.llm_ensemble] INFO: OpenRouter meta-llama/llama-3.3-70b-instruct:free rate limited
+2026-04-04 14:14:07,012 [aedb.llm_ensemble] INFO: Backend llama-3.3-70b-instruct:free: 6 failures, cooldown 80s
+2026-04-04 14:14:10,732 [aedb.llm_ensemble] WARNING: All LLM backends failed
+2026-04-04 14:14:17,774 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:14:20,940 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.2s
+2026-04-04 14:14:20,941 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:14:20,968 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:14:20,995 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:14:21,020 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:14:21,048 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:14:21,048 [aedb.orchestrator] INFO:   Gen 5: best=0.7684, fid=0.9097, valid=1/3, db=7 (4 cells), LLM=20, DEHB=56, BRFD=28, time=42.0s
+2026-04-04 14:15:29,455 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:15:32,386 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 2.9s
+2026-04-04 14:15:32,387 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:15:32,414 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:15:32,441 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:15:32,468 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:15:32,495 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:15:32,495 [aedb.orchestrator] INFO:   Gen 6: best=0.7684, fid=0.9097, valid=1/3, db=7 (4 cells), LLM=24, DEHB=64, BRFD=32, time=71.4s
+2026-04-04 14:15:35,372 [google_genai.models] INFO: AFC is enabled with max remote calls: 10.
+2026-04-04 14:15:35,879 [httpx] INFO: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-04 14:15:35,880 [aedb.llm_ensemble] INFO: Gemini rate limited
+2026-04-04 14:15:35,880 [aedb.llm_ensemble] INFO: Backend gemini-flash: 6 failures, cooldown 80s
+2026-04-04 14:15:37,536 [aedb.llm_ensemble] INFO: Backend gemma-3-27b-it:free: 7 failures, cooldown 120s
+2026-04-04 14:15:39,001 [aedb.llm_ensemble] INFO: OpenRouter google/gemma-3-12b-it:free rate limited
+2026-04-04 14:15:39,003 [aedb.llm_ensemble] INFO: Backend gemma-3-12b-it:free: 7 failures, cooldown 120s
+2026-04-04 14:15:40,484 [aedb.llm_ensemble] INFO: OpenRouter qwen/qwen3-coder:free rate limited
+2026-04-04 14:15:40,485 [aedb.llm_ensemble] INFO: Backend qwen3-coder:free: 7 failures, cooldown 120s

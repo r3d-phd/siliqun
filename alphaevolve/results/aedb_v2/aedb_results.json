@@ -1,0 +1,189 @@
+{
+  "best_combined_score": 0.7683994273498203,
+  "best_base_fidelity": 0.9096642928113972,
+  "final_fidelity_500": 0.9126831928019181,
+  "best_code": "def generate_gate_sequence(target_gate, n_qubits, nn_correlation, qubit_spacing_nm, corr_length_nm):\n    gates = []\n    \n    if nn_correlation > 0.7:\n        for i in range(n_qubits):\n            angle = np.pi * (i + 1) / n_qubits\n            ry_angle = np.arccos(nn_correlation) * angle\n            gates.append(Gate(\"ry\", [i], {\"angle\": ry_angle}))\n        \n        if target_gate == \"bell\":\n            gates.append(Gate(\"h\", [0]))\n            gates.append(Gate(\"cnot\", [0, 1]))\n            gates.append(Gate(\"h\", [1]))\n            gates.append(Gate(\"cnot\", [1, 0]))\n            gates.append(Gate(\"h\", [0]))\n        elif target_gate == \"cnot\":\n            gates.append(Gate(\"cnot\", [0, 1]))\n        elif target_gate == \"ghz\":\n            gates.append(Gate(\"h\", [0]))\n            for i in range(n_qubits - 1):\n                gates.append(Gate(\"cnot\", [i, i + 1]))\n        \n        for i in range(n_qubits-1, -1, -1):\n            angle = np.pi * (i + 1) / n_qubits\n            ry_angle = np.arccos(nn_correlation) * angle\n            gates.append(Gate(\"ry\", [i], {\"angle\": ry_angle}))\n    else:\n        if target_gate == \"bell\":\n            gates.append(Gate(\"h\", [0]))\n            gates.append(Gate(\"cnot\", [0, 1]))\n        elif target_gate == \"cnot\":\n            gates.append(Gate(\"cnot\", [0, 1]))\n        elif target_gate == \"ghz\":\n            gates.append(Gate(\"h\", [0]))\n            for i in range(n_qubits - 1):\n                gates.append(Gate(\"cnot\", [i, i + 1]))\n    \n    return gates\n",
+  "best_scores": {
+    "combined": 0.7683994273498203,
+    "base_fidelity": 0.9096642928113972,
+    "gate_efficiency": 1.0,
+    "correlation_use": 0.3333333333333333,
+    "gate_count": 2.0,
+    "dehb_fitness": 0.8156599674347645,
+    "brfd_fidelity": 0.3443464535684616
+  },
+  "best_model": "ollama-gpu",
+  "best_generation": 10,
+  "best_source": "evolution",
+  "total_llm_calls": 30,
+  "total_dehb_evals": 216,
+  "total_brfd_steps": 108,
+  "total_time_seconds": 707.5710985660553,
+  "total_programs": 14,
+  "noise_amplitude": 0.5,
+  "n_qubits": 2,
+  "history": [
+    {
+      "generation": 1,
+      "best_score": 0.7683994273498203,
+      "best_fidelity": 0.9096642928113972,
+      "valid": 2,
+      "total": 3,
+      "llm_calls": 3,
+      "dehb_evals": 48,
+      "brfd_steps": 24,
+      "db_programs": 7,
+      "db_cells": 4,
+      "time_seconds": 31.142576932907104
+    },
+    {
+      "generation": 2,
+      "best_score": 0.7683994273498203,
+      "best_fidelity": 0.9096642928113972,
+      "valid": 3,
+      "total": 3,
+      "llm_calls": 6,
+      "dehb_evals": 64,
+      "brfd_steps": 32,
+      "db_programs": 10,
+      "db_cells": 4,
+      "time_seconds": 44.11717367172241
+    },
+    {
+      "generation": 3,
+      "best_score": 0.7483992106472589,
+      "best_fidelity": 0.8696638594062744,
+      "valid": 3,
+      "total": 3,
+      "llm_calls": 9,
+      "dehb_evals": 80,
+      "brfd_steps": 40,
+      "db_programs": 12,
+      "db_cells": 6,
+      "time_seconds": 42.75540590286255
+    },
+    {
+      "generation": 4,
+      "best_score": 0.7683994273498203,
+      "best_fidelity": 0.9096642928113972,
+      "valid": 3,
+      "total": 3,
+      "llm_calls": 12,
+      "dehb_evals": 96,
+      "brfd_steps": 48,
+      "db_programs": 12,
+      "db_cells": 6,
+      "time_seconds": 53.618314266204834
+    },
+    {
+      "generation": 5,
+      "best_score": 0.7683994273498203,
+      "best_fidelity": 0.9096642928113972,
+      "valid": 3,
+      "total": 3,
+      "llm_calls": 15,
+      "dehb_evals": 112,
+      "brfd_steps": 56,
+      "db_programs": 14,
+      "db_cells": 7,
+      "time_seconds": 68.93756580352783
+    },
+    {
+      "generation": 6,
+      "best_score": 0.7683994273498203,
+      "best_fidelity": 0.9096642928113972,
+      "valid": 3,
+      "total": 3,
+      "llm_calls": 18,
+      "dehb_evals": 128,
+      "brfd_steps": 64,
+      "db_programs": 14,
+      "db_cells": 7,
+      "time_seconds": 83.77544331550598
+    },
+    {
+      "generation": 7,
+      "best_score": 0.7683994273498203,
+      "best_fidelity": 0.9096642928113972,
+      "valid": 3,
+      "total": 3,
+      "llm_calls": 21,
+      "dehb_evals": 144,
+      "brfd_steps": 72,
+      "db_programs": 14,
+      "db_cells": 7,
+      "time_seconds": 101.12279295921326
+    },
+    {
+      "generation": 8,
+      "best_score": 0.7683994273498203,
+      "best_fidelity": 0.9096642928113972,
+      "valid": 2,
+      "total": 3,
+      "llm_calls": 24,
+      "dehb_evals": 160,
+      "brfd_steps": 80,
+      "db_programs": 14,
+      "db_cells": 7,
+      "time_seconds": 85.14559388160706
+    },
+    {
+      "generation": 9,
+      "best_score": 0.7683994273498203,
+      "best_fidelity": 0.9096642928113972,
+      "valid": 3,
+      "total": 3,
+      "llm_calls": 27,
+      "dehb_evals": 176,
+      "brfd_steps": 88,
+      "db_programs": 14,
+      "db_cells": 7,
+      "time_seconds": 56.65064334869385
+    },
+    {
+      "generation": 10,
+      "best_score": 0.7683994273498203,
+      "best_fidelity": 0.9096642928113972,
+      "valid": 3,
+      "total": 3,
+      "llm_calls": 30,
+      "dehb_evals": 192,
+      "brfd_steps": 96,
+      "db_programs": 14,
+      "db_cells": 7,
+      "time_seconds": 117.64235711097717
+    }
+  ],
+  "cascade_stats": {
+    "total": 34,
+    "passed_compile": 34,
+    "passed_quick": 33,
+    "passed_medium": 31,
+    "passed_full": 31,
+    "compile_rate": 1.0,
+    "quick_rate": 0.9705882352941176,
+    "medium_rate": 0.9117647058823529,
+    "full_rate": 0.9117647058823529
+  },
+  "llm_stats": {
+    "ollama-gpu": {
+      "tier": "flash",
+      "calls": 30,
+      "tokens": 10226,
+      "failures": 0,
+      "consecutive_failures": 0
+    }
+  },
+  "database_stats": {
+    "total": 14,
+    "best": 0.836765004967978,
+    "mean": 0.7566461337896359,
+    "std": 0.12809105775684967,
+    "islands": [
+      4,
+      6,
+      4
+    ],
+    "cells": 7
+  }
+}

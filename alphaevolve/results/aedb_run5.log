@@ -1,0 +1,317 @@
+nohup: ignoring input
+2026-04-04 14:29:40,019 [aedb.llm_ensemble] INFO: LLM Ensemble: Ollama-only (qwen2.5-coder:7b-gpu @ http://localhost:11435)
+2026-04-04 14:29:40,019 [aedb.orchestrator] INFO: ======================================================================
+2026-04-04 14:29:40,019 [aedb.orchestrator] INFO: AEDB Orchestrator v2: AlphaEvolve + DEHB + BRFD
+2026-04-04 14:29:40,019 [aedb.orchestrator] INFO: ======================================================================
+2026-04-04 14:29:40,019 [aedb.orchestrator] INFO:   Qubits:        2
+2026-04-04 14:29:40,019 [aedb.orchestrator] INFO:   Noise:         0.5 rad/gate
+2026-04-04 14:29:40,019 [aedb.orchestrator] INFO:   AE gens:       10
+2026-04-04 14:29:40,019 [aedb.orchestrator] INFO:   AE pop/gen:    3
+2026-04-04 14:29:40,019 [aedb.orchestrator] INFO:   AE max calls:  40
+2026-04-04 14:29:40,019 [aedb.orchestrator] INFO:   AE islands:    3
+2026-04-04 14:29:40,019 [aedb.orchestrator] INFO:   DEHB evals:    8 per top-2
+2026-04-04 14:29:40,019 [aedb.orchestrator] INFO:   BRFD steps:    4 per top-1
+2026-04-04 14:29:40,019 [aedb.orchestrator] INFO: 
+--- Phase 1: Seed Evaluation (DEHB + BRFD) ---
+2026-04-04 14:29:40,116 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:29:43,095 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.0s
+2026-04-04 14:29:43,096 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:29:43,126 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:29:43,156 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:29:43,185 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:29:43,214 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:29:43,214 [aedb.program_db] INFO: New global best: 0.7684 (island=0, gen=0)
+2026-04-04 14:29:43,214 [aedb.orchestrator] INFO:   Seed 'standard': fid=0.9097, dehb=0.8157, brfd=0.3443, combined=0.7684
+2026-04-04 14:29:43,296 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:29:46,287 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.0s
+2026-04-04 14:29:46,288 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:29:46,317 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:29:46,345 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:29:46,373 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:29:46,402 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:29:46,402 [aedb.orchestrator] INFO:   Seed 'echo_cancel': fid=0.0000, dehb=0.8157, brfd=0.3443, combined=0.3136
+2026-04-04 14:29:46,648 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:29:49,814 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.2s
+2026-04-04 14:29:49,815 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:29:49,850 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:29:49,883 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:29:49,919 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:29:49,951 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:29:49,951 [aedb.orchestrator] INFO:   Seed 'correlation_aware': fid=0.8466, dehb=0.8157, brfd=0.3443, combined=0.7369
+2026-04-04 14:29:50,046 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:29:53,233 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.2s
+2026-04-04 14:29:53,234 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:29:53,263 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:29:53,292 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:29:53,320 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:29:53,349 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:29:53,349 [aedb.orchestrator] INFO:   Seed 'minimal': fid=0.9097, dehb=0.8157, brfd=0.3443, combined=0.7684
+2026-04-04 14:29:53,350 [aedb.orchestrator] INFO:   Database: 4 programs, best=0.7684
+2026-04-04 14:29:53,350 [aedb.orchestrator] INFO: 
+--- Phase 2: AlphaEvolve Evolution ---
+2026-04-04 14:29:53,350 [aedb.orchestrator] INFO:   (MAP-Elites + LLM ensemble + evaluation cascade)
+2026-04-04 14:30:17,961 [aedb.program_db] INFO: New global best: 0.7868 (island=0, gen=1)
+2026-04-04 14:30:17,994 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:30:21,030 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.0s
+2026-04-04 14:30:21,031 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:30:21,061 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:30:21,093 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:30:21,123 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:30:21,152 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:30:21,182 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:30:24,359 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.2s
+2026-04-04 14:30:24,360 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:30:24,395 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:30:24,427 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:30:24,457 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:30:24,492 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:30:24,492 [aedb.orchestrator] INFO:   Gen 1: best=0.7684, fid=0.9097, valid=2/3, db=7 (4 cells), LLM=3, DEHB=48, BRFD=24, time=31.1s
+2026-04-04 14:30:33,711 [aedb.program_db] INFO: New global best: 0.8368 (island=0, gen=2)
+2026-04-04 14:31:01,981 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:31:05,205 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.2s
+2026-04-04 14:31:05,206 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:31:05,237 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:31:05,268 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:31:05,298 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:31:05,328 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:31:05,358 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:31:08,476 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.1s
+2026-04-04 14:31:08,477 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:31:08,510 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:31:08,543 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:31:08,576 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:31:08,609 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:31:08,610 [aedb.orchestrator] INFO:   Gen 2: best=0.7684, fid=0.9097, valid=3/3, db=10 (4 cells), LLM=6, DEHB=64, BRFD=32, time=44.1s
+2026-04-04 14:31:19,591 [aedb.program_db] INFO: New global best: 0.8776 (island=2, gen=3)
+2026-04-04 14:31:44,782 [aedb.program_db] INFO: New global best: 0.9088 (island=1, gen=3)
+2026-04-04 14:31:44,811 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:31:47,874 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.1s
+2026-04-04 14:31:47,875 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:31:47,914 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:31:47,958 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:31:47,993 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:31:48,029 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:31:48,062 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:31:51,238 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.2s
+2026-04-04 14:31:51,240 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:31:51,272 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:31:51,303 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:31:51,334 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:31:51,365 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:31:51,365 [aedb.orchestrator] INFO:   Gen 3: best=0.7484, fid=0.8697, valid=3/3, db=12 (6 cells), LLM=9, DEHB=80, BRFD=40, time=42.8s
+2026-04-04 14:32:20,972 [aedb.program_db] INFO: New global best: 0.8368 (island=1, gen=4)
+2026-04-04 14:32:38,365 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:32:41,632 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.3s
+2026-04-04 14:32:41,633 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:32:41,665 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:32:41,697 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:32:41,728 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:32:41,758 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:32:41,788 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:32:44,859 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.1s
+2026-04-04 14:32:44,860 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:32:44,891 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:32:44,922 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:32:44,952 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:32:44,983 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:32:44,984 [aedb.orchestrator] INFO:   Gen 4: best=0.7684, fid=0.9097, valid=3/3, db=12 (6 cells), LLM=12, DEHB=96, BRFD=48, time=53.6s
+2026-04-04 14:33:02,140 [aedb.program_db] INFO: New global best: 0.8368 (island=1, gen=5)
+2026-04-04 14:33:24,567 [aedb.program_db] INFO: New global best: 0.9368 (island=0, gen=5)
+2026-04-04 14:33:47,505 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:33:50,580 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.1s
+2026-04-04 14:33:50,581 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:33:50,611 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:33:50,640 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:33:50,670 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:33:50,701 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:33:50,732 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:33:53,812 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.1s
+2026-04-04 14:33:53,814 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:33:53,842 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:33:53,869 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:33:53,894 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:33:53,921 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:33:53,922 [aedb.orchestrator] INFO:   Gen 5: best=0.7684, fid=0.9097, valid=3/3, db=14 (7 cells), LLM=15, DEHB=112, BRFD=56, time=68.9s
+2026-04-04 14:34:42,368 [aedb.program_db] INFO: New global best: 0.8368 (island=0, gen=6)
+2026-04-04 14:35:11,407 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:35:14,401 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.0s
+2026-04-04 14:35:14,402 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:35:14,432 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:35:14,461 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:35:14,490 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:35:14,519 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:35:14,547 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:35:17,574 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.0s
+2026-04-04 14:35:17,575 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:35:17,604 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:35:17,635 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:35:17,667 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:35:17,697 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:35:17,697 [aedb.orchestrator] INFO:   Gen 6: best=0.7684, fid=0.9097, valid=3/3, db=14 (7 cells), LLM=18, DEHB=128, BRFD=64, time=83.8s
+2026-04-04 14:36:52,739 [aedb.program_db] INFO: New global best: 0.8368 (island=0, gen=7)
+2026-04-04 14:36:52,768 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:36:55,684 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 2.9s
+2026-04-04 14:36:55,685 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:36:55,713 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:36:55,739 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:36:55,766 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:36:55,793 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:36:55,821 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:36:58,705 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 2.9s
+2026-04-04 14:36:58,706 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:36:58,734 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:36:58,762 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:36:58,791 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:36:58,820 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:36:58,820 [aedb.orchestrator] INFO:   Gen 7: best=0.7684, fid=0.9097, valid=3/3, db=14 (7 cells), LLM=21, DEHB=144, BRFD=72, time=101.1s
+2026-04-04 14:37:25,646 [aedb.program_db] INFO: New global best: 0.8368 (island=0, gen=8)
+2026-04-04 14:38:17,708 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:38:20,740 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.0s
+2026-04-04 14:38:20,741 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:38:20,769 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:38:20,798 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:38:20,827 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:38:20,857 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:38:20,885 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:38:23,846 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.0s
+2026-04-04 14:38:23,847 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:38:23,876 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:38:23,909 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:38:23,937 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:38:23,966 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:38:23,966 [aedb.orchestrator] INFO:   Gen 8: best=0.7684, fid=0.9097, valid=2/3, db=14 (7 cells), LLM=24, DEHB=160, BRFD=80, time=85.1s
+2026-04-04 14:39:14,343 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:39:17,310 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.0s
+2026-04-04 14:39:17,311 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:39:17,340 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:39:17,368 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:39:17,396 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:39:17,428 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:39:17,456 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:39:20,501 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.0s
+2026-04-04 14:39:20,502 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:39:20,531 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:39:20,559 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:39:20,588 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:39:20,617 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:39:20,617 [aedb.orchestrator] INFO:   Gen 9: best=0.7684, fid=0.9097, valid=3/3, db=14 (7 cells), LLM=27, DEHB=176, BRFD=88, time=56.7s
+2026-04-04 14:41:10,724 [aedb.program_db] INFO: New global best: 0.8368 (island=0, gen=10)
+2026-04-04 14:41:10,758 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:41:14,416 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.7s
+2026-04-04 14:41:14,417 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:41:14,449 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:41:14,480 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:41:14,510 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:41:14,541 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:41:14,575 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:41:18,144 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.6s
+2026-04-04 14:41:18,145 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:41:18,174 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:41:18,204 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:41:18,232 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:41:18,259 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:41:18,260 [aedb.orchestrator] INFO:   Gen 10: best=0.7684, fid=0.9097, valid=3/3, db=14 (7 cells), LLM=30, DEHB=192, BRFD=96, time=117.6s
+2026-04-04 14:41:18,260 [aedb.orchestrator] INFO: 
+--- Phase 3: Final Refinement ---
+2026-04-04 14:41:18,260 [aedb.orchestrator] INFO:   Refining top-1: score=0.8368 (source=evolution)
+2026-04-04 14:41:18,288 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:41:21,241 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 3.0s
+2026-04-04 14:41:21,242 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:41:21,270 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:41:21,299 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:41:21,326 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:41:21,353 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:41:21,353 [aedb.orchestrator] INFO:     -> refined score=0.7684 (dehb=0.8157, brfd=0.3443)
+2026-04-04 14:41:21,353 [aedb.orchestrator] INFO:   Refining top-2: score=0.8368 (source=evolution)
+2026-04-04 14:41:21,380 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:41:24,281 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 2.9s
+2026-04-04 14:41:24,282 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:41:24,309 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:41:24,336 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:41:24,362 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:41:24,388 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:41:24,388 [aedb.orchestrator] INFO:     -> refined score=0.7684 (dehb=0.8157, brfd=0.3443)
+2026-04-04 14:41:24,388 [aedb.orchestrator] INFO:   Refining top-3: score=0.8368 (source=evolution)
+2026-04-04 14:41:24,415 [aedb.dehb] INFO: Starting DEHB optimization: 8 evaluations, budgets [1, 3, 9], 11 dimensions
+2026-04-04 14:41:27,346 [aedb.dehb] INFO: DEHB complete: best fidelity = 0.815660, time = 2.9s
+2026-04-04 14:41:27,347 [aedb.brfd] INFO: BRFD training: 4 outer steps, 8 inner episodes each
+2026-04-04 14:41:27,378 [aedb.brfd] INFO:   Outer step 1/4: mean_fid=0.1385, best=0.1385
+2026-04-04 14:41:27,407 [aedb.brfd] INFO:   Outer step 2/4: mean_fid=0.1845, best=0.1845
+2026-04-04 14:41:27,435 [aedb.brfd] INFO:   Outer step 3/4: mean_fid=0.3098, best=0.3098
+2026-04-04 14:41:27,462 [aedb.brfd] INFO:   Outer step 4/4: mean_fid=0.3443, best=0.3443
+2026-04-04 14:41:27,462 [aedb.orchestrator] INFO:     -> refined score=0.7684 (dehb=0.8157, brfd=0.3443)
+2026-04-04 14:41:27,462 [aedb.orchestrator] INFO: 
+--- Phase 4: Final Evaluation (500 samples) ---
+2026-04-04 14:41:27,591 [aedb.orchestrator] INFO: 
+======================================================================
+2026-04-04 14:41:27,591 [aedb.orchestrator] INFO: AEDB v2 COMPLETE
+2026-04-04 14:41:27,591 [aedb.orchestrator] INFO: ======================================================================
+2026-04-04 14:41:27,591 [aedb.orchestrator] INFO:   Best combined:   0.7684
+2026-04-04 14:41:27,591 [aedb.orchestrator] INFO:   Best fidelity:   0.9097
+2026-04-04 14:41:27,591 [aedb.orchestrator] INFO:   Final (500):     0.9127
+2026-04-04 14:41:27,591 [aedb.orchestrator] INFO:   Total programs:  14
+2026-04-04 14:41:27,591 [aedb.orchestrator] INFO:   LLM calls:       30
+2026-04-04 14:41:27,591 [aedb.orchestrator] INFO:   DEHB evals:      216
+2026-04-04 14:41:27,591 [aedb.orchestrator] INFO:   BRFD steps:      108
+2026-04-04 14:41:27,591 [aedb.orchestrator] INFO:   Total time:      707.6s
+2026-04-04 14:41:27,591 [aedb.orchestrator] INFO: ======================================================================
+======================================================================
+AEDB v2: AlphaEvolve + DEHB + BRFD Orchestrator
+======================================================================
+Architecture: MAP-Elites + LLM Ensemble + Evaluation Cascade
+Noise: 0.5 rad/gate (hard regime)
+Target: Discover novel noise mitigation strategies
+
+
+======================================================================
+FINAL RESULTS
+======================================================================
+Best combined score: 0.7684
+Best base fidelity:  0.9097
+Final fidelity (500): 0.9127
+Total programs:      14
+LLM calls:           30
+DEHB evals:          216
+BRFD steps:          108
+Time:                707.6s
+
+Best strategy:
+def generate_gate_sequence(target_gate, n_qubits, nn_correlation, qubit_spacing_nm, corr_length_nm):
+    gates = []
+    
+    if nn_correlation > 0.7:
+        for i in range(n_qubits):
+            angle = np.pi * (i + 1) / n_qubits
+            ry_angle = np.arccos(nn_correlation) * angle
+            gates.append(Gate("ry", [i], {"angle": ry_angle}))
+        
+        if target_gate == "bell":
+            gates.append(Gate("h", [0]))
+            gates.append(Gate("cnot", [0, 1]))
+            gates.append(Gate("h", [1]))
+            gates.append(Gate("cnot", [1, 0]))
+            gates.append(Gate("h", [0]))
+        elif target_gate == "cnot":
+            gates.append(Gate("cnot", [0, 1]))
+        elif target_gate == "ghz":
+            gates.append(Gate("h", [0]))
+            for i in range(n_qubits - 1):
+                gates.append(Gate("cnot", [i, i + 1]))
+        
+        for i in range(n_qubits-1, -1, -1):
+            angle = np.pi * (i + 1) / n_qubits
+            ry_angle = np.arccos(nn_correlation) * angle
+            gates.append(Gate("ry", [i], {"angle": ry_angle}))
+    else:
+        if target_gate == "bell":
+            gates.append(Gate("h", [0]))
+            gates.append(Gate("cnot", [0, 1]))
+        elif target_gate == "cnot":
+            gates.append(Gate("cnot", [0, 1]))
+        elif target_gate == "ghz":
+            gates.append(Gate("h", [0]))
+            for i in range(n_qubits - 1):
+                gates.append(Gate("cnot", [i, i + 1]))
+    
+    return gates
+

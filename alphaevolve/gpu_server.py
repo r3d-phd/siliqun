@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """GPU-accelerated LLM inference server using llama-cpp-python.
 
-Runs on the user's RTX 2070 machine and serves an OpenAI-compatible API.
+Runs on the user's RTX 2070 machine and serves an Ollama-compatible API.
+Uses create_chat_completion for proper chat template handling.
 """
 
 import json
@@ -21,6 +22,7 @@ llm = Llama(
     n_ctx=4096,
     n_batch=512,
     verbose=True,
+    chat_format="chatml",  # Qwen2.5 uses ChatML format
 )
 print(f"Model loaded in {time.time()-t0:.1f}s")
 
@@ -35,17 +37,33 @@ class Handler(BaseHTTPRequestHandler):
             options = body.get("options", {})
             max_tokens = options.get("num_predict", body.get("num_predict", 1500))
             temperature = options.get("temperature", body.get("temperature", 0.7))
+            repeat_penalty = options.get("repeat_penalty", 1.1)
+
+            # Split prompt into system + user if it contains both
+            # The LLMEnsemble sends "system\n\nuser" format
+            system_msg = "You are a helpful coding assistant."
+            user_msg = prompt
+            if "\n\n" in prompt:
+                parts = prompt.split("\n\n", 1)
+                if len(parts[0]) > 50:  # Looks like a system prompt
+                    system_msg = parts[0]
+                    user_msg = parts[1]
+
+            messages = [
+                {"role": "system", "content": system_msg},
+                {"role": "user", "content": user_msg},
+            ]
 
             t0 = time.time()
-            output = llm(
-                prompt,
+            output = llm.create_chat_completion(
+                messages=messages,
                 max_tokens=max_tokens,
                 temperature=temperature,
-                stop=["```\n\n", "\n\n\n\n"],
+                repeat_penalty=repeat_penalty,
             )
             t1 = time.time()
 
-            text = output["choices"][0]["text"]
+            text = output["choices"][0]["message"]["content"]
             eval_count = output["usage"]["completion_tokens"]
             eval_duration = int((t1 - t0) * 1e9)
 

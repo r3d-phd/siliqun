@@ -1,0 +1,19 @@
+{
+  "best_config": {
+    "dd_repetitions": 3,
+    "dd_sequence": "knill",
+    "echo_angle": 2.9480918790165,
+    "n_echo_pairs": 5,
+    "noise_amplitude": 0.158564426793,
+    "post_rotation_angle": 3.5989506187034,
+    "post_rotation_axis": "z",
+    "pre_rotation_angle": 1.54139819072,
+    "pre_rotation_axis": "none",
+    "qubit_spacing_nm": 142.9779177950852,
+    "tlf_correlation_length_nm": 207.7105563937935
+  },
+  "best_fitness": 0.18434003256523546,
+  "best_fidelity": 0.8156599674347645,
+  "total_evaluations": 8,
+  "total_time_seconds": 2.9894349575042725
+}

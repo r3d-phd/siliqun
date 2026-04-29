@@ -28,7 +28,7 @@ SiliQun is an open-source quantum simulation platform purpose-built for training
 ### Basic Installation (CPU only)
 
 ```bash
-git clone https://github.com/ralshehri/siliqun.git
+git clone https://github.com/r3d-phd/siliqun.git
 cd siliqun
 pip install -e .
 ```

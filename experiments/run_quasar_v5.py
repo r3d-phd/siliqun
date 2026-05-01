@@ -367,6 +367,8 @@ def run_dehb(seed: int, condition: str):
         logger.warning("ConfigSpace unavailable — using default HPs")
         return copy.deepcopy(DEFAULT_HP)
     try:
+        dehb_output_dir = f"/tmp/dehb_{condition}_{seed}"
+        os.makedirs(dehb_output_dir, exist_ok=True)
         optimizer = DEHB(
             f=dehb_objective,
             cs=cs,
@@ -374,6 +376,7 @@ def run_dehb(seed: int, condition: str):
             max_fidelity=DEHB_STEPS,
             n_workers=1,
             seed=seed,
+            output_path=dehb_output_dir,
         )
         # NOTE: verbose parameter removed — deprecated in DEHB v0.1.2+
         trajectory, runtime, history = optimizer.run(fevals=DEHB_BUDGET)

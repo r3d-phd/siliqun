@@ -1,0 +1,38 @@
+#!/bin/bash
+#PBS -N quasar_v5_brfd
+#PBS -q gpu
+#PBS -l select=1:ncpus=32:mem=64gb:ngpus=1
+#PBS -l walltime=60:00:00
+#PBS -j oe
+#PBS -o /home/ralshehri0468/quasar_v5_results/quasar_v5_brfd.log
+
+# ============================================================
+# QUASAR v5 — BRFD Dense Reward Shaping + VAPOR-lite + PBT
+# Walltime: 60 hours
+# ============================================================
+
+echo "=== QUASAR v5 Job Starting ==="
+echo "Job ID: $PBS_JOBID"
+echo "Node: $(hostname)"
+echo "Date: $(date)"
+
+# Load modules
+module load python/3.11 cuda/12.1 2>/dev/null || true
+
+# Activate conda environment
+source ~/miniconda3/etc/profile.d/conda.sh 2>/dev/null || true
+conda activate quasar 2>/dev/null || true
+
+# Set paths
+export PYTHONPATH=~/siliqun:~/quasar:$PYTHONPATH
+
+# Create results directory
+mkdir -p ~/quasar_v5_results
+
+# Run experiment
+cd ~/quasar_v3
+echo "=== Starting QUASAR v5 experiment ==="
+python run_quasar_v3.py 2>&1
+
+echo "=== QUASAR v5 Job Complete ==="
+echo "Date: $(date)"

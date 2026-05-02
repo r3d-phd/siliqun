@@ -298,21 +298,25 @@ def make_env(seed: int, reward_type: str = "shaped"):
 # ===========================================================================
 def evaluate_agent(agent, seed: int, n_episodes: int = EVAL_EPISODES):
     """
-    Evaluate agent over n_episodes and return mean fidelity.
-    Uses deterministic actions (no exploration noise).
+    Evaluate agent over n_episodes and return mean best-fidelity.
+    Uses stochastic sampling (not deterministic mean) to match training policy.
+    Reports best_fidelity achieved during each episode (episode max).
     """
     env = make_env(seed + 10000)  # Different seed from training
     fidelities = []
     for _ in range(n_episodes):
         obs, _ = env.reset()
         done = False
-        ep_fidelity = 0.0
+        ep_best_fidelity = 0.0
         while not done:
-            action = agent.select_action(obs, deterministic=True)
+            # Use stochastic sampling — matches the training policy
+            action = agent.select_action(obs, deterministic=False)
             obs, reward, terminated, truncated, info = env.step(action)
             done = terminated or truncated
-            ep_fidelity = info.get("best_fidelity", info.get("fidelity", 0.0))
-        fidelities.append(ep_fidelity)
+            # Track best fidelity achieved during the episode
+            step_fidelity = info.get("fidelity", 0.0)
+            ep_best_fidelity = max(ep_best_fidelity, step_fidelity)
+        fidelities.append(ep_best_fidelity)
     env.close()
     return float(np.mean(fidelities))
 
@@ -484,6 +488,7 @@ def train_standard(condition: str, seed: int, best_hp: dict):
     total_steps = 0
     episode = 0
     episode_reward = 0.0
+    episode_max_fidelity = 0.0  # Track max fidelity within episode for BRFD
     fidelity_history = []
     eval_checkpoints = []
     best_eval_fidelity = 0.0
@@ -499,6 +504,10 @@ def train_standard(condition: str, seed: int, best_hp: dict):
 
         # Record transition for BRFD episode buffer
         brfd.record_transition(obs, action, next_obs)
+
+        # Track per-step fidelity for BRFD max-fidelity label
+        step_fidelity = info.get("fidelity", 0.0) if info else 0.0
+        episode_max_fidelity = max(episode_max_fidelity, step_fidelity)
 
         # Apply BRFD shaped reward
         shaped_reward = brfd.shape(reward, obs, action, next_obs, step=total_steps)
@@ -519,8 +528,9 @@ def train_standard(condition: str, seed: int, best_hp: dict):
             episode += 1
             episode_reward = 0.0
 
-            # Propagate terminal fidelity label back to all episode steps
-            brfd.end_episode(terminal_fidelity=fidelity)
+            # Use max fidelity achieved during episode as BRFD label (richer signal)
+            brfd.end_episode(terminal_fidelity=episode_max_fidelity)
+            episode_max_fidelity = 0.0  # Reset for next episode
 
             obs, _ = env.reset()
 

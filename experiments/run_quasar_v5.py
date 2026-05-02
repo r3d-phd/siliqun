@@ -279,7 +279,17 @@ class BRFDRewardShaper:
 
 
 # ===========================================================================
-# Helper: create SiliQun environment
+# Detect actual environment dimensions dynamically
+# ===========================================================================
+_env_probe = SiliQunEnv()
+ENV_OBS_DIM = int(_env_probe.observation_space.shape[0])
+ENV_ACT_DIM = int(_env_probe.action_space.shape[0])
+_env_probe.close()
+logger.info(f"[ENV] Detected obs_dim={ENV_OBS_DIM}, act_dim={ENV_ACT_DIM}")
+
+
+# ===========================================================================
+# Helper: make environment
 # ===========================================================================
 def make_env(seed: int, reward_type: str = "shaped"):
     """Create a 3-qubit SiliQun GHZ environment."""
@@ -427,7 +437,7 @@ def _make_agent(hp: dict, seed: int, use_vapor: bool = True):
     """Instantiate the appropriate agent."""
     if use_vapor:
         return VAPORSACAgent(
-            obs_dim=10, act_dim=10,
+            obs_dim=ENV_OBS_DIM, act_dim=ENV_ACT_DIM,
             hidden_dim=128,
             actor_lr=hp["actor_lr"],
             critic_lr=hp["critic_lr"],
@@ -443,7 +453,7 @@ def _make_agent(hp: dict, seed: int, use_vapor: bool = True):
         )
     else:
         return VAPORSACAgent(
-            obs_dim=10, act_dim=10,
+            obs_dim=ENV_OBS_DIM, act_dim=ENV_ACT_DIM,
             hidden_dim=128,
             actor_lr=hp["actor_lr"],
             critic_lr=hp["critic_lr"],
@@ -474,8 +484,8 @@ def train_standard(condition: str, seed: int, best_hp: dict):
 
     # Initialize BRFD reward shaper
     brfd = BRFDRewardShaper(
-        obs_dim=10,
-        act_dim=10,
+        obs_dim=ENV_OBS_DIM,
+        act_dim=ENV_ACT_DIM,
         hidden_dim=BRFD_HIDDEN_DIM,
         lr=BRFD_LR,
         warmup_steps=BRFD_WARMUP_STEPS,
@@ -636,8 +646,8 @@ def train_pbt(condition: str, seed: int, best_hp: dict):
     brfd_shapers = []
     for i in range(PBT_POP_SIZE):
         shaper = BRFDRewardShaper(
-            obs_dim=10,
-            act_dim=10,
+            obs_dim=ENV_OBS_DIM,
+            act_dim=ENV_ACT_DIM,
             hidden_dim=BRFD_HIDDEN_DIM,
             lr=BRFD_LR,
             warmup_steps=BRFD_WARMUP_STEPS,

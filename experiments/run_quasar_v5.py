@@ -382,6 +382,10 @@ def run_dehb(seed: int, condition: str):
         return copy.deepcopy(DEFAULT_HP)
     try:
         dehb_output_dir = f"/tmp/dehb_{condition}_{seed}"
+        # Always start fresh — remove stale checkpoints from previous runs
+        if os.path.exists(dehb_output_dir):
+            import shutil
+            shutil.rmtree(dehb_output_dir)
         os.makedirs(dehb_output_dir, exist_ok=True)
         optimizer = DEHB(
             f=dehb_objective,

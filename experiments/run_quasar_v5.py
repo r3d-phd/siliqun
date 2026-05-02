@@ -281,7 +281,8 @@ class BRFDRewardShaper:
 # ===========================================================================
 # Detect actual environment dimensions dynamically
 # ===========================================================================
-_env_probe = SiliQunEnv()
+# Probe with the SAME configuration as make_env() to get correct dimensions
+_env_probe = SiliQunEnv(n_qubits=3, target_state="ghz")
 ENV_OBS_DIM = int(_env_probe.observation_space.shape[0])
 ENV_ACT_DIM = int(_env_probe.action_space.shape[0])
 _env_probe.close()

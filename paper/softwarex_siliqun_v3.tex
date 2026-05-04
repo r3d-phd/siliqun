@@ -89,8 +89,8 @@ SiliQun is built entirely in Python, comprising roughly 4,500 lines of code dist
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{fig1_architecture.png}
-\caption{The SiliQun software architecture. This modular framework is divided into four distinct layers: a flexible numerical backend (supporting NumPy and CuPy), a dual simulation core featuring both an MPS engine for 1D chains and a GPU state vector engine for 2D grids, a dedicated physics engine containing calibrated device profiles and noise models, and an uppermost layer that provides a Gymnasium-compatible RL environment.}
+\includegraphics[width=0.72\textwidth]{fig1_architecture_v4.png}
+\caption{The SiliQun software architecture with inter-layer data flows. The framework is organised into four distinct layers. The \textbf{Numerical Backend} (Layer~1) provides NumPy and CuPy~(CUDA) array operations, \texttt{opt\_einsum} contraction, and SciPy routines; CuPy falls back transparently to NumPy when no GPU is available. The \textbf{Simulation Core} (Layer~2) routes workloads via an auto-select decision: 1D chains ($\leq$4 qubits) are handled by the CPU-based MPS engine, while 2D grids ($\geq$6 qubits) are dispatched to the GPU-accelerated State Vector engine; the routing is controlled by \texttt{SimConfig} (topology, qubit count, \texttt{sim\_mode}). The \textbf{Physics Engine} (Layer~3) receives gate type and target qubit from the environment, applies the DFS encoder (SLEDGE devices only), injects noise via Kraus operators derived from calibrated device profiles (Donor, SiMOS, GAA), and returns the inter-qubit coupling angle~$\theta$ to the Leakage Tracker for perturbative monitoring. The \textbf{RL Environment} (Layer~4) implements the Gymnasium interface: it decodes the agent's discrete gate action ($R_x, R_y, R_z$, CNOT), builds the observation vector $[\langle X_i\rangle, \langle Y_i\rangle, \langle Z_i\rangle, S_{\mathrm{ent}}, \mathcal{L}]$, computes the scalar reward, and returns the tuple $(\mathbf{o}, r, \mathrm{done})$ to the external DRL agent.}
 \label{fig:architecture}
 \end{figure}
 

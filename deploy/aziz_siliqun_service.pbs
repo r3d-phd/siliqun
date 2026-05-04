@@ -1,0 +1,81 @@
+#!/bin/bash
+#PBS -N siliqun_api
+#PBS -q A100
+#PBS -l nodes=1:ppn=8
+#PBS -l mem=32gb
+#PBS -l walltime=168:00:00
+#PBS -j oe
+#PBS -o ~/logs/siliqun_api.log
+#PBS -m abe
+#PBS -M ralshehri0468@stu.kau.edu.sa
+
+# ============================================================
+# SiliQun v2.0 FastAPI Service — Aziz HPC Deployment
+# King Abdulaziz University HPCC
+# ============================================================
+
+set -euo pipefail
+
+echo "=== SiliQun API Service Starting ==="
+echo "Job ID: $PBS_JOBID"
+echo "Node: $(hostname)"
+echo "Date: $(date)"
+echo "Working dir: $PBS_O_WORKDIR"
+
+# Load required modules
+module load python/3.11
+module load cuda/11.8
+module load gcc/11.2
+
+# Activate virtual environment (create if not exists)
+VENV_DIR="$HOME/siliqun_venv"
+if [ ! -d "$VENV_DIR" ]; then
+    echo "=== Creating virtual environment ==="
+    python3 -m venv "$VENV_DIR"
+fi
+
+source "$VENV_DIR/bin/activate"
+
+# Install/upgrade SiliQun and dependencies
+echo "=== Installing SiliQun dependencies ==="
+pip install --upgrade pip --quiet
+pip install --quiet \
+    fastapi \
+    uvicorn[standard] \
+    numpy \
+    scipy \
+    cupy-cuda118 \
+    qiskit \
+    pennylane \
+    pydantic \
+    httpx
+
+# Install SiliQun from GitHub
+pip install --quiet git+https://github.com/r3d-phd/siliqun.git@main
+
+# Create log directory
+mkdir -p "$HOME/logs"
+
+# Get the node's IP for the service URL
+NODE_IP=$(hostname -I | awk '{print $1}')
+PORT=8765
+
+echo "=== Starting SiliQun FastAPI Service ==="
+echo "Service URL: http://${NODE_IP}:${PORT}"
+echo "Health check: http://${NODE_IP}:${PORT}/health"
+
+# Write the service URL to a file for easy access
+echo "http://${NODE_IP}:${PORT}" > "$HOME/siliqun_service_url.txt"
+echo "Job ID: $PBS_JOBID" >> "$HOME/siliqun_service_url.txt"
+echo "Started: $(date)" >> "$HOME/siliqun_service_url.txt"
+
+# Start the FastAPI server
+cd "$HOME"
+python3 -m uvicorn siliqun.api.server:app \
+    --host 0.0.0.0 \
+    --port $PORT \
+    --workers 4 \
+    --log-level info \
+    --access-log \
+    --log-config "$HOME/siliqun/deploy/uvicorn_log_config.json" \
+    2>&1 | tee "$HOME/logs/siliqun_api_$(date +%Y%m%d_%H%M%S).log"

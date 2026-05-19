@@ -169,6 +169,7 @@ SiliQun provides features designed to support practical DRL research workflows:
     \item \textbf{Topology-Aware Observables:} Computes $ZZ$ correlators along grid edges and tracks perturbative leakage.
     \item \textbf{HPC Runner:} Generates PBS/SLURM job scripts and handles automated checkpointing for parallel hyperparameter sweeps.
     \item \textbf{Reproducibility:} All random number generators are seeded through the Gymnasium API, ensuring fully reproducible training runs.
+    \item \textbf{Generalisation Target States:} In addition to GHZ, Bell, and W states, the environment natively supports the open-boundary 1D Cluster state (\texttt{cluster1d}) in both MPS and state vector modes. The Cluster state is constructed as $\mathrm{CZ}_{01}\cdots\mathrm{CZ}_{n-2,n-1}\,H^{\otimes n}\ket{0}^{\otimes n}$ and decomposed into a bond-dimension-2 MPS via sequential SVD \cite{verstraete2004renormalization}. This enables cross-topology generalisation studies in which an agent trained on GHZ entanglement is evaluated on graph-state entanglement under identical SiMOS noise conditions.
 \end{itemize}
 
 \subsection{Installation}
@@ -409,6 +410,8 @@ The authors acknowledge the use of the Aziz Supercomputer at King Abdulaziz Univ
 \bibitem{classiq2026agent} Classiq Technologies. (2026). Classiq introduces AI agent for quantum software development. The Quantum Insider, April 23, 2026. \url{https://thequantuminsider.com/2026/04/23/classiq-expert-level-quantum-ai-agents/}. Accessed: April 29, 2026.
 
 \bibitem{rojasarias2026correlated} Rojas-Arias, F., Degli Esposti, D., Hsiao, T.-K., Johri, S., Neyens, S. F., Tanttu, T., Rimbach-Russ, M., Huang, J. Y., Liles, S. D., Lim, W. H., Cifuentes, J. D., Tanttu, E., Saraiva, A., Dzurak, A. S., Ares, N., Loss, D., \& Bosco, S. (2026). Scaling of silicon spin qubits under correlated noise. arXiv preprint arXiv:2603.03051.
+
+\bibitem{verstraete2004renormalization} Verstraete, F., \& Cirac, J. I. (2004). Renormalization algorithms for quantum-many body systems in two and higher dimensions. Physical Review A, 70(6), 060302(R). \url{https://doi.org/10.1103/PhysRevA.70.060302}
 
 \end{thebibliography}
 

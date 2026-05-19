@@ -302,6 +302,8 @@ class SiliQunEnv(BASE_CLASS):
                 self._target_state = MPS.random_state(
                     self.n_qubits, bond_dim=4
                 )
+            elif target_state == "cluster1d":
+                self._target_state = MPS.cluster1d_state(self.n_qubits)
             else:
                 raise ValueError(f"Unknown target state: {target_state}")
 
@@ -328,6 +330,17 @@ class SiliQunEnv(BASE_CLASS):
             sv = np.random.randn(dim) + 1j * np.random.randn(dim)
             sv /= np.linalg.norm(sv)
             return sv.astype(np.complex128)
+        elif target_state == "cluster1d":
+            # 1D Cluster state: H^n|0...0> then CZ on all neighbouring pairs
+            sv = np.ones(dim, dtype=np.complex128) / np.sqrt(dim)
+            for q in range(n - 1):
+                for idx in range(dim):
+                    bit_q   = (idx >> (n - 1 - q)) & 1
+                    bit_qp1 = (idx >> (n - 2 - q)) & 1
+                    if bit_q == 1 and bit_qp1 == 1:
+                        sv[idx] *= -1
+            sv /= np.linalg.norm(sv)
+            return sv
         else:
             raise ValueError(f"Unknown target state: {target_state}")
 

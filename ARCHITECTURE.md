@@ -152,6 +152,13 @@ The tensor network layer implements MPS and MPO data structures with efficient c
 - `MPO`: Matrix Product Operator representation of mixed states and operators
 - `MPOEvolver`: Applies MPO gates/channels to MPS/MPO states with truncation
 
+**Built-in target states** available via `MPS.<method>(n_qubits)`:
+- `ghz_state` — GHZ state: (|0...0⟩ + |1...1⟩)/√2, bond dimension 2
+- `bell_state` — Bell state (alias for GHZ at 2 qubits)
+- `w_state` — W state: equal superposition of single-excitation basis states, bond dimension 2
+- `cluster1d_state` — Open-boundary 1D Cluster state: H⊗ⁿ|0...0⟩ followed by CZ on all neighbouring pairs, bond dimension 2, constructed via sequential SVD decomposition (Verstraete & Cirac, PRA 70, 060302(R), 2004)
+- `random_state` — Random MPS with configurable bond dimension
+
 **Bond dimension management** is critical: after each gate application, the bond dimension is truncated via SVD to maintain a maximum bond dimension χ_max, with a configurable truncation error threshold ε.
 
 ### 5.3 Layer 3: Physics Models

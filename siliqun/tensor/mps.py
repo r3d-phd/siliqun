@@ -178,6 +178,71 @@ class MPS:
         return cls(tensors)
 
     @classmethod
+    def cluster1d_state(cls, n_qubits: int) -> "MPS":
+        """Create the open-boundary 1D Cluster state as a normalised MPS.
+
+        The 1D Cluster state is prepared by applying H^{\u2297n} to |0...0>
+        followed by CZ gates on all neighbouring pairs (open boundary).
+        Uses the exact statevector construction for correctness, then
+        converts to MPS via SVD decomposition to ensure unit norm.
+
+        Reference: Verstraete & Cirac, PRA 70, 060302(R) (2004).
+        """
+        import numpy as np
+        n = n_qubits
+        dim = 2 ** n
+        # Build the exact statevector
+        # Start with |+>^n = uniform superposition
+        sv = np.ones(dim, dtype=complex) / np.sqrt(dim)
+        # Apply CZ_{i, i+1} for i in 0..n-2
+        # CZ flips the sign of |11> component for each pair
+        for i in range(n - 1):
+            for idx in range(dim):
+                # Check if qubit i and qubit i+1 are both |1>
+                bit_i = (idx >> (n - 1 - i)) & 1
+                bit_j = (idx >> (n - 1 - (i + 1))) & 1
+                if bit_i == 1 and bit_j == 1:
+                    sv[idx] *= -1
+        # Normalise (should already be unit norm, but ensure it)
+        sv = sv / np.linalg.norm(sv)
+        # Convert to MPS via SVD (left-canonical form)
+        # Use from_statevector if available, otherwise manual SVD
+        try:
+            return cls.from_statevector(sv, max_bond_dim=2)
+        except (AttributeError, TypeError):
+            pass
+        try:
+            return cls.from_dense(sv, max_bond_dim=2)
+        except (AttributeError, TypeError):
+            pass
+        # Manual SVD decomposition into MPS (left-canonical)
+        tensors = []
+        remaining = sv.reshape(2, -1)  # (phys_0, rest)
+        for site in range(n - 1):
+            # SVD: remaining = U * S * Vh
+            U, S, Vh = np.linalg.svd(remaining, full_matrices=False)
+            # Truncate to bond_dim=2
+            chi = min(2, len(S))
+            U = U[:, :chi]   # (chi_l * phys, chi)
+            S = S[:chi]
+            Vh = Vh[:chi, :]  # (chi, rest)
+            # Reshape U into (chi_l, phys, chi_r)
+            chi_l = U.shape[0] // 2
+            if chi_l == 0:
+                chi_l = 1
+            tensor = U.reshape(chi_l, 2, chi)
+            tensors.append(tensor)
+            # Absorb S into Vh for next iteration
+            remaining = (np.diag(S) @ Vh).reshape(chi * 2, -1)
+            if remaining.shape[1] == 0:
+                remaining = remaining.reshape(chi, 2)
+        # Last site
+        tensors.append(remaining.reshape(-1, 2, 1))
+        mps = cls(tensors)
+        mps.normalize()
+        return mps
+
+    @classmethod
     def random_state(cls, n_qubits: int, bond_dim: int = 4) -> MPS:
         """Alias for random() for compatibility."""
         return cls.random(n_qubits, bond_dim)

@@ -8,6 +8,8 @@
 
 SiliQun is an open-source quantum simulation platform purpose-built for training deep reinforcement learning (DRL) agents on silicon spin qubit control tasks. It provides physically calibrated device models, decoherence-free subspace (DFS) encoding, and a dual-engine architecture combining matrix product state (MPS) tensor networks with a GPU-accelerated exact state vector backend.
 
+As of v2.2, SiliQun supports the **1D Cluster state** (`cluster1d`) as a target for generalisation studies, enabling curriculum-based training to transfer from GHZ entanglement to graph-state entanglement under the same SiMOS noise model.
+
 ## Key Features
 
 - **Dual Simulation Backends:** MPS tensor network engine for approximate simulation and GPU-accelerated state vector engine for exact logical-subspace simulation up to 25 qubits (5x5 grids).
@@ -16,6 +18,7 @@ SiliQun is an open-source quantum simulation platform purpose-built for training
 - **Native Gymnasium Interface:** Fully compliant with the [Gymnasium](https://gymnasium.farama.org/) API for seamless integration with standard DRL libraries (Stable-Baselines3, Ray RLlib, CleanRL).
 - **Automatic Backend Selection:** The `"auto"` mode selects MPS for small systems (4 qubits or fewer) and GPU state vector for larger grids.
 - **SLEDGE Grid Topologies:** Built-in support for 2x2, 3x3, 4x4, and 5x5 2D spin qubit arrays with nearest-neighbour exchange couplings.
+- **1D Cluster State Target:** Native support for the open-boundary 1D Cluster state (`cluster1d`) in both MPS and state vector modes, enabling generalisation benchmarks across entanglement structures.
 
 ## Installation
 
@@ -288,7 +291,7 @@ make_siliqun_env(device, target, sim_mode="auto", max_steps=100, **kwargs)
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `device` | str | Device profile name: `"donor_2q"`, `"sledge_3x3"`, `"sledge_4x4"`, `"sledge_5x5"` |
-| `target` | str | Target quantum state: `"bell"`, `"ghz"`, `"w"`, `"random"` |
+| `target` | str | Target quantum state: `"bell"`, `"ghz"`, `"w"`, `"random"`, `"cluster1d"` |
 | `sim_mode` | str | Simulation backend: `"mps"`, `"sv"`, `"auto"` |
 | `max_steps` | int | Maximum steps per episode |
 

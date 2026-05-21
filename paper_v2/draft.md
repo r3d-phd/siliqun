@@ -114,6 +114,15 @@ Results from the confirmed seed-42 run: $F = 0.9906$, training time 6.6 s. The m
 
 To establish external validity, we replicated three published RL-on-quantum results on SiliQun. The three studies were selected because they represent the state of the art in RL-based quantum control and their experimental setups are sufficiently well-described to permit faithful replication.
 
+**Table 3. E5 External Replication — Published fidelities vs. SiliQun replication results (Aziz HPC, May 2026).**
+
+| Study | Algorithm | Target | Device | Published $F$ | SiliQun $F$ | Notes |
+|-------|-----------|--------|--------|--------------|------------|-------|
+| Moro et al. (2021) [17] | PPO | Bell (2q) | Donor | $\geq$0.9999 (noiseless) | **0.9157** | Late breakthrough at step 490k |
+| Kuo et al. (2021) [18] | PPO | GHZ (3q) | SiMOS | $\geq$0.95 (noiseless) | 0.4050 | Fails under realistic noise |
+| Kuo et al. (2021) [18] | A2C | GHZ (3q) | SiMOS | $\geq$0.95 (noiseless) | 0.4950 | Fails under realistic noise |
+| He et al. (2021) [19] | DQN | Bell (2q) | Donor | 0.9695 (spin qubit) | 0.4950 | Arbitrary discretisation fails |
+
 **E5a — Replication of Moro et al. (2021) [17]:** We replicated Moro's PPO configuration (lr=$3 \times 10^{-4}$, n\_steps=2048, batch=64, 10 epochs) on 2-qubit Bell state preparation using the Donor device. Moro achieves AGF $\geq 0.9999$ on an abstract noiseless SU(2) model; our replication on the noisy Donor device achieved $F = 0.9157$ after 500,000 steps, with a late breakthrough at step 490,000. The lower fidelity relative to Moro's result is expected given the Donor device's realistic charge noise and finite $T_1/T_2$ decoherence. The result confirms that SiliQun is not artificially hard: PPO can learn on SiliQun, but requires more steps than on an abstract noiseless model.
 
 **E5b — Replication of Kuo et al. (2021) [18]:** We replicated both PPO and A2C from Kuo et al. on 3-qubit GHZ preparation using the SiMOS device. Kuo achieves $F \geq 0.95$ on an abstract noiseless circuit model; our replication achieved $F = 0.405$ (PPO) and $F = 0.495$ (A2C) after 500,000 steps. Both algorithms are stuck near the random baseline, consistent with the E1 result. The gap between Kuo's noiseless result and our noisy replication quantifies the difficulty added by SiliQun's realistic hardware noise model.

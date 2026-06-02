@@ -17,6 +17,7 @@ Standards:
 """
 
 from .pennylane_device import SiliQunDevice, register_pennylane_device, PENNYLANE_AVAILABLE
+from .statevector_compat import apply_patch as apply_statevector_patch
 from ..compiler.qasm3_compiler import (
     SiliQunBackendV2,
     OpenQASM3Compiler,
@@ -39,6 +40,7 @@ from ..pulse.openpulse_schedule import (
 )
 
 __all__ = [
+    "apply_statevector_patch",
     "SiliQunBackendV2", "SiliQunJob", "SiliQunResult", "QISKIT_AVAILABLE",
     "SiliQunDevice", "register_pennylane_device", "PENNYLANE_AVAILABLE",
     "OpenQASM3Compiler", "CompiledPulseSchedule",

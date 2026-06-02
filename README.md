@@ -39,21 +39,23 @@ pip install -e .
 
 ### GPU Installation (recommended for 16 qubits or more)
 
-For NVIDIA GPUs with CUDA 12.x:
+SiliQun ships three installation tiers for GPU acceleration:
 
 ```bash
-pip install cupy-cuda12x
-pip install -e .
+# Tier 1 — CuPy only (CUDA 12.x, recommended for most users)
+pip install -e ".[gpu]"
+
+# Tier 1 — CuPy only (CUDA 11.x)
+pip install cupy-cuda11x && pip install -e .
+
+# Tier 2 — CuPy + NVIDIA cuQuantum (10–100× faster for tensor network contraction)
+pip install -e ".[gpu,cuquantum]"
+
+# Tier 3 — JAX backend (GPU/TPU, automatic differentiation, XLA JIT)
+pip install -e ".[jax]"
 ```
 
-For CUDA 11.x:
-
-```bash
-pip install cupy-cuda11x
-pip install -e .
-```
-
-SiliQun automatically detects CuPy at runtime and uses GPU acceleration when available. No code changes are required.
+SiliQun automatically detects the best available backend at runtime — no code changes are required. The `"auto"` backend mode selects CuPy when a CUDA device is present and NumPy otherwise. The crossover point where GPU becomes faster than CPU is approximately **16 qubits** (see GPU Benchmarks below).
 
 ### Verifying the Installation
 
@@ -310,6 +312,30 @@ For 2-qubit gates at 25 qubits, GPU achieves **89x speedup** (556 ms to 6.2 ms).
 
 The crossover point where GPU becomes faster than CPU is approximately 16 qubits, which aligns with the automatic backend selection threshold.
 
+### Selecting the Backend Programmatically
+
+```python
+from siliqun.backend import get_backend, set_backend
+
+# Explicit GPU backend (raises ImportError if CuPy unavailable)
+be = get_backend("cuda")
+
+# Explicit CPU backend (always available)
+be = get_backend("numpy")
+
+# JAX backend (GPU/TPU + JIT, requires jax install)
+be = get_backend("jax")
+
+# Set globally for all subsequent simulator calls
+set_backend("cuda")
+
+# Check what is active
+from siliqun.backend import active_backend
+print(active_backend().name)  # 'cupy', 'numpy', or 'jax'
+```
+
+The `StateVectorSimulator` and `MPODensityMatrixSimulator` both honour the active backend automatically. Third-party plugins that subclass `TechnologyProfile` inherit the same backend transparently.
+
 ## Reproducing the Benchmarks
 
 ```bash
@@ -452,6 +478,7 @@ SiliQun serves as the foundational simulation layer for several research project
 | Project | Integration Point |
 |---------|-------------------|
 | **QUASAR** | Provides the training environment for DRL agents learning scalable quantum control (2 to 25 qubits) |
+| **ANDROMEDA** | Supplies the 19-qubit shared-edge simulation environment for hierarchical multi-module RL (uses `siliqun.backend.get_backend("cuda")` for GPU-accelerated state vector evolution) |
 | **SeQurAIty** | Models physical-layer adversarial attacks via charge noise injection for security evaluation |
 | **DYNAMO** | Supplies the quantum environment for classical DRL convergence benchmarking |
 

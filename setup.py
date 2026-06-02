@@ -23,8 +23,11 @@ setup(
     ],
     extras_require={
         "gpu": ["cupy-cuda12x>=13.0"],
+        "gpu-cuda11": ["cupy-cuda11x>=13.0"],
+        "cuquantum": ["cupy-cuda12x>=13.0", "cuquantum>=24.0"],
+        "jax": ["jax[cuda12_pip]>=0.4.25"],
         "dev": ["pytest>=7.0", "matplotlib>=3.7"],
-        "rl": ["stable-baselines3>=2.0", "torch>=2.0"],
+        "rl": ["stable-baselines3>=2.0", "torch>=2.4.0"],
     },
     classifiers=[
         "Development Status :: 4 - Beta",

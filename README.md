@@ -14,6 +14,7 @@ As of v2.2, SiliQun supports the **1D Cluster state** (`cluster1d`) as a target 
 
 - **Dual Simulation Backends:** MPS tensor network engine for approximate simulation and GPU-accelerated state vector engine for exact logical-subspace simulation up to 25 qubits (5x5 grids).
 - **Silicon-Specific Device Physics:** Three calibrated device profiles (Donor, SiMOS, GAA) with realistic T1, T2*, charge noise (1/f spectrum), and crosstalk models.
+- **Formal Plugin Interface:** Add any new qubit platform in under 50 lines via the `TechnologyProfile` ABC — the Lindblad solver, Gymnasium interface, and RL agent require no modification.
 - **DFS Logical Encoding:** Automatic mapping from physical spin triplets to logical qubits with perturbative leakage tracking.
 - **Native Gymnasium Interface:** Fully compliant with the [Gymnasium](https://gymnasium.farama.org/) API for seamless integration with standard DRL libraries (Stable-Baselines3, Ray RLlib, CleanRL).
 - **Automatic Backend Selection:** The `"auto"` mode selects MPS for small systems (4 qubits or fewer) and GPU state vector for larger grids.
@@ -183,6 +184,117 @@ from siliqun.physics.devices.profiles import (
 )
 ```
 
+## Writing a Plugin
+
+SiliQun v5 ships a formal **plugin interface** that lets you integrate any new
+qubit platform in **under 50 lines of Python**, without modifying the core
+framework.  The Lindblad solver, Gymnasium interface, and RL agent are all
+provided — you only write the platform-specific physics.
+
+### Plugin Contract (4 mandatory components)
+
+| Component | File | Lines | Purpose |
+|-----------|------|-------|---------|
+| Profile class | `my_profile.py` | ~28 | `TechnologyProfile` subclass with 5 abstract methods |
+| Calibration data | `my_calibration.json` | ~12 | Raw measurements with source DOIs |
+| Validation benchmarks | `my_benchmarks.py` | ~7 | Three PGIRS Phase-1 benchmark calls |
+| Gymnasium env ID | (in profile class) | 1 line | Unique `SiliQun-{Name}-v{N}` string |
+
+### Step 1 — Subclass `TechnologyProfile`
+
+```python
+# my_plugin/my_profile.py  (~28 lines)
+import math, json, pathlib
+import numpy as np
+from siliqun.core.abc import TechnologyProfile, CalibrationRecord
+
+class MyProfile(TechnologyProfile):
+    technology_name  = "MyTech-Nominal"
+    gymnasium_env_id = "SiliQun-MyTech-v1"
+
+    def device_parameters(self):
+        return {"T1": 1e-3, "T2": 5e-4, "tau1": 10e-9, "tau2": 100e-9, "p2": 0.01, "n_qubits": 2}
+
+    def drift_hamiltonian(self):
+        return np.zeros((4, 4), dtype=complex)
+
+    def control_hamiltonians(self):
+        Sx = np.array([[0,1],[1,0]], dtype=complex)/2
+        I  = np.eye(2, dtype=complex)
+        return [np.kron(Sx,I), np.kron(I,Sx)]
+
+    def noise_channels(self):
+        p  = self.device_parameters()
+        Sm = np.array([[0,1],[0,0]], dtype=complex)
+        I  = np.eye(2, dtype=complex)
+        return [math.sqrt(1/p["T1"])*np.kron(Sm,I), math.sqrt(1/p["T1"])*np.kron(I,Sm)]
+
+    def gate_library(self):
+        return ["Rx", "Ry", "Rz", "CNOT"]
+
+    @property
+    def calibration_record(self):
+        data = json.loads((pathlib.Path(__file__).parent/"my_calibration.json").read_text())
+        return CalibrationRecord(**data)
+```
+
+### Step 2 — Add calibration data
+
+```json
+{
+  "source_doi": "10.1000/example.doi",
+  "source_description": "Author et al., Journal, Year",
+  "raw_values": {"T1_ms": 1.0, "T2_ms": 0.5, "F_2Q_percent": 99.0},
+  "additional_sources": []
+}
+```
+
+### Step 3 — Add validation benchmarks
+
+```python
+# my_plugin/my_benchmarks.py  (~7 lines)
+from siliqun.core.abc import PGIRSValidator
+from .my_profile import MyProfile
+
+def run_pgirs_phase1(tolerance=0.02):
+    return PGIRSValidator(MyProfile()).run(tolerance=tolerance)
+
+def assert_pgirs_phase1(tolerance=0.02):
+    results = run_pgirs_phase1(tolerance)
+    failures = [k for k, v in results.items() if not v]
+    assert not failures, f"Failed PGIRS Phase-1: {failures}"
+```
+
+### Step 4 — Register and use
+
+```python
+from my_plugin.my_profile import MyProfile
+import gymnasium as gym
+
+profile = MyProfile()
+profile.register()                         # runs benchmarks; raises if any fail
+env = gym.make("SiliQun-MyTech-v1")       # works with any Gymnasium-compatible RL library
+```
+
+### Reference implementation
+
+The `plugins/siliqun-gaas/` directory contains the complete reference
+implementation for GAA silicon spin qubits (Tanamoto & Ono 2025), demonstrating
+the minimum 47-line contract.  Use it as a template for new platforms.
+
+```
+plugins/siliqun-gaas/
+├── siliqun_gaas/
+│   ├── __init__.py
+│   ├── gaa_profile.py        # 28 lines — TechnologyProfile subclass
+│   ├── gaa_calibration.json  # 12 lines — calibration data with DOIs
+│   └── gaa_benchmarks.py     #  7 lines — PGIRS Phase-1 benchmarks
+├── setup.py
+└── README.md
+```
+
+---
+
 ## GPU Benchmarks
 
 Measured on NVIDIA A100-PCIE-40GB (Aziz HPC, King Abdulaziz University):
@@ -318,9 +430,19 @@ siliqun/
 ├── benchmarks/
 │   ├── benchmark_sv.py               # Performance benchmarking script
 │   └── sv_benchmark_results.json     # Benchmark results
+├── core/
+│   ├── __init__.py
+│   └── abc.py                        # TechnologyProfile ABC + PGIRSValidator
 ├── paper/
 │   └── softwarex_siliqun_v2.tex      # SoftwareX manuscript
 └── README.md
+plugins/
+└── siliqun-gaas/                     # Reference plugin (GAA, 47 lines)
+    ├── siliqun_gaas/
+    │   ├── gaa_profile.py
+    │   ├── gaa_calibration.json
+    │   └── gaa_benchmarks.py
+    └── setup.py
 ```
 
 ## Integration with Research Frameworks

@@ -2,22 +2,26 @@
 siliqun.plugins.statevector_compat
 ===================================
 Compatibility plugin that adds statevector-simulation primitives to all
-SiliQun backends: ``moveaxis``, ``asarray``, ``zeros``, ``ones``.
+SiliQun backends.
 
 Background
 ----------
 SiliQun's ``Backend`` abstract interface was originally designed for
 tensor-network (MPS/MPO) operations, which express gate application via
 ``einsum`` and ``tensordot``.  Statevector simulators — such as the
-ANDROMEDA v2 multi-module architecture — use a different set of primitives:
+ANDROMEDA v2 multi-module architecture — use a broader set of primitives:
 
     1. Reshape state vector (2^n,) → (2, 2, …, 2)  [n axes]
     2. Contract gate (2×2) with axis ``qubit``  via ``tensordot``
-    3. **Move** the contracted result axis back to position ``qubit``
+    3. Move the contracted result axis back to position ``qubit``
     4. Flatten back to (2^n,)
+    5. Compute fidelity via ``dot`` (inner product)
+    6. Construct initial states via ``zeros`` / ``ones`` / ``asarray``
+    7. Compute absolute values, ranges, and conditional selections
 
-This requires ``moveaxis``, ``asarray``, ``zeros``, and ``ones``, none of
-which were included in the original SiliQun ``Backend`` interface.
+Methods patched (complete statevector API):
+    ``moveaxis``, ``asarray``, ``zeros``, ``ones``,
+    ``abs``, ``arange``, ``dot``, ``where``
 
 Usage
 -----
@@ -64,6 +68,22 @@ def _numpy_ones(self, shape, dtype=None):
     import numpy as np
     return np.ones(shape, dtype=dtype if dtype is not None else np.complex128)
 
+def _numpy_abs(self, tensor):
+    import numpy as np
+    return np.abs(tensor)
+
+def _numpy_arange(self, *args, **kwargs):
+    import numpy as np
+    return np.arange(*args, **kwargs)
+
+def _numpy_dot(self, a, b):
+    import numpy as np
+    return np.dot(a, b)
+
+def _numpy_where(self, condition, x, y):
+    import numpy as np
+    return np.where(condition, x, y)
+
 
 # ── CuPy (CUDA) implementations ───────────────────────────────────────────────
 
@@ -90,6 +110,26 @@ def _cuda_ones(self, shape, dtype=None):
     with self._device:
         return cp.ones(shape, dtype=dtype if dtype is not None else cp.complex128)
 
+def _cuda_abs(self, tensor):
+    cp = self._cp
+    with self._device:
+        return cp.abs(tensor)
+
+def _cuda_arange(self, *args, **kwargs):
+    import cupy as cp
+    with self._device:
+        return cp.arange(*args, **kwargs)
+
+def _cuda_dot(self, a, b):
+    cp = self._cp
+    with self._device:
+        return cp.dot(a, b)
+
+def _cuda_where(self, condition, x, y):
+    cp = self._cp
+    with self._device:
+        return cp.where(condition, x, y)
+
 
 # ── JAX implementations ────────────────────────────────────────────────────────
 
@@ -109,6 +149,22 @@ def _jax_ones(self, shape, dtype=None):
     import jax.numpy as jnp
     return jnp.ones(shape, dtype=dtype)
 
+def _jax_abs(self, tensor):
+    import jax.numpy as jnp
+    return jnp.abs(tensor)
+
+def _jax_arange(self, *args, **kwargs):
+    import jax.numpy as jnp
+    return jnp.arange(*args, **kwargs)
+
+def _jax_dot(self, a, b):
+    import jax.numpy as jnp
+    return jnp.dot(a, b)
+
+def _jax_where(self, condition, x, y):
+    import jax.numpy as jnp
+    return jnp.where(condition, x, y)
+
 
 # ── Patch registry ─────────────────────────────────────────────────────────────
 
@@ -117,6 +173,10 @@ _NUMPY_PATCHES = {
     "asarray":  _numpy_asarray,
     "zeros":    _numpy_zeros,
     "ones":     _numpy_ones,
+    "abs":      _numpy_abs,
+    "arange":   _numpy_arange,
+    "dot":      _numpy_dot,
+    "where":    _numpy_where,
 }
 
 _CUDA_PATCHES = {
@@ -124,6 +184,10 @@ _CUDA_PATCHES = {
     "asarray":  _cuda_asarray,
     "zeros":    _cuda_zeros,
     "ones":     _cuda_ones,
+    "abs":      _cuda_abs,
+    "arange":   _cuda_arange,
+    "dot":      _cuda_dot,
+    "where":    _cuda_where,
 }
 
 _JAX_PATCHES = {
@@ -131,6 +195,10 @@ _JAX_PATCHES = {
     "asarray":  _jax_asarray,
     "zeros":    _jax_zeros,
     "ones":     _jax_ones,
+    "abs":      _jax_abs,
+    "arange":   _jax_arange,
+    "dot":      _jax_dot,
+    "where":    _jax_where,
 }
 
 
@@ -148,7 +216,8 @@ def _apply_patches(cls, patches: dict, cls_name: str, patched: list[str]) -> Non
 def apply_patch() -> None:
     """Inject statevector primitives into any SiliQun backend class missing them.
 
-    Methods patched: ``moveaxis``, ``asarray``, ``zeros``, ``ones``.
+    Methods patched: ``moveaxis``, ``asarray``, ``zeros``, ``ones``,
+    ``abs``, ``arange``, ``dot``, ``where``.
     This function is idempotent and safe to call multiple times.
     """
     patched: list[str] = []

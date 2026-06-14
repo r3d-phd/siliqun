@@ -21,7 +21,7 @@ closed-form solutions at machine precision ($\max\,\delta \leq 2.78 \times
 10^{-16}$).
 We validate SiliQun through four independent experiments spanning three hardware
 technologies and four RL algorithms.
-Replication~1 reproduces DQN and SARSA CZ gate-synthesis results of
+Replication~1 reproduces DQL and SARSA CZ gate-synthesis results of
 Daraeizadeh~et~al.\ on SiliQun's SiMOS profile ($\bar{F} = 0.9996 \pm 0.0001$
 and $0.9994 \pm 0.0002$, within $0.04\%$ of published values).
 Replication~2 reproduces DQN state-preparation results of He~et~al.\ on
@@ -164,10 +164,11 @@ to the SiliQun simulation platform.
 
 \textbf{Tertiary contributions --- empirical validation of the platform:}
 \begin{enumerate}\setcounter{enumi}{5}
-  \item \textbf{Cross-algorithm benchmark:} A systematic evaluation of six DRL
-    algorithm families (DQL, SARSA, PPO, DQN, TQC, SAC) on the 4-qubit GHZ
-    synthesis task under SiMOS noise, providing the first comparative benchmark
-    of DRL algorithms on a physically calibrated silicon spin qubit environment.
+  \item \textbf{Cross-algorithm benchmark:} A comparative evaluation of three DRL
+    algorithm families (DQL, SARSA, PPO) on the SiMOS CZ gate-synthesis task,
+    spanning tabular, deep value-based, and policy-gradient paradigms under
+    identical physics conditions, providing the first algorithm-family comparison
+    on a physically calibrated silicon spin qubit simulator.
 
   \item \textbf{Cross-backend validation:} A multi-backend dispatch interface
     transferring SiliQun-trained circuits across four backends (SiliQun,

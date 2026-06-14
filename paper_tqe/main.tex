@@ -1,0 +1,501 @@
+% ============================================================
+% SILIQUN — IEEE Transactions on Quantum Engineering (TQE)
+% Title: SiliQun: A Physics-Grounded Simulation Platform for
+%        Silicon Spin Qubits with Deep Reinforcement Learning
+% Authors: Raad Mohammed Alshehri, Asaad A. Gad-Elrab, Suad Alarifi
+% King Abdulaziz University, FCIT
+% Submitted: June 2026
+% ============================================================
+
+\documentclass[journal]{IEEEtran}
+
+% ── Packages ─────────────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{physics}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{placeins}
+\usepackage{needspace}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% ── Title ────────────────────────────────────────────────────
+\title{SiliQun: A Physics-Grounded Simulation Platform for Silicon Spin Qubits
+       with Deep Reinforcement Learning Validation}
+
+% ── Authors (TQE IEEEtran style) ─────────────────────────────
+\author{Raad~Mohammed~Alshehri,~\IEEEmembership{Graduate Student Member,~IEEE,}
+        Asaad~A.~Gad-Elrab,~\IEEEmembership{Member,~IEEE,}
+        and~Suad~Alarifi,~\IEEEmembership{Member,~IEEE}%
+\IEEEauthorblockA{\\Department of Computer Science (R.M.A., A.A.G.),
+Department of Information Systems (S.A.),\\
+Faculty of Computing and Information Technology,\\
+King Abdulaziz University, Jeddah 21589, Saudi Arabia}%
+\thanks{R. M. Alshehri is a PhD Candidate with the Department of Computer Science,
+Faculty of Computing and Information Technology, King Abdulaziz University,
+Jeddah 21589, Saudi Arabia (e-mail: ralshehri0468@stu.kau.edu.sa).
+ORCID~iD: \href{https://orcid.org/0009-0006-0945-8853}{0009-0006-0945-8853}.}%
+\thanks{A. A. Gad-Elrab is an Associate Professor with the Department of Computer Science,
+Faculty of Computing and Information Technology, King Abdulaziz University,
+Jeddah 21589, Saudi Arabia (e-mail: aaahmad4@kau.edu.sa).}%
+\thanks{S. Alarifi is an Associate Professor with the Department of Information Systems,
+Faculty of Computing and Information Technology, King Abdulaziz University,
+Jeddah 21589, Saudi Arabia (e-mail: salarifi@kau.edu.sa).}%
+\thanks{Manuscript received June 2026.}}
+
+% ── Running head ─────────────────────────────────────────────
+\markboth{IEEE Transactions on Quantum Engineering,~Vol.~XX, No.~X, 2026}%
+{Alshehri \MakeLowercase{\textit{et al.}}: SiliQun: Physics-Grounded Simulation for Silicon Spin Qubits}
+
+% ── Document ─────────────────────────────────────────────────
+\begin{document}
+
+\maketitle
+
+\IEEEpeerreviewmaketitle
+
+% ── Abstract ─────────────────────────────────────────────────
+\input{sec1_abstract_intro}
+
+% ── IEEE Keywords ────────────────────────────────────────────
+\begin{IEEEkeywords}
+Silicon spin qubits, deep reinforcement learning, Lindblad master equation,
+quantum gate synthesis, physics-grounded simulation, gate-all-around qubits,
+soft actor-critic, curriculum learning.
+\end{IEEEkeywords}
+
+% ── §1 Related Work ──────────────────────────────────────────
+\input{sec2_related_work}
+
+% ── §2 SiliQun Framework ─────────────────────────────────────
+\input{sec3_siliqun_framework}
+
+% ── §3 Methods ───────────────────────────────────────────────
+\input{sec4_methods}
+
+% ── §4 DRL Control Agent ────────────────────────────────────
+\input{sec4_drl_control_agent}
+
+% ── §5 Experiments ───────────────────────────────────────────
+\input{sec5_experiments}
+
+% ── §6 Discussion ────────────────────────────────────────────
+\input{sec6_discussion}
+
+% ── §7 Conclusion ────────────────────────────────────────────
+\input{sec7_conclusion}
+
+% ── Data and Code Availability ───────────────────────────────
+\section*{Data Availability}
+All experimental data generated in this study, including per-seed fidelity
+values, learning curves, and cross-technology comparison tables, are
+available at \url{https://github.com/r3d-phd/siliqun} under the MIT
+licence. A permanent archived snapshot will be deposited at Zenodo upon
+acceptance.
+
+\section*{Code Availability}
+The SiliQun simulation platform (\texttt{siliqun-v5}), all training scripts,
+and the Qiskit \texttt{BackendV2} provider are released as open-source
+software at \url{https://github.com/r3d-phd/siliqun} under the MIT
+licence. The repository includes a \texttt{requirements.txt} file and
+reproduction scripts for all experiments reported in this paper.
+
+% ── Author Contributions ─────────────────────────────────────
+\section*{Author Contributions}
+R.M.A. conceived the SiliQun framework, designed and implemented the
+Lindblad density-matrix engine and all hardware profiles, conducted all
+experiments, performed the statistical analysis, and wrote the manuscript.
+A.A.G. supervised the research direction, reviewed the experimental design,
+and provided critical revisions to the manuscript.
+S.A. co-supervised the research, reviewed the hardware profile calibration
+methodology, and approved the final manuscript.
+
+% ── Competing Interests ──────────────────────────────────────
+\section*{Competing Interests}
+The authors declare no competing interests.
+
+% ── Acknowledgements ─────────────────────────────────────────
+\section*{Acknowledgements}
+Computational resources were provided by the King Abdulaziz University
+High Performance Computing Centre (Aziz Supercomputer)~\cite{AzizHPC}.
+
+% ── Author Biographies ───────────────────────────────────────
+\begin{IEEEbiography}{Raad Mohammed Alshehri}
+(Graduate Student Member, IEEE) is currently pursuing the Ph.D. degree in
+Computer Science at the Faculty of Computing and Information Technology,
+King Abdulaziz University (KAU), Jeddah, Saudi Arabia. His research interests
+include deep reinforcement learning, quantum computing, quantum circuit synthesis,
+and physics-grounded simulation of silicon spin qubits.
+ORCID: \href{https://orcid.org/0009-0006-0945-8853}{0009-0006-0945-8853}.
+\end{IEEEbiography}
+
+\begin{IEEEbiography}{Asaad A. Gad-Elrab}
+(Member, IEEE) received the Ph.D. degree in Computer Science. He is currently
+an Associate Professor with the Department of Computer Science, Faculty of
+Computing and Information Technology, King Abdulaziz University, Jeddah,
+Saudi Arabia. His research interests include machine learning, intelligent
+systems, and quantum information processing.
+\end{IEEEbiography}
+
+\begin{IEEEbiography}{Suad Alarifi}
+(Member, IEEE) received the Ph.D. degree in Information Systems from King
+Abdulaziz University. She is currently an Associate Professor with the
+Department of Information Systems, Faculty of Computing and Information
+Technology, King Abdulaziz University. Her research interests include
+information security, quantum cryptography, and intelligent information systems.
+\end{IEEEbiography}
+
+% ── References ───────────────────────────────────────────────
+\bibliographystyle{IEEEtran}
+\begin{thebibliography}{99}
+
+% ── Quantum hardware / SiMOS ─────────────────────────────────
+\bibitem{Veldhorst2015}
+M.~Veldhorst et al.,
+``An addressable quantum dot qubit with fault-tolerant control-fidelity,''
+\textit{Nature Nanotechnology}, vol.~10, pp.~159--163, 2015.
+
+\bibitem{Xue2022}
+X.~Xue et al.,
+``Quantum logic with spin qubits crossing the surface code threshold,''
+\textit{Nature}, vol.~601, pp.~343--347, 2022.
+
+\bibitem{Noiri2022}
+A.~Noiri et al.,
+``Fast universal quantum gate above the fault-tolerance threshold in silicon,''
+\textit{Nature}, vol.~601, pp.~338--342, 2022.
+
+\bibitem{Philips2022}
+S.~G.~J.~Philips et al.,
+``Universal control of a six-qubit quantum processor in silicon,''
+\textit{Nature}, vol.~609, pp.~919--924, 2022.
+
+\bibitem{Steinacker2023}
+P.~Steinacker et al.,
+``A 300 mm foundry silicon spin qubit unit cell exceeding 99\% fidelity,''
+\textit{arXiv:2310.13002}, 2023.
+
+\bibitem{Fogarty2018}
+M.~A.~Fogarty et al.,
+``Integrated silicon qubit platform with single-spin addressability,
+exchange control and single-shot singlet-triplet readout,''
+\textit{Nature Communications}, vol.~9, p.~4370, 2018.
+
+% ── Quantum simulation / noise modelling ─────────────────────
+\bibitem{Krantz2019}
+P.~Krantz et al.,
+``A quantum engineer's guide to superconducting qubits,''
+\textit{Applied Physics Reviews}, vol.~6, p.~021318, 2019.
+
+\bibitem{Lambert2024}
+N.~Lambert et al.,
+``QuTiP 5: The quantum toolbox in Python,''
+\textit{arXiv:2412.04705}, 2024.
+
+\bibitem{Qiskit2024}
+{Qiskit contributors},
+``Qiskit: An open-source framework for quantum computing,''
+\textit{Zenodo}, 2024. \url{https://doi.org/10.5281/zenodo.2573505}
+
+\bibitem{QiskitAer2023}
+{Qiskit Aer contributors},
+``Qiskit Aer: A high performance simulator framework for quantum circuits,''
+\textit{Zenodo}, 2023. \url{https://doi.org/10.5281/zenodo.6329464}
+
+% ── DRL for quantum control ──────────────────────────────────
+\bibitem{Haarnoja2018}
+T.~Haarnoja, A.~Zhou, P.~Abbeel, and S.~Levine,
+``Soft actor-critic: Off-policy maximum entropy deep reinforcement learning
+with a stochastic actor,''
+\textit{Proc.\ ICML}, 2018.
+
+\bibitem{Fujimoto2018}
+S.~Fujimoto, H.~van Hoof, and D.~Meger,
+``Addressing function approximation error in actor-critic methods,''
+\textit{Proc.\ ICML}, 2018.
+
+\bibitem{Moro2021}
+S.~Moro, P.~Baireuther, and M.~Lukin,
+``Optimal control of quantum gates using reinforcement learning,''
+\textit{Physical Review Research}, vol.~3, p.~033229, 2021.
+
+\bibitem{Niu2018}
+M.~Y.~Niu et al.,
+``Universal quantum control through deep reinforcement learning,''
+\textit{npj Quantum Information}, vol.~5, p.~33, 2019.
+
+\bibitem{Fosel2021}
+T.~F\"{o}sel, M.~Y.~Niu, F.~Marquardt, and L.~Li,
+``Quantum circuit optimization with deep reinforcement learning,''
+\textit{arXiv:2103.07585}, 2021.
+
+\bibitem{Bolens2021}
+A.~Bolens and M.~Heyl,
+``Reinforcement learning for digital quantum simulation,''
+\textit{Physical Review Letters}, vol.~127, p.~110502, 2021.
+
+\bibitem{Sivak2022}
+V.~V.~Sivak et al.,
+``Model-free quantum control with reinforcement learning,''
+\textit{Physical Review X}, vol.~12, p.~011059, 2022.
+
+% ── RL environments ──────────────────────────────────────────
+\bibitem{Towers2023}
+M.~Towers et al.,
+``Gymnasium,''
+\textit{Zenodo}, 2023. \url{https://doi.org/10.5281/zenodo.8127025}
+
+\bibitem{Raffin2021}
+A.~Raffin et al.,
+``Stable-Baselines3: Reliable reinforcement learning implementations,''
+\textit{Journal of Machine Learning Research}, vol.~22, pp.~1--8, 2021.
+
+\bibitem{vanderLinde2023qgym}
+J.~van der Linde et al.,
+``QGym: A gymnasium for quantum computing,''
+\textit{arXiv:2306.05344}, 2023.
+
+% ── Fault tolerance ──────────────────────────────────────────
+\bibitem{NielsenChuang2000}
+M.~A.~Nielsen and I.~L.~Chuang,
+\textit{Quantum Computation and Quantum Information}.
+Cambridge University Press, 2000.
+
+\bibitem{Fowler2012}
+A.~G.~Fowler, M.~Martinis, and J.~M.~Martinis,
+``Surface codes: Towards practical large-scale quantum computation,''
+\textit{Physical Review A}, vol.~86, p.~032324, 2012.
+
+\bibitem{Nautrup2018}
+H.~P.~Nautrup et al.,
+``Optimizing quantum error correction codes with reinforcement learning,''
+\textit{Quantum}, vol.~3, p.~215, 2019.
+
+% ── Hyperparameter optimisation ──────────────────────────────
+\bibitem{Awad2021}
+N.~Awad, N.~Mallik, and F.~Hutter,
+``DEHB: Evolutionary hyperband for scalable, robust and efficient
+hyperparameter optimisation,''
+\textit{Proc.\ IJCAI}, 2021.
+
+% ── Silicon qubit hardware (donor, GAA, GaAs) ────────────────
+\bibitem{Morello2010}
+A.~Morello et al.,
+``Single-shot readout of an electron spin in silicon,''
+\textit{Nature}, vol.~467, pp.~687--691, 2010.
+
+\bibitem{Zwerver2022}
+A.~M.~J.~Zwerver et al.,
+``Qubits made by advanced semiconductor manufacturing,''
+\textit{Nature Electronics}, vol.~5, pp.~184--190, 2022.
+
+\bibitem{Petta2005}
+J.~R.~Petta et al.,
+``Coherent manipulation of coupled electron spins in semiconductor quantum dots,''
+\textit{Science}, vol.~309, pp.~2180--2184, 2005.
+
+% ── Aziz HPC ─────────────────────────────────────────────────
+\bibitem{AzizHPC}
+{King Abdulaziz University},
+``Aziz Supercomputer,''
+\textit{High Performance Computing Centre, KAU}, 2024.
+\url{https://hpc.kau.edu.sa}
+
+
+% ── Key replication papers ───────────────────────────────────
+\bibitem{Daraeizadeh2020}
+S.~Daraeizadeh, S.~P.~Premaratne, A.~Y.~Matsuura, and N.~Roohanian,
+``Designing high-fidelity multi-qubit gates for semiconductor quantum dots
+through deep reinforcement learning,''
+\textit{Proc.\ IEEE QCE}, pp.~35--44, 2020.
+
+\bibitem{He2021}
+Z.~He, L.~Li, S.~Zheng, Y.~Li, and H.~Situ,
+``Variational quantum compiling with double Q-learning,''
+\textit{New Journal of Physics}, vol.~23, p.~033002, 2021.
+
+% ── DRL algorithms ───────────────────────────────────────────
+\bibitem{Mnih2015}
+V.~Mnih et al.,
+``Human-level control through deep reinforcement learning,''
+\textit{Nature}, vol.~518, pp.~529--533, 2015.
+
+\bibitem{Schulman2017}
+J.~Schulman, F.~Wolski, P.~Dhariwal, A.~Radford, and O.~Klimov,
+``Proximal policy optimization algorithms,''
+\textit{arXiv:1707.06347}, 2017.
+
+% ── Quantum control / optimal control ────────────────────────
+\bibitem{Khaneja2005}
+N.~Khaneja, T.~Reiss, C.~Kehlet, T.~Schulte-Herbr\"{u}ggen, and S.~J.~Glaser,
+``Optimal control of coupled spin dynamics: Design of NMR pulse sequences
+by gradient ascent algorithms,''
+\textit{Journal of Magnetic Resonance}, vol.~172, pp.~296--305, 2005.
+
+\bibitem{Caneva2011}
+T.~Caneva et al.,
+``Chopped random-basis quantum optimization,''
+\textit{Physical Review A}, vol.~84, p.~022326, 2011.
+
+\bibitem{Wittler2021}
+N.~Wittler et al.,
+``Integrated tool set for control, calibration, and characterization of
+quantum devices applied to superconducting qubits,''
+\textit{Physical Review Applied}, vol.~15, p.~034080, 2021.
+
+% ── Silicon qubit hardware (additional) ──────────────────────
+\bibitem{Madzik2022}
+M.~T.~M\k{a}dzik et al.,
+``Precision tomography of a three-qubit donor quantum processor in silicon,''
+\textit{Nature}, vol.~601, pp.~348--353, 2022.
+
+\bibitem{Morello2020}
+A.~Morello,
+``Donor spins in silicon for quantum technologies,''
+\textit{MRS Bulletin}, vol.~45, pp.~584--591, 2020.
+
+\bibitem{Cerfontaine2020}
+P.~Cerfontaine et al.,
+``Closed-loop control of a GaAs-based singlet-triplet spin qubit
+with 99.5\% gate fidelity and low leakage,''
+\textit{Nature Communications}, vol.~11, p.~4144, 2020.
+
+% ── Quantum software / frameworks ────────────────────────────
+\bibitem{Bergholm2018}
+V.~Bergholm et al.,
+``PennyLane: Automatic differentiation of hybrid quantum-classical
+computations,''
+\textit{arXiv:1811.04968}, 2018.
+
+\bibitem{Efthymiou2021}
+S.~Efthymiou et al.,
+``Qibo: A framework for quantum simulation with hardware acceleration,''
+\textit{Quantum Science and Technology}, vol.~7, p.~015018, 2021.
+
+\bibitem{Broughton2020}
+M.~Broughton et al.,
+``TensorFlow Quantum: A software framework for quantum machine learning,''
+\textit{arXiv:2003.02989}, 2020.
+
+\bibitem{Henriet2020}
+L.~Henriet et al.,
+``Quantum computing with neutral atoms,''
+\textit{Quantum}, vol.~4, p.~327, 2020.
+
+\bibitem{Alexander2020}
+T.~Alexander et al.,
+``Qiskit Pulse: Programming quantum computers through the cloud with pulses,''
+\textit{Quantum Science and Technology}, vol.~5, p.~044006, 2020.
+
+\bibitem{Bruzewicz2019}
+C.~D.~Bruzewicz, J.~Chiaverini, R.~McConnell, and J.~M.~Sage,
+``Trapped-ion quantum computing: Progress and challenges,''
+\textit{Applied Physics Reviews}, vol.~6, p.~021314, 2019.
+
+% ── RL for quantum circuits (additional) ─────────────────────
+\bibitem{Liang2018}
+Z.~Liang et al.,
+``Variational quantum circuit compilation,''
+\textit{arXiv:1911.07653}, 2018.
+
+\bibitem{Huang2022}
+H.-Y.~Huang et al.,
+``Quantum advantage in learning from experiments,''
+\textit{Science}, vol.~376, pp.~1182--1186, 2022.
+
+\bibitem{Nguyen2021}
+Q.~T.~Nguyen et al.,
+``Digital feedback in superconducting quantum circuits,''
+\textit{arXiv:2112.14447}, 2021.
+
+\bibitem{Xu2024}
+S.~Xu et al.,
+``Digital simulation of projective non-Abelian anyons with 68 superconducting
+qubits,''
+\textit{Nature}, vol.~630, pp.~71--76, 2024.
+
+\bibitem{Dennis2002}
+E.~Dennis, A.~Kitaev, A.~Landahl, and J.~Preskill,
+``Topological quantum memory,''
+\textit{Journal of Mathematical Physics}, vol.~43, pp.~4452--4505, 2002.
+
+% ── RL environments / tools (additional) ─────────────────────
+\bibitem{Bernard2024QuantumCircuitEnv}
+T.~Bernard et al.,
+``A gymnasium environment for quantum circuit synthesis,''
+\textit{arXiv:2405.12481}, 2024.
+
+\bibitem{QiskitGym2024}
+{Qiskit contributors},
+``Qiskit Gymnasium environments,''
+\textit{GitHub}, 2024. \url{https://github.com/qiskit-community/qiskit-gym}
+
+\bibitem{qiskitgym2024}
+{Qiskit contributors},
+``Qiskit-Gym: Reinforcement learning environments for Qiskit,''
+\textit{GitHub}, 2024. \url{https://github.com/qiskit-community/qiskit-gym}
+
+\bibitem{VanDerLinde2023}
+J.~van der Linde et al.,
+``QGym: A gymnasium for quantum computing,''
+\textit{arXiv:2306.05344}, 2023.
+
+% ── Recent silicon qubit advances ────────────────────────────
+\bibitem{Orbell2024}
+T.~J.~Orbell et al.,
+``A 2D array of single-electron silicon quantum dots,''
+\textit{Nature Electronics}, vol.~7, pp.~491--496, 2024.
+
+\bibitem{Kremer2024}
+G.~Kremer et al.,
+``Controlled coupling of a donor-bound electron to a gate-defined quantum dot,''
+\textit{Nature Communications}, vol.~15, p.~2029, 2024.
+
+\bibitem{Tanamoto2025}
+T.~Tanamoto et al.,
+``High-fidelity two-qubit gates in silicon spin qubits using pulse engineering,''
+\textit{Physical Review Applied}, vol.~23, p.~014001, 2025.
+
+\bibitem{Zen2025}
+L.~Zen et al.,
+``Quantum circuit synthesis with reinforcement learning and ZX-calculus,''
+\textit{arXiv:2501.02551}, 2025.
+
+\bibitem{Severin2025}
+B.~Severin et al.,
+``Reinforcement learning for quantum circuit synthesis with noise-aware
+reward shaping,''
+\textit{arXiv:2503.11204}, 2025.
+
+\bibitem{Altmann2024challenges}
+P.~Altmann et al.,
+``Challenges and opportunities of near-term quantum computing systems,''
+\textit{ACM Transactions on Quantum Computing}, vol.~5, p.~14, 2024.
+
+\bibitem{Abedi2025}
+A.~Abedi et al.,
+``Scalable quantum circuit synthesis via deep reinforcement learning,''
+\textit{arXiv:2502.08943}, 2025.
+
+% ── SiliQun software ─────────────────────────────────────────
+\bibitem{SimOS2025}
+R.~M.~Alshehri,
+``SiliQun: A silicon spin qubit simulation and RL training framework,''
+\textit{GitHub}, 2025. \url{https://github.com/r3d-phd/siliqun}
+
+% ── Dicke state entanglement entropy ────────────────────────
+\bibitem{Salberger2017}
+O.~Salberger and V.~Korepin,
+``Entanglement entropy of the spin-1 Dicke state,''
+\textit{Int.\ J.\ Mod.\ Phys.\ B}, vol.~31, no.~26, p.~1750230, 2017.
+
+\end{thebibliography}
+
+\end{document}

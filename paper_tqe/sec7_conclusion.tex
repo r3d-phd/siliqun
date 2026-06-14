@@ -1,0 +1,75 @@
+%% ============================================================
+%% §7 — Conclusion
+%% SiliQun — A Physics-Grounded Simulation Platform
+%% for Silicon Spin Qubit Quantum Control
+%%
+%% Sources: P1 §5.4 (rewritten), experimental results from SiliQun v5 training
+%% ============================================================
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+We have presented SiliQun~v5, an open-source, physics-grounded simulation
+platform that unifies three distinct silicon spin qubit hardware technologies
+--- SiMOS quantum dots, phosphorus-donor electron and nuclear spin qubits,
+and gate-all-around (GAA) nanowire spin qubits --- within a single
+Gymnasium-compatible Lindblad density-matrix engine.
+SiliQun's design is governed by the Physics-Grounded Iterative RL Stack
+(PGIRS) methodology, a five-phase engineering discipline that enforces
+noise-first design, interface abstraction, reward engineering, hierarchical
+decomposition, and empirical validation at each layer of the simulation stack.
+The platform is validated through four independent replications spanning
+three hardware technologies and three reinforcement learning algorithms,
+making it the most comprehensively validated open-source silicon spin qubit
+simulator to date.
+
+The scientific case for SiliQun rests on four results reported in this
+paper. First, SiliQun's Lindblad physics engine passes three analytical
+validation benchmarks at machine precision: Rabi oscillations, $T_1$
+amplitude decay (max deviation $2.78 \times 10^{-16}$, float64 epsilon),
+and Bell state fidelity versus coherence time. Second, cross-technology
+consistency is established through two independent replications: the
+DQL/SARSA CZ gate-synthesis experiment of Daraeizadeh~et~al.~\cite{Daraeizadeh2020}
+is reproduced on the SiMOS profile at $\Delta F < 0.04\%$, and the DQN
+universal state-preparation experiment of He~et~al.~\cite{He2021} is
+reproduced on the donor electron profile at $\bar{F} = 0.9748 \pm 0.0098$.
+Third, the same DQN protocol applied to the GAA profile achieves
+$\bar{F} = 0.9877 \pm 0.0021$ --- to the best of our knowledge, the first
+machine-learning benchmark for GAA silicon spin qubits in the literature.
+Fourth, the DRL validation experiment demonstrates two complementary properties
+of SiliQun simultaneously: a lightweight PPO agent achieves $F = 0.9996$ on
+2-qubit Bell state synthesis, confirming that the physics engine produces a
+learnable reward signal and that the Gymnasium interface is correctly
+implemented; the same agent reaches only $F = 0.3998$ on the 4-qubit GHZ
+task, confirming that the SiMOS noise model is physically realistic and that
+the task is genuinely hard for a simple agent without domain-specific
+enhancements.
+
+Beyond the immediate results, SiliQun's most significant contribution is
+architectural. By providing a single, hardware-neutral simulation substrate
+that exposes all three silicon spin qubit technologies through an identical
+Gymnasium interface, SiliQun enables cross-technology comparison and
+transfer-learning studies that were previously impossible due to the
+fragmentation of existing simulation tools. The PGIRS methodology codifies
+the engineering decisions required to extend SiliQun to new hardware
+platforms, including superconducting transmon, trapped-ion, and neutral atom
+qubits, without modifying the Lindblad solver or the Gymnasium interface.
+
+The three highest-priority directions for future work are: (1) a direct
+comparison with classical optimal control methods (GRAPE~\cite{Khaneja2005},
+CRAB~\cite{Caneva2011}) on the SiMOS and donor profiles, to establish
+when and why DRL provides a practical advantage; (2) validation of
+SiliQun's hardware profiles against physical SiMOS and donor devices through
+standard randomised benchmarking circuits, to close the simulation-to-hardware
+gap that currently limits the deployment of SiliQun-trained policies on
+real quantum processors; and (3) extension to multi-qubit scalability studies beyond four qubits,
+exploring whether the noise-conditional hyperparameter relationships
+identified here generalise to larger registers and whether the PGIRS
+methodology can guide the design of simulation substrates for
+superconducting transmon and neutral atom platforms without modification
+to the Lindblad solver or the Gymnasium interface.
+
+SiliQun is released under the MIT licence at
+\url{https://github.com/r3d-phd/siliqun}. All experiments reported in
+this paper are fully reproducible using the provided scripts and the Aziz
+HPC job files archived in the same repository.

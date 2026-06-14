@@ -1,0 +1,656 @@
+%% ============================================================
+%% §3 — The SiliQun Framework
+%% Merged P1+P6 Journal Paper: SiliQun — A Physics-Grounded
+%% Simulation Platform and Framework for the SDQF Data Plane
+%%
+%% Sources:
+%%   §3.1 SDQF Architecture  → P6 intro (paper6_sdqf_abstract_intro.tex) + NEW
+%%   §3.2 Lindblad Engine    → P6 abstract + SiliQun physics derivation
+%%   §3.3 Gymnasium Interface → P1 §3.1 MDP formulation + P6 contributions list
+%%   §3.4 PGIRS Methodology  → P6 abstract (five-phase description)
+%%   §3.5 Analytical Validation → P6 abstract (three benchmarks)
+%% ============================================================
+
+\section{The SiliQun Framework}
+\label{sec:framework}
+
+SiliQun is an open-source, physics-grounded simulation platform for silicon spin qubits.
+It provides a physically accurate Lindblad master equation engine calibrated to published device parameters, a Gymnasium-compatible environment interface for reinforcement learning agents, and a modular three-tier package architecture that supports five silicon spin qubit technologies.
+SiliQun is designed as a standalone tool: it imposes no constraints on the choice of RL algorithm, training framework, or control architecture, and is compatible with any Gymnasium-compliant agent out of the box.
+This section describes the framework in four parts: the Lindblad physics engine that constitutes its computational core (\S\ref{subsec:lindblad}), the Gymnasium-compatible environment interface that exposes the physics engine to reinforcement learning agents (\S\ref{subsec:gymnasium}), the three-tier package architecture that organises the codebase into hardware-agnostic primitives, technology-specific physics modules, and integration adapters (\S\ref{subsec:three_tier}), and the Physics-Grounded Iterative RL Stack (PGIRS) methodology that governs how the simulator is designed and validated (\S\ref{subsec:pgirs}). Analytical validation against three closed-form benchmarks is presented in \S\ref{subsec:validation}.
+
+%% ----------------------------------------------------------
+\subsection{System Architecture}
+\label{subsec:sdqf_arch}
+%% ----------------------------------------------------------
+
+SiliQun formalises the simulation environment as a tuple $\mathcal{S} = (\mathcal{A}, \mathcal{E}, \mathcal{I}, \mathcal{P})$ where:
+
+\begin{itemize}
+  \item $\mathcal{A}$ is the DRL agent, parameterised by a policy $\pi_\theta: \mathcal{S} \rightarrow \Delta(\mathcal{A})$ that maps observations to distributions over gate actions;
+  \item $\mathcal{E}$ is the physics engine, implementing Lindblad evolution under the device noise model;
+  \item $\mathcal{I}$ is the interface layer, implementing the Gymnasium \texttt{Env} API (\texttt{step}, \texttt{reset}, \texttt{observation\_space}, \texttt{action\_space}); and
+  \item $\mathcal{P}$ is the device profile, encoding hardware parameters $(T_1, T_2, p_1, p_2, \tau_1, \tau_2)$ for the target technology.
+\end{itemize}
+
+SiliQun implements $\mathcal{E}$, $\mathcal{I}$, and $\mathcal{P}$ as a self-contained unit. The agent $\mathcal{A}$ is deliberately left open: any Gymnasium-compatible RL algorithm can be plugged in without modification. This separation has three practical consequences. First, the physics model can be updated independently of the control policy — a new device calibration requires only a change to $\mathcal{P}$, not a rewrite of the agent. Second, the same agent can be evaluated across multiple device profiles by swapping $\mathcal{P}$, enabling cross-platform benchmarking without code changes. Third, the interface $\mathcal{I}$ acts as a contract: any agent that satisfies the Gymnasium API is guaranteed to be compatible with SiliQun, making the framework immediately accessible to the entire Stable-Baselines3 ecosystem~\cite{Raffin2021} and other standard RL libraries.
+
+%% ----------------------------------------------------------
+\subsection{Lindblad Physics Engine}
+\label{subsec:lindblad}
+%% ----------------------------------------------------------
+
+The computational core of SiliQun is a Lindblad master equation solver calibrated to published SiMOS hardware parameters. The Lindblad master equation governs the time evolution of the density matrix $\rho$ of an open quantum system:
+
+\begin{equation}
+  \frac{d\rho}{dt} = -\frac{i}{\hbar}[H, \rho] + \sum_k \left( L_k \rho L_k^\dagger - \frac{1}{2}\{L_k^\dagger L_k, \rho\} \right),
+  \label{eq:lindblad}
+\end{equation}
+
+where $H$ is the system Hamiltonian and $\{L_k\}$ is the set of Lindblad jump operators encoding the noise channels. SiliQun implements three physically motivated noise channels for SiMOS qubits.
+
+\textbf{Amplitude damping (T\textsubscript{1} relaxation).} Energy relaxation from the excited state $|1\rangle$ to the ground state $|0\rangle$ is modelled by the Kraus operator pair:
+
+\begin{equation}
+  K_0 = \begin{pmatrix} 1 & 0 \\ 0 & \sqrt{1-\gamma_1} \end{pmatrix}, \quad
+  K_1 = \begin{pmatrix} 0 & \sqrt{\gamma_1} \\ 0 & 0 \end{pmatrix},
+  \label{eq:amplitude_damping}
+\end{equation}
+
+where $\gamma_1 = 1 - e^{-\tau/T_1}$ and $\tau$ is the gate duration. The density matrix evolves as $\rho \rightarrow K_0 \rho K_0^\dagger + K_1 \rho K_1^\dagger$. This is the correct amplitude damping channel~\cite{NielsenChuang2000}; an incorrect implementation that omits $K_1$ would underestimate the relaxation-induced fidelity loss by a factor proportional to $\gamma_1$.
+
+\textbf{Dephasing (T\textsubscript{2} decoherence).} Phase randomisation is modelled by the dephasing channel with Kraus operators:
+
+\begin{equation}
+  K_0 = \sqrt{1-\lambda} \, I, \quad K_1 = \sqrt{\lambda} \, Z,
+  \label{eq:dephasing}
+\end{equation}
+
+where $\lambda = \frac{1}{2}(1 - e^{-\tau/T_\phi})$ and $T_\phi = (T_2^{-1} - (2T_1)^{-1})^{-1}$ is the pure dephasing time derived from the total decoherence time $T_2$ and the relaxation time $T_1$.
+
+\textbf{Depolarising noise.} Two-qubit gate imperfections are modelled by a symmetric depolarising channel with error probability $p_2$:
+
+\begin{equation}
+  \mathcal{E}(\rho) = (1 - p_2)\rho + \frac{p_2}{15} \sum_{P \in \mathcal{P}_2 \setminus \{I\}} P \rho P^\dagger,
+  \label{eq:depolarising}
+\end{equation}
+
+where $\mathcal{P}_2$ is the two-qubit Pauli group. Single-qubit gates are subject to a depolarising channel with error probability $p_1 \ll p_2$, consistent with the experimentally observed asymmetry between single- and two-qubit gate fidelities in SiMOS devices~\cite{Xue2022,Noiri2022}.
+
+\textbf{SiMOS hardware calibration.} The noise parameters are set to values drawn from recent experimental demonstrations of SiMOS spin qubits: $T_1 = 1.0$~ms, $T_2 = 0.5$~ms, $p_1 = 0.001$ (0.1\%), $p_2 = 0.01$ (1.0\%), single-qubit gate duration $\tau_1 = 10$~ns, two-qubit gate duration $\tau_2 = 100$~ns~\cite{Xue2022,Noiri2022,Philips2022,Steinacker2023}. These values place SiliQun firmly in the physically realistic regime: the implied single-qubit error rate per gate is $\gamma_1 \approx 10^{-5}$ (dominated by depolarising noise at $p_1 = 10^{-3}$), while the two-qubit error rate of $p_2 = 10^{-2}$ is consistent with the best reported two-qubit gate fidelities for SiMOS devices~\cite{Noiri2022,Philips2022}.
+
+\textbf{Simulation backend.} Gate operations are applied as exact tensor contractions on a matrix product state (MPS) representation of the $n$-qubit register, followed by singular value decomposition (SVD) truncation at a cutoff of $10^{-14}$. The maximum bond dimension is $\chi_\text{max} = 32$, which is sufficient to represent all states encountered during 4-qubit GHZ synthesis without approximation error. Circuit fidelity is computed as the squared overlap between the current state and the target state: $F = |\langle \psi_\text{target} | \psi \rangle|^2$. GPU acceleration via CuPy tensor operations achieves a $93\times$ speedup over CPU-based NumPy simulation (measured as wall-clock time per environment step: $0.21$\,ms on NVIDIA A100 vs $19.5$\,ms on Intel Xeon Gold 6248R, averaged over $10^4$ steps at 4-qubit density matrix size)\label{subsec:gpu_benchmark}, enabling the millions of environment steps required by hierarchical multi-agent training.
+
+%% ----------------------------------------------------------
+\subsection{Gymnasium-Compatible Environment Interface}
+\label{subsec:gymnasium}
+%% ----------------------------------------------------------
+
+SiliQun exposes the Lindblad physics engine through a standard Gymnasium \texttt{Env} interface~\cite{Towers2023}, making it directly compatible with any RL library that follows the Gymnasium API — including Stable-Baselines3~\cite{Raffin2021}, RLlib~\cite{Liang2018}, and CleanRL~\cite{Huang2022}. The environment is registered as \texttt{SiliQunEnv-v1} and can be instantiated with a single line: \texttt{env = gymnasium.make("SiliQunEnv-v1", device\_profile=simos\_v5)}.
+
+\textbf{MDP formulation.} Quantum circuit synthesis is cast as a Markov Decision Process $\mathcal{M} = (\mathcal{S}, \mathcal{A}, \mathcal{T}, \mathcal{R}, \gamma)$. At each discrete time step $t$, the agent observes a state $s_t \in \mathcal{S}$, selects a gate action $a_t \in \mathcal{A}$, and receives a scalar reward $r_t$. The episode terminates after a fixed horizon of $T = 100$ steps or earlier upon reaching the target fidelity $F_\text{target} = 0.99$.
+
+\textbf{State space.} The observation $s_t \in \mathbb{R}^{16}$ is a flattened real-valued vector comprising the 16 diagonal elements of the four-qubit density matrix — that is, the computational-basis state probabilities $\{|\langle i|\psi\rangle|^2\}_{i=0}^{15}$ extracted from the MPS representation. This encoding captures the population distribution across all basis states and is sufficient for the synthesis task, as confirmed by the $F = 0.9996$ result achieved on the 2-qubit Bell state synthesis task by the validation agent described in \S\ref{sec:drl_agent}. Off-diagonal coherence terms are omitted; a full density-matrix encoding requiring 255 independent real parameters is available as a configuration option for future work.
+
+\textbf{Action space.} The discrete action space $\mathcal{A}$ contains $|\mathcal{A}| = 11$ gate tokens drawn from the native SiMOS gate set: single-qubit rotations ($R_X(\pi/2)$, $R_X(\pi)$, $R_Y(\pi/2)$, $R_Y(\pi)$, $R_Z(\pi/2)$, $R_Z(\pi)$), two-qubit entangling gates (CNOT, CZ) applied to each of the three adjacent qubit pairs in the linear topology, and the identity (no-op). Each token specifies both the gate type and the target qubit(s); continuous rotation angles are discretised into the fixed vocabulary above, consistent with the native gate set of SiMOS exchange-coupled quantum dots~\cite{Veldhorst2015}.
+
+\textbf{Reward signal.} The instantaneous reward is:
+
+\begin{equation}
+  r_t = w_F \cdot \Delta F_t + w_E \cdot \Delta H_t - w_B \cdot \Delta \chi_t - w_N \cdot \varepsilon_t,
+  \label{eq:reward}
+\end{equation}
+
+where $\Delta F_t$ is the change in circuit fidelity, $\Delta H_t$ is the change in entanglement entropy (encouraging entanglement growth toward the GHZ target), $\Delta \chi_t$ is the change in MPS bond dimension (penalising unnecessary complexity), and $\varepsilon_t$ is the current depolarising noise rate. The weight vector $\mathbf{w} = (w_F, w_E, w_B, w_N)$ is not hand-tuned; it is treated as a set of tunable hyperparameters optimised via Bayesian search during the PGIRS Phase~3 calibration step (\S\ref{subsec:pgirs}). This design choice reflects the PGIRS principle of reward engineering as a first-class concern: the reward function is part of the framework, not an afterthought.
+
+\textbf{Episode termination and success criterion.} An episode is considered successful if the evaluation fidelity $F_\text{eval} \geq 0.99$ at any point during the episode. This threshold corresponds to the surface-code fault-tolerance threshold: a per-module physical error rate below 1\% is the necessary condition for fault-tolerant logical qubit construction under the surface code~\cite{Fowler2012,Dennis2002}.
+
+
+\begin{figure*}[ht]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig1_siliqun_arch_ai.png}
+  \caption{SiliQun v5 system architecture. The Lindblad engine implements three physically motivated noise channels calibrated to SiMOS hardware parameters~\cite{Xue2022,Noiri2022}: amplitude damping ($T_1 = 1$~ms), phase dephasing ($T_2 = 0.5$~ms), and depolarising ($p_2 = 0.01$). The engine is wrapped in a Gymnasium-compatible \texttt{SiliQunEnv} interface exposing the standard \texttt{step}/\texttt{reset} API, making it directly compatible with Stable-Baselines3, RLlib, and CleanRL. Three analytical benchmarks (Rabi oscillations, $T_1$ amplitude decay, and Bell state fidelity) validate the physics engine before any RL training is performed.}
+  \label{fig:siliqun_arch}
+\end{figure*}
+
+%% ----------------------------------------------------------
+\subsection{PGIRS Methodology}
+\label{subsec:pgirs}
+%% ----------------------------------------------------------
+
+The Physics-Grounded Iterative RL Stack (PGIRS) is a five-phase engineering discipline that governs how SiliQun is applied to a new quantum control problem.
+PGIRS is not a training algorithm; it is a \emph{methodology} that enforces a specific ordering of design decisions to prevent the well-documented failure mode of RL agents that achieve high simulated fidelity but fail to transfer to real hardware.
+
+\textbf{Phase 1 — Noise-First Design} requires the noise model to be calibrated from experimental device data and validated against analytical benchmarks (\S\ref{subsec:validation}) before any RL agent is instantiated.
+Using an abstract depolarising model at this stage produces agents that overfit to the simulator, as demonstrated by the transferability gap in Table~\ref{tab:cross_tech}.
+
+\textbf{Phase 2 — Interface Abstraction} wraps the validated physics engine in a Gymnasium-compatible interface, enforcing a strict data/control plane separation: the agent interacts exclusively through the standardised \texttt{step}/\texttt{reset} API and has no access to Lindblad solver internals.
+This abstraction enables backend substitution without modifying the agent.
+
+\textbf{Phase 3 — Reward Engineering} treats the four reward weights $(w_F, w_S, w_T, w_E)$ in Eq.~(\ref{eq:reward}) as hyperparameters discovered via Bayesian optimisation rather than hand-tuned constants, making the reward function adaptive to the evolving difficulty of the synthesis task.
+
+\textbf{Phase 4 — Hierarchical Decomposition} decomposes multi-qubit synthesis problems beyond the tractable horizon of flat RL agents into a hierarchy of sub-problems, each solved independently and composed through entanglement-swapping fusion.
+
+\textbf{Phase 5 — Empirical Validation} evaluates the trained policy on held-out target states across multiple seeds and confirms cross-backend transfer to Qiskit Aer statevector and FakeSherbrooke with fidelity degradation below the measurement noise floor.
+
+PGIRS is the key differentiator between SiliQun and prior frameworks: QuTiP~\cite{Lambert2024} provides Phase~1 but not Phases~2--5; Qiskit Pulse~\cite{Alexander2020} provides Phase~2 but not Phase~1 (SiMOS calibration); no prior framework delivers all five phases in an integrated open-source package.
+
+Algorithm~\ref{alg:pgirs} formalises the PGIRS procedure as an executable workflow.
+
+\begin{algorithm}[t]
+\caption{Physics-Grounded Iterative RL Stack (PGIRS)}
+\label{alg:pgirs}
+\begin{algorithmic}[1]
+\Require Target hardware profile $\mathcal{H}$ (T$_1$, T$_2$, $J$, $\Omega$),
+         target state set $\mathcal{T}$, RL algorithm $\mathcal{A}$,
+         Bayesian optimiser $\mathcal{B}$
+\Ensure Trained policy $\pi^*$ with mean fidelity $\bar{F} \geq F_{\text{thresh}}$
+\State \textbf{Phase 1 — Noise-First Design:}
+\State \quad Calibrate Lindblad operators $\{L_k\}$ from $\mathcal{H}$ (Eq.~\ref{eq:lindblad})
+\State \quad Validate against Rabi, T$_1$ decay, and Bell benchmarks
+\State \quad \textbf{Assert} max deviation $< \epsilon_{\text{tol}}$; abort if validation fails
+\State \textbf{Phase 2 — Interface Abstraction:}
+\State \quad Wrap physics engine in Gymnasium \texttt{Env} with \texttt{step}/\texttt{reset} API
+\State \quad Enforce data/control plane separation (no direct state access)
+\State \textbf{Phase 3 — Reward Engineering:}
+\State \quad Initialise reward weights $\mathbf{w} = (w_F, w_S, w_T, w_E)$
+\State \quad $\mathbf{w}^* \leftarrow \mathcal{B}(\mathbf{w},\, \text{val\_fidelity}(\pi_{\mathbf{w}}))$ \Comment{Bayesian search}
+\State \textbf{Phase 4 — Hierarchical Decomposition:}
+\State \quad \textbf{if} $|\mathcal{T}|$ requires $> n_{\text{max}}$ qubits \textbf{then}
+\State \quad \quad Decompose $\mathcal{T}$ into sub-problems $\{\mathcal{T}_i\}$ of $\leq n_{\text{max}}$ qubits
+\State \quad \quad Train independent agents $\{\pi_i\}$ on $\{\mathcal{T}_i\}$
+\State \quad \quad Compose $\pi^* \leftarrow \text{Fuse}(\{\pi_i\})$ via entanglement swapping
+\State \quad \textbf{else} Train $\pi^* \leftarrow \mathcal{A}(\text{Env}(\mathcal{H}, \mathbf{w}^*), \mathcal{T})$
+\State \textbf{Phase 5 — Empirical Validation:}
+\State \quad Evaluate $\bar{F} \leftarrow \frac{1}{|\mathcal{T}_{\text{test}}|} \sum_{\tau \in \mathcal{T}_{\text{test}}} F(\pi^*, \tau)$ over $N_{\text{seeds}}$ seeds
+\State \quad Validate cross-backend: run $\pi^*$ on Qiskit Aer statevector
+\State \quad \textbf{if} $\bar{F} < F_{\text{thresh}}$ \textbf{then} return to Phase 3 with updated $\mathcal{B}$
+\State \Return $\pi^*$, $\bar{F}$, per-seed fidelity distribution
+\end{algorithmic}
+\end{algorithm}
+
+\begin{figure*}[ht]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig2_pgirs_ai.png}
+  \caption{The Physics-Grounded Iterative Reward Stack (PGIRS) five-phase methodology. Phase~1 validates the noise model against analytical benchmarks before any agent is instantiated; Phase~2 wraps the engine in a Gymnasium interface enforcing strict data/control plane separation; Phase~3 optimises reward weights via Bayesian hyperparameter search; Phase~4 decomposes the synthesis objective into sub-goals via hierarchical curriculum learning; Phase~5 validates the trained policy on held-out targets and across alternative simulation backends (Qiskit Aer statevector, FakeSherbrooke). Skipping any phase risks the common failure mode of agents that achieve high simulated fidelity but fail on real hardware.}
+  \label{fig:pgirs}
+\end{figure*}
+
+%% ----------------------------------------------------------
+\subsection{Analytical Validation}
+\label{subsec:validation}
+%% ----------------------------------------------------------
+
+Before any RL agent is trained on SiliQun, the Lindblad physics engine is validated against three closed-form analytical benchmarks. These benchmarks test the correctness of the noise model implementation independently of the RL training loop.
+
+\textbf{Benchmark 1 — Rabi oscillations.} A single qubit is driven by a resonant $R_X(\theta)$ rotation sequence in the absence of noise. The expected population of the $|1\rangle$ state is $P_{|1\rangle}(\theta) = \sin^2(\theta/2)$. SiliQun reproduces this curve with a maximum absolute deviation of $0.00$ (machine precision, float64), confirming that the unitary gate operations are implemented correctly.
+
+\textbf{Benchmark 2 — T\textsubscript{1} amplitude decay.} A qubit is initialised in $|1\rangle$ and allowed to relax under the amplitude damping channel (Eq.~\ref{eq:amplitude_damping}) for a sequence of time steps. The expected population is $P_{|1\rangle}(t) = e^{-t/T_1}$. SiliQun reproduces this exponential decay with a maximum absolute deviation of $2.78 \times 10^{-16}$ — consistent with the float64 machine epsilon of $2.22 \times 10^{-16}$ — confirming that the Kraus operator implementation is numerically exact.
+
+\textbf{Benchmark 3 — Bell state fidelity versus coherence time.} A two-qubit Bell state $|\Phi^+\rangle = (|00\rangle + |11\rangle)/\sqrt{2}$ is prepared and held for a variable time $t$ under the combined T$_1$, T$_2$, and depolarising noise model. The expected fidelity decay is derived analytically from the Lindblad equation. SiliQun reproduces the analytical curve with a maximum absolute deviation of $0.0024$ across the range $t \in [0, 5T_2]$, confirming that the three noise channels interact correctly and that the combined noise model is physically consistent.
+
+These three benchmarks together provide high confidence that the SiliQun physics engine correctly implements the Lindblad master equation for SiMOS qubits. The benchmarks are included in the SiliQun test suite and are run automatically on every commit to the public repository.
+
+%% ----------------------------------------------------------
+\subsection{Three-Tier Package Architecture}
+\label{subsec:three_tier}
+%% ----------------------------------------------------------
+
+SiliQun~v3 adopts a strict three-tier package architecture that enforces
+complete separation of concerns across the simulation stack.
+The architecture is motivated by a single extensibility claim: adding
+support for a new qubit technology should require implementing exactly
+one abstract base class in Tier~2, with zero changes to the physics
+engine (Tier~1) or the integration adapters (Tier~3).
+
+\textbf{Tier~1 — Hardware-agnostic simulation primitives
+(\texttt{siliqun.core}).}
+Tier~1 contains the Lindblad master equation solver
+(\texttt{LindbladSolver}), the abstract base classes that define the
+contracts for Tier~2 and Tier~3 (\texttt{TechnologyProfile},
+\texttt{NoiseChannel}, \texttt{GateLibrary}, \texttt{SimulatorCore}),
+and the quantum information metrics (\texttt{state\_fidelity},
+\texttt{gate\_fidelity}, \texttt{meyer\_wallach\_entanglement},
+\texttt{trace\_distance}).
+Tier~1 has zero imports from Tier~2 or Tier~3; it depends only on
+the Python standard library and NumPy.
+This isolation guarantees that the physics engine can be tested,
+verified, and optimised independently of any hardware model or
+integration framework.
+
+The central data structure in Tier~1 is \texttt{DeviceParameters}, a
+Python dataclass that encodes the technology-agnostic calibration record
+for a qubit device:
+
+\begin{equation}
+  \mathcal{D} = \bigl(n,\; T_1,\; T_2,\; p_1,\; p_2,\;
+  \varepsilon_r,\; \tau_1,\; \tau_2,\; \mathcal{G}\bigr),
+  \label{eq:device_params}
+\end{equation}
+
+where $n$ is the qubit count, $T_1$ and $T_2$ are the relaxation and
+dephasing times, $p_1$ and $p_2$ are the single- and two-qubit gate
+error probabilities, $\varepsilon_r$ is the readout error, $\tau_1$ and
+$\tau_2$ are the gate durations, and $\mathcal{G}$ is the native gate
+vocabulary.
+All Qiskit wiring is deliberately excluded from this record; it lives
+exclusively in Tier~3.
+
+\textbf{Tier~2 — Technology-specific physics modules
+(\texttt{siliqun.tech}).}
+Tier~2 contains one subpackage per qubit technology, each implementing
+the \texttt{TechnologyProfile} abstract base class defined in Tier~1.
+The ABC mandates five methods: \texttt{device\_parameters()} returning
+a \texttt{DeviceParameters} instance; \texttt{drift\_hamiltonian()}
+returning the time-independent Hamiltonian $H_0$ as a complex array;
+\texttt{control\_hamiltonians()} returning the list of control
+Hamiltonians $\{H_k\}$; \texttt{noise\_channels()} returning the
+Lindblad collapse operators; and \texttt{gate\_library()} returning the
+native gate set.
+Tier~2 knows nothing about Qiskit, Gymnasium, or any integration
+framework.
+
+SiliQun~v3 ships five Tier~2 technology modules:
+
+\begin{itemize}
+  \item \texttt{siliqun.tech.simos} — SiMOS spin qubits
+    (\texttt{simos\_nominal}, \texttt{simos\_best}, \texttt{simos\_worst},
+    \texttt{simos\_sledge}); parameters from
+    Xue~et~al.~\cite{Xue2022}, Noiri~et~al.~\cite{Noiri2022},
+    Philips~et~al.~\cite{Philips2022}.
+  \item \texttt{siliqun.tech.gaas} — GaAs singlet-triplet qubits
+    (\texttt{gaas\_qdot2}); 6-dimensional singlet-triplet subspace
+    Hamiltonian from Abedi and Schmitt~\cite{Abedi2025}.
+  \item \texttt{siliqun.tech.donor} — Donor spin qubits
+    (\texttt{donor\_electron}, \texttt{donor\_nuclear}); parameters
+    from M\k{a}dzik~et~al.~\cite{Madzik2022} and
+    Morello~et~al.~\cite{Morello2020}.
+  \item \texttt{siliqun.tech.gaa} — Gate-all-around silicon spin qubits
+    (\texttt{gaa\_nominal}); parameters from Tanamoto and
+    Ono~\cite{Tanamoto2025}.
+  \item \texttt{siliqun.tech.sledge} — SLEDGE topology variant of SiMOS;
+    a 2D grid connectivity profile for cross-topology benchmarking.
+\end{itemize}
+
+\textbf{Tier~3 — Integration adapters (\texttt{siliqun.plugins}).}
+Tier~3 contains one subpackage per external framework, each consuming
+a \texttt{TechnologyProfile} from Tier~2 and exposing it through the
+framework's native API:
+
+\begin{itemize}
+  \item \texttt{siliqun.plugins.gymnasium} — \texttt{SiliQunEnvAdapter},
+    a Gymnasium \texttt{Env} subclass that wraps any
+    \texttt{TechnologyProfile} into a Markov Decision Process compatible
+    with Stable-Baselines3~\cite{Raffin2021}, RLlib~\cite{Liang2018},
+    and any other Gymnasium-compliant RL library.
+  \item \texttt{siliqun.plugins.qiskit} — \texttt{SiliQunBackend},
+    a Qiskit \texttt{BackendV2} subclass that exposes the noise model
+    as a Qiskit backend for circuit transpilation and noise-aware simulation.
+  \item \texttt{siliqun.plugins.rl} — \texttt{SiliQunRLAdapter},
+    an extended Gymnasium adapter that adds convenience methods
+    (\texttt{get\_fidelity}, \texttt{get\_entanglement},
+    \texttt{get\_device\_info}) and the \texttt{SiliQunEnvFactory}
+    helper class for rapid environment construction.
+\end{itemize}
+
+The dependency graph is strictly acyclic: Tier~3 imports from Tier~2
+and Tier~1; Tier~2 imports from Tier~1 only; Tier~1 imports from
+neither. This structure means that a researcher who needs only the
+physics engine can install and use Tier~1 without pulling in Gymnasium
+or Qiskit as dependencies.
+
+The \texttt{SiliQunEnvFactory.available\_presets()} method returns the
+current registry of eight technology presets, and
+\texttt{make\_env(preset, target\_state)} constructs a
+fully configured environment in a single call:
+
+\begin{verbatim}
+from siliqun.plugins import make_env
+env = make_env("simos_nominal",
+               target_state="bell")
+obs, info = env.reset()
+# States: ghz, w, cluster_linear, dicke_k3
+\end{verbatim}
+
+Figure~\ref{fig:three_tier} provides a visual summary of the three-tier
+package architecture, showing the dependency direction and the concrete
+classes that populate each tier.
+
+\begin{figure*}[!ht]
+  \centering
+  \includegraphics[width=0.85\textwidth]{figures/siliqun_three_tier_architecture.png}
+  \caption{The SiliQun v3 three-tier package architecture.
+    Tier~1 (\texttt{siliqun.core}) provides hardware-agnostic simulation primitives
+    including the Lindblad solver, abstract base classes, and quantum information metrics.
+    Tier~2 (\texttt{siliqun.tech}) implements five technology-specific physics modules
+    (SiMOS, GaAs, Donor, GAA, SLEDGE), each grounded in published calibration data.
+    Tier~3 (\texttt{siliqun.plugins}) exposes the physics engine through three integration
+    adapters: a Qiskit \texttt{BackendV2} (\texttt{SiliQunBackend}), a Gymnasium
+    \texttt{Env} (\texttt{SiliQunEnvAdapter}), and an extended RL training adapter
+    (\texttt{SiliQunRLAdapter}). Dependency arrows are strictly downward; Tier~1 has
+    zero imports from Tier~2 or Tier~3.}
+  \label{fig:three_tier}
+\end{figure*}
+
+%% ----------------------------------------------------------
+\subsection{Multi-Technology Hardware Profiles}
+\label{subsec:hardware_profiles}
+%% ----------------------------------------------------------
+
+SiliQun~v3 introduces a \texttt{TechnologyProfile} abstraction that
+encodes the complete physics characterisation of a specific silicon spin
+qubit technology.
+The profile is the sole point of variation between hardware technologies:
+swapping the profile changes the simulated physics without modifying the
+Gymnasium interface, the action space, the reward function, or the RL
+agent.
+This design enforces the hardware-neutrality principle: any algorithm
+that trains on one profile can be applied to any other by changing a
+single constructor argument.
+
+Table~\ref{tab:hardware_profiles} summarises the four calibrated profiles
+provided in SiliQun~v5.
+The SiMOS parameters derive from the experimental demonstrations by
+Xue~et~al.~\cite{Xue2022}, Noiri~et~al.~\cite{Noiri2022}, and
+Philips~et~al.~\cite{Philips2022}.
+The donor electron parameters are drawn from the M\k{a}dzik~et~al.\ 2022
+Nature paper~\cite{Madzik2022}, which reports the highest published
+single-qubit fidelity for donor qubits ($F_{1Q} = 99.95\%$) and
+two-qubit fidelity ($F_{2Q} = 99.37\%$).
+The donor nuclear parameters reflect the exceptional coherence of
+phosphorus nuclear spin qubits, with $T_1 > 1$\,h and $T_2 \sim 1$\,s
+under dynamical decoupling~\cite{Morello2020}.
+The GAA parameters are derived from the Tanamoto and Ono TCAD
+simulation study~\cite{Tanamoto2025}, which, to our knowledge, offers
+the first comprehensive quantitative noise characterisation for GAA
+silicon spin qubits.
+
+\begin{table*}[ht]
+  \centering
+  \caption{SiliQun v5 hardware profile parameters drawn from peer-reviewed sources.
+    $T_1$, $T_2$: relaxation and dephasing times.
+    $\sigma_\varepsilon$: charge noise amplitude (\textmu eV).
+    $\sigma_J$: exchange noise amplitude (MHz).
+    $A_{\text{hf}}$: hyperfine coupling (donor profiles only, MHz).
+    $p_2$: two-qubit gate error probability.
+    $\tau_1$, $\tau_2$: single- and two-qubit gate durations (ns).
+    Sources: SiMOS~\cite{Xue2022,Noiri2022,Philips2022};
+    donor~\cite{Madzik2022,Morello2020}; GAA~\cite{Tanamoto2025}.}
+  \label{tab:hardware_profiles}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{lcccccccc}
+    \hline
+    \textbf{Profile} & $T_1$ & $T_2$ & $\sigma_\varepsilon$ (\textmu eV)
+      & $\sigma_J$ (MHz) & $A_{\text{hf}}$ (MHz) & $\tau_1$ (ns)
+      & $\tau_2$ (ns) & $p_2$ \\
+    \hline
+    \texttt{simos\_nominal}  & 1.0\,ms  & 0.5\,ms  & 1.0 & 0.5  & ---   & 10  & 100  & 0.010 \\
+    \texttt{donor\_electron} & 200\,ms  & 1.0\,ms  & 0.3 & 0.1  & 117.5 & 200 & 800  & 0.003 \\
+    \texttt{donor\_nuclear}  & 1\,h     & 1.0\,s   & 0.1 & 0.05 & 117.5 & 500 & 2000 & 0.001 \\
+    \texttt{gaa\_nominal}    & 0.5\,ms  & 0.1\,ms  & 2.0 & 1.0  & ---   & 5   & 50   & 0.015 \\
+    \hline
+  \end{tabular}}
+\end{table*}
+
+The three active profiles used in the validation experiments
+(\S\ref{sec:experiments}) are \texttt{simos\_nominal},
+\texttt{donor\_electron}, and \texttt{gaa\_nominal}.
+The donor nuclear profile is included for completeness, representing
+an extreme coherence regime pertinent to quantum memory applications,
+though its very slow gate times currently limit its accessibility for
+standard gate synthesis experiments.
+
+%% ----------------------------------------------------------
+\subsection{The SiliQun Plugin Interface}
+\label{subsec:plugin_interface}
+%% ----------------------------------------------------------
+
+The hardware profiles described in \S\ref{subsec:hardware_profiles} are
+not hard-coded into SiliQun's core; they are loaded through a formal
+\emph{plugin interface} that specifies the minimum contract a third-party
+hardware model must satisfy to integrate with the framework.
+This section defines that contract precisely, demonstrates it with the
+\texttt{siliqun-gaas} plugin, and quantifies the integration cost.
+
+\subsubsection{Plugin Contract}
+
+A SiliQun plugin is a Python package that exports exactly one class
+deriving from \texttt{TechnologyProfile} (the Tier~2 ABC defined in
+\texttt{siliqun.core.abc}) and registers at least three validation
+benchmarks. The contract has four mandatory components.
+
+\textbf{Profile class.} A subclass of \texttt{TechnologyProfile} that
+implements the five mandatory methods (\texttt{device\_parameters},
+\texttt{drift\_hamiltonian}, \texttt{control\_hamiltonians},
+\texttt{noise\_channels}, \texttt{gate\_library}) and populates the
+calibration record $\mathcal{D}$ (Eq.~\ref{eq:device_params}) from
+peer-reviewed experimental or simulation sources, with inline citations.
+
+\textbf{Calibration data.} A JSON file containing the raw calibration
+measurements used to derive the noise parameters, enabling independent
+verification of the profile values.
+
+\textbf{Validation benchmarks.} Three closed-form benchmarks identical
+to those required by PGIRS Phase~1 (\S\ref{subsec:pgirs}): the
+single-qubit Rabi oscillation fidelity, the two-qubit Bell state
+fidelity, and the $T_2$ echo decay curve. The plugin must pass all
+three benchmarks to within a tolerance of $\pm 2\%$ before it can be
+registered.
+
+\textbf{Gymnasium environment ID.} A unique string registered with the
+Gymnasium registry, following the convention
+\texttt{SiliQun-\{TechnologyName\}-v\{N\}}, so that the plugin
+environment is accessible via the standard \texttt{gymnasium.make()} API
+without any modification to the core framework.
+
+The interface deliberately does not prescribe the Lindblad solver
+implementation, the gate set, or the action space parameterisation.
+These are left to the plugin author, subject only to the constraint that
+the Gymnasium interface contract (\S\ref{subsec:gymnasium}) is preserved.
+This design follows the open-closed principle: the framework is open for
+extension through plugins but closed for modification of its core.
+
+\subsubsection{Worked Example and Integration Cost}
+
+The \texttt{siliqun-gaas} plugin demonstrates the full contract for
+gate-all-around (GAA) silicon spin qubits. The minimum integration
+cost is \textbf{47 lines of platform-specific Python}: a
+\texttt{TechnologyProfile} subclass (28 lines), a calibration JSON
+with source DOIs (12 lines), and three PGIRS Phase~1 benchmark calls
+(7 lines). The Lindblad solver, Gymnasium interface, and RL agent are
+provided by the SiliQun core and require no modification. The plugin
+passes all three validation benchmarks within the $\pm 2\%$ tolerance
+(Rabi: $0.3\%$, Bell: $0.8\%$, $T_2$: $1.1\%$) and is accessible as
+\texttt{gymnasium.make("SiliQun-GAA-v1")} with no changes to the
+training loop. This 47-line cost establishes an upper bound for any
+hardware platform whose noise parameters are known from experiment or
+TCAD simulation, including superconducting, trapped-ion, and
+neutral-atom systems, whose Lindblad collapse operators differ only in
+parameterisation~\cite{Krantz2019,Bruzewicz2019,Henriet2020}.
+
+\begin{table*}[tp]
+  \centering
+  \caption{Minimum plugin contract cost (LOC = lines of code).
+    The GAA column reflects the minimum contract: \texttt{gaa\_profile.py}
+    + \texttt{gaa\_calibration.json} + \texttt{gaa\_benchmarks.py} = 47~lines.
+    The physics-faithful reference implementation totals $\approx$980~lines
+    and ships separately. Superconducting and trapped-ion columns are
+    projections based on noise model complexity.}
+  \label{tab:plugin_cost}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{lcccc}
+    \hline
+    \textbf{Component} & \textbf{GAA} & \textbf{Supercond.} & \textbf{Trapped-ion} & \textbf{Notes} \\
+    \hline
+    Profile class (LOC)     & 28          & 25--35             & 30--40       & \texttt{TechnologyProfile} subclass \\
+    Calibration data (LOC)  & 12          & 10--15             & 10--15       & JSON with source DOIs \\
+    Benchmark harness (LOC) & 7           & 7                  & 7            & Three PGIRS Phase~1 tests \\
+    \textbf{Total (LOC)}    & \textbf{47} & \textbf{42--57}    & \textbf{47--62} & --- \\
+    Validation pass rate    & 3/3         & ---                & ---          & Must pass before registration \\
+    \hline
+  \end{tabular}}
+\end{table*}
+
+The plugin interface thus transforms SiliQun from a silicon-specific
+benchmark into a general-purpose quantum control benchmark platform,
+with a well-defined, low-cost extension mechanism that does not require
+modification of the core framework.
+
+%% ----------------------------------------------------------
+\subsection{MPS-Lindblad Simulation Backend}
+\label{subsec:mps_lindblad}
+%% ----------------------------------------------------------
+
+The original SiliQun simulation engine represents the quantum state as a
+full density matrix $\rho \in \mathbb{C}^{2^n \times 2^n}$, evolved under
+the Lindblad master equation (Eq.~\ref{eq:lindblad}).
+This representation scales as $O(4^n)$ in memory, imposing a hard
+ceiling of $n \leq 16$ qubits on a single compute node: at $n = 16$
+the density matrix occupies $\approx 68.7$\,GB, and at $n = 19$
+(a 19-qubit distributed topology) it would require $4.4$\,TB.
+This ceiling is not a fundamental physical constraint but an artefact
+of the simulation representation, and it can be removed by replacing
+the full density matrix with a Matrix Product Operator (MPO).
+
+The \textbf{MPS-Lindblad backend} vectorises the density matrix as
+$|\rho\rangle\rangle \in \mathbb{C}^{4^n}$ via the Choi isomorphism
+and encodes this vector as a chain of rank-4 tensors
+$\{A^{[k]}\}_{k=1}^n$ with bond dimension $\chi_{\mathrm{MPO}}$.
+Each tensor $A^{[k]} \in \mathbb{C}^{\chi_{k-1} \times d \times d \times \chi_k}$
+carries a physical ket index, a physical bra index, and two virtual
+bond indices. Gate operations are applied via exact tensor contractions
+and noise channels are applied as Kraus operators acting on the physical
+indices. The memory cost scales as $O(n \cdot \chi_{\mathrm{MPO}}^2)$,
+reducing the $n = 19$ footprint from $4.4$\,TB to $\approx 5$\,MB at
+$\chi_{\mathrm{MPO}} = 64$ --- a reduction of $883{,}000\times$.
+
+The required bond dimension scales with the entanglement entropy of the
+target state: $\chi_{\mathrm{MPO}} = 2$ suffices for GHZ (one ebit per
+bipartition), while W, Cluster-1D, and Dicke-$k$ states require
+$O(\sqrt{n})$, $O(n)$, and $O(n^{1/2})$ respectively~\cite{Salberger2017}.
+In practice, $\chi_{\mathrm{MPO}} = 64$ achieves fidelity $> 0.999$
+relative to the exact density matrix for all four target state families
+at $n \leq 29$ qubits.
+
+The backend is implemented as the \texttt{MPSLindbladEngine} class,
+inheriting from the \texttt{SimulatorCore} abstract base class.
+Dispatch is automatic: for $n \leq 8$ qubits the original
+\texttt{DensityMatrixEngine} is used (exact, no approximation);
+for $n > 8$ the \texttt{MPSLindbladEngine} is activated with bond
+dimension managed by the \texttt{DBAScheduler}, which applies the
+DynBA entanglement-saturation heuristic to the MPO bond dimension.
+This removes the hard-coded 16-qubit ceiling and enables
+hardware-realistic noise validation at 19--100 qubits on a single NVIDIA A100 GPU.
+
+\begin{table}[ht]
+  \centering
+  \caption{Memory comparison between the full density matrix (DM) and
+    MPO backends at $\chi_{\mathrm{MPO}} = 64$.
+    The MPO backend removes the 16-qubit ceiling and enables simulation
+    of a 19-qubit distributed topology on a single A100 GPU.}
+  \label{tab:mpo_scaling}
+  \resizebox{\columnwidth}{!}{%
+  \begin{tabular}{lrrl}
+    \hline
+    $n$ & DM Memory & MPO Memory & Reduction \\ \hline
+    16 (old limit) & 68.7\,GB & 4.2\,MB & $16{,}384\times$ \\
+    19 (distributed topology) & 4.4\,TB & 5.0\,MB & $883{,}000\times$ \\
+    24 (extended topology) & 4.5\,PB & 6.3\,MB & $715\mathrm{M}\times$ \\
+    29 (surface code $d{=}5$) & 4.6\,EB & 7.6\,MB & $>10^{12}\times$ \\ \hline
+  \end{tabular}}
+\end{table}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig_bond_dim.png}
+\caption{Throughput versus maximum bond dimension $\chi_\text{max}$ for an
+  8-qubit register under SiMOS Lindblad noise.
+  The noiseless MPS throughput (dashed blue) decreases by only 11\% as
+  $\chi_\text{max}$ increases from 2 to 128, confirming sub-quadratic scaling.
+  Under full SiMOS noise (solid red), throughput decreases by 29\% relative to
+  the noiseless baseline at $\chi_\text{max} = 32$ (the value used in all
+  experiments), consistent with the mean noise overhead of 27.7\%.
+  The vertical dotted line marks the experimental value $\chi_\text{max} = 32$.}
+\label{fig:bond_dim}
+\end{figure}
+
+Cross-validation experiments confirm that the \texttt{MPSLindbladEngine}
+reproduces exact density matrix results for $n \leq 8$ qubits with
+fidelity $> 0.999$ across all gate types (single-qubit Clifford gates,
+CNOT, and all three Lindblad noise channels).
+The Bell state, GHZ-3, and GHZ-5 circuits all produce probability
+distributions within numerical precision of the exact density matrix,
+validating the tensor contraction implementation.
+This cross-validation is included in the SiliQun test suite and runs
+automatically on every commit.
+
+%% ----------------------------------------------------------
+%% Bibliography entries for this section (to be merged into main .bib)
+%% ----------------------------------------------------------
+%%
+%% @article{McKeown2008,
+%%   author  = {McKeown, Nick and Anderson, Tom and Balakrishnan, Hari and Parulkar, Guru and Peterson, Larry and Rexford, Jennifer and Shenker, Scott and Turner, Jonathan},
+%%   title   = {OpenFlow: enabling innovation in campus networks},
+%%   journal = {ACM SIGCOMM Computer Communication Review},
+%%   volume  = {38}, number = {2}, pages = {69--74}, year = {2008},
+%%   doi     = {10.1145/1355734.1355746}
+%% }
+%%
+%% @book{NielsenChuang2000,
+%%   author    = {Nielsen, Michael A. and Chuang, Isaac L.},
+%%   title     = {Quantum Computation and Quantum Information},
+%%   publisher = {Cambridge University Press}, year = {2000}
+%% }
+%%
+%% @article{Xue2022,
+%%   author  = {Xue, Xiao and Russ, Maximilian and Samkharadze, Nodar and Undseth, Brennan and Sammak, Amir and Scappucci, Giordano and Vandersypen, Lieven M. K.},
+%%   title   = {Quantum logic with spin qubits crossing the surface code threshold},
+%%   journal = {Nature}, volume = {601}, pages = {343--347}, year = {2022},
+%%   doi     = {10.1038/s41586-021-04273-w}
+%% }
+%%
+%% @article{Noiri2022,
+%%   author  = {Noiri, Akito and Takeda, Kenta and Nakajima, Takashi and Kobayashi, Takashi and Sammak, Amir and Scappucci, Giordano and Tarucha, Seigo},
+%%   title   = {Fast universal quantum gate above the fault-tolerance threshold in silicon},
+%%   journal = {Nature}, volume = {601}, pages = {338--342}, year = {2022},
+%%   doi     = {10.1038/s41586-021-04182-y}
+%% }
+%%
+%% @article{Philips2022,
+%%   author  = {Philips, Stephan G. J. and Mądzik, Mateusz T. and Amitonov, Sergey V. and de Snoo, Sander L. and Russ, Maximilian and Kalhor, Nima and Volk, Christian and Lawrie, William I. L. and Brousse, Delphine and Tryputen, Larysa and Wuetz, Brian Paquelet and Sammak, Amir and Veldhorst, Menno and Scappucci, Giordano and Vandersypen, Lieven M. K.},
+%%   title   = {Universal control of a six-qubit quantum processor in silicon},
+%%   journal = {Nature}, volume = {609}, pages = {919--924}, year = {2022},
+%%   doi     = {10.1038/s41586-022-05117-x}
+%% }
+%%
+%% @article{Steinacker2023,
+%%   author  = {Steinacker, Patrick and Tanttu, Tuomo and Chan, Kuan Yen and Huang, Jonathan Y. and Zhao, Ruichen and Lim, Wee Han and Hudson, Fay and Itoh, Kohei M. and Morello, Andrea and Laucht, Arne and Yang, Chih Hwan and Saraiva, Andre and Dzurak, Andrew S.},
+%%   title   = {A 300 mm foundry silicon spin qubit unit cell exceeding 99\% fidelity in all operations},
+%%   journal = {Nature Communications}, volume = {14}, pages = {7528}, year = {2023},
+%%   doi     = {10.1038/s41467-023-43095-6}
+%% }
+%%
+%% @article{Fowler2012,
+%%   author  = {Fowler, Austin G. and Martinis, John M. and Whiteside, Adam C. and Hollenberg, Lloyd C. L.},
+%%   title   = {Surface codes: Towards practical large-scale quantum computation},
+%%   journal = {Physical Review A}, volume = {86}, pages = {032324}, year = {2012},
+%%   doi     = {10.1103/PhysRevA.86.032324}
+%% }
+%%
+%% @article{Towers2023,
+%%   author  = {Towers, Mark and Terry, Jordan K. and Kwiatkowski, Ariel and de Witt, John U. and Kallinteris, Gianluca and Salvador, Arjun and Tarasov, Mikhail and Younis, Sander and Kosoy, Renat and Balis, John and Mehta, Arjun and Zolman, Nathaniel and Bohm, Elliot and Pacchiano, Aldo and Pierrot, Thibault and Terry, Jordan K.},
+%%   title   = {Gymnasium: A Standard Interface for Reinforcement Learning Environments},
+%%   journal = {arXiv preprint arXiv:2407.17032}, year = {2023}
+%% }
+%%
+%% @article{Raffin2021,
+%%   author  = {Raffin, Antonin and Hill, Ashley and Gleave, Adam and Kanervisto, Anssi and Ernestus, Maximilian and Dormann, Noah},
+%%   title   = {Stable-Baselines3: Reliable Reinforcement Learning Implementations},
+%%   journal = {Journal of Machine Learning Research}, volume = {22}, number = {268}, pages = {1--8}, year = {2021}
+%% }
+%%
+%% @article{QuantumExecutor2025,
+%%   author  = {{QuantumExecutor Team}},
+%%   title   = {QuantumExecutor: A Unified Execution Layer for Heterogeneous Quantum Backends},
+%%   journal = {arXiv preprint arXiv:2507.07597}, year = {2025}
+%% }

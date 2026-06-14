@@ -21,13 +21,11 @@ closed-form solutions at machine precision ($\max\,\delta \leq 2.78 \times
 10^{-16}$).
 We validate SiliQun through four independent experiments spanning three hardware
 technologies and four RL algorithms.
-Replication~1 reproduces the deep Q-learning and SARSA CZ gate-synthesis results
-of Daraeizadeh~et~al.\ on SiliQun's SiMOS profile, achieving mean fidelity
-$\bar{F} = 0.9996 \pm 0.0001$ and $0.9994 \pm 0.0002$ respectively, within
-$0.04\%$ of the published values.
-Replication~2 reproduces the DQN universal state-preparation results of
-He~et~al.\ on SiliQun's donor-electron profile, achieving a mean cardinal-state
-fidelity of $\bar{F} = 0.9748 \pm 0.0098$.
+Replication~1 reproduces DQN and SARSA CZ gate-synthesis results of
+Daraeizadeh~et~al.\ on SiliQun's SiMOS profile ($\bar{F} = 0.9996 \pm 0.0001$
+and $0.9994 \pm 0.0002$, within $0.04\%$ of published values).
+Replication~2 reproduces DQN state-preparation results of He~et~al.\ on
+SiliQun's donor-electron profile ($\bar{F} = 0.9748 \pm 0.0098$).
 Extension~3 applies the same DQN protocol to SiliQun's GAA profile,
 establishing the first machine-learning benchmark for GAA silicon spin qubits
 with mean fidelity $\bar{F} = 0.9877 \pm 0.0021$.
@@ -35,11 +33,10 @@ A fourth experiment using Proximal Policy Optimisation on the SiMOS profile
 achieves $F = 1.000$ across all five independent seeds, converging within
 200 episodes and demonstrating that SiliQun supports modern policy-gradient
 algorithms without modification.
-Across all four experiments, consistent cross-technology fidelity confirms that
-SiliQun's physics engine correctly models hardware-specific decoherence rather
-than introducing simulator-induced artefacts.
-SiliQun is released under the MIT licence and is fully reproducible from the
-provided scripts and Aziz HPC job files.
+Consistent cross-technology fidelity confirms that SiliQun's physics engine
+correctly models hardware-specific decoherence rather than
+introducing simulator-induced artefacts.
+SiliQun is released under the MIT licence and is fully reproducible.
 \end{abstract}
 
 \section{Introduction}

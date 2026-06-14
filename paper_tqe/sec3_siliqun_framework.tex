@@ -86,7 +86,7 @@ where $\mathcal{P}_2$ is the two-qubit Pauli group. Single-qubit gates are subje
 \label{subsec:gymnasium}
 %% ----------------------------------------------------------
 
-SiliQun exposes the Lindblad physics engine through a standard Gymnasium \texttt{Env} interface~\cite{Towers2023}, making it directly compatible with any RL library that follows the Gymnasium API — including Stable-Baselines3~\cite{Raffin2021}, RLlib~\cite{Liang2018}, and CleanRL~\cite{Huang2022}. The environment is registered as \texttt{SiliQunEnv-v1} and can be instantiated with a single line: \texttt{env = gymnasium.make("SiliQunEnv-v1", device\_profile=simos\_v5)}.
+SiliQun exposes the Lindblad physics engine through a standard Gymnasium \texttt{Env} interface~\cite{Towers2023}, making it directly compatible with any RL library that follows the Gymnasium API — including Stable-Baselines3~\cite{Raffin2021}, RLlib~\cite{Liang2018}, and CleanRL~\cite{Huang2022}. The environment is registered as \texttt{SiliQunEnv-v1} and can be instantiated with a single line: \texttt{env = gymnasium.make("SiliQunEnv", device\_profile=simos)}.
 
 \textbf{MDP formulation.} Quantum circuit synthesis is cast as a Markov Decision Process $\mathcal{M} = (\mathcal{S}, \mathcal{A}, \mathcal{T}, \mathcal{R}, \gamma)$. At each discrete time step $t$, the agent observes a state $s_t \in \mathcal{S}$, selects a gate action $a_t \in \mathcal{A}$, and receives a scalar reward $r_t$. The episode terminates after a fixed horizon of $T = 100$ steps or earlier upon reaching the target fidelity $F_\text{target} = 0.99$.
 
@@ -109,7 +109,7 @@ where $\Delta F_t$ is the change in circuit fidelity, $\Delta H_t$ is the change
 \begin{figure*}[ht]
   \centering
   \includegraphics[width=\textwidth]{figures/fig1_siliqun_arch_ai.png}
-  \caption{SiliQun v5 system architecture. The Lindblad engine implements three physically motivated noise channels calibrated to SiMOS hardware parameters~\cite{Xue2022,Noiri2022}: amplitude damping ($T_1 = 1$~ms), phase dephasing ($T_2 = 0.5$~ms), and depolarising ($p_2 = 0.01$). The engine is wrapped in a Gymnasium-compatible \texttt{SiliQunEnv} interface exposing the standard \texttt{step}/\texttt{reset} API, making it directly compatible with Stable-Baselines3, RLlib, and CleanRL. Three analytical benchmarks (Rabi oscillations, $T_1$ amplitude decay, and Bell state fidelity) validate the physics engine before any RL training is performed.}
+  \caption{SiliQun system architecture. The Lindblad engine implements three physically-motivated noise channels across four silicon spin qubit technology profiles~\cite{Xue2022,Noiri2022}: amplitude damping ($T_1 = 1$~ms), phase dephasing ($T_2 = 0.5$~ms), and depolarising ($p_2 = 0.01$). The engine is wrapped in a Gymnasium-compatible \texttt{SiliQunEnv} interface exposing the standard \texttt{step}/\texttt{reset} API, making it directly compatible with Stable-Baselines3, RLlib, and CleanRL. Three analytical benchmarks (Rabi oscillations, $T_1$ amplitude decay, and Bell state fidelity) validate the physics engine before any RL training is performed.}
   \label{fig:siliqun_arch}
 \end{figure*}
 
@@ -196,7 +196,7 @@ These three benchmarks together provide high confidence that the SiliQun physics
 \label{subsec:three_tier}
 %% ----------------------------------------------------------
 
-SiliQun~v3 adopts a strict three-tier package architecture that enforces
+SiliQun adopts a strict three-tier package architecture that enforces
 complete separation of concerns across the simulation stack.
 The architecture is motivated by a single extensibility claim: adding
 support for a new qubit technology should require implementing exactly
@@ -250,7 +250,7 @@ native gate set.
 Tier~2 knows nothing about Qiskit, Gymnasium, or any integration
 framework.
 
-SiliQun~v3 ships five Tier~2 technology modules:
+SiliQun ships five Tier~2 technology modules:
 
 \begin{itemize}
   \item \texttt{siliqun.tech.simos} — SiMOS spin qubits
@@ -319,7 +319,7 @@ classes that populate each tier.
 \begin{figure*}[!ht]
   \centering
   \includegraphics[width=0.85\textwidth]{figures/siliqun_three_tier_architecture.png}
-  \caption{The SiliQun v3 three-tier package architecture.
+  \caption{The SiliQun three-tier package architecture.
     Tier~1 (\texttt{siliqun.core}) provides hardware-agnostic simulation primitives
     including the Lindblad solver, abstract base classes, and quantum information metrics.
     Tier~2 (\texttt{siliqun.tech}) implements five technology-specific physics modules
@@ -337,7 +337,7 @@ classes that populate each tier.
 \label{subsec:hardware_profiles}
 %% ----------------------------------------------------------
 
-SiliQun~v3 introduces a \texttt{TechnologyProfile} abstraction that
+SiliQun introduces a \texttt{TechnologyProfile} abstraction that
 encodes the complete physics characterisation of a specific silicon spin
 qubit technology.
 The profile is the sole point of variation between hardware technologies:
@@ -349,7 +349,7 @@ that trains on one profile can be applied to any other by changing a
 single constructor argument.
 
 Table~\ref{tab:hardware_profiles} summarises the four calibrated profiles
-provided in SiliQun~v5.
+provided in SiliQun.
 The SiMOS parameters derive from the experimental demonstrations by
 Xue~et~al.~\cite{Xue2022}, Noiri~et~al.~\cite{Noiri2022}, and
 Philips~et~al.~\cite{Philips2022}.
@@ -367,7 +367,7 @@ silicon spin qubits.
 
 \begin{table*}[ht]
   \centering
-  \caption{SiliQun v5 hardware profile parameters drawn from peer-reviewed sources.
+  \caption{SiliQun hardware profile parameters drawn from peer-reviewed sources.
     $T_1$, $T_2$: relaxation and dephasing times.
     $\sigma_\varepsilon$: charge noise amplitude (\textmu eV).
     $\sigma_J$: exchange noise amplitude (MHz).

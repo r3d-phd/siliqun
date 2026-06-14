@@ -4,7 +4,7 @@
 %        Silicon Spin Qubits with Deep Reinforcement Learning
 % Authors: Raad Mohammed Alshehri, Asaad A. Gad-Elrab, Suad Alarifi
 % King Abdulaziz University, FCIT
-% Submitted: June 2026
+% Submitted: June 2026 | v9 revision
 % ============================================================
 
 \documentclass[journal]{IEEEtran}
@@ -77,8 +77,9 @@ soft actor-critic, curriculum learning.
 % ── §2 SiliQun Framework ─────────────────────────────────────
 \input{sec3_siliqun_framework}
 
-% ── §3 Methods ───────────────────────────────────────────────
-\input{sec4_methods}
+% ── §3 Methods (integrated into Framework + Experiments) ─────────────
+%% \input{sec4_methods}  %% Disabled v9: duplicates Framework subsections;
+%%                       %% unique content (Eval Metrics, GAA CZ) moved to sec5
 
 % ── §4 DRL Control Agent ────────────────────────────────────
 \input{sec4_drl_control_agent}
@@ -204,21 +205,11 @@ N.~Lambert et al.,
 ``Qiskit: An open-source framework for quantum computing,''
 \textit{Zenodo}, 2024. \url{https://doi.org/10.5281/zenodo.2573505}
 
-\bibitem{QiskitAer2023}
-{Qiskit Aer contributors},
-``Qiskit Aer: A high performance simulator framework for quantum circuits,''
-\textit{Zenodo}, 2023. \url{https://doi.org/10.5281/zenodo.6329464}
-
 % ── DRL for quantum control ──────────────────────────────────
 \bibitem{Haarnoja2018}
 T.~Haarnoja, A.~Zhou, P.~Abbeel, and S.~Levine,
 ``Soft actor-critic: Off-policy maximum entropy deep reinforcement learning
 with a stochastic actor,''
-\textit{Proc.\ ICML}, 2018.
-
-\bibitem{Fujimoto2018}
-S.~Fujimoto, H.~van Hoof, and D.~Meger,
-``Addressing function approximation error in actor-critic methods,''
 \textit{Proc.\ ICML}, 2018.
 
 \bibitem{Moro2021}
@@ -230,11 +221,6 @@ S.~Moro, P.~Baireuther, and M.~Lukin,
 M.~Y.~Niu et al.,
 ``Universal quantum control through deep reinforcement learning,''
 \textit{npj Quantum Information}, vol.~5, p.~33, 2019.
-
-\bibitem{Fosel2021}
-T.~F\"{o}sel, M.~Y.~Niu, F.~Marquardt, and L.~Li,
-``Quantum circuit optimization with deep reinforcement learning,''
-\textit{arXiv:2103.07585}, 2021.
 
 \bibitem{Bolens2021}
 A.~Bolens and M.~Heyl,
@@ -273,11 +259,6 @@ A.~G.~Fowler, M.~Martinis, and J.~M.~Martinis,
 ``Surface codes: Towards practical large-scale quantum computation,''
 \textit{Physical Review A}, vol.~86, p.~032324, 2012.
 
-\bibitem{Nautrup2018}
-H.~P.~Nautrup et al.,
-``Optimizing quantum error correction codes with reinforcement learning,''
-\textit{Quantum}, vol.~3, p.~215, 2019.
-
 % ── Hyperparameter optimisation ──────────────────────────────
 \bibitem{Awad2021}
 N.~Awad, N.~Mallik, and F.~Hutter,
@@ -286,21 +267,6 @@ hyperparameter optimisation,''
 \textit{Proc.\ IJCAI}, 2021.
 
 % ── Silicon qubit hardware (donor, GAA, GaAs) ────────────────
-\bibitem{Morello2010}
-A.~Morello et al.,
-``Single-shot readout of an electron spin in silicon,''
-\textit{Nature}, vol.~467, pp.~687--691, 2010.
-
-\bibitem{Zwerver2022}
-A.~M.~J.~Zwerver et al.,
-``Qubits made by advanced semiconductor manufacturing,''
-\textit{Nature Electronics}, vol.~5, pp.~184--190, 2022.
-
-\bibitem{Petta2005}
-J.~R.~Petta et al.,
-``Coherent manipulation of coupled electron spins in semiconductor quantum dots,''
-\textit{Science}, vol.~309, pp.~2180--2184, 2005.
-
 % ── Aziz HPC ─────────────────────────────────────────────────
 \bibitem{AzizHPC}
 {King Abdulaziz University},
@@ -415,12 +381,6 @@ Q.~T.~Nguyen et al.,
 ``Digital feedback in superconducting quantum circuits,''
 \textit{arXiv:2112.14447}, 2021.
 
-\bibitem{Xu2024}
-S.~Xu et al.,
-``Digital simulation of projective non-Abelian anyons with 68 superconducting
-qubits,''
-\textit{Nature}, vol.~630, pp.~71--76, 2024.
-
 \bibitem{Dennis2002}
 E.~Dennis, A.~Kitaev, A.~Landahl, and J.~Preskill,
 ``Topological quantum memory,''
@@ -435,11 +395,6 @@ T.~Bernard et al.,
 \bibitem{QiskitGym2024}
 {Qiskit contributors},
 ``Qiskit Gymnasium environments,''
-\textit{GitHub}, 2024. \url{https://github.com/qiskit-community/qiskit-gym}
-
-\bibitem{qiskitgym2024}
-{Qiskit contributors},
-``Qiskit-Gym: Reinforcement learning environments for Qiskit,''
 \textit{GitHub}, 2024. \url{https://github.com/qiskit-community/qiskit-gym}
 
 \bibitem{VanDerLinde2023}
@@ -468,12 +423,6 @@ L.~Zen et al.,
 ``Quantum circuit synthesis with reinforcement learning and ZX-calculus,''
 \textit{arXiv:2501.02551}, 2025.
 
-\bibitem{Severin2025}
-B.~Severin et al.,
-``Reinforcement learning for quantum circuit synthesis with noise-aware
-reward shaping,''
-\textit{arXiv:2503.11204}, 2025.
-
 \bibitem{Altmann2024challenges}
 P.~Altmann et al.,
 ``Challenges and opportunities of near-term quantum computing systems,''
@@ -485,6 +434,12 @@ A.~Abedi et al.,
 \textit{arXiv:2502.08943}, 2025.
 
 % ── SiliQun software ─────────────────────────────────────────
+\bibitem{Alshehri2026QUASAR}
+R.~M.~Alshehri, A.~A.~Gad-Elrab, and S.~Alarifi,
+``Adaptive quantum control with curriculum learning and DEHB-optimised
+hyperparameters for multi-qubit entangled state preparation,'' manuscript
+in preparation, 2026.
+
 \bibitem{SimOS2025}
 R.~M.~Alshehri,
 ``SiliQun: A silicon spin qubit simulation and RL training framework,''

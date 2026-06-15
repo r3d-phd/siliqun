@@ -4,11 +4,11 @@
 \subsection{Significance of the Replication-Based Validation Strategy}
 \label{subsec:significance}
 
-Our replication-based validation strategy offers stronger evidence for SiliQun's correctness than single high-fidelity demonstrations could provide. By reproducing two distinct published experiments across different hardware platforms and achieving results within $0.04$ fidelity values, we confirm SiliQun's physics engine isn't just self-consistent—it's externally validated against independent ground truths.
+Our replication-based validation strategy provides stronger evidence of SiliQun's correctness than single high-fidelity demonstrations alone. Reproducing two distinct published experiments across different hardware platforms and matching results within $0.04$ fidelity confirms that SiliQun's physics engine is not merely self-consistent—it is externally validated against independent ground truths.
 
 Replication 1 (SiMOS) delivers particularly valuable insight by quantifying the simulator's accuracy: $\Delta F < 0.04$ establishes a tighter bound than the original experiment's reported $F > 0.999$. This agreement verifies that SiliQun correctly implements the ZZ Hamiltonian parameterisation, charge noise amplitude, and gate time characteristics of the original SiMOS device. 
 
-Meanwhile, Replication 2 (donor) validates our donor physics model differently—the DQN algorithm's discovery of the global optimum ($F_\text{best} = 1.0000$) confirms proper implementation of the $S$-$T_0$ Hamiltonian and hyperfine coupling. The lower mean cardinal-state fidelity ($\bar{F} = 0.9748$ versus $F > 0.99$ in He~et~al.) stems from methodological differences between per-state specialisation and our general-purpose training approach, not simulator deficiencies.
+Replication 2 (donor) validates the donor physics model through a different lens: the DQN agent's discovery of the global optimum ($F_\text{best} = 1.0000$) confirms correct implementation of the $S$-$T_0$ Hamiltonian and hyperfine coupling. The lower mean cardinal-state fidelity ($\bar{F} = 0.9748$ versus $F > 0.99$ in He~et~al.) reflects methodological differences between per-state specialisation and our general-purpose training protocol—not simulator deficiencies.
 
 Extension 3 (GAA) demonstrates SiliQun's unique capability to explore uncharted experimental territory. Since no physical GAA device has been sufficiently characterised for gate synthesis studies, our TCAD-derived profile~\cite{Tanamoto2025} enables pioneering investigations. The achieved results ($F_\text{best} = 0.9999$, $\bar{F}_\text{cardinal} = 0.9877$) now provide a benchmark for future physical GAA experiments.
 

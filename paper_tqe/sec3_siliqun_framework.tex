@@ -14,10 +14,10 @@
 \section{The SiliQun Framework}
 \label{sec:framework}
 
-SiliQun is an open-source, physics-grounded simulation platform for silicon spin qubits.
-It provides a physically accurate Lindblad master equation engine calibrated to published device parameters, a Gymnasium-compatible environment interface for reinforcement learning agents, and a modular three-tier package architecture that supports five silicon spin qubit technologies.
-SiliQun is designed as a standalone tool: it imposes no constraints on the choice of RL algorithm, training framework, or control architecture, and is compatible with any Gymnasium-compliant agent out of the box.
-This section describes the framework in four parts: the Lindblad physics engine that constitutes its computational core (\S\ref{subsec:lindblad}), the Gymnasium-compatible environment interface that exposes the physics engine to reinforcement learning agents (\S\ref{subsec:gymnasium}), the three-tier package architecture that organises the codebase into hardware-agnostic primitives, technology-specific physics modules, and integration adapters (\S\ref{subsec:three_tier}), and the Physics-Grounded Iterative RL Stack (PGIRS) methodology that governs how the simulator is designed and validated (\S\ref{subsec:pgirs}). Analytical validation against three closed-form benchmarks is presented in \S\ref{subsec:validation}.
+SiliQun is an open-source simulation platform for silicon spin qubits grounded in experimentally calibrated device physics.
+At its core sits a Lindblad master equation engine whose noise parameters are drawn directly from published SiMOS, donor, and GAA device measurements; wrapped around this engine is a Gymnasium-compatible environment interface that any standard reinforcement learning library can consume without modification.
+The framework deliberately imposes no constraints on the choice of RL algorithm or training infrastructure: it is the physics that is opinionated, not the control layer.
+The remainder of this section develops the framework in four parts. The Lindblad engine and its SiMOS calibration are described in \S\ref{subsec:lindblad}; the Gymnasium MDP formulation and reward structure follow in \S\ref{subsec:gymnasium}; the three-tier package architecture that enforces hardware-neutrality is presented in \S\ref{subsec:three_tier}; and the Physics-Grounded Iterative RL Stack (PGIRS) methodology that governs the full design-and-validation workflow is introduced in \S\ref{subsec:pgirs}. Analytical validation against three closed-form benchmarks closes the section in \S\ref{subsec:validation}.
 
 %% ----------------------------------------------------------
 \subsection{System Architecture}
@@ -119,10 +119,10 @@ where $\Delta F_t$ is the change in circuit fidelity, $\Delta H_t$ is the change
 %% ----------------------------------------------------------
 
 The Physics-Grounded Iterative RL Stack (PGIRS) is a five-phase engineering discipline that governs how SiliQun is applied to a new quantum control problem.
-PGIRS is not a training algorithm; it is a \emph{methodology} that enforces a specific ordering of design decisions to prevent the well-documented failure mode of RL agents that achieve high simulated fidelity but fail to transfer to real hardware.
+PGIRS is not a training algorithm; it is a \emph{methodology} that enforces a specific ordering of design decisions to prevent the well-documented failure mode of RL agents that achieve high simulated fidelity but collapse on real hardware.
 
 \textbf{Phase 1 — Noise-First Design} requires the noise model to be calibrated from experimental device data and validated against analytical benchmarks (\S\ref{subsec:validation}) before any RL agent is instantiated.
-Using an abstract depolarising model at this stage produces agents that overfit to the simulator, as demonstrated by the transferability gap in Table~\ref{tab:cross_tech}.
+Skipping this step and using an abstract depolarising model instead produces agents that overfit to the simulator, as the transferability gap in Table~\ref{tab:cross_tech} makes clear.
 
 \textbf{Phase 2 — Interface Abstraction} wraps the validated physics engine in a Gymnasium-compatible interface, enforcing a strict data/control plane separation: the agent interacts exclusively through the standardised \texttt{step}/\texttt{reset} API and has no access to Lindblad solver internals.
 This abstraction enables backend substitution without modifying the agent.
@@ -133,7 +133,7 @@ This abstraction enables backend substitution without modifying the agent.
 
 \textbf{Phase 5 — Empirical Validation} evaluates the trained policy on held-out target states across multiple seeds and confirms cross-backend transfer to Qiskit Aer statevector and FakeSherbrooke with fidelity degradation below the measurement noise floor.
 
-PGIRS is the key differentiator between SiliQun and prior frameworks: QuTiP~\cite{Lambert2024} provides Phase~1 but not Phases~2--5; Qiskit Pulse~\cite{Alexander2020} provides Phase~2 but not Phase~1 (SiMOS calibration); no prior framework delivers all five phases in an integrated open-source package.
+PGIRS is what separates SiliQun from prior frameworks. QuTiP~\cite{Lambert2024} covers Phase~1 but stops there; Qiskit Pulse~\cite{Alexander2020} addresses Phase~2 but lacks the SiMOS-calibrated noise model of Phase~1; no prior open-source package delivers all five phases in a single integrated workflow.
 
 Algorithm~\ref{alg:pgirs} formalises the PGIRS procedure as an executable workflow.
 
@@ -181,7 +181,7 @@ Algorithm~\ref{alg:pgirs} formalises the PGIRS procedure as an executable workfl
 \label{subsec:validation}
 %% ----------------------------------------------------------
 
-Before any RL agent is trained on SiliQun, the Lindblad physics engine is validated against three closed-form analytical benchmarks. These benchmarks test the correctness of the noise model implementation independently of the RL training loop.
+Before any RL agent is trained, the Lindblad physics engine is validated against three closed-form analytical benchmarks that probe the correctness of the noise model in isolation from the training loop.
 
 \textbf{Benchmark 1 — Rabi oscillations.} A single qubit is driven by a resonant $R_X(\theta)$ rotation sequence in the absence of noise. The expected population of the $|1\rangle$ state is $P_{|1\rangle}(\theta) = \sin^2(\theta/2)$. SiliQun reproduces this curve with a maximum absolute deviation of $0.00$ (machine precision, float64), confirming that the unitary gate operations are implemented correctly.
 
@@ -189,19 +189,15 @@ Before any RL agent is trained on SiliQun, the Lindblad physics engine is valida
 
 \textbf{Benchmark 3 — Bell state fidelity versus coherence time.} A two-qubit Bell state $|\Phi^+\rangle = (|00\rangle + |11\rangle)/\sqrt{2}$ is prepared and held for a variable time $t$ under the combined T$_1$, T$_2$, and depolarising noise model. The expected fidelity decay is derived analytically from the Lindblad equation. SiliQun reproduces the analytical curve with a maximum absolute deviation of $0.0024$ across the range $t \in [0, 5T_2]$, confirming that the three noise channels interact correctly and that the combined noise model is physically consistent.
 
-These three benchmarks together provide high confidence that the SiliQun physics engine correctly implements the Lindblad master equation for SiMOS qubits. The benchmarks are included in the SiliQun test suite and are run automatically on every commit to the public repository.
+Together, these three benchmarks establish that the SiliQun physics engine implements the Lindblad master equation correctly for SiMOS qubits. All three are included in the automated test suite and run on every commit to the public repository, ensuring that future changes to the codebase cannot silently break the physics.
 
 %% ----------------------------------------------------------
 \subsection{Three-Tier Package Architecture}
 \label{subsec:three_tier}
 %% ----------------------------------------------------------
 
-SiliQun adopts a strict three-tier package architecture that enforces
-complete separation of concerns across the simulation stack.
-The architecture is motivated by a single extensibility claim: adding
-support for a new qubit technology should require implementing exactly
-one abstract base class in Tier~2, with zero changes to the physics
-engine (Tier~1) or the integration adapters (Tier~3).
+SiliQun is organised as a strict three-tier package that enforces complete separation of concerns across the simulation stack.
+The architecture is motivated by a single extensibility principle: adding support for a new qubit technology should require implementing exactly one abstract base class in Tier~2, with no changes to the physics engine (Tier~1) or the integration adapters (Tier~3).
 
 \textbf{Tier~1 — Hardware-agnostic simulation primitives
 (\texttt{siliqun.core}).}
@@ -491,26 +487,16 @@ parameterisation~\cite{Krantz2019,Bruzewicz2019,Henriet2020}.
   \end{tabular}}
 \end{table*}
 
-The plugin interface thus transforms SiliQun from a silicon-specific
-benchmark into a general-purpose quantum control benchmark platform,
-with a well-defined, low-cost extension mechanism that does not require
-modification of the core framework.
+The plugin interface transforms SiliQun from a silicon-specific benchmark into a general-purpose quantum control platform. Any hardware platform whose noise parameters are known from experiment or simulation can be integrated at a cost of fewer than 50 lines of Python, without touching the core framework.
 
 %% ----------------------------------------------------------
 \subsection{MPS-Lindblad Simulation Backend}
 \label{subsec:mps_lindblad}
 %% ----------------------------------------------------------
 
-The original SiliQun simulation engine represents the quantum state as a
-full density matrix $\rho \in \mathbb{C}^{2^n \times 2^n}$, evolved under
-the Lindblad master equation (Eq.~\ref{eq:lindblad}).
-This representation scales as $O(4^n)$ in memory, imposing a hard
-ceiling of $n \leq 16$ qubits on a single compute node: at $n = 16$
-the density matrix occupies $\approx 68.7$\,GB, and at $n = 19$
-(a 19-qubit distributed topology) it would require $4.4$\,TB.
-This ceiling is not a fundamental physical constraint but an artefact
-of the simulation representation, and it can be removed by replacing
-the full density matrix with a Matrix Product Operator (MPO).
+The original SiliQun simulation engine evolves the quantum state as a full density matrix $\rho \in \mathbb{C}^{2^n \times 2^n}$ under the Lindblad master equation (Eq.~\ref{eq:lindblad}).
+This representation carries an $O(4^n)$ memory cost that imposes a hard ceiling of $n \leq 16$ qubits on a single compute node: at $n = 16$ the density matrix already occupies $\approx 68.7$\,GB, and a 19-qubit distributed topology would require $4.4$\,TB.
+This ceiling is not a fundamental physical constraint; it is an artefact of the chosen representation. Replacing the full density matrix with a Matrix Product Operator (MPO) removes it entirely.
 
 The \textbf{MPS-Lindblad backend} vectorises the density matrix as
 $|\rho\rangle\rangle \in \mathbb{C}^{4^n}$ via the Choi isomorphism
@@ -574,15 +560,8 @@ hardware-realistic noise validation at 19--100 qubits on a single NVIDIA A100 GP
 \label{fig:bond_dim}
 \end{figure}
 
-Cross-validation experiments confirm that the \texttt{MPSLindbladEngine}
-reproduces exact density matrix results for $n \leq 8$ qubits with
-fidelity $> 0.999$ across all gate types (single-qubit Clifford gates,
-CNOT, and all three Lindblad noise channels).
-The Bell state, GHZ-3, and GHZ-5 circuits all produce probability
-distributions within numerical precision of the exact density matrix,
-validating the tensor contraction implementation.
-This cross-validation is included in the SiliQun test suite and runs
-automatically on every commit.
+Cross-validation confirms that the \texttt{MPSLindbladEngine} reproduces exact density matrix results for $n \leq 8$ qubits with fidelity $> 0.999$ across all gate types, including single-qubit Clifford gates, CNOT, and all three Lindblad noise channels.
+Bell state, GHZ-3, and GHZ-5 circuits all produce probability distributions within numerical precision of the exact density matrix, validating the tensor contraction implementation. This cross-validation runs automatically on every commit.
 
 %% ----------------------------------------------------------
 %% Bibliography entries for this section (to be merged into main .bib)

@@ -47,7 +47,7 @@ Gradients are computed via numerical finite differences (step size $\epsilon = 1
 on a random subset of 200 parameters per update step, keeping the implementation
 self-contained and reproducible without GPU or automatic differentiation.
 
-Figure~\ref{fig:siliqun_arch} illustrates the overall SiliQun architecture and
+Figure~\ref{fig:agent_arch_sec4} illustrates the overall SiliQun architecture and
 the position of the Gymnasium interface within it.
 
 \begin{figure}[h]
@@ -62,7 +62,7 @@ the position of the Gymnasium interface within it.
   and the tensor-network primitives (\texttt{siliqun.tensor}).
   An external DRL agent (e.g., PPO) interacts with SiliQun exclusively through
   the standard Gymnasium \texttt{step}/\texttt{reset} API.}
-\label{fig:siliqun_arch}
+\label{fig:agent_arch_sec4}
 \end{figure}
 
 %% ----------------------------------------------------------

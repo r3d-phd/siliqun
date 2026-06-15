@@ -1,0 +1,139 @@
+% ============================================================
+% SILIQUN -- Quantum Science & Technology (QST), IOP Publishing
+% Title: SiliQun: A Physics-Grounded Simulation Platform for
+%        Silicon Spin Qubits with Deep Reinforcement Learning
+% Authors: Raad Mohammed Alshehri, Asaad A. Gad-Elrab, Suad Alarifi
+% King Abdulaziz University, FCIT
+% Submitted: June 2026 | v11 QST revision (iopjournal class)
+% ============================================================
+\documentclass{iopjournal}
+% -- Packages -------------------------------------------------
+\usepackage{lmodern}  % Latin Modern fonts (Type1, replaces EC bitmap fonts)
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{placeins}
+\usepackage{needspace}
+% hyperref is loaded by iopjournal.cls -- do not reload
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% -- Title ----------------------------------------------------
+\title{SiliQun: A Physics-Grounded Simulation Platform for Silicon Spin Qubits
+       with Deep Reinforcement Learning Validation}
+
+% -- Authors (iopjournal style) --------------------------------
+\author{Raad Mohammed Alshehri$^1$, Asaad A Gad-Elrab$^1$ and Suad Alarifi$^2$}
+
+\affil{$^1$ Department of Computer Science, Faculty of Computing and
+Information Technology, King Abdulaziz University, Jeddah 21589, Saudi Arabia}
+\affil{$^2$ Department of Information Systems, Faculty of Computing and
+Information Technology, King Abdulaziz University, Jeddah 21589, Saudi Arabia}
+
+\email{ralshehri0468@stu.kau.edu.sa}
+
+% -- Document -------------------------------------------------
+\begin{document}
+
+\maketitle
+
+% -- Abstract -------------------------------------------------
+\begin{abstract}
+We introduce \textbf{SiliQun}, an open-source simulation platform that unifies
+three silicon spin qubit technologies---silicon metal-oxide-semiconductor (SiMOS)
+quantum dots, phosphorus-donor electron spin qubits, and gate-all-around (GAA)
+nanowire spin qubits---within a single Lindblad density-matrix engine and a
+Gymnasium-compatible reinforcement learning interface. Its Software-Defined
+Quantum Firmware (SDQF) architecture decouples device physics from hardware
+profiles, enabling identical RL agents to train across all three technologies
+by changing one constructor argument. Three analytical benchmarks validate the
+physics engine against closed-form solutions at numerical precision
+($\max\,\delta \leq 2.78 \times 10^{-16}$), covering Rabi oscillations,
+$T_1$ amplitude decay, and Bell-state fidelity versus coherence time.
+
+Four independent experiments validate SiliQun across three hardware technologies
+and four RL algorithms. Replication~1 reproduces DQL and SARSA CZ gate-synthesis
+results from Daraeizadeh~et~al.\ using SiliQun's SiMOS profile
+($\bar{F} = 0.9996 \pm 0.0001$ and $0.9994 \pm 0.0002$, within $0.04\%$ of the
+original). Replication~2 matches DQN state-preparation fidelity from He~et~al.\
+on the donor-electron profile ($\bar{F} = 0.9748 \pm 0.0098$). Extension~3
+applies this DQN protocol to the GAA profile, establishing the first
+machine-learning benchmark for GAA silicon spin qubits
+($\bar{F} = 0.9877 \pm 0.0021$). A fourth experiment using Proximal Policy
+Optimisation on SiMOS attains $F = 1.000$ across all five seeds within 200
+episodes, confirming compatibility with modern policy-gradient algorithms.
+Cross-technology fidelity consistency confirms that SiliQun accurately captures
+hardware-specific decoherence without simulator artefacts. Released under the
+MIT licence with full reproducibility scripts, SiliQun is freely available at
+\url{https://github.com/r3d91ll/SiliQun}.
+\end{abstract}
+
+% -- Keywords -------------------------------------------------
+\keywords{silicon spin qubits, deep reinforcement learning, Lindblad master equation,
+quantum gate synthesis, physics-grounded simulation, gate-all-around qubits,
+soft actor-critic, curriculum learning}
+
+% -- §1 Introduction ------------------------------------------
+\input{sec1_intro_only}
+
+% -- §2 Related Work ------------------------------------------
+\input{sec2_related_work}
+
+% -- §3 SiliQun Framework -------------------------------------
+\input{sec3_siliqun_framework}
+
+% -- §4 DRL Control Agent -------------------------------------
+\input{sec4_drl_control_agent}
+
+% -- §5 Experiments -------------------------------------------
+\input{sec5_experiments}
+
+% -- §6 Discussion --------------------------------------------
+\input{sec6_discussion}
+
+% -- §7 Conclusion --------------------------------------------
+\input{sec7_conclusion}
+
+% -- Data Availability ----------------------------------------
+\data{All experimental data generated in this study, including per-seed fidelity
+values, learning curves, and cross-technology comparison tables, are
+available at \url{https://github.com/r3d-phd/siliqun} under the MIT
+licence. A permanent archived snapshot will be deposited at Zenodo upon
+acceptance.}
+
+% -- Code Availability ----------------------------------------
+\section*{Code Availability}
+The SiliQun simulation platform (\texttt{siliqun}), all training scripts,
+and the Qiskit \texttt{BackendV2} provider are released as open-source
+software at \url{https://github.com/r3d-phd/siliqun} under the MIT
+licence. The repository includes a \texttt{requirements.txt} file and
+reproduction scripts for all experiments reported in this paper.
+
+% -- Author Contributions -------------------------------------
+\roles{R.M.A. conceived the SiliQun framework, designed and implemented the
+Lindblad density-matrix engine and all hardware profiles, conducted all
+experiments, performed the statistical analysis, and wrote the manuscript.
+A.A.G. supervised the research direction, reviewed the experimental design,
+and provided critical revisions to the manuscript.
+S.A. co-supervised the research, reviewed the hardware profile calibration
+methodology, and approved the final manuscript.}
+
+% -- Competing Interests --------------------------------------
+\section*{Competing Interests}
+The authors declare no competing interests.
+
+% -- Acknowledgements -----------------------------------------
+\ack{Computational resources were provided by the King Abdulaziz University
+High Performance Computing Centre (Aziz Supercomputer)~\cite{AzizHPC}.}
+
+% -- References -----------------------------------------------
+\bibliographystyle{unsrt}
+\bibliography{siliqun_refs}
+
+\end{document}

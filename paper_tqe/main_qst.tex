@@ -4,13 +4,13 @@
 %        Silicon Spin Qubits with Deep Reinforcement Learning
 % Authors: Raad Mohammed Alshehri, Asaad A. Gad-Elrab, Suad Alarifi
 % King Abdulaziz University, FCIT
-% Submitted: June 2026 | v10 QST revision
+% Submitted: June 2026 | v11 QST revision (iopjournal class)
 % ============================================================
 
-\documentclass[12pt]{iopart}
+\documentclass{iopjournal}
 
 % ── Packages ─────────────────────────────────────────────────
-\usepackage{iopams}
+\usepackage{lmodern}  % fix missing EC bitmap fonts (ecsx0800 etc.)
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amssymb,amsfonts}
@@ -22,28 +22,35 @@
 \usepackage{xcolor}
 \usepackage{placeins}
 \usepackage{needspace}
-\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+% hyperref is already loaded by iopjournal.cls — do not reload
+% \usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+
+% ── Document ─────────────────────────────────────────────────
+\begin{document}
+
+\articletype{Paper}
 
 % ── Title ────────────────────────────────────────────────────
 \title{SiliQun: A Physics-Grounded Simulation Platform for Silicon Spin Qubits
        with Deep Reinforcement Learning Validation}
 
-% ── Authors (IOP iopart style) ───────────────────────────────
+% ── Authors ──────────────────────────────────────────────────
 \author{Raad Mohammed Alshehri$^1$, Asaad A Gad-Elrab$^1$ and Suad Alarifi$^2$}
 
-\address{$^1$ Department of Computer Science, Faculty of Computing and
+\affil{$^1$ Department of Computer Science, Faculty of Computing and
 Information Technology, King Abdulaziz University, Jeddah 21589, Saudi Arabia}
-\address{$^2$ Department of Information Systems, Faculty of Computing and
+\affil{$^2$ Department of Information Systems, Faculty of Computing and
 Information Technology, King Abdulaziz University, Jeddah 21589, Saudi Arabia}
+\affil{$^*$Author to whom any correspondence should be addressed.}
 
-\ead{ralshehri0468@stu.kau.edu.sa}
+\email{ralshehri0468@stu.kau.edu.sa}
 
-% ── Document ─────────────────────────────────────────────────
-\begin{document}
-
-\maketitle
+% ── Keywords ─────────────────────────────────────────────────
+\keywords{silicon spin qubits, deep reinforcement learning, Lindblad master equation,
+quantum gate synthesis, physics-grounded simulation, gate-all-around qubits,
+soft actor-critic, curriculum learning}
 
 % ── Abstract ─────────────────────────────────────────────────
 \begin{abstract}
@@ -76,13 +83,6 @@ MIT licence with full reproducibility scripts, SiliQun is freely available at
 \url{https://github.com/r3d91ll/SiliQun}.
 \end{abstract}
 
-% ── Keywords ─────────────────────────────────────────────────
-\begin{keyword}
-silicon spin qubits \sep deep reinforcement learning \sep Lindblad master equation
-\sep quantum gate synthesis \sep physics-grounded simulation \sep gate-all-around
-qubits \sep soft actor-critic \sep curriculum learning
-\end{keyword}
-
 % ── §1 Introduction ─────────────────────────────────────────
 \input{sec1_intro_only}
 
@@ -104,43 +104,30 @@ qubits \sep soft actor-critic \sep curriculum learning
 % ── §7 Conclusion ────────────────────────────────────────────
 \input{sec7_conclusion}
 
+% ── Acknowledgements ─────────────────────────────────────────
+\ack{Computational resources were provided by the King Abdulaziz University
+High Performance Computing Centre (Aziz Supercomputer)~\cite{AzizHPC}.}
+
+% ── Funding ──────────────────────────────────────────────────
+\funding{This research received no specific grant from any funding agency in the
+public, commercial, or not-for-profit sectors.}
+
+% ── Author Contributions (CRediT) ────────────────────────────
+\roles{R.M.A.: Conceptualisation, Methodology, Software, Validation, Formal
+Analysis, Investigation, Data Curation, Writing---Original Draft, Visualisation.
+A.A.G.: Supervision, Conceptualisation, Writing---Review \& Editing.
+S.A.: Supervision, Writing---Review \& Editing, Project Administration.}
+
 % ── Data Availability ────────────────────────────────────────
-\section*{Data Availability Statement}
-All experimental data generated in this study, including per-seed fidelity
+\data{All experimental data generated in this study, including per-seed fidelity
 values, learning curves, and cross-technology comparison tables, are
 available at \url{https://github.com/r3d-phd/siliqun} under the MIT
 licence. A permanent archived snapshot will be deposited at Zenodo upon
-acceptance.
-
-% ── Code Availability ────────────────────────────────────────
-\section*{Code Availability}
-The SiliQun simulation platform (\texttt{siliqun}), all training scripts,
-and the Qiskit \texttt{BackendV2} provider are released as open-source
-software at \url{https://github.com/r3d-phd/siliqun} under the MIT
-licence. The repository includes a \texttt{requirements.txt} file and
-reproduction scripts for all experiments reported in this paper.
-
-% ── Author Contributions ─────────────────────────────────────
-\section*{Author Contributions}
-R.M.A. conceived the SiliQun framework, designed and implemented the
-Lindblad density-matrix engine and all hardware profiles, conducted all
-experiments, performed the statistical analysis, and wrote the manuscript.
-A.A.G. supervised the research direction, reviewed the experimental design,
-and provided critical revisions to the manuscript.
-S.A. co-supervised the research, reviewed the hardware profile calibration
-methodology, and approved the final manuscript.
-
-% ── Competing Interests ──────────────────────────────────────
-\section*{Competing Interests}
-The authors declare no competing interests.
-
-% ── Acknowledgements ─────────────────────────────────────────
-\section*{Acknowledgements}
-Computational resources were provided by the King Abdulaziz University
-High Performance Computing Centre (Aziz Supercomputer)~\cite{AzizHPC}.
+acceptance.}
 
 % ── References ───────────────────────────────────────────────
-\bibliographystyle{iopart-num}
+\section*{References}
+\bibliographystyle{unsrt}
 \bibliography{siliqun_refs}
 
 \end{document}

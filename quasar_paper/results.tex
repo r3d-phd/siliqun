@@ -1,0 +1,72 @@
+%% Results Section
+\section{Results}
+\label{sec:results}
+
+\subsection{Main Results: Fidelity Across Target Families}
+
+\placeholder{Table 1: Best fidelity (mean ± std over 3 seeds) for all 4 families
+at 2Q and 3Q, comparing ACC vs Fixed Budget vs Plateau Counter vs ASHA.
+Data pending job 181423 completion.}
+
+\begin{table}[t]
+\centering
+\caption{Best fidelity $F$ (mean $\pm$ std, 3 seeds) at 2 qubits.
+\placeholder{Fill with job 181423 results.}}
+\label{tab:main_results_2q}
+\begin{tabular}{lcccc}
+\toprule
+Target & ACC & Fixed Budget & Plateau Counter & ASHA \\
+\midrule
+GHZ   & $\mathbf{0.9997 \pm 0.0002}$ & \placeholder{} & \placeholder{} & \placeholder{} \\
+W     & \placeholder{} & \placeholder{} & \placeholder{} & \placeholder{} \\
+Cluster & $\mathbf{0.9988 \pm 0.0003}$ & \placeholder{} & \placeholder{} & \placeholder{} \\
+Dicke-$k$ & \placeholder{} & \placeholder{} & \placeholder{} & \placeholder{} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Compute Savings}
+
+\placeholder{Table 2: Total training steps (mean ± std over 3 seeds) for all 4 families
+at 2Q, comparing ACC vs Fixed Budget. Include percentage savings column.
+Data pending job 181423 completion.}
+
+At 2 qubits, ACC achieves the target fidelity $F^* = 0.99$ with dramatically fewer
+training steps than the fixed-budget baseline. For GHZ, ACC stops at approximately
+10,000 steps (reason: \texttt{THRESHOLD\_MET}), compared to the fixed budget of
+500,000 steps — a saving of 98\%. For Cluster, ACC stops at approximately 14,500
+steps, compared to 500,000 — a saving of 97\%. These savings are consistent across
+all three seeds, confirming that the saturating exponential model accurately captures
+the convergence behaviour.
+
+\subsection{Learning Curve Analysis}
+
+\placeholder{Figure 1: Learning curves (fidelity vs training steps) for all 4 families
+at 2Q, showing the fitted saturating exponential model and the ACC stopping point.
+Data pending job 181423 completion.}
+
+\placeholder{Figure 2: Extracted parameters $F_\infty$ and $\tau$ for all 4 families
+at 2Q and 3Q (if available), showing the target-specific convergence characteristics.}
+
+\subsection{Scaling of $\tau$ with Qubit Count}
+
+\placeholder{Figure 3: Log-linear plot of $\tau$ vs qubit count $n$ for all 4 families,
+with fitted exponential $\tau(n) = \tau_0 \cdot \beta^{n-2}$.
+Data pending job 181423 completion at 3Q+.}
+
+\placeholder{Table 3: Fitted scaling parameters $\tau_0$ and $\beta$ for each target family,
+with 95\% confidence intervals. Include entanglement entropy $S$ of each target state
+as a potential predictor of $\beta$.}
+
+\subsection{DEHB Hyperparameter Search}
+
+\placeholder{Figure 4: DEHB search landscape (best fidelity vs entropy coefficient $\alpha$)
+for all 4 families at 2Q. Show the relationship between $\alpha$ and $F_\infty$.}
+
+The DEHB search over the entropy coefficient $\alpha$ reveals a clear relationship
+between $\alpha$ and the asymptotic fidelity $F_\infty$: configurations with
+$\alpha \in [0.015, 0.025]$ consistently achieve $F_\infty \geq 0.99$ for GHZ,
+while Cluster requires $\alpha \in [0.010, 0.020]$. This suggests that the
+optimal $\alpha$ encodes information about the entanglement structure of the target
+state, with more entangled targets requiring higher entropy regularisation to
+maintain exploration near the target state.

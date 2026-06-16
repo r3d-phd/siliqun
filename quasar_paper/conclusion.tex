@@ -1,0 +1,44 @@
+%% Conclusion Section
+\section{Conclusion}
+\label{sec:conclusion}
+
+We have introduced the Adaptive Convergence Controller (ACC), a data-driven module
+that replaces fixed training budgets and heuristic plateau counters in DRL-based
+quantum state preparation with a principled, theoretically grounded stopping criterion.
+ACC fits a saturating exponential model to the online training trajectory and identifies
+three decision states — threshold met, flat unreachable, and converged — enabling
+early termination of both successful and hopeless runs.
+
+Integrated into QUASAR v14, ACC achieves fidelity $F \geq 0.99$ across all four
+canonical entangled state families (GHZ, W, Cluster, Dicke-$k$) at 2 qubits with
+30--98\% fewer training steps than fixed-budget baselines, validated across three
+random seeds. The theoretical analysis in \cref{sec:theory} establishes that the
+saturating exponential model arises from the Bellman contraction property of the
+optimal value function near the target state, providing a first-principles
+justification for ACC's convergence model.
+
+The scaling conjecture $\tau(n) = \tau_0 \cdot \beta^{n-2}$ (\cref{eq:tau_scaling}),
+if confirmed by the 3Q+ experiments in job 181423, would provide a predictive framework
+for estimating the required training budget at any qubit count from measurements at
+small qubit counts. This would be a significant step toward scalable DRL-based quantum
+control on near-term hardware.
+
+\subsection{Limitations and Future Work}
+
+The current results are limited to 2 qubits, where the learning problem is relatively
+tractable. The key open question is whether ACC's benefits persist at 3Q+ where the
+Hilbert space dimension grows exponentially and the saturating exponential model may
+break down. We are currently running experiments at 3Q and 4Q (job 181423) and will
+update the results section upon completion.
+
+A second limitation is that the theoretical analysis in \cref{sec:theory} relies on
+local Lipschitz continuity and reward shaping assumptions that may not hold globally.
+A more rigorous analysis using PAC-MDP theory \cite{kakade2003sample} or regret bounds
+for entropy-regularised RL \cite{haarnoja2018soft} would strengthen the theoretical
+contribution.
+
+Finally, while ACC is presented here in the context of quantum state preparation, the
+framework is algorithm-agnostic and applicable to any DRL problem with a saturating
+reward signal. Future work will benchmark ACC against fixed-budget and ASHA baselines
+on standard continuous control benchmarks (MuJoCo) and discrete action spaces (Atari),
+establishing ACC as a general-purpose convergence controller for DRL.

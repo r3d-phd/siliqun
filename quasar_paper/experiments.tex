@@ -1,0 +1,90 @@
+%% Experimental Setup Section
+\section{Experimental Setup}
+\label{sec:experiments}
+
+\subsection{QUASAR v14 Framework}
+
+QUASAR v14 (Quantum Universal Adaptive State pReparation) is a multi-target
+quantum state preparation framework built on the following components:
+
+\paragraph{Base RL algorithm.}
+We use Soft Actor-Critic (SAC) \cite{haarnoja2018soft} with automatic entropy
+tuning. The actor and critic networks are multilayer perceptrons with two hidden
+layers of 256 units each and ReLU activations. The replay buffer has capacity
+$10^6$ transitions, and we use a batch size of 256 with a learning rate of
+$3 \times 10^{-4}$ for all networks.
+
+\paragraph{Continual multi-target learning.}
+To enable a single agent to learn control policies for multiple entangled state
+families without catastrophic forgetting, we augment SAC with Dark Experience
+Replay++ (DER++) \cite{buzzega2020dark}. DER++ stores a buffer of (state, logit)
+pairs from past training trajectories and adds a distillation loss term to the
+SAC objective:
+\begin{equation}
+  \mathcal{L}_{\mathrm{DER++}} = \mathcal{L}_{\mathrm{SAC}} +
+  \lambda \mathbb{E}_{(s, z) \sim \mathcal{B}_{\mathrm{DER}}}
+  \bigl[\|Q(s, \cdot) - z\|^2\bigr],
+\end{equation}
+where $\mathcal{B}_{\mathrm{DER}}$ is the DER++ buffer and $\lambda = 0.5$.
+
+\paragraph{Exploration enhancement.}
+We introduce Stochastic Layer Modulation (SLM), a novel exploration mechanism
+that randomly scales the activations of a randomly selected hidden layer by a
+factor drawn from $\mathcal{U}(0.8, 1.2)$ during exploration episodes. SLM
+provides structured perturbations to the policy that are more informative than
+isotropic Gaussian noise, particularly near the target state where the gradient
+landscape is flat.
+
+\paragraph{Hyperparameter optimisation.}
+The entropy coefficient $\alpha$ is optimised using DEHB \cite{awad2021dehb}
+with 12 trials per qubit level. Each trial runs for an initial budget of 40,000
+steps, with ACC providing early termination for unreachable configurations.
+The best $\alpha$ from the HP search phase is used for the full-budget run,
+with the budget set to $T^* \times 1.2$ as predicted by ACC.
+
+\subsection{Quantum Simulation Environment}
+
+We simulate $n$-qubit systems using SiliQun v2 \cite{TODO_siliqun}, a
+silicon spin qubit simulator that models exchange-coupled spin-1/2 particles
+with realistic device parameters. The Hamiltonian is:
+\begin{equation}
+  H_0 = \sum_{i=1}^{n} \frac{\omega_i}{2} \sigma_z^{(i)}
+        + \sum_{\langle i,j\rangle} J_{ij} \bigl(\sigma_x^{(i)}\sigma_x^{(j)}
+        + \sigma_y^{(i)}\sigma_y^{(j)}\bigr),
+\end{equation}
+where $\omega_i / 2\pi \in [4.5, 5.5]\,\mathrm{GHz}$ are qubit frequencies and
+$J_{ij} / 2\pi \in [1, 10]\,\mathrm{MHz}$ are exchange coupling strengths,
+drawn from the SiMOS device profile \cite{TODO_siliqun}.
+
+\subsection{Baseline Methods}
+
+We compare ACC against three baselines:
+
+\begin{enumerate}
+  \item \textbf{Fixed budget (FB)}: the standard approach used in prior work
+    \cite{yao2021reinforcement,moro2021quantum}, with a fixed budget of
+    $500{,}000 \times 1.5^{n-2}$ steps per qubit level.
+  \item \textbf{Plateau counter (PC)}: the heuristic used in QUASAR v13,
+    which stops training when the best fidelity has not improved for 20,000
+    consecutive steps.
+  \item \textbf{ASHA}: the Asynchronous Successive Halving Algorithm
+    \cite{li2020system} applied to the training budget allocation problem,
+    using the same 12-trial budget as DEHB+ACC.
+\end{enumerate}
+
+\subsection{Evaluation Protocol}
+
+All experiments are run with three random seeds (42, 123, 456) per
+(target family, qubit count) combination. We report the mean and standard
+deviation of the best fidelity achieved, the total number of training steps,
+and the wall-clock time on the Aziz Supercomputer A100 nodes. Statistical
+significance is assessed using a two-sided Wilcoxon signed-rank test with
+$\alpha = 0.05$.
+
+\subsection{Computational Resources}
+
+All experiments were performed on the Aziz Supercomputer at King Abdulaziz
+University, using NVIDIA A100-PCIE-40GB GPUs (job 181423) and
+NVIDIA H100-SXM5-80GB GPUs (job 181404). Each job ran under PBS Pro with
+a 72-hour walltime limit. The total compute budget for the main experiments
+is approximately 200 GPU-hours.

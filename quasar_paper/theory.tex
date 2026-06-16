@@ -1,0 +1,128 @@
+%% Theoretical Analysis Section
+\section{Theoretical Analysis}
+\label{sec:theory}
+
+In this section we provide a formal justification for the saturating exponential
+convergence model (\cref{eq:sat_exp}). We show that this model arises naturally
+from the Bellman contraction property of the optimal value function near the
+target state, under mild assumptions on the reward structure.
+
+\subsection{Bellman Contraction Near the Target State}
+
+Let $Q^*(s, a)$ denote the optimal action-value function for the quantum state
+preparation MDP defined in \cref{sec:problem}. The Bellman optimality equation is:
+\begin{equation}
+  Q^*(s, a) = \mathcal{R}(s, a) + \gamma \max_{a'} Q^*(\mathcal{T}(s,a), a').
+  \label{eq:bellman}
+\end{equation}
+
+\begin{assumption}[Local Lipschitz continuity]
+\label{ass:lipschitz}
+In a neighbourhood $\mathcal{N}(\rho^*)$ of the target state $\rho^*$, the
+optimal value function satisfies $|Q^*(s, a) - Q^*(s', a)| \leq L \|s - s'\|$
+for all $a \in \mathcal{A}$ and some constant $L > 0$.
+\end{assumption}
+
+\begin{assumption}[Reward shaping near target]
+\label{ass:reward}
+The reward function satisfies $\mathcal{R}(s, a) = c \cdot F(\rho, \rho^*) + \xi$
+for constants $c > 0$ and $\xi$, and the fidelity $F(\rho, \rho^*)$ is
+differentiable in $\rho$ within $\mathcal{N}(\rho^*)$.
+\end{assumption}
+
+Under these assumptions, we can characterise the convergence of the expected
+fidelity during SAC training.
+
+\begin{proposition}[Exponential convergence rate]
+\label{prop:exp_conv}
+Let $F_t = \mathbb{E}_{\pi_t}[F(\rho_T, \rho^*)]$ denote the expected terminal
+fidelity under the policy $\pi_t$ at training step $t$. Under
+\cref{ass:lipschitz,ass:reward}, and assuming that the SAC policy gradient update
+is a contraction mapping with rate $\kappa \in (0, 1)$ in the neighbourhood
+$\mathcal{N}(\rho^*)$, the fidelity deficit $\Delta_t = F^* - F_t$ satisfies:
+\begin{equation}
+  \Delta_t \leq \Delta_0 \cdot e^{-t/\tau},
+  \label{eq:deficit_decay}
+\end{equation}
+where $\tau = -1/\ln(\kappa)$ is the convergence time constant.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The SAC policy gradient update can be written as a proximal gradient step on
+the KL-regularised objective $J(\pi) = \mathbb{E}_\pi[Q^\pi(s,a)] - \alpha H(\pi)$,
+where $H(\pi)$ is the policy entropy and $\alpha$ is the temperature parameter.
+Near the optimal policy $\pi^*$, the second-order Taylor expansion of $J$ gives
+a quadratic approximation with curvature bounded by the Lipschitz constant $L$
+of \cref{ass:lipschitz}. The gradient step with step size $\eta$ then satisfies
+$\|J(\pi_{t+1}) - J(\pi^*)\| \leq (1 - \eta \mu) \|J(\pi_t) - J(\pi^*)\|$,
+where $\mu > 0$ is the strong convexity constant of $J$ near $\pi^*$. Setting
+$\kappa = 1 - \eta\mu$ and using \cref{ass:reward} to relate $J$ to $F$ gives
+\cref{eq:deficit_decay}.
+\end{proof}
+
+\begin{corollary}[Saturating exponential model]
+\label{cor:sat_exp}
+Under the conditions of \cref{prop:exp_conv}, the expected fidelity $F_t$ satisfies:
+\begin{equation}
+  F_t = F_\infty - (F_\infty - F_0) e^{-t/\tau} \approx F_\infty(1 - e^{-t/\tau}),
+\end{equation}
+where $F_\infty = \lim_{t\to\infty} F_t$ is the asymptotic fidelity and the
+approximation holds when $F_0 \approx 0$ (random initialisation).
+\end{corollary}
+
+\cref{cor:sat_exp} provides the theoretical foundation for the ACC model
+(\cref{eq:sat_exp}). The key parameters $F_\infty$ and $\tau$ have clear
+physical interpretations: $F_\infty$ is determined by the expressivity of the
+policy class and the quality of the hyperparameter configuration, while $\tau$
+encodes the difficulty of the learning problem — specifically, the curvature of
+the value function near the target state.
+
+\subsection{Implications for Budget Prediction}
+
+\cref{cor:sat_exp} implies that the optimal budget $T^*$ defined in
+\cref{sec:problem} can be computed analytically once $F_\infty$ and $\tau$ are
+estimated:
+\begin{equation}
+  T^* = \tau \ln\!\left(\frac{F_\infty}{F_\infty - F^*}\right).
+  \label{eq:T_star_theory}
+\end{equation}
+This is identical to \cref{eq:T_star} in \cref{sec:acc}, confirming that the
+ACC budget prediction formula is theoretically grounded.
+
+\subsection{Unreachability Condition}
+
+If $F_\infty < F^*$, then $T^*$ in \cref{eq:T_star_theory} is undefined (the
+argument of the logarithm is negative), and no amount of additional training
+will achieve the target fidelity under the current hyperparameter configuration.
+This is the \texttt{FLAT\_UNREACHABLE} condition detected by ACC. Formally:
+
+\begin{proposition}[Unreachability]
+\label{prop:unreachable}
+If the fitted $F_\infty < F^*$, then for all $t > 0$:
+$\mathbb{E}_{\pi_t}[F(\rho_T, \rho^*)] < F^*$.
+\end{proposition}
+
+This proposition justifies ACC's early termination of unreachable runs:
+continuing training beyond the point where $F_\infty < F^*$ is detected
+wastes compute without any possibility of achieving the target fidelity.
+
+\subsection{Scaling of $\tau$ with Qubit Count}
+
+The convergence time constant $\tau$ encodes the difficulty of the learning
+problem. For quantum state preparation, the difficulty grows with the Hilbert
+space dimension $2^n$, suggesting that $\tau$ should scale exponentially with
+qubit count $n$. We conjecture:
+\begin{equation}
+  \tau(n) = \tau_0 \cdot \beta^{n-2},
+  \label{eq:tau_scaling}
+\end{equation}
+where $\tau_0$ is the convergence time at 2 qubits and $\beta > 1$ is a
+target-specific scaling exponent. The value of $\beta$ is expected to depend
+on the entanglement structure of the target state: states with higher
+multipartite entanglement (e.g., GHZ) should have larger $\beta$ than states
+with more local structure (e.g., W states).
+
+We test this conjecture empirically in \cref{sec:results} using the $\tau$
+values extracted from job 181423. If confirmed, \cref{eq:tau_scaling} provides
+a predictive framework for estimating the required training budget at any
+qubit count from measurements at small qubit counts.

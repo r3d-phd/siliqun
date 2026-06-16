@@ -1,0 +1,125 @@
+%% ACC Methodology Section
+\section{Adaptive Convergence Controller}
+\label{sec:acc}
+
+\subsection{Overview}
+
+The Adaptive Convergence Controller (ACC) is a lightweight runtime module that monitors
+the fidelity trajectory $\{(t_k, F_k)\}_{k=1}^{K}$ produced during DRL training and
+makes data-driven stopping decisions. At each checkpoint $k$, ACC fits the saturating
+exponential model (\cref{eq:sat_exp}) to the most recent $W$ data points and evaluates
+three ordered stopping tests. The module is designed to be algorithm-agnostic: it
+requires only a sequence of (step, fidelity) pairs and returns a binary stop signal
+with a diagnostic reason code.
+
+\subsection{Online Curve Fitting}
+
+Let $\mathcal{W}_k = \{(t_j, F_j) : j = k-W+1, \ldots, k\}$ denote the sliding window
+of the $W$ most recent checkpoints. ACC fits the model
+\begin{equation}
+  \hat{F}(t; F_\infty, \tau) = F_\infty \bigl(1 - e^{-t/\tau}\bigr)
+  \label{eq:model}
+\end{equation}
+to $\mathcal{W}_k$ using nonlinear least squares with bounds $F_\infty \in (0, 1]$
+and $\tau > 0$. The fit is accepted only if:
+\begin{enumerate}
+  \item The window contains at least $m_{\min}$ points (default $m_{\min} = 5$).
+  \item The coefficient of determination $R^2 \geq R^2_{\min}$ (default $R^2_{\min} = 0.7$).
+  \item The estimated $F_\infty$ is finite and positive.
+\end{enumerate}
+If the fit is not accepted, ACC defers to the next checkpoint without stopping.
+
+Given an accepted fit, ACC computes the \emph{optimal budget prediction}:
+\begin{equation}
+  T^* = -\tau \ln\!\left(1 - \frac{F^*}{F_\infty}\right),
+  \label{eq:T_star}
+\end{equation}
+which is the step at which the model predicts $\hat{F}(T^*) = F^*$. If $F_\infty < F^*$,
+the argument of the logarithm is negative and $T^*$ is undefined, indicating that the
+target is unreachable under the current configuration.
+
+\subsection{Stopping Decision Logic}
+
+ACC evaluates three tests in priority order at each checkpoint $k$:
+
+\paragraph{Test 1 — Threshold Met.}
+If $F_k \geq F^*$, ACC returns \textsc{Stop} with reason \texttt{THRESHOLD\_MET}.
+This is the primary success condition and requires no curve fitting.
+
+\paragraph{Test 2 — Flat Unreachable.}
+If the fit is accepted and $F_\infty < F^*$ and the instantaneous slope
+$\dot{F}_k = (F_k - F_{k-1})/(t_k - t_{k-1}) < \epsilon_{\mathrm{slope}}$
+(default $\epsilon_{\mathrm{slope}} = 10^{-7}$ per step), ACC returns \textsc{Stop}
+with reason \texttt{FLAT\_UNREACHABLE}. This condition identifies runs where the
+asymptotic fidelity is provably below the target and the agent is no longer improving.
+
+\paragraph{Test 3 — Converged (Diminishing Returns).}
+If the fit is accepted, $F_\infty \geq F^*$, and $t_k > T^*$, ACC computes the
+marginal gain of continuing for an additional $\Delta t$ steps:
+\begin{equation}
+  \Delta F = \hat{F}(t_k + \Delta t) - \hat{F}(t_k)
+           = F_\infty e^{-t_k/\tau}\bigl(1 - e^{-\Delta t/\tau}\bigr).
+\end{equation}
+If $\Delta F / F^* < \delta$ (default $\delta = 0.05$), ACC returns \textsc{Stop}
+with reason \texttt{CONVERGED}. This condition identifies runs that have effectively
+converged but have not yet crossed $F^*$, indicating that additional compute will
+not close the gap within a reasonable margin.
+
+\paragraph{Test 4 — Hard Ceiling.}
+If $t_k \geq T_{\max}$, ACC returns \textsc{Stop} with reason \texttt{MAX\_BUDGET}.
+This is a safety fallback that prevents runaway training.
+
+\subsection{Integration with DEHB Hyperparameter Search}
+
+ACC integrates naturally with DEHB's successive halving structure. During the HP search
+phase, each trial runs for a short initial budget $T_{\mathrm{init}}$ (default 40,000
+steps). ACC monitors each trial and terminates it early if \texttt{FLAT\_UNREACHABLE}
+is detected, freeing the budget for more promising configurations. After the HP search
+completes, the best configuration's fitted $F_\infty$ and $\tau$ values are used to
+set the full-budget run length as $T_{\mathrm{full}} = T^* \cdot (1 + m)$, where
+$m = 0.2$ is a safety margin.
+
+\subsection{Pseudocode}
+
+\begin{algorithm}[t]
+\caption{Adaptive Convergence Controller (ACC)}
+\label{alg:acc}
+\begin{algorithmic}[1]
+\Require Fidelity threshold $F^*$, window size $W$, min points $m_{\min}$,
+         $R^2$ threshold $R^2_{\min}$, slope threshold $\epsilon$,
+         margin $\delta$, max budget $T_{\max}$
+\State $\mathcal{H} \leftarrow []$ \Comment{History of (step, fidelity) pairs}
+\For{each checkpoint $(t_k, F_k)$}
+  \State Append $(t_k, F_k)$ to $\mathcal{H}$
+  \If{$F_k \geq F^*$}
+    \Return \textsc{Stop}(\texttt{THRESHOLD\_MET})
+  \EndIf
+  \State $\mathcal{W} \leftarrow$ last $W$ entries of $\mathcal{H}$
+  \If{$|\mathcal{W}| \geq m_{\min}$}
+    \State $(F_\infty, \tau, R^2) \leftarrow \textsc{FitSatExp}(\mathcal{W})$
+    \If{$R^2 \geq R^2_{\min}$}
+      \If{$F_\infty < F^*$ \textbf{and} $\dot{F}_k < \epsilon$}
+        \Return \textsc{Stop}(\texttt{FLAT\_UNREACHABLE})
+      \EndIf
+      \State $T^* \leftarrow -\tau \ln(1 - F^*/F_\infty)$ \Comment{Eq.~\ref{eq:T_star}}
+      \If{$t_k > T^*$ \textbf{and} $\Delta F / F^* < \delta$}
+        \Return \textsc{Stop}(\texttt{CONVERGED})
+      \EndIf
+    \EndIf
+  \EndIf
+  \If{$t_k \geq T_{\max}$}
+    \Return \textsc{Stop}(\texttt{MAX\_BUDGET})
+  \EndIf
+  \State \Return \textsc{Continue}
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Computational Overhead}
+
+The dominant cost of ACC is the nonlinear least squares fit, which solves a
+2-parameter optimisation problem over a window of $W \leq 20$ points. Using
+the Levenberg-Marquardt algorithm, this requires $O(W)$ function evaluations
+and completes in $< 1\,\mathrm{ms}$ on a standard CPU, negligible compared to
+the cost of a single RL environment step ($\sim 10\,\mathrm{ms}$ for a 2-qubit
+simulation). ACC therefore adds no measurable overhead to the training loop.

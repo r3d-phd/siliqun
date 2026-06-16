@@ -1,0 +1,286 @@
+======================================================
+QUASAR-SLM OCA | mode=no_slm | seeds=42,123,456 | families=ghz,w,bell,cluster_linear,dicke_k3
+Job: 180707.khead2 | Node: kcn517 | Start: Thu Jun 11 23:01:55 +03 2026
+======================================================
+/var/spool/pbs/mom_priv/jobs/180707.khead2.SC: line 17: /opt/share/anaconda3/2024.06/etc/profile.d/conda.sh: No such file or directory
+/var/spool/pbs/mom_priv/jobs/180707.khead2.SC: line 18: /opt/share/anaconda3/2023.09/etc/profile.d/conda.sh: No such file or directory
+Python: Python 3.12.4
+GPU:    NVIDIA A100-PCIE-40GB, 40960 MiB
+CUDA:   12.1
+
+------------------------------------------------------
+Starting seed=42 | mode=no_slm | Thu Jun 11 23:02:40 +03 2026
+------------------------------------------------------
+23:02:47 [INFO] ======================================================================
+23:02:47 [INFO] QUASAR-SLM OCA Unlimited-Qubit Scaling Experiment
+23:02:47 [INFO]   seed=42 | mode=no_slm | max_qubits=16
+23:02:47 [INFO]   model=Qwen/Qwen2.5-1.5B-Instruct | lora=/home/ralshehri0468/quasar_slm/checkpoints/quasar_slm_v1
+23:02:47 [INFO]   device=cuda | timesteps/stage=300,000
+23:02:47 [INFO] ======================================================================
+23:02:47 [INFO] 
+==================================================
+23:02:47 [INFO] QUBIT STAGE: 2Q
+23:02:47 [INFO] ==================================================
+QUASAR v9 not found — using mock environment for testing
+[QUASAR] Mode C disabled: reward_denoiser.py not found
+23:02:48 [INFO]   Stage 2Q/ghz | timesteps=300,000
+23:02:50 [INFO]   ghz: F=0.2298 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:02:50 [INFO]   Stage 2Q/w | timesteps=300,000
+23:02:53 [INFO]   w: F=0.2298 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:02:53 [INFO]   Stage 2Q/bell | timesteps=300,000
+23:02:54 [INFO]   bell: F=0.2298 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:02:54 [INFO]   Stage 2Q/cluster_linear | timesteps=300,000
+23:02:56 [INFO]   cluster_linear: F=0.2298 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:02:56 [INFO]   Stage 2Q/dicke_k3 | timesteps=300,000
+23:02:57 [INFO]   dicke_k3: F=0.2298 | success=False | slm_calls=0 | slm_good_rate=0.00
+23:02:57 [INFO] 
+  STAGE 2Q SUMMARY: mean_F=0.2298 | best_F=0.2298 | success=False
+  Families: ghz=✗(0.230) | w=✗(0.230) | bell=✗(0.230) | cluster_linear=✗(0.230) | dicke_k3=✗(0.230)
+23:02:57 [WARNING]   ✗ 2Q failed (F=0.2298 < 0.99) [1/3]
+23:02:57 [INFO] 
+==================================================
+23:02:57 [INFO] QUBIT STAGE: 3Q
+23:02:57 [INFO] ==================================================
+QUASAR v9 not found — using mock environment for testing
+23:02:57 [INFO]   Stage 3Q/ghz | timesteps=300,000
+23:02:59 [INFO]   ghz: F=0.2235 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:02:59 [INFO]   Stage 3Q/w | timesteps=300,000
+23:03:00 [INFO]   w: F=0.2235 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:03:00 [INFO]   Stage 3Q/bell | timesteps=300,000
+23:03:02 [INFO]   bell: F=0.2235 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:03:02 [INFO]   Stage 3Q/cluster_linear | timesteps=300,000
+23:03:03 [INFO]   cluster_linear: F=0.2235 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:03:03 [INFO]   Stage 3Q/dicke_k3 | timesteps=300,000
+23:03:05 [INFO]   dicke_k3: F=0.2235 | success=False | slm_calls=0 | slm_good_rate=0.00
+23:03:05 [INFO] 
+  STAGE 3Q SUMMARY: mean_F=0.2235 | best_F=0.2235 | success=False
+  Families: ghz=✗(0.224) | w=✗(0.224) | bell=✗(0.224) | cluster_linear=✗(0.224) | dicke_k3=✗(0.224)
+23:03:05 [WARNING]   ✗ 3Q failed (F=0.2235 < 0.99) [2/3]
+23:03:05 [INFO] 
+==================================================
+23:03:05 [INFO] QUBIT STAGE: 4Q
+23:03:05 [INFO] ==================================================
+QUASAR v9 not found — using mock environment for testing
+23:03:05 [INFO]   Stage 4Q/ghz | timesteps=300,000
+23:03:06 [INFO]   ghz: F=0.2391 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:03:06 [INFO]   Stage 4Q/w | timesteps=300,000
+23:03:08 [INFO]   w: F=0.2391 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:03:08 [INFO]   Stage 4Q/bell | timesteps=300,000
+23:03:09 [INFO]   bell: F=0.2391 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:03:09 [INFO]   Stage 4Q/cluster_linear | timesteps=300,000
+23:03:11 [INFO]   cluster_linear: F=0.2391 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:03:11 [INFO]   Stage 4Q/dicke_k3 | timesteps=300,000
+23:03:12 [INFO]   dicke_k3: F=0.2391 | success=False | slm_calls=0 | slm_good_rate=0.00
+23:03:12 [INFO] 
+  STAGE 4Q SUMMARY: mean_F=0.2391 | best_F=0.2391 | success=False
+  Families: ghz=✗(0.239) | w=✗(0.239) | bell=✗(0.239) | cluster_linear=✗(0.239) | dicke_k3=✗(0.239)
+23:03:12 [WARNING]   ✗ 4Q failed (F=0.2391 < 0.99) [3/3]
+23:03:12 [INFO] 
+Stopping: 3 consecutive failures. Max qubit with F≥0.99: 2Q
+23:03:12 [INFO] 
+======================================================================
+23:03:12 [INFO] EXPERIMENT COMPLETE
+23:03:12 [INFO]   Max qubit achieved (F≥0.99): 2Q
+23:03:12 [INFO]   Total time: 0.01h
+23:03:12 [INFO]   Results saved: /home/ralshehri0468/quasar_slm_results/quasar_slm_oca_s42_no_slm.json
+23:03:12 [INFO] ======================================================================
+seed=42 completed successfully | Thu Jun 11 23:03:13 +03 2026
+GPU cache cleared
+
+------------------------------------------------------
+Starting seed=123 | mode=no_slm | Thu Jun 11 23:03:18 +03 2026
+------------------------------------------------------
+23:03:25 [INFO] ======================================================================
+23:03:25 [INFO] QUASAR-SLM OCA Unlimited-Qubit Scaling Experiment
+23:03:25 [INFO]   seed=123 | mode=no_slm | max_qubits=16
+23:03:25 [INFO]   model=Qwen/Qwen2.5-1.5B-Instruct | lora=/home/ralshehri0468/quasar_slm/checkpoints/quasar_slm_v1
+23:03:25 [INFO]   device=cuda | timesteps/stage=300,000
+23:03:25 [INFO] ======================================================================
+23:03:25 [INFO] 
+==================================================
+23:03:25 [INFO] QUBIT STAGE: 2Q
+23:03:25 [INFO] ==================================================
+QUASAR v9 not found — using mock environment for testing
+[QUASAR] Mode C disabled: reward_denoiser.py not found
+23:03:25 [INFO]   Stage 2Q/ghz | timesteps=300,000
+23:03:28 [INFO]   ghz: F=0.2427 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:03:28 [INFO]   Stage 2Q/w | timesteps=300,000
+23:03:30 [INFO]   w: F=0.2427 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:03:30 [INFO]   Stage 2Q/bell | timesteps=300,000
+23:03:31 [INFO]   bell: F=0.2427 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:03:31 [INFO]   Stage 2Q/cluster_linear | timesteps=300,000
+23:03:33 [INFO]   cluster_linear: F=0.2427 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:03:33 [INFO]   Stage 2Q/dicke_k3 | timesteps=300,000
+23:03:34 [INFO]   dicke_k3: F=0.2427 | success=False | slm_calls=0 | slm_good_rate=0.00
+23:03:34 [INFO] 
+  STAGE 2Q SUMMARY: mean_F=0.2427 | best_F=0.2427 | success=False
+  Families: ghz=✗(0.243) | w=✗(0.243) | bell=✗(0.243) | cluster_linear=✗(0.243) | dicke_k3=✗(0.243)
+23:03:34 [WARNING]   ✗ 2Q failed (F=0.2427 < 0.99) [1/3]
+23:03:34 [INFO] 
+==================================================
+23:03:34 [INFO] QUBIT STAGE: 3Q
+23:03:34 [INFO] ==================================================
+QUASAR v9 not found — using mock environment for testing
+23:03:34 [INFO]   Stage 3Q/ghz | timesteps=300,000
+23:03:36 [INFO]   ghz: F=0.2405 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:03:36 [INFO]   Stage 3Q/w | timesteps=300,000
+23:03:38 [INFO]   w: F=0.2405 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:03:38 [INFO]   Stage 3Q/bell | timesteps=300,000
+23:03:39 [INFO]   bell: F=0.2405 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:03:39 [INFO]   Stage 3Q/cluster_linear | timesteps=300,000
+23:03:41 [INFO]   cluster_linear: F=0.2405 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:03:41 [INFO]   Stage 3Q/dicke_k3 | timesteps=300,000
+23:03:42 [INFO]   dicke_k3: F=0.2405 | success=False | slm_calls=0 | slm_good_rate=0.00
+23:03:42 [INFO] 
+  STAGE 3Q SUMMARY: mean_F=0.2405 | best_F=0.2405 | success=False
+  Families: ghz=✗(0.241) | w=✗(0.241) | bell=✗(0.241) | cluster_linear=✗(0.241) | dicke_k3=✗(0.241)
+23:03:42 [WARNING]   ✗ 3Q failed (F=0.2405 < 0.99) [2/3]
+23:03:42 [INFO] 
+==================================================
+23:03:42 [INFO] QUBIT STAGE: 4Q
+23:03:42 [INFO] ==================================================
+QUASAR v9 not found — using mock environment for testing
+23:03:42 [INFO]   Stage 4Q/ghz | timesteps=300,000
+23:03:44 [INFO]   ghz: F=0.2171 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:03:44 [INFO]   Stage 4Q/w | timesteps=300,000
+23:03:45 [INFO]   w: F=0.2171 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:03:45 [INFO]   Stage 4Q/bell | timesteps=300,000
+23:03:47 [INFO]   bell: F=0.2171 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:03:47 [INFO]   Stage 4Q/cluster_linear | timesteps=300,000
+23:03:48 [INFO]   cluster_linear: F=0.2171 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:03:48 [INFO]   Stage 4Q/dicke_k3 | timesteps=300,000
+23:03:50 [INFO]   dicke_k3: F=0.2171 | success=False | slm_calls=0 | slm_good_rate=0.00
+23:03:50 [INFO] 
+  STAGE 4Q SUMMARY: mean_F=0.2171 | best_F=0.2171 | success=False
+  Families: ghz=✗(0.217) | w=✗(0.217) | bell=✗(0.217) | cluster_linear=✗(0.217) | dicke_k3=✗(0.217)
+23:03:50 [WARNING]   ✗ 4Q failed (F=0.2171 < 0.99) [3/3]
+23:03:50 [INFO] 
+Stopping: 3 consecutive failures. Max qubit with F≥0.99: 2Q
+23:03:50 [INFO] 
+======================================================================
+23:03:50 [INFO] EXPERIMENT COMPLETE
+23:03:50 [INFO]   Max qubit achieved (F≥0.99): 2Q
+23:03:50 [INFO]   Total time: 0.01h
+23:03:50 [INFO]   Results saved: /home/ralshehri0468/quasar_slm_results/quasar_slm_oca_s123_no_slm.json
+23:03:50 [INFO] ======================================================================
+seed=123 completed successfully | Thu Jun 11 23:03:51 +03 2026
+GPU cache cleared
+
+------------------------------------------------------
+Starting seed=456 | mode=no_slm | Thu Jun 11 23:03:56 +03 2026
+------------------------------------------------------
+23:04:02 [INFO] ======================================================================
+23:04:02 [INFO] QUASAR-SLM OCA Unlimited-Qubit Scaling Experiment
+23:04:02 [INFO]   seed=456 | mode=no_slm | max_qubits=16
+23:04:02 [INFO]   model=Qwen/Qwen2.5-1.5B-Instruct | lora=/home/ralshehri0468/quasar_slm/checkpoints/quasar_slm_v1
+23:04:02 [INFO]   device=cuda | timesteps/stage=300,000
+23:04:02 [INFO] ======================================================================
+23:04:02 [INFO] 
+==================================================
+23:04:02 [INFO] QUBIT STAGE: 2Q
+23:04:02 [INFO] ==================================================
+QUASAR v9 not found — using mock environment for testing
+[QUASAR] Mode C disabled: reward_denoiser.py not found
+23:04:03 [INFO]   Stage 2Q/ghz | timesteps=300,000
+23:04:05 [INFO]   ghz: F=0.2307 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:04:05 [INFO]   Stage 2Q/w | timesteps=300,000
+23:04:08 [INFO]   w: F=0.2307 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:04:08 [INFO]   Stage 2Q/bell | timesteps=300,000
+23:04:09 [INFO]   bell: F=0.2307 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:04:09 [INFO]   Stage 2Q/cluster_linear | timesteps=300,000
+23:04:11 [INFO]   cluster_linear: F=0.2307 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:04:11 [INFO]   Stage 2Q/dicke_k3 | timesteps=300,000
+23:04:12 [INFO]   dicke_k3: F=0.2307 | success=False | slm_calls=0 | slm_good_rate=0.00
+23:04:12 [INFO] 
+  STAGE 2Q SUMMARY: mean_F=0.2307 | best_F=0.2307 | success=False
+  Families: ghz=✗(0.231) | w=✗(0.231) | bell=✗(0.231) | cluster_linear=✗(0.231) | dicke_k3=✗(0.231)
+23:04:12 [WARNING]   ✗ 2Q failed (F=0.2307 < 0.99) [1/3]
+23:04:12 [INFO] 
+==================================================
+23:04:12 [INFO] QUBIT STAGE: 3Q
+23:04:12 [INFO] ==================================================
+QUASAR v9 not found — using mock environment for testing
+23:04:12 [INFO]   Stage 3Q/ghz | timesteps=300,000
+23:04:14 [INFO]   ghz: F=0.2150 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:04:14 [INFO]   Stage 3Q/w | timesteps=300,000
+23:04:15 [INFO]   w: F=0.2150 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:04:15 [INFO]   Stage 3Q/bell | timesteps=300,000
+23:04:17 [INFO]   bell: F=0.2150 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:04:17 [INFO]   Stage 3Q/cluster_linear | timesteps=300,000
+23:04:18 [INFO]   cluster_linear: F=0.2150 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:04:18 [INFO]   Stage 3Q/dicke_k3 | timesteps=300,000
+23:04:20 [INFO]   dicke_k3: F=0.2150 | success=False | slm_calls=0 | slm_good_rate=0.00
+23:04:20 [INFO] 
+  STAGE 3Q SUMMARY: mean_F=0.2150 | best_F=0.2150 | success=False
+  Families: ghz=✗(0.215) | w=✗(0.215) | bell=✗(0.215) | cluster_linear=✗(0.215) | dicke_k3=✗(0.215)
+23:04:20 [WARNING]   ✗ 3Q failed (F=0.2150 < 0.99) [2/3]
+23:04:20 [INFO] 
+==================================================
+23:04:20 [INFO] QUBIT STAGE: 4Q
+23:04:20 [INFO] ==================================================
+QUASAR v9 not found — using mock environment for testing
+23:04:20 [INFO]   Stage 4Q/ghz | timesteps=300,000
+23:04:21 [INFO]   ghz: F=0.2392 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:04:21 [INFO]   Stage 4Q/w | timesteps=300,000
+23:04:23 [INFO]   w: F=0.2392 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:04:23 [INFO]   Stage 4Q/bell | timesteps=300,000
+23:04:25 [INFO]   bell: F=0.2392 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:04:25 [INFO]   Stage 4Q/cluster_linear | timesteps=300,000
+23:04:26 [INFO]   cluster_linear: F=0.2392 | success=False | slm_calls=0 | slm_good_rate=0.00
+QUASAR v9 not found — using mock environment for testing
+23:04:26 [INFO]   Stage 4Q/dicke_k3 | timesteps=300,000
+23:04:28 [INFO]   dicke_k3: F=0.2392 | success=False | slm_calls=0 | slm_good_rate=0.00
+23:04:28 [INFO] 
+  STAGE 4Q SUMMARY: mean_F=0.2392 | best_F=0.2392 | success=False
+  Families: ghz=✗(0.239) | w=✗(0.239) | bell=✗(0.239) | cluster_linear=✗(0.239) | dicke_k3=✗(0.239)
+23:04:28 [WARNING]   ✗ 4Q failed (F=0.2392 < 0.99) [3/3]
+23:04:28 [INFO] 
+Stopping: 3 consecutive failures. Max qubit with F≥0.99: 2Q
+23:04:28 [INFO] 
+======================================================================
+23:04:28 [INFO] EXPERIMENT COMPLETE
+23:04:28 [INFO]   Max qubit achieved (F≥0.99): 2Q
+23:04:28 [INFO]   Total time: 0.01h
+23:04:28 [INFO]   Results saved: /home/ralshehri0468/quasar_slm_results/quasar_slm_oca_s456_no_slm.json
+23:04:28 [INFO] ======================================================================
+seed=456 completed successfully | Thu Jun 11 23:04:29 +03 2026
+GPU cache cleared
+
+======================================================
+mode=no_slm complete | seeds_failed=0/3 | Thu Jun 11 23:04:34 +03 2026
+======================================================

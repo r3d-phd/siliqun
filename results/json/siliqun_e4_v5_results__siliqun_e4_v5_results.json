@@ -1,0 +1,41 @@
+{
+  "ghz_s42": {
+    "target": "ghz",
+    "seed": 42,
+    "n_qubits": 2,
+    "best_F": 0.7473203529270147,
+    "final_F_mean": 0.28194623295773463,
+    "final_F_std": 5.551115123125783e-17,
+    "steps_run": 1000000,
+    "success": false,
+    "elapsed_s": 54297.1003549099,
+    "env": "QuasarEnv_v9.54",
+    "version": "e4_v5"
+  },
+  "ghz_s123": {
+    "target": "ghz",
+    "seed": 123,
+    "n_qubits": 2,
+    "best_F": 0.7099397846007109,
+    "final_F_mean": 0.5409451669381529,
+    "final_F_std": 0.0,
+    "steps_run": 695000,
+    "success": false,
+    "elapsed_s": 35434.64865732193,
+    "env": "QuasarEnv_v9.54",
+    "version": "e4_v5"
+  },
+  "ghz_s456": {
+    "target": "ghz",
+    "seed": 456,
+    "n_qubits": 2,
+    "best_F": 0.6032157896612915,
+    "final_F_mean": 0.26047351210236436,
+    "final_F_std": 5.551115123125783e-17,
+    "steps_run": 657395,
+    "success": false,
+    "elapsed_s": 33162.50883960724,
+    "env": "QuasarEnv_v9.54",
+    "version": "e4_v5"
+  }
+}

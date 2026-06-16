@@ -1,0 +1,12 @@
+=== Node: kcn511 | GPU: NVIDIA A100-PCIE-40GB ===
+=== Python: /home/ralshehri0468/.conda/envs/quantum_drl_gpu/bin/python ===
+=== Verifying environment ===
+torch: 2.4.0 cuda: True
+
+sb3: 2.8.0
+
+=== Verifying GaAsCNOTEnvVec import ===
+GaAsCNOTEnvVec: OK
+
+=== Running R4 seeds 666 and 1453 (20k episodes each) ===
+=>> PBS: job killed: walltime 43298 exceeded limit 43200

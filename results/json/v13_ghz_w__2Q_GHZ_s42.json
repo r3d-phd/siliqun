@@ -1,0 +1,19 @@
+{
+  "n_qubits": 2,
+  "target": "GHZ",
+  "seed": 42,
+  "best_F": 0.999684744574838,
+  "noise_stage": 5,
+  "max_steps": 500000,
+  "hp_search": "random",
+  "best_config": {
+    "alpha": 0.0190011091877578,
+    "lr_actor": 0.0003818298519922996,
+    "lr_critic": 0.00017316321885271768,
+    "tau": 0.012735101652503085,
+    "batch_size": 128,
+    "hidden_dim": 384,
+    "cond_dim": 64,
+    "slm_interval": 84113
+  }
+}

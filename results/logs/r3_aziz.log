@@ -1,0 +1,180 @@
+=== Node: kcn512 | GPU: NVIDIA A100-PCIE-40GB ===
+=== Installing sb3_contrib ===
+
+[notice] A new release of pip is available: 25.3 -> 26.1.1
+[notice] To update, run: /app/utils/anaconda3-2024.02/bin/python -m pip install --upgrade pip
+=== Verifying environment ===
+torch: 2.5.1+cu121 cuda: True device: NVIDIA A100-PCIE-40GB
+2026-05-30 04:09:51.445859: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-05-30 04:09:54.917030: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Traceback (most recent call last):
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/ralshehri0468/.local/lib/python3.11/site-packages/sb3_contrib/__init__.py", line 3, in <module>
+    from sb3_contrib.ars import ARS
+  File "/home/ralshehri0468/.local/lib/python3.11/site-packages/sb3_contrib/ars/__init__.py", line 1, in <module>
+    from sb3_contrib.ars.ars import ARS
+  File "/home/ralshehri0468/.local/lib/python3.11/site-packages/sb3_contrib/ars/ars.py", line 12, in <module>
+    from stable_baselines3.common.base_class import BaseAlgorithm
+  File "/home/ralshehri0468/.local/lib/python3.11/site-packages/stable_baselines3/__init__.py", line 3, in <module>
+    from stable_baselines3.a2c import A2C
+  File "/home/ralshehri0468/.local/lib/python3.11/site-packages/stable_baselines3/a2c/__init__.py", line 1, in <module>
+    from stable_baselines3.a2c.a2c import A2C
+  File "/home/ralshehri0468/.local/lib/python3.11/site-packages/stable_baselines3/a2c/a2c.py", line 7, in <module>
+    from stable_baselines3.common.buffers import RolloutBuffer
+  File "/home/ralshehri0468/.local/lib/python3.11/site-packages/stable_baselines3/common/buffers.py", line 17, in <module>
+    from stable_baselines3.common.utils import get_device
+  File "/home/ralshehri0468/.local/lib/python3.11/site-packages/stable_baselines3/common/utils.py", line 20, in <module>
+    from torch.utils.tensorboard import SummaryWriter
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/torch/utils/tensorboard/__init__.py", line 12, in <module>
+    from .writer import FileWriter, SummaryWriter  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/torch/utils/tensorboard/writer.py", line 19, in <module>
+    from ._embedding import get_embedding_info, make_mat, make_sprite, make_tsv, write_pbtxt
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/torch/utils/tensorboard/_embedding.py", line 10, in <module>
+    _HAS_GFILE_JOIN = hasattr(tf.io.gfile, "join")
+                              ^^^^^
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorboard/lazy.py", line 65, in __getattr__
+    return getattr(load_once(self), attr_name)
+                   ^^^^^^^^^^^^^^^
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorboard/lazy.py", line 97, in wrapper
+    cache[arg] = f(arg)
+                 ^^^^^^
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorboard/lazy.py", line 50, in load_once
+    module = load_fn()
+             ^^^^^^^^^
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 45, in tf
+    import tensorflow
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorflow/__init__.py", line 49, in <module>
+    from tensorflow._api.v2 import __internal__
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorflow/_api/v2/__internal__/__init__.py", line 8, in <module>
+    from tensorflow._api.v2.__internal__ import autograph
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorflow/_api/v2/__internal__/autograph/__init__.py", line 8, in <module>
+    from tensorflow.python.autograph.core.ag_ctx import control_status_ctx # line: 34
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorflow/python/autograph/core/ag_ctx.py", line 21, in <module>
+    from tensorflow.python.autograph.utils import ag_logging
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorflow/python/autograph/utils/__init__.py", line 17, in <module>
+    from tensorflow.python.autograph.utils.context_managers import control_dependency_on_returns
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorflow/python/autograph/utils/context_managers.py", line 20, in <module>
+    from tensorflow.python.ops import tensor_array_ops
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorflow/python/ops/tensor_array_ops.py", line 42, in <module>
+    from tensorflow.python.ops import math_ops
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorflow/python/ops/math_ops.py", line 90, in <module>
+    from tensorflow.python.ops import gen_logging_ops
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorflow/python/ops/gen_logging_ops.py", line 318, in <module>
+    def image_summary(tag: Annotated[Any, _atypes.String], tensor: Annotated[Any, TV_ImageSummary_T], max_images:int=3, bad_color=_execute.make_tensor("""dtype: DT_UINT8 tensor_shape { dim { size: 4 } } int_val: 255 int_val: 0 int_val: 0 int_val: 255 """, "bad_color"), name=None) -> Annotated[Any, _atypes.String]:
+                                                                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorflow/python/eager/execute.py", line 215, in make_tensor
+    text_format.Merge(v, pb)
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/google/protobuf/text_format.py", line 765, in Merge
+    return MergeLines(
+           ^^^^^^^^^^^
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/google/protobuf/text_format.py", line 839, in MergeLines
+    return parser.MergeLines(lines, message)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/google/protobuf/text_format.py", line 864, in MergeLines
+    self._ParseOrMerge(lines, message)
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/google/protobuf/text_format.py", line 888, in _ParseOrMerge
+    self._MergeField(tokenizer, message)
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/google/protobuf/text_format.py", line 1012, in _MergeField
+    if (field.is_repeated and
+        ^^^^^^^^^^^^^^^^^
+AttributeError: 'google.protobuf.pyext._message.FieldDescriptor' object has no attribute 'is_repeated'
+=== Running R3 remaining seeds (666, 1453) ===
+2026-05-30 04:10:10.491781: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-05-30 04:10:10.574831: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Traceback (most recent call last):
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ralshehri0468/r3_remaining.py", line 13, in <module>
+    from sb3_contrib import TQC
+  File "/home/ralshehri0468/.local/lib/python3.11/site-packages/sb3_contrib/__init__.py", line 3, in <module>
+    from sb3_contrib.ars import ARS
+  File "/home/ralshehri0468/.local/lib/python3.11/site-packages/sb3_contrib/ars/__init__.py", line 1, in <module>
+    from sb3_contrib.ars.ars import ARS
+  File "/home/ralshehri0468/.local/lib/python3.11/site-packages/sb3_contrib/ars/ars.py", line 12, in <module>
+    from stable_baselines3.common.base_class import BaseAlgorithm
+  File "/home/ralshehri0468/.local/lib/python3.11/site-packages/stable_baselines3/__init__.py", line 3, in <module>
+    from stable_baselines3.a2c import A2C
+  File "/home/ralshehri0468/.local/lib/python3.11/site-packages/stable_baselines3/a2c/__init__.py", line 1, in <module>
+    from stable_baselines3.a2c.a2c import A2C
+  File "/home/ralshehri0468/.local/lib/python3.11/site-packages/stable_baselines3/a2c/a2c.py", line 7, in <module>
+    from stable_baselines3.common.buffers import RolloutBuffer
+  File "/home/ralshehri0468/.local/lib/python3.11/site-packages/stable_baselines3/common/buffers.py", line 17, in <module>
+    from stable_baselines3.common.utils import get_device
+  File "/home/ralshehri0468/.local/lib/python3.11/site-packages/stable_baselines3/common/utils.py", line 20, in <module>
+    from torch.utils.tensorboard import SummaryWriter
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/torch/utils/tensorboard/__init__.py", line 12, in <module>
+    from .writer import FileWriter, SummaryWriter  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/torch/utils/tensorboard/writer.py", line 19, in <module>
+    from ._embedding import get_embedding_info, make_mat, make_sprite, make_tsv, write_pbtxt
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/torch/utils/tensorboard/_embedding.py", line 10, in <module>
+    _HAS_GFILE_JOIN = hasattr(tf.io.gfile, "join")
+                              ^^^^^
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorboard/lazy.py", line 65, in __getattr__
+    return getattr(load_once(self), attr_name)
+                   ^^^^^^^^^^^^^^^
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorboard/lazy.py", line 97, in wrapper
+    cache[arg] = f(arg)
+                 ^^^^^^
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorboard/lazy.py", line 50, in load_once
+    module = load_fn()
+             ^^^^^^^^^
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 45, in tf
+    import tensorflow
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorflow/__init__.py", line 49, in <module>
+    from tensorflow._api.v2 import __internal__
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorflow/_api/v2/__internal__/__init__.py", line 8, in <module>
+    from tensorflow._api.v2.__internal__ import autograph
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorflow/_api/v2/__internal__/autograph/__init__.py", line 8, in <module>
+    from tensorflow.python.autograph.core.ag_ctx import control_status_ctx # line: 34
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorflow/python/autograph/core/ag_ctx.py", line 21, in <module>
+    from tensorflow.python.autograph.utils import ag_logging
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorflow/python/autograph/utils/__init__.py", line 17, in <module>
+    from tensorflow.python.autograph.utils.context_managers import control_dependency_on_returns
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorflow/python/autograph/utils/context_managers.py", line 20, in <module>
+    from tensorflow.python.ops import tensor_array_ops
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorflow/python/ops/tensor_array_ops.py", line 42, in <module>
+    from tensorflow.python.ops import math_ops
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorflow/python/ops/math_ops.py", line 90, in <module>
+    from tensorflow.python.ops import gen_logging_ops
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorflow/python/ops/gen_logging_ops.py", line 318, in <module>
+    def image_summary(tag: Annotated[Any, _atypes.String], tensor: Annotated[Any, TV_ImageSummary_T], max_images:int=3, bad_color=_execute.make_tensor("""dtype: DT_UINT8 tensor_shape { dim { size: 4 } } int_val: 255 int_val: 0 int_val: 0 int_val: 255 """, "bad_color"), name=None) -> Annotated[Any, _atypes.String]:
+                                                                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/tensorflow/python/eager/execute.py", line 215, in make_tensor
+    text_format.Merge(v, pb)
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/google/protobuf/text_format.py", line 765, in Merge
+    return MergeLines(
+           ^^^^^^^^^^^
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/google/protobuf/text_format.py", line 839, in MergeLines
+    return parser.MergeLines(lines, message)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/google/protobuf/text_format.py", line 864, in MergeLines
+    self._ParseOrMerge(lines, message)
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/google/protobuf/text_format.py", line 888, in _ParseOrMerge
+    self._MergeField(tokenizer, message)
+  File "/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/google/protobuf/text_format.py", line 1012, in _MergeField
+    if (field.is_repeated and
+        ^^^^^^^^^^^^^^^^^
+AttributeError: 'google.protobuf.pyext._message.FieldDescriptor' object has no attribute 'is_repeated'
+=== Results ===
+No results file found
+=== R3 Complete ===

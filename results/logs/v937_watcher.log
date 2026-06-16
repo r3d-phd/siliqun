@@ -1,0 +1,872 @@
+[2026-06-03 23:21:45 +03] ============================================================
+[2026-06-03 23:21:45 +03] QUASAR v9.37 Seed Watcher started
+[2026-06-03 23:21:45 +03] Seeds to submit: 456 1111 2222
+[2026-06-03 23:21:45 +03] Poll interval: 300s | Max wait: 72h
+[2026-06-03 23:21:45 +03] ============================================================
+[2026-06-03 23:21:45 +03] --- Next seed: 456 ---
+[2026-06-03 23:21:45 +03] Poll #1 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-03 23:21:45 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-03 23:26:45 +03] Poll #2 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-03 23:26:45 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-03 23:31:45 +03] Poll #3 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-03 23:31:45 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-03 23:36:46 +03] Poll #4 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-03 23:36:46 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-03 23:41:46 +03] Poll #5 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-03 23:41:46 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-03 23:46:46 +03] Poll #6 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-03 23:46:46 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-03 23:51:46 +03] Poll #7 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-03 23:51:47 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-03 23:56:47 +03] Poll #8 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-03 23:56:47 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 00:01:47 +03] Poll #9 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 00:01:47 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 00:06:47 +03] Poll #10 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 00:06:47 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 00:11:48 +03] Poll #11 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 00:11:48 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 00:16:48 +03] Poll #12 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 00:16:48 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 00:21:48 +03] Poll #13 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 00:21:48 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 00:26:48 +03] Poll #14 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 00:26:48 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 00:31:49 +03] Poll #15 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 00:31:49 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 00:36:49 +03] Poll #16 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 00:36:49 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 00:41:49 +03] Poll #17 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 00:41:49 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 00:46:49 +03] Poll #18 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 00:46:49 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 00:51:50 +03] Poll #19 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 00:51:50 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 00:56:50 +03] Poll #20 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 00:56:50 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 01:01:50 +03] Poll #21 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 01:01:50 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 01:06:50 +03] Poll #22 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 01:06:50 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 01:11:51 +03] Poll #23 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 01:11:51 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 01:16:51 +03] Poll #24 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 01:16:51 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 01:21:51 +03] Poll #25 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 01:21:51 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 01:26:51 +03] Poll #26 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 01:26:51 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 01:31:52 +03] Poll #27 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 01:31:52 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 01:36:52 +03] Poll #28 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 01:36:52 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 01:41:52 +03] Poll #29 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 01:41:52 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 01:46:52 +03] Poll #30 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 01:46:52 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 01:51:53 +03] Poll #31 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 01:51:53 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 01:56:53 +03] Poll #32 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 01:56:53 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 02:01:53 +03] Poll #33 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 02:01:53 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 02:06:54 +03] Poll #34 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 02:06:54 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 02:11:54 +03] Poll #35 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 02:11:54 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 02:16:54 +03] Poll #36 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 02:16:54 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 02:21:54 +03] Poll #37 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 02:21:54 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 02:26:55 +03] Poll #38 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 02:26:55 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 02:31:55 +03] Poll #39 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 02:31:55 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 02:36:55 +03] Poll #40 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 02:36:55 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 02:41:55 +03] Poll #41 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 02:41:55 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 02:46:56 +03] Poll #42 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 02:46:56 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 02:51:56 +03] Poll #43 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 02:51:56 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 02:56:56 +03] Poll #44 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 02:56:56 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 03:01:56 +03] Poll #45 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 03:01:56 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 03:06:57 +03] Poll #46 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 03:06:57 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 03:11:57 +03] Poll #47 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 03:11:57 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 03:16:57 +03] Poll #48 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 03:16:57 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 03:21:57 +03] Poll #49 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 03:21:57 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 03:26:58 +03] Poll #50 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 03:26:58 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 03:31:58 +03] Poll #51 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 03:31:58 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 03:36:58 +03] Poll #52 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 03:36:58 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 03:41:59 +03] Poll #53 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 03:41:59 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 03:46:59 +03] Poll #54 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 03:46:59 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 03:51:59 +03] Poll #55 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 03:51:59 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 03:56:59 +03] Poll #56 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 03:56:59 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 04:02:00 +03] Poll #57 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 04:02:00 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 04:07:00 +03] Poll #58 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 04:07:00 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 04:12:00 +03] Poll #59 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 04:12:00 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 04:17:00 +03] Poll #60 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 04:17:00 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 04:22:01 +03] Poll #61 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 04:22:01 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 04:27:01 +03] Poll #62 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 04:27:01 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 04:32:01 +03] Poll #63 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 04:32:01 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 04:37:02 +03] Poll #64 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 04:37:02 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 04:42:02 +03] Poll #65 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 04:42:02 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 04:47:02 +03] Poll #66 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 04:47:02 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 04:52:02 +03] Poll #67 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 04:52:02 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 04:57:03 +03] Poll #68 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 04:57:03 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 05:02:03 +03] Poll #69 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 05:02:03 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 05:07:03 +03] Poll #70 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 05:07:03 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 05:12:03 +03] Poll #71 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 05:12:03 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 05:17:04 +03] Poll #72 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 05:17:04 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 05:22:04 +03] Poll #73 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 05:22:04 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 05:27:04 +03] Poll #74 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 05:27:04 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 05:32:04 +03] Poll #75 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 05:32:04 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 05:37:05 +03] Poll #76 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 05:37:05 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 05:42:05 +03] Poll #77 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 05:42:05 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 05:47:05 +03] Poll #78 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 05:47:05 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 05:52:05 +03] Poll #79 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 05:52:05 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 05:57:06 +03] Poll #80 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 05:57:06 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 06:02:06 +03] Poll #81 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 06:02:06 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 06:07:06 +03] Poll #82 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 06:07:06 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 06:12:06 +03] Poll #83 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 06:12:06 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 06:17:07 +03] Poll #84 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 06:17:07 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 06:22:07 +03] Poll #85 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 06:22:07 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 06:27:07 +03] Poll #86 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 06:27:07 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 06:32:08 +03] Poll #87 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 06:32:08 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 06:37:08 +03] Poll #88 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 06:37:08 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 06:42:08 +03] Poll #89 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 06:42:08 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 06:47:08 +03] Poll #90 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 06:47:08 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 06:52:09 +03] Poll #91 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 06:52:09 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 06:57:09 +03] Poll #92 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 06:57:09 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 07:02:09 +03] Poll #93 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 07:02:09 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 07:07:09 +03] Poll #94 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 07:07:09 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 07:12:10 +03] Poll #95 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 07:12:10 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 07:17:10 +03] Poll #96 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 07:17:10 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 07:22:10 +03] Poll #97 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 07:22:10 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 07:27:10 +03] Poll #98 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 07:27:10 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 07:32:11 +03] Poll #99 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 07:32:11 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 07:37:11 +03] Poll #100 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 07:37:11 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 07:42:11 +03] Poll #101 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 07:42:11 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 07:47:11 +03] Poll #102 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 07:47:11 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 07:52:12 +03] Poll #103 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 07:52:12 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 07:57:12 +03] Poll #104 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 07:57:12 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 08:02:12 +03] Poll #105 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 08:02:12 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 08:07:13 +03] Poll #106 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 08:07:13 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 08:12:13 +03] Poll #107 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 08:12:13 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 08:17:13 +03] Poll #108 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 08:17:13 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 08:22:13 +03] Poll #109 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 08:22:13 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 08:27:14 +03] Poll #110 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 08:27:14 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 08:32:14 +03] Poll #111 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 08:32:14 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 08:37:14 +03] Poll #112 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 08:37:14 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 08:42:14 +03] Poll #113 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 08:42:14 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 08:47:15 +03] Poll #114 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 08:47:15 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 08:52:15 +03] Poll #115 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 08:52:15 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 08:57:15 +03] Poll #116 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 08:57:15 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 09:02:15 +03] Poll #117 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 09:02:15 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 09:07:16 +03] Poll #118 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 09:07:16 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 09:12:16 +03] Poll #119 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 09:12:16 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 09:17:16 +03] Poll #120 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 09:17:16 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 09:22:17 +03] Poll #121 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 09:22:17 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 09:27:17 +03] Poll #122 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 09:27:17 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 09:32:17 +03] Poll #123 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 09:32:17 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 09:37:17 +03] Poll #124 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 09:37:17 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 09:42:18 +03] Poll #125 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 09:42:18 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 09:47:18 +03] Poll #126 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 09:47:18 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 09:52:18 +03] Poll #127 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 09:52:18 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 09:57:19 +03] Poll #128 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 09:57:19 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 10:02:19 +03] Poll #129 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 10:02:19 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 10:07:19 +03] Poll #130 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 10:07:19 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 10:12:19 +03] Poll #131 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 10:12:19 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 10:17:20 +03] Poll #132 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 10:17:20 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 10:22:20 +03] Poll #133 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 10:22:20 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 10:27:20 +03] Poll #134 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 10:27:20 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 10:32:20 +03] Poll #135 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 10:32:20 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 10:37:21 +03] Poll #136 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 10:37:21 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 10:42:21 +03] Poll #137 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 10:42:21 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 10:47:21 +03] Poll #138 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 10:47:21 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 10:52:21 +03] Poll #139 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 10:52:21 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 10:57:22 +03] Poll #140 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 10:57:22 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 11:02:22 +03] Poll #141 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 11:02:22 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 11:07:22 +03] Poll #142 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 11:07:22 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 11:12:22 +03] Poll #143 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 11:12:22 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 11:17:23 +03] Poll #144 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 11:17:23 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 11:22:23 +03] Poll #145 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 11:22:23 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 11:27:23 +03] Poll #146 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 11:27:23 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 11:32:24 +03] Poll #147 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 11:32:24 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 11:37:24 +03] Poll #148 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 11:37:24 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 11:42:24 +03] Poll #149 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 11:42:24 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 11:47:24 +03] Poll #150 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 11:47:24 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 11:52:25 +03] Poll #151 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 11:52:25 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 11:57:25 +03] Poll #152 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 11:57:25 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 12:02:25 +03] Poll #153 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 12:02:25 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 12:07:25 +03] Poll #154 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 12:07:25 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 12:12:26 +03] Poll #155 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 12:12:26 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 12:17:26 +03] Poll #156 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 12:17:26 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 12:22:26 +03] Poll #157 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 12:22:26 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 12:27:26 +03] Poll #158 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 12:27:26 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 12:32:27 +03] Poll #159 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 12:32:27 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 12:37:27 +03] Poll #160 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 12:37:27 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 12:42:27 +03] Poll #161 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 12:42:27 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 12:47:27 +03] Poll #162 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 12:47:27 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 12:52:28 +03] Poll #163 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 12:52:28 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 12:57:28 +03] Poll #164 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 12:57:28 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 13:02:28 +03] Poll #165 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 13:02:28 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 13:07:28 +03] Poll #166 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 13:07:28 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 13:12:29 +03] Poll #167 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 13:12:29 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 13:17:29 +03] Poll #168 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 13:17:29 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 13:22:29 +03] Poll #169 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 13:22:29 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 13:27:30 +03] Poll #170 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 13:27:30 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 13:32:30 +03] Poll #171 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 13:32:30 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 13:37:30 +03] Poll #172 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 13:37:30 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 13:42:30 +03] Poll #173 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 13:42:30 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 13:47:31 +03] Poll #174 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 13:47:31 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 13:52:31 +03] Poll #175 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 13:52:31 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 13:57:31 +03] Poll #176 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 13:57:31 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 14:02:31 +03] Poll #177 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 14:02:31 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 14:07:32 +03] Poll #178 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 14:07:32 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 14:12:32 +03] Poll #179 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 14:12:32 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 14:17:32 +03] Poll #180 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 14:17:32 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 14:22:33 +03] Poll #181 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 14:22:33 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 14:27:33 +03] Poll #182 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 14:27:33 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 14:32:33 +03] Poll #183 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 14:32:33 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 14:37:33 +03] Poll #184 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 14:37:33 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 14:42:34 +03] Poll #185 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 14:42:34 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 14:47:34 +03] Poll #186 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 14:47:34 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 14:52:34 +03] Poll #187 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 14:52:34 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 14:57:34 +03] Poll #188 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 14:57:34 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 15:02:35 +03] Poll #189 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 15:02:35 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 15:07:35 +03] Poll #190 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 15:07:35 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 15:12:35 +03] Poll #191 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 15:12:35 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 15:17:35 +03] Poll #192 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 15:17:35 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 15:22:36 +03] Poll #193 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 15:22:36 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 15:27:36 +03] Poll #194 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 15:27:36 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 15:32:36 +03] Poll #195 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 15:32:36 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 15:37:36 +03] Poll #196 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 15:37:36 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 15:42:37 +03] Poll #197 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 15:42:37 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 15:47:37 +03] Poll #198 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 15:47:37 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 15:52:37 +03] Poll #199 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 15:52:37 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 15:57:38 +03] Poll #200 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 15:57:38 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 16:02:38 +03] Poll #201 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 16:02:38 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 16:07:38 +03] Poll #202 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 16:07:38 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 16:12:38 +03] Poll #203 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 16:12:38 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 16:17:39 +03] Poll #204 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 16:17:39 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 16:22:39 +03] Poll #205 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 16:22:39 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 16:27:39 +03] Poll #206 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 16:27:39 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 16:32:39 +03] Poll #207 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 16:32:39 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 16:37:40 +03] Poll #208 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 16:37:40 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 16:42:40 +03] Poll #209 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 16:42:40 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 16:47:40 +03] Poll #210 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 16:47:40 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 16:52:41 +03] Poll #211 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 16:52:41 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 16:57:41 +03] Poll #212 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 16:57:41 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 17:02:41 +03] Poll #213 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 17:02:41 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 17:07:41 +03] Poll #214 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 17:07:41 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 17:12:42 +03] Poll #215 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 17:12:42 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 17:17:42 +03] Poll #216 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 17:17:42 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 17:22:42 +03] Poll #217 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 17:22:42 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 17:27:42 +03] Poll #218 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 17:27:42 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 17:32:43 +03] Poll #219 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 17:32:43 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 17:37:43 +03] Poll #220 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 17:37:43 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 17:42:43 +03] Poll #221 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 17:42:43 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 17:47:43 +03] Poll #222 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 17:47:43 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 17:52:44 +03] Poll #223 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 17:52:44 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 17:57:44 +03] Poll #224 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 17:57:44 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 18:02:44 +03] Poll #225 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 18:02:44 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 18:07:44 +03] Poll #226 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 18:07:44 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 18:12:45 +03] Poll #227 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 18:12:45 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 18:17:45 +03] Poll #228 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 18:17:45 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 18:22:45 +03] Poll #229 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 18:22:45 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 18:27:46 +03] Poll #230 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 18:27:46 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 18:32:46 +03] Poll #231 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 18:32:46 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 18:37:46 +03] Poll #232 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 18:37:46 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 18:42:46 +03] Poll #233 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 18:42:46 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 18:47:47 +03] Poll #234 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 18:47:47 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 18:52:47 +03] Poll #235 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 18:52:47 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 18:57:47 +03] Poll #236 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 18:57:47 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 19:02:47 +03] Poll #237 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 19:02:47 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 19:07:48 +03] Poll #238 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 19:07:48 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 19:12:48 +03] Poll #239 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 19:12:48 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 19:17:48 +03] Poll #240 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 19:17:48 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 19:22:48 +03] Poll #241 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 19:22:48 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 19:27:49 +03] Poll #242 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 19:27:49 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 19:32:49 +03] Poll #243 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 19:32:49 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 19:37:49 +03] Poll #244 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 19:37:49 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 19:42:49 +03] Poll #245 | H100 jobs: 1 | Total jobs: 5 | Waiting for seed 456
+[2026-06-04 19:42:49 +03] Slot busy (H100=1, total=5). Sleeping 300s...
+[2026-06-04 19:47:50 +03] Poll #246 | H100 jobs: 0 | Total jobs: 4 | Waiting for seed 456
+[2026-06-04 19:47:50 +03] Slot available (H100=0, total=4). Submitting seed 456...
+[2026-06-04 19:47:50 +03] Submitting seed 456: /home/ralshehri0468/quasar_v937_seed456.pbs
+[2026-06-04 19:47:50 +03] SUCCESS: Seed 456 submitted — Job ID: 179661.khead2
+[2026-06-04 19:48:05 +03] Post-submit check: H100 jobs = 1
+[2026-06-04 19:48:05 +03] Seed 456 submitted. Waiting for it to complete before submitting next seed...
+[2026-06-04 19:53:05 +03] Poll #247 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 19:58:05 +03] Poll #248 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 20:03:05 +03] Poll #249 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 20:08:05 +03] Poll #250 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 20:13:05 +03] Poll #251 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 20:18:05 +03] Poll #252 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 20:23:05 +03] Poll #253 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 20:28:05 +03] Poll #254 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 20:33:05 +03] Poll #255 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 20:38:05 +03] Poll #256 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 20:43:05 +03] Poll #257 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 20:48:05 +03] Poll #258 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 20:53:05 +03] Poll #259 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 20:58:05 +03] Poll #260 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 21:03:05 +03] Poll #261 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 21:08:05 +03] Poll #262 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 21:13:05 +03] Poll #263 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 21:18:06 +03] Poll #264 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 21:23:06 +03] Poll #265 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 21:28:06 +03] Poll #266 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 21:33:06 +03] Poll #267 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 21:38:06 +03] Poll #268 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 21:43:06 +03] Poll #269 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 21:48:06 +03] Poll #270 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 21:53:06 +03] Poll #271 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 21:58:06 +03] Poll #272 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 22:03:06 +03] Poll #273 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 22:08:06 +03] Poll #274 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 22:13:06 +03] Poll #275 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 22:18:06 +03] Poll #276 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 22:23:06 +03] Poll #277 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 22:28:06 +03] Poll #278 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 22:33:06 +03] Poll #279 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 22:38:06 +03] Poll #280 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 22:43:06 +03] Poll #281 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 22:48:06 +03] Poll #282 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 22:53:06 +03] Poll #283 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 22:58:06 +03] Poll #284 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 23:03:06 +03] Poll #285 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 23:08:06 +03] Poll #286 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 23:13:06 +03] Poll #287 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 23:18:06 +03] Poll #288 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 23:23:06 +03] Poll #289 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 23:28:06 +03] Poll #290 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 23:33:06 +03] Poll #291 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 23:38:07 +03] Poll #292 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 23:43:07 +03] Poll #293 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 23:48:07 +03] Poll #294 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 23:53:07 +03] Poll #295 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-04 23:58:07 +03] Poll #296 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-05 00:03:07 +03] Poll #297 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-05 00:08:07 +03] Poll #298 | Waiting for seed 456 to finish | H100 jobs: 1
+[2026-06-05 00:13:07 +03] Poll #299 | Waiting for seed 456 to finish | H100 jobs: 0
+[2026-06-05 00:13:07 +03] Seed 456 job has finished (H100 queue empty).
+[2026-06-05 00:13:07 +03] --- Next seed: 1111 ---
+[2026-06-05 00:13:07 +03] Poll #300 | H100 jobs: 0 | Total jobs: 4 | Waiting for seed 1111
+[2026-06-05 00:13:07 +03] Slot available (H100=0, total=4). Submitting seed 1111...
+[2026-06-05 00:13:07 +03] Submitting seed 1111: /home/ralshehri0468/quasar_v937_seed1111.pbs
+[2026-06-05 00:13:07 +03] SUCCESS: Seed 1111 submitted — Job ID: 179690.khead2
+[2026-06-05 00:13:22 +03] Post-submit check: H100 jobs = 1
+[2026-06-05 00:13:22 +03] Seed 1111 submitted. Waiting for it to complete before submitting next seed...
+[2026-06-05 00:18:22 +03] Poll #301 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 00:23:22 +03] Poll #302 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 00:28:22 +03] Poll #303 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 00:33:22 +03] Poll #304 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 00:38:23 +03] Poll #305 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 00:43:23 +03] Poll #306 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 00:48:23 +03] Poll #307 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 00:53:23 +03] Poll #308 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 00:58:23 +03] Poll #309 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 01:03:23 +03] Poll #310 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 01:08:23 +03] Poll #311 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 01:13:23 +03] Poll #312 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 01:18:23 +03] Poll #313 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 01:23:23 +03] Poll #314 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 01:28:23 +03] Poll #315 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 01:33:23 +03] Poll #316 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 01:38:23 +03] Poll #317 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 01:43:23 +03] Poll #318 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 01:48:23 +03] Poll #319 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 01:53:23 +03] Poll #320 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 01:58:23 +03] Poll #321 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 02:03:23 +03] Poll #322 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 02:08:23 +03] Poll #323 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 02:13:23 +03] Poll #324 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 02:18:23 +03] Poll #325 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 02:23:23 +03] Poll #326 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 02:28:23 +03] Poll #327 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 02:33:23 +03] Poll #328 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 02:38:23 +03] Poll #329 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 02:43:23 +03] Poll #330 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 02:48:23 +03] Poll #331 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 02:53:23 +03] Poll #332 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 02:58:23 +03] Poll #333 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 03:03:24 +03] Poll #334 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 03:08:24 +03] Poll #335 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 03:13:24 +03] Poll #336 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 03:18:24 +03] Poll #337 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 03:23:24 +03] Poll #338 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 03:28:24 +03] Poll #339 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 03:33:24 +03] Poll #340 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 03:38:24 +03] Poll #341 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 03:43:24 +03] Poll #342 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 03:48:24 +03] Poll #343 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 03:53:24 +03] Poll #344 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 03:58:24 +03] Poll #345 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 04:03:24 +03] Poll #346 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 04:08:24 +03] Poll #347 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 04:13:24 +03] Poll #348 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 04:18:24 +03] Poll #349 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 04:23:24 +03] Poll #350 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 04:28:24 +03] Poll #351 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 04:33:24 +03] Poll #352 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 04:38:24 +03] Poll #353 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 04:43:24 +03] Poll #354 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 04:48:24 +03] Poll #355 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 04:53:24 +03] Poll #356 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 04:58:24 +03] Poll #357 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 05:03:24 +03] Poll #358 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 05:08:24 +03] Poll #359 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 05:13:24 +03] Poll #360 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 05:18:25 +03] Poll #361 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 05:23:25 +03] Poll #362 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 05:28:25 +03] Poll #363 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 05:33:25 +03] Poll #364 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 05:38:25 +03] Poll #365 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 05:43:25 +03] Poll #366 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 05:48:25 +03] Poll #367 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 05:53:25 +03] Poll #368 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 05:58:25 +03] Poll #369 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 06:03:25 +03] Poll #370 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 06:08:25 +03] Poll #371 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 06:13:25 +03] Poll #372 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 06:18:25 +03] Poll #373 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 06:23:25 +03] Poll #374 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 06:28:25 +03] Poll #375 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 06:33:25 +03] Poll #376 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 06:38:25 +03] Poll #377 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 06:43:25 +03] Poll #378 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 06:48:25 +03] Poll #379 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 06:53:25 +03] Poll #380 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 06:58:25 +03] Poll #381 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 07:03:25 +03] Poll #382 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 07:08:25 +03] Poll #383 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 07:13:25 +03] Poll #384 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 07:18:25 +03] Poll #385 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 07:23:25 +03] Poll #386 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 07:28:25 +03] Poll #387 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 07:33:25 +03] Poll #388 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 07:38:26 +03] Poll #389 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 07:43:26 +03] Poll #390 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 07:48:26 +03] Poll #391 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 07:53:26 +03] Poll #392 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 07:58:26 +03] Poll #393 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 08:03:26 +03] Poll #394 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 08:08:26 +03] Poll #395 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 08:13:26 +03] Poll #396 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 08:18:26 +03] Poll #397 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 08:23:26 +03] Poll #398 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 08:28:26 +03] Poll #399 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 08:33:26 +03] Poll #400 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 08:38:26 +03] Poll #401 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 08:43:26 +03] Poll #402 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 08:48:26 +03] Poll #403 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 08:53:26 +03] Poll #404 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 08:58:26 +03] Poll #405 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 09:03:26 +03] Poll #406 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 09:08:26 +03] Poll #407 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 09:13:26 +03] Poll #408 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 09:18:26 +03] Poll #409 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 09:23:26 +03] Poll #410 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 09:28:26 +03] Poll #411 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 09:33:26 +03] Poll #412 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 09:38:26 +03] Poll #413 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 09:43:27 +03] Poll #414 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 09:48:27 +03] Poll #415 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 09:53:27 +03] Poll #416 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 09:58:27 +03] Poll #417 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 10:03:27 +03] Poll #418 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 10:08:27 +03] Poll #419 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 10:13:27 +03] Poll #420 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 10:18:27 +03] Poll #421 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 10:23:27 +03] Poll #422 | Waiting for seed 1111 to finish | H100 jobs: 1
+[2026-06-05 10:28:27 +03] Poll #423 | Waiting for seed 1111 to finish | H100 jobs: 0
+[2026-06-05 10:28:27 +03] Seed 1111 job has finished (H100 queue empty).
+[2026-06-05 10:28:27 +03] --- Next seed: 2222 ---
+[2026-06-05 10:28:27 +03] Poll #424 | H100 jobs: 0 | Total jobs: 4 | Waiting for seed 2222
+[2026-06-05 10:28:27 +03] Slot available (H100=0, total=4). Submitting seed 2222...
+[2026-06-05 10:28:27 +03] Submitting seed 2222: /home/ralshehri0468/quasar_v937_seed2222.pbs
+[2026-06-05 10:28:27 +03] SUCCESS: Seed 2222 submitted — Job ID: 179729.khead2
+[2026-06-05 10:28:43 +03] Post-submit check: H100 jobs = 1
+[2026-06-05 10:28:43 +03] Seed 2222 submitted. Waiting for it to complete before submitting next seed...
+[2026-06-05 10:33:43 +03] Poll #425 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 10:38:43 +03] Poll #426 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 10:43:43 +03] Poll #427 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 10:48:43 +03] Poll #428 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 10:53:43 +03] Poll #429 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 10:58:43 +03] Poll #430 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 11:03:43 +03] Poll #431 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 11:08:43 +03] Poll #432 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 11:13:43 +03] Poll #433 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 11:18:43 +03] Poll #434 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 11:23:43 +03] Poll #435 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 11:28:43 +03] Poll #436 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 11:33:43 +03] Poll #437 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 11:38:43 +03] Poll #438 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 11:43:43 +03] Poll #439 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 11:48:43 +03] Poll #440 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 11:53:43 +03] Poll #441 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 11:58:43 +03] Poll #442 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 12:03:43 +03] Poll #443 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 12:08:43 +03] Poll #444 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 12:13:43 +03] Poll #445 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 12:18:43 +03] Poll #446 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 12:23:43 +03] Poll #447 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 12:28:43 +03] Poll #448 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 12:33:43 +03] Poll #449 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 12:38:44 +03] Poll #450 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 12:43:44 +03] Poll #451 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 12:48:44 +03] Poll #452 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 12:53:44 +03] Poll #453 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 12:58:44 +03] Poll #454 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 13:03:44 +03] Poll #455 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 13:08:44 +03] Poll #456 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 13:13:44 +03] Poll #457 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 13:18:44 +03] Poll #458 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 13:23:44 +03] Poll #459 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 13:28:44 +03] Poll #460 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 13:33:44 +03] Poll #461 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 13:38:44 +03] Poll #462 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 13:43:44 +03] Poll #463 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 13:48:44 +03] Poll #464 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 13:53:44 +03] Poll #465 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 13:58:44 +03] Poll #466 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 14:03:44 +03] Poll #467 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 14:08:44 +03] Poll #468 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 14:13:44 +03] Poll #469 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 14:18:44 +03] Poll #470 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 14:23:44 +03] Poll #471 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 14:28:44 +03] Poll #472 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 14:33:44 +03] Poll #473 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 14:38:44 +03] Poll #474 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 14:43:44 +03] Poll #475 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 14:48:44 +03] Poll #476 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 14:53:44 +03] Poll #477 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 14:58:45 +03] Poll #478 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 15:03:45 +03] Poll #479 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 15:08:45 +03] Poll #480 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 15:13:45 +03] Poll #481 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 15:18:45 +03] Poll #482 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 15:23:45 +03] Poll #483 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 15:28:45 +03] Poll #484 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 15:33:45 +03] Poll #485 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 15:38:45 +03] Poll #486 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 15:43:45 +03] Poll #487 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 15:48:45 +03] Poll #488 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 15:53:45 +03] Poll #489 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 15:58:45 +03] Poll #490 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 16:03:45 +03] Poll #491 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 16:08:45 +03] Poll #492 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 16:13:45 +03] Poll #493 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 16:18:45 +03] Poll #494 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 16:23:45 +03] Poll #495 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 16:28:45 +03] Poll #496 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 16:33:45 +03] Poll #497 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 16:38:45 +03] Poll #498 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 16:43:45 +03] Poll #499 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 16:48:45 +03] Poll #500 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 16:53:45 +03] Poll #501 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 16:58:45 +03] Poll #502 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 17:03:45 +03] Poll #503 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 17:08:45 +03] Poll #504 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 17:13:45 +03] Poll #505 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 17:18:46 +03] Poll #506 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 17:23:46 +03] Poll #507 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 17:28:46 +03] Poll #508 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 17:33:46 +03] Poll #509 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 17:38:46 +03] Poll #510 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 17:43:46 +03] Poll #511 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 17:48:46 +03] Poll #512 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 17:53:46 +03] Poll #513 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 17:58:46 +03] Poll #514 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 18:03:46 +03] Poll #515 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 18:08:46 +03] Poll #516 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 18:13:46 +03] Poll #517 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 18:18:46 +03] Poll #518 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 18:23:46 +03] Poll #519 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 18:28:46 +03] Poll #520 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 18:33:46 +03] Poll #521 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 18:38:46 +03] Poll #522 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 18:43:46 +03] Poll #523 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 18:48:46 +03] Poll #524 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 18:53:46 +03] Poll #525 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 18:58:46 +03] Poll #526 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 19:03:46 +03] Poll #527 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 19:08:46 +03] Poll #528 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 19:13:46 +03] Poll #529 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 19:18:46 +03] Poll #530 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 19:23:46 +03] Poll #531 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 19:28:46 +03] Poll #532 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 19:33:47 +03] Poll #533 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 19:38:47 +03] Poll #534 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 19:43:47 +03] Poll #535 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 19:48:47 +03] Poll #536 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 19:53:47 +03] Poll #537 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 19:58:47 +03] Poll #538 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 20:03:47 +03] Poll #539 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 20:08:47 +03] Poll #540 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 20:13:47 +03] Poll #541 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 20:18:47 +03] Poll #542 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 20:23:47 +03] Poll #543 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 20:28:47 +03] Poll #544 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 20:33:47 +03] Poll #545 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 20:38:47 +03] Poll #546 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 20:43:47 +03] Poll #547 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 20:48:47 +03] Poll #548 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 20:53:47 +03] Poll #549 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 20:58:47 +03] Poll #550 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 21:03:47 +03] Poll #551 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 21:08:47 +03] Poll #552 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 21:13:47 +03] Poll #553 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 21:18:47 +03] Poll #554 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 21:23:47 +03] Poll #555 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 21:28:47 +03] Poll #556 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 21:33:47 +03] Poll #557 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 21:38:47 +03] Poll #558 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 21:43:47 +03] Poll #559 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 21:48:48 +03] Poll #560 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 21:53:48 +03] Poll #561 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 21:58:48 +03] Poll #562 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 22:03:48 +03] Poll #563 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 22:08:48 +03] Poll #564 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 22:13:48 +03] Poll #565 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 22:18:48 +03] Poll #566 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 22:23:48 +03] Poll #567 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 22:28:48 +03] Poll #568 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 22:33:48 +03] Poll #569 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 22:38:48 +03] Poll #570 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 22:43:48 +03] Poll #571 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 22:48:48 +03] Poll #572 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 22:53:48 +03] Poll #573 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 22:58:48 +03] Poll #574 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 23:03:48 +03] Poll #575 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 23:08:48 +03] Poll #576 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 23:13:48 +03] Poll #577 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 23:18:48 +03] Poll #578 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 23:23:48 +03] Poll #579 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 23:28:48 +03] Poll #580 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 23:33:48 +03] Poll #581 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 23:38:48 +03] Poll #582 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 23:43:48 +03] Poll #583 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 23:48:48 +03] Poll #584 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 23:53:48 +03] Poll #585 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-05 23:58:48 +03] Poll #586 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-06 00:03:48 +03] Poll #587 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-06 00:08:48 +03] Poll #588 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-06 00:13:49 +03] Poll #589 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-06 00:18:49 +03] Poll #590 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-06 00:23:49 +03] Poll #591 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-06 00:28:49 +03] Poll #592 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-06 00:33:49 +03] Poll #593 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-06 00:38:49 +03] Poll #594 | Waiting for seed 2222 to finish | H100 jobs: 1
+[2026-06-06 00:43:49 +03] Poll #595 | Waiting for seed 2222 to finish | H100 jobs: 0
+[2026-06-06 00:43:49 +03] Seed 2222 job has finished (H100 queue empty).
+[2026-06-06 00:43:49 +03] ============================================================
+[2026-06-06 00:43:49 +03] All seeds submitted and completed: 456 1111 2222
+[2026-06-06 00:43:49 +03] Watcher exiting cleanly.
+[2026-06-06 00:43:49 +03] ============================================================
+ exiting cleanly.
+[2026-06-06 00:43:49 +03] ============================================================

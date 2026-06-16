@@ -1,0 +1,21 @@
+=== QUASAR v13 Adaptive (factory bug fixed, full 2Q-8Q run) ===
+Job ID: 181320.khead2
+Node: kcn524
+Start: Tue Jun 16 04:36:39 +03 2026
+Queue: H100
+Syntax OK
+Python: Python 3.6.8
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'torch'
+PyTorch: 
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'torch'
+CUDA: 
+Traceback (most recent call last):
+  File "/home/ralshehri0468/quasar_v13/quasar_v13_adaptive.py", line 65, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+=== DONE ===
+End: Tue Jun 16 04:36:42 +03 2026

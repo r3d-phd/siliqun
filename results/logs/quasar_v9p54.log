@@ -1,0 +1,37 @@
+=== QUASAR v9.54 PBS Job (H100) ===
+Job ID: 179490.khead2
+Node: kcn521
+Start: Wed Jun  3 02:28:52 +03 2026
+GPU: NVIDIA H100 NVL
+Python: Python 3.12.4
+PyTorch: 2.4.0
+CUDA: True
+=== QUASAR v9.54 (VAPOR-Lite Fixed) ===
+Device: cuda
+VAPOR_BETA=0.3, DELTA_F_BONUS=0.05
+Milestones: {0.5: 0.5, 0.8: 1.0, 0.99: 2.0}
+
+============================================================
+[stage_0] n_qubits=2, budget=20,000
+============================================================
+  [stage_0] step=  20,000 | F_eval=0.6118 | F_max=0.6186 | best=0.6118 | tau_g=0.1000 | alpha=0.0956
+/home/ralshehri0468/quasar_v954.py:393: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(path, map_location=DEVICE)
+  [stage_0] Done: best_F=0.6118, elapsed=122.4s
+
+============================================================
+[stage_0.1] n_qubits=2, budget=10,000
+============================================================
+  [CST] Warm-start (100%) from /home/ralshehri0468/quasar_v9p54_results/stage_0_best.pt
+  [stage_0.1] Done: best_F=0.0000, elapsed=9.2s
+
+============================================================
+[stage_0.2] n_qubits=2, budget=10,000
+============================================================
+  [stage_0.2] Done: best_F=0.0000, elapsed=9.5s
+
+============================================================
+[stage_0.3] n_qubits=2, budget=50,000
+============================================================
+
+[SIGTERM] Partial results saved to /home/ralshehri0468/quasar_v9p54_results/quasar_v9p54_results_partial.json

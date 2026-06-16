@@ -1,0 +1,26 @@
+[
+  {
+    "target": "ghz",
+    "seed": 42,
+    "mean_fidelity": 0.05415295473974303,
+    "std_fidelity": 0.00578224018089842,
+    "best_fidelity_cb": 0.14133150843557507,
+    "elapsed_s": 22672.595648765564,
+    "timesteps": 1000000,
+    "converged": false,
+    "early_stopped": false,
+    "patience_stopped": true
+  },
+  {
+    "target": "ghz",
+    "seed": 123,
+    "mean_fidelity": 0.02218994775901998,
+    "std_fidelity": 0.0009872040061193626,
+    "best_fidelity_cb": 0.4438422465848581,
+    "elapsed_s": 23625.06033229828,
+    "timesteps": 1000000,
+    "converged": false,
+    "early_stopped": false,
+    "patience_stopped": true
+  }
+]

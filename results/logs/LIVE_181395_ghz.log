@@ -1,0 +1,89 @@
+2026-06-16 18:23:54.434 | INFO     | __main__:main:781 - ======================================================================
+2026-06-16 18:23:54.434 | INFO     | __main__:main:782 - QUASAR v13 — Adaptive Open-Ended Scalability Experiment
+2026-06-16 18:23:54.434 | INFO     | __main__:main:783 -   Device:      cuda
+2026-06-16 18:23:54.435 | INFO     | __main__:main:784 -   Qubit range: 2 → 12 (adaptive)
+2026-06-16 18:23:54.435 | INFO     | __main__:main:785 -   Targets:     ['GHZ', 'W', 'Dicke-k3']
+2026-06-16 18:23:54.435 | INFO     | __main__:main:786 -   Seeds:       [42, 123, 456]
+2026-06-16 18:23:54.435 | INFO     | __main__:main:787 -   F threshold: 0.99 (advance) / 0.9 (floor)
+2026-06-16 18:23:54.435 | INFO     | __main__:main:788 -   Max steps:   500000 @ 2Q, ×1.5 per qubit
+2026-06-16 18:23:54.435 | INFO     | __main__:main:790 -   Noise stage: 5
+2026-06-16 18:23:54.435 | INFO     | __main__:main:791 - ======================================================================
+2026-06-16 18:23:54.435 | INFO     | __main__:main:814 - 
+2026-06-16 18:23:54.435 | INFO     | __main__:main:815 - ======================================================================
+2026-06-16 18:23:54.435 | INFO     | __main__:main:816 -   QUBIT LEVEL: 2Q  (budget=500,000 steps)
+2026-06-16 18:23:54.435 | INFO     | __main__:main:817 - ======================================================================
+2026-06-16 18:23:54.436 | INFO     | __main__:main:827 - DER++ buffer init: obs_dim=20, act_dim=6
+2026-06-16 18:23:54.444 | INFO     | __main__:run_qubit_level:606 -   ── 2Q / GHZ / seed=42 ──
+2026-06-16 18:26:02.873 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=10,000 best_F=0.9302 plateau=1,568 alpha=0.0148
+2026-06-16 18:26:25.753 | INFO     | __main__:run_cell:482 -     SLM correction applied at step=10939
+2026-06-16 18:29:59.280 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=20,000 best_F=0.9897 plateau=2,788 alpha=0.0148
+2026-06-16 18:30:49.037 | INFO     | __main__:run_cell:482 -     SLM correction applied at step=21878
+2026-06-16 18:34:23.481 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=30,000 best_F=0.9918 plateau=9,271 alpha=0.0148
+2026-06-16 18:35:38.288 | INFO     | __main__:run_cell:482 -     SLM correction applied at step=32817
+2026-06-16 18:38:28.052 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=39247
+2026-06-16 18:38:28.055 | INFO     | __main__:run_qubit_level:645 -     HP trial 1/12: best_F=0.9918
+2026-06-16 18:40:45.980 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=10,000 best_F=0.9391 plateau=114 alpha=0.0225
+2026-06-16 18:45:11.645 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=20,000 best_F=0.9896 plateau=6,033 alpha=0.0225
+2026-06-16 18:49:37.439 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=30,000 best_F=0.9896 plateau=16,033 alpha=0.0225
+2026-06-16 18:50:43.411 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=32485
+2026-06-16 18:50:43.413 | INFO     | __main__:run_qubit_level:645 -     HP trial 2/12: best_F=0.9896
+2026-06-16 18:53:01.165 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=10,000 best_F=0.8825 plateau=3,581 alpha=0.0186
+2026-06-16 18:57:25.805 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=20,000 best_F=0.8825 plateau=13,581 alpha=0.0186
+2026-06-16 18:59:36.678 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=24937
+2026-06-16 18:59:36.680 | INFO     | __main__:run_qubit_level:645 -     HP trial 3/12: best_F=0.8825
+2026-06-16 19:01:54.363 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=10,000 best_F=0.8724 plateau=6,636 alpha=0.0252
+2026-06-16 19:06:19.087 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=20,000 best_F=0.8724 plateau=16,636 alpha=0.0252
+2026-06-16 19:07:08.888 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=21882
+2026-06-16 19:07:08.890 | INFO     | __main__:run_qubit_level:645 -     HP trial 4/12: best_F=0.8724
+2026-06-16 19:09:27.563 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=10,000 best_F=0.9049 plateau=382 alpha=0.0025
+2026-06-16 19:13:54.014 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=20,000 best_F=0.9889 plateau=6,611 alpha=0.0025
+2026-06-16 19:18:20.548 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=30,000 best_F=0.9889 plateau=16,611 alpha=0.0025
+2026-06-16 19:19:11.280 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=31907
+2026-06-16 19:19:11.282 | INFO     | __main__:run_qubit_level:645 -     HP trial 5/12: best_F=0.9889
+2026-06-16 19:21:30.155 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=10,000 best_F=0.8724 plateau=6,636 alpha=0.0018
+2026-06-16 19:25:57.247 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=20,000 best_F=0.8724 plateau=16,636 alpha=0.0018
+2026-06-16 19:26:47.509 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=21882
+2026-06-16 19:26:47.511 | INFO     | __main__:run_qubit_level:645 -     HP trial 6/12: best_F=0.8724
+2026-06-16 19:29:05.421 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=10,000 best_F=0.8843 plateau=4,061 alpha=0.0231
+2026-06-16 19:33:30.435 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=20,000 best_F=0.9901 plateau=127 alpha=0.0231
+2026-06-16 19:37:55.433 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=30,000 best_F=0.9901 plateau=10,127 alpha=0.0231
+2026-06-16 19:41:37.783 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=38391
+2026-06-16 19:41:37.786 | INFO     | __main__:run_qubit_level:645 -     HP trial 7/12: best_F=0.9901
+2026-06-16 19:43:56.188 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=10,000 best_F=0.9665 plateau=96 alpha=0.0190
+2026-06-16 19:48:22.343 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=20,000 best_F=0.9921 plateau=7,667 alpha=0.0190
+2026-06-16 19:52:48.538 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=30,000 best_F=0.9925 plateau=5,512 alpha=0.0190
+2026-06-16 19:57:14.729 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=40,000 best_F=0.9925 plateau=15,512 alpha=0.0190
+2026-06-16 19:58:34.773 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=43006
+2026-06-16 19:58:34.775 | INFO     | __main__:run_qubit_level:645 -     HP trial 8/12: best_F=0.9925
+2026-06-16 20:00:53.154 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=10,000 best_F=0.9554 plateau=1,738 alpha=0.0084
+2026-06-16 20:05:19.154 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=20,000 best_F=0.9782 plateau=3,515 alpha=0.0084
+2026-06-16 20:09:45.272 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=30,000 best_F=0.9891 plateau=1,880 alpha=0.0084
+2026-06-16 20:14:11.278 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=40,000 best_F=0.9891 plateau=11,880 alpha=0.0084
+2026-06-16 20:17:07.715 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=46638
+2026-06-16 20:17:07.716 | INFO     | __main__:run_qubit_level:645 -     HP trial 9/12: best_F=0.9891
+2026-06-16 20:19:26.873 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=10,000 best_F=0.9675 plateau=66 alpha=0.0103
+2026-06-16 20:23:53.608 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=20,000 best_F=0.9675 plateau=10,066 alpha=0.0103
+2026-06-16 20:27:38.676 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=28452
+2026-06-16 20:27:38.679 | INFO     | __main__:run_qubit_level:645 -     HP trial 10/12: best_F=0.9675
+2026-06-16 20:29:56.871 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=10,000 best_F=0.8724 plateau=6,636 alpha=0.0053
+2026-06-16 20:34:22.687 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=20,000 best_F=0.8724 plateau=16,636 alpha=0.0053
+2026-06-16 20:35:12.727 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=21882
+2026-06-16 20:35:12.729 | INFO     | __main__:run_qubit_level:645 -     HP trial 11/12: best_F=0.8724
+2026-06-16 20:37:31.067 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=10,000 best_F=0.8724 plateau=6,636 alpha=0.0111
+2026-06-16 20:41:50.505 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=20,000 best_F=0.8724 plateau=16,636 alpha=0.0111
+2026-06-16 20:42:40.445 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=21882
+2026-06-16 20:42:40.448 | INFO     | __main__:run_qubit_level:645 -     HP trial 12/12: best_F=0.8724
+2026-06-16 20:42:40.448 | INFO     | __main__:run_qubit_level:654 -   Best HP (F=0.9925), running full budget 500,000 steps...
+2026-06-16 20:42:40.477 | INFO     | __main__:transfer_agent:362 -   Transfer: 20→20 obs, 6→6 act
+2026-06-16 20:44:58.985 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=10,000 best_F=0.9958 plateau=3,577 alpha=0.0190
+2026-06-16 20:49:25.488 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=20,000 best_F=0.9986 plateau=4,582 alpha=0.0190
+2026-06-16 20:53:50.329 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=30,000 best_F=0.9986 plateau=14,582 alpha=0.0190
+2026-06-16 20:58:14.815 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=40,000 best_F=0.9986 plateau=24,582 alpha=0.0190
+2026-06-16 21:02:39.292 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=50,000 best_F=0.9986 plateau=34,582 alpha=0.0190
+2026-06-16 21:07:03.886 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=60,000 best_F=0.9986 plateau=44,582 alpha=0.0190
+2026-06-16 21:11:28.351 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=70,000 best_F=0.9986 plateau=54,582 alpha=0.0190
+2026-06-16 21:15:52.910 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=80,000 best_F=0.9986 plateau=64,582 alpha=0.0190
+2026-06-16 21:17:42.240 | INFO     | __main__:run_cell:482 -     SLM correction applied at step=84113
+2026-06-16 21:20:18.065 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=90,000 best_F=0.9986 plateau=74,582 alpha=0.0190
+2026-06-16 21:24:42.654 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=100,000 best_F=0.9994 plateau=3,753 alpha=0.0190
+2026-06-16 21:29:07.098 | INFO     | __main__:run_cell:486 -     2Q/ghz/s42 step=110,000 best_F=0.9994 plateau=13,753 alpha=0.0190

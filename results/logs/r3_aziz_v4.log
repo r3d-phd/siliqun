@@ -1,0 +1,37 @@
+=== Node: kcn502 | GPU: NVIDIA A100-PCIE-40GB ===
+=== Job start: Sat May 30 16:28:37 +03 2026 ===
+Python: /app/utils/anaconda3-2024.02/bin/python3
+Python 3.11.7
+PyTorch: 2.5.1+cu121 | CUDA avail: True
+=== Running R3 v3 seeds (666, 1453) — fidelity key fix ===
+TQC loaded from sb3_contrib
+
+============================================================
+Running seed 666 (1/2)
+============================================================
+[DIAGNOSTIC] info keys from env: ['mean_fidelity', 'best_fidelity', 'nlif', 'noisefree_fidelity']
+[DIAGNOSTIC] mean_fidelity=0.19072543037944656, best_fidelity=0.19441436861274475
+  Seed 666 | Ep 500/5000 | mean_F=0.1527 | best_F=0.1529 | elapsed=0.21h
+  Seed 666 | Ep 1000/5000 | mean_F=0.4164 | best_F=0.4167 | elapsed=0.46h
+  Seed 666 | Ep 1500/5000 | mean_F=0.5428 | best_F=0.5430 | elapsed=0.72h
+  Seed 666 | Ep 2000/5000 | mean_F=0.5899 | best_F=0.5902 | elapsed=0.99h
+  Seed 666 | Ep 2500/5000 | mean_F=0.7342 | best_F=0.7349 | elapsed=1.25h
+  Seed 666 | Ep 3000/5000 | mean_F=0.7541 | best_F=0.7546 | elapsed=1.50h
+  Seed 666 | Ep 3500/5000 | mean_F=0.8062 | best_F=0.8069 | elapsed=1.76h
+  Seed 666 | Ep 4000/5000 | mean_F=0.7833 | best_F=0.7840 | elapsed=2.02h
+  Seed 666 | Ep 4500/5000 | mean_F=0.7963 | best_F=0.7969 | elapsed=2.28h
+  Seed 666 | Ep 5000/5000 | mean_F=0.8004 | best_F=0.8008 | elapsed=2.53h
+  Seed 666 | Ep 5500/5000 | mean_F=0.7905 | best_F=0.7913 | elapsed=2.79h
+  Seed 666 | Ep 6000/5000 | mean_F=0.7986 | best_F=0.7992 | elapsed=3.05h
+  Seed 666 | Ep 6500/5000 | mean_F=0.8514 | best_F=0.8520 | elapsed=3.30h
+  Seed 666 | Ep 7000/5000 | mean_F=0.8621 | best_F=0.8626 | elapsed=3.56h
+  Seed 666 | Ep 7500/5000 | mean_F=0.8705 | best_F=0.8710 | elapsed=3.82h
+  Seed 666 | Ep 8000/5000 | mean_F=0.8710 | best_F=0.8716 | elapsed=4.08h
+  Seed 666 | Ep 8500/5000 | mean_F=0.8572 | best_F=0.8577 | elapsed=4.33h
+  Seed 666 | Ep 9000/5000 | mean_F=0.8694 | best_F=0.8701 | elapsed=4.59h
+  Seed 666 | Ep 9500/5000 | mean_F=0.8564 | best_F=0.8572 | elapsed=4.85h
+  Seed 666 | Ep 10000/5000 | mean_F=0.8578 | best_F=0.8585 | elapsed=5.11h
+  Seed 666 | Ep 10500/5000 | mean_F=0.8681 | best_F=0.8689 | elapsed=5.36h
+  Seed 666 | Ep 11000/5000 | mean_F=0.8635 | best_F=0.8642 | elapsed=5.62h
+  Seed 666 | Ep 11500/5000 | mean_F=0.8419 | best_F=0.8427 | elapsed=5.88h
+=>> PBS: job killed: walltime 21652 exceeded limit 21600

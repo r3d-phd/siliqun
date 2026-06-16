@@ -1,0 +1,32 @@
+================================================================
+QUASAR v9.57 (DBA max_chi fix + MPS reset throttle + deep AttractorEscape)
+Job: 175843.khead2 | Node: kcn524 | Start: Wed May 13 16:05:36 +03 2026
+================================================================
+[SETUP] Downloading v9.57 tarball...
+[SETUP] Extracting tarball...
+[SETUP] Copying v9.57 source to code/src/quasar/...
+[SETUP] Copy complete.
+
+=== PREFLIGHT CHECKS ===
+  [PASS] DBA v9.57 max_chi=initial*4 formula
+  [PASS] DBA v9.57 log marker
+  [PASS] MPS reset rolling window (v9.57)
+  [PASS] MPS reset cooldown 2000*n_qubits
+  [PASS] AttractorEscape v9.57 deep reset
+  [PASS] AttractorEscape cooldown 20k base
+
+Preflight: 6 passed, 0 failed.
+
+[ENV] Activating Python environment...
+
+EnvironmentNameNotFound: Could not find conda environment: quasar_env
+You can list all discoverable environments with `conda info --envs`.
+
+
+
+[TRAIN] Launching QUASAR v9.57 training...
+python3: can't open file 'code/src/run_quasar_v950.py': [Errno 2] No such file or directory
+
+================================================================
+QUASAR v9.57 training complete. End: Wed May 13 16:05:41 +03 2026
+================================================================

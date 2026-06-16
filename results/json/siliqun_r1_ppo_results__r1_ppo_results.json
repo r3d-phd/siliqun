@@ -1,0 +1,539 @@
+{
+  "algorithm": "PPO",
+  "replication": "R1_SiMOS_CZ",
+  "paper": "Daraeizadeh2020",
+  "seeds": [
+    42,
+    123,
+    456
+  ],
+  "mean_F_across_seeds": 0.48646223126475147,
+  "std_F_across_seeds": 0.00981987430836786,
+  "best_F_overall": 0.8215126771974566,
+  "mean_pct_above_999": 0.0,
+  "per_seed_results": [
+    {
+      "seed": 42,
+      "algorithm": "PPO",
+      "replication": "R1_SiMOS_CZ",
+      "paper": "Daraeizadeh2020",
+      "target_F": 0.999,
+      "final_mean_fidelity": 0.48778005623649245,
+      "final_best_fidelity": 0.801749834274476,
+      "final_pct_above_999": 0.0,
+      "training_time_min": 10.638601239522298,
+      "n_episodes": 10000,
+      "training_curve": [
+        {
+          "episode": 500,
+          "mean_fidelity": 0.2507305719206758,
+          "best_fidelity": 0.7813051918322618,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 33.77869391441345,
+          "eps_per_sec": 14.802230105961817
+        },
+        {
+          "episode": 1000,
+          "mean_fidelity": 0.40816642677583037,
+          "best_fidelity": 0.7813051918322618,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 66.0747697353363,
+          "eps_per_sec": 15.134369805684049
+        },
+        {
+          "episode": 1500,
+          "mean_fidelity": 0.3904613467770053,
+          "best_fidelity": 0.7813051918322618,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 98.31122732162476,
+          "eps_per_sec": 15.257667317007003
+        },
+        {
+          "episode": 2000,
+          "mean_fidelity": 0.42533715065417776,
+          "best_fidelity": 0.7813051918322618,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 130.55155754089355,
+          "eps_per_sec": 15.319618070228893
+        },
+        {
+          "episode": 2500,
+          "mean_fidelity": 0.4181358570887315,
+          "best_fidelity": 0.7813051918322618,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 162.77493691444397,
+          "eps_per_sec": 15.358629819737073
+        },
+        {
+          "episode": 3000,
+          "mean_fidelity": 0.4438334506114135,
+          "best_fidelity": 0.7813051918322618,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 195.01714634895325,
+          "eps_per_sec": 15.383262734405726
+        },
+        {
+          "episode": 3500,
+          "mean_fidelity": 0.468606140823616,
+          "best_fidelity": 0.7813051918322618,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 227.25026869773865,
+          "eps_per_sec": 15.401521943436224
+        },
+        {
+          "episode": 4000,
+          "mean_fidelity": 0.47997619536134156,
+          "best_fidelity": 0.7813051918322618,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 259.4619777202606,
+          "eps_per_sec": 15.416517037084358
+        },
+        {
+          "episode": 4500,
+          "mean_fidelity": 0.42672366158891273,
+          "best_fidelity": 0.7813051918322618,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 291.7081673145294,
+          "eps_per_sec": 15.426376441314893
+        },
+        {
+          "episode": 5000,
+          "mean_fidelity": 0.43497430052033736,
+          "best_fidelity": 0.7813051918322618,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 323.9076657295227,
+          "eps_per_sec": 15.436497894357407
+        },
+        {
+          "episode": 5500,
+          "mean_fidelity": 0.4552863269174134,
+          "best_fidelity": 0.7813051918322618,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 356.12717843055725,
+          "eps_per_sec": 15.443920972946659
+        },
+        {
+          "episode": 6000,
+          "mean_fidelity": 0.4728073142930696,
+          "best_fidelity": 0.7813051918322618,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 388.3675673007965,
+          "eps_per_sec": 15.449281827781746
+        },
+        {
+          "episode": 6500,
+          "mean_fidelity": 0.460971887492013,
+          "best_fidelity": 0.7813051918322618,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 419.60269594192505,
+          "eps_per_sec": 15.490844226843647
+        },
+        {
+          "episode": 7000,
+          "mean_fidelity": 0.4684451803985693,
+          "best_fidelity": 0.7813051918322618,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 450.7917900085449,
+          "eps_per_sec": 15.528233111493252
+        },
+        {
+          "episode": 7500,
+          "mean_fidelity": 0.43290891636093876,
+          "best_fidelity": 0.7813051918322618,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 481.96654438972473,
+          "eps_per_sec": 15.561246080880247
+        },
+        {
+          "episode": 8000,
+          "mean_fidelity": 0.46921474496272036,
+          "best_fidelity": 0.7813051918322618,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 513.1744291782379,
+          "eps_per_sec": 15.589241289381171
+        },
+        {
+          "episode": 8500,
+          "mean_fidelity": 0.44003824931916974,
+          "best_fidelity": 0.801749834274476,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 544.3736944198608,
+          "eps_per_sec": 15.614273957632085
+        },
+        {
+          "episode": 9000,
+          "mean_fidelity": 0.49330933069633454,
+          "best_fidelity": 0.801749834274476,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 575.5854504108429,
+          "eps_per_sec": 15.636253476483738
+        },
+        {
+          "episode": 9500,
+          "mean_fidelity": 0.47412361402334036,
+          "best_fidelity": 0.801749834274476,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 606.7951011657715,
+          "eps_per_sec": 15.656026196896862
+        },
+        {
+          "episode": 10000,
+          "mean_fidelity": 0.5014364984496446,
+          "best_fidelity": 0.801749834274476,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 637.9866909980774,
+          "eps_per_sec": 15.674308165199854
+        }
+      ]
+    },
+    {
+      "seed": 123,
+      "algorithm": "PPO",
+      "replication": "R1_SiMOS_CZ",
+      "paper": "Daraeizadeh2020",
+      "target_F": 0.999,
+      "final_mean_fidelity": 0.47383075012565923,
+      "final_best_fidelity": 0.8215126771974566,
+      "final_pct_above_999": 0.0,
+      "training_time_min": 10.537276629606882,
+      "n_episodes": 10000,
+      "training_curve": [
+        {
+          "episode": 500,
+          "mean_fidelity": 0.2889789640481315,
+          "best_fidelity": 0.8215126771974566,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 30.852092027664185,
+          "eps_per_sec": 16.206356429627668
+        },
+        {
+          "episode": 1000,
+          "mean_fidelity": 0.37694131199503944,
+          "best_fidelity": 0.8215126771974566,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 62.03932809829712,
+          "eps_per_sec": 16.118807708806383
+        },
+        {
+          "episode": 1500,
+          "mean_fidelity": 0.4008845021452646,
+          "best_fidelity": 0.8215126771974566,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 93.65642023086548,
+          "eps_per_sec": 16.01598690514181
+        },
+        {
+          "episode": 2000,
+          "mean_fidelity": 0.37013469978513436,
+          "best_fidelity": 0.8215126771974566,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 125.29287004470825,
+          "eps_per_sec": 15.962600260384649
+        },
+        {
+          "episode": 2500,
+          "mean_fidelity": 0.38270828290574893,
+          "best_fidelity": 0.8215126771974566,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 156.95385193824768,
+          "eps_per_sec": 15.92824877584786
+        },
+        {
+          "episode": 3000,
+          "mean_fidelity": 0.4027628567680912,
+          "best_fidelity": 0.8215126771974566,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 188.5953631401062,
+          "eps_per_sec": 15.90707189217224
+        },
+        {
+          "episode": 3500,
+          "mean_fidelity": 0.376008518163415,
+          "best_fidelity": 0.8215126771974566,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 220.26689839363098,
+          "eps_per_sec": 15.889813791926542
+        },
+        {
+          "episode": 4000,
+          "mean_fidelity": 0.4063910218017452,
+          "best_fidelity": 0.8215126771974566,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 251.93343234062195,
+          "eps_per_sec": 15.877209955175278
+        },
+        {
+          "episode": 4500,
+          "mean_fidelity": 0.39351695080484594,
+          "best_fidelity": 0.8215126771974566,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 283.59178042411804,
+          "eps_per_sec": 15.867878798426903
+        },
+        {
+          "episode": 5000,
+          "mean_fidelity": 0.40790510458086876,
+          "best_fidelity": 0.8215126771974566,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 315.2643165588379,
+          "eps_per_sec": 15.85970798907985
+        },
+        {
+          "episode": 5500,
+          "mean_fidelity": 0.4112711317543537,
+          "best_fidelity": 0.8215126771974566,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 346.9337019920349,
+          "eps_per_sec": 15.85317300804138
+        },
+        {
+          "episode": 6000,
+          "mean_fidelity": 0.41962965843535927,
+          "best_fidelity": 0.8215126771974566,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 378.614431142807,
+          "eps_per_sec": 15.84725648700089
+        },
+        {
+          "episode": 6500,
+          "mean_fidelity": 0.4135304925168408,
+          "best_fidelity": 0.8215126771974566,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 410.26343631744385,
+          "eps_per_sec": 15.843478664207806
+        },
+        {
+          "episode": 7000,
+          "mean_fidelity": 0.4073870254356309,
+          "best_fidelity": 0.8215126771974566,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 441.943754196167,
+          "eps_per_sec": 15.839119647096286
+        },
+        {
+          "episode": 7500,
+          "mean_fidelity": 0.4762272082543392,
+          "best_fidelity": 0.8215126771974566,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 473.6177439689636,
+          "eps_per_sec": 15.8355553513457
+        },
+        {
+          "episode": 8000,
+          "mean_fidelity": 0.48058967521669993,
+          "best_fidelity": 0.8215126771974566,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 505.291552066803,
+          "eps_per_sec": 15.832443600684513
+        },
+        {
+          "episode": 8500,
+          "mean_fidelity": 0.46468735360486524,
+          "best_fidelity": 0.8215126771974566,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 536.9450509548187,
+          "eps_per_sec": 15.83029769039669
+        },
+        {
+          "episode": 9000,
+          "mean_fidelity": 0.46841553096474686,
+          "best_fidelity": 0.8215126771974566,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 568.6205177307129,
+          "eps_per_sec": 15.827779194317108
+        },
+        {
+          "episode": 9500,
+          "mean_fidelity": 0.49158177472833586,
+          "best_fidelity": 0.8215126771974566,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 600.2545785903931,
+          "eps_per_sec": 15.826618136440226
+        },
+        {
+          "episode": 10000,
+          "mean_fidelity": 0.4560797255229826,
+          "best_fidelity": 0.8215126771974566,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 631.907110452652,
+          "eps_per_sec": 15.825110739514756
+        }
+      ]
+    },
+    {
+      "seed": 456,
+      "algorithm": "PPO",
+      "replication": "R1_SiMOS_CZ",
+      "paper": "Daraeizadeh2020",
+      "target_F": 0.999,
+      "final_mean_fidelity": 0.4977758874321026,
+      "final_best_fidelity": 0.7548508868272623,
+      "final_pct_above_999": 0.0,
+      "training_time_min": 10.547989610830943,
+      "n_episodes": 10000,
+      "training_curve": [
+        {
+          "episode": 500,
+          "mean_fidelity": 0.24608453992210624,
+          "best_fidelity": 0.695873784880158,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 31.31677007675171,
+          "eps_per_sec": 15.965886608823034
+        },
+        {
+          "episode": 1000,
+          "mean_fidelity": 0.37009908869495134,
+          "best_fidelity": 0.7493691709273316,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 62.97217607498169,
+          "eps_per_sec": 15.880029281651131
+        },
+        {
+          "episode": 1500,
+          "mean_fidelity": 0.37750364413599335,
+          "best_fidelity": 0.7493691709273316,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 94.64032053947449,
+          "eps_per_sec": 15.849481399150058
+        },
+        {
+          "episode": 2000,
+          "mean_fidelity": 0.403642892607196,
+          "best_fidelity": 0.7493691709273316,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 126.26997256278992,
+          "eps_per_sec": 15.839078439693694
+        },
+        {
+          "episode": 2500,
+          "mean_fidelity": 0.4388116469700345,
+          "best_fidelity": 0.7493691709273316,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 157.89100813865662,
+          "eps_per_sec": 15.833707248259202
+        },
+        {
+          "episode": 3000,
+          "mean_fidelity": 0.4567738787787226,
+          "best_fidelity": 0.7493691709273316,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 189.52196097373962,
+          "eps_per_sec": 15.829300122193667
+        },
+        {
+          "episode": 3500,
+          "mean_fidelity": 0.4557834295332099,
+          "best_fidelity": 0.7493691709273316,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 221.17323327064514,
+          "eps_per_sec": 15.82469970820168
+        },
+        {
+          "episode": 4000,
+          "mean_fidelity": 0.40744706978029555,
+          "best_fidelity": 0.7493691709273316,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 252.8240373134613,
+          "eps_per_sec": 15.821280454597918
+        },
+        {
+          "episode": 4500,
+          "mean_fidelity": 0.4011073732322694,
+          "best_fidelity": 0.7493691709273316,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 284.4670069217682,
+          "eps_per_sec": 15.81905771321155
+        },
+        {
+          "episode": 5000,
+          "mean_fidelity": 0.4478210913534354,
+          "best_fidelity": 0.7493691709273316,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 316.14197993278503,
+          "eps_per_sec": 15.815678768960233
+        },
+        {
+          "episode": 5500,
+          "mean_fidelity": 0.4425395214850879,
+          "best_fidelity": 0.7493691709273316,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 347.80020666122437,
+          "eps_per_sec": 15.813676630035152
+        },
+        {
+          "episode": 6000,
+          "mean_fidelity": 0.4815452350508265,
+          "best_fidelity": 0.7493691709273316,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 379.4668872356415,
+          "eps_per_sec": 15.811656304741335
+        },
+        {
+          "episode": 6500,
+          "mean_fidelity": 0.44920884993505045,
+          "best_fidelity": 0.7493691709273316,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 411.1269404888153,
+          "eps_per_sec": 15.810202056502868
+        },
+        {
+          "episode": 7000,
+          "mean_fidelity": 0.4524716756174036,
+          "best_fidelity": 0.7493691709273316,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 442.80536699295044,
+          "eps_per_sec": 15.808299812480461
+        },
+        {
+          "episode": 7500,
+          "mean_fidelity": 0.44895391747571717,
+          "best_fidelity": 0.7548508868272623,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 474.4600441455841,
+          "eps_per_sec": 15.807442781627968
+        },
+        {
+          "episode": 8000,
+          "mean_fidelity": 0.4428811342050172,
+          "best_fidelity": 0.7548508868272623,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 506.11241030693054,
+          "eps_per_sec": 15.806765131778572
+        },
+        {
+          "episode": 8500,
+          "mean_fidelity": 0.4415738687507682,
+          "best_fidelity": 0.7548508868272623,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 537.7307088375092,
+          "eps_per_sec": 15.80716864464685
+        },
+        {
+          "episode": 9000,
+          "mean_fidelity": 0.4922430520100113,
+          "best_fidelity": 0.7548508868272623,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 569.3554861545563,
+          "eps_per_sec": 15.807347463684359
+        },
+        {
+          "episode": 9500,
+          "mean_fidelity": 0.5003183532101871,
+          "best_fidelity": 0.7548508868272623,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 600.9718725681305,
+          "eps_per_sec": 15.807728171043498
+        },
+        {
+          "episode": 10000,
+          "mean_fidelity": 0.495233421654018,
+          "best_fidelity": 0.7548508868272623,
+          "pct_above_999": 0.0,
+          "elapsed_sec": 632.5502467155457,
+          "eps_per_sec": 15.809020788346865
+        }
+      ]
+    }
+  ],
+  "timestamp": "2026-05-30T00:05:16.177631"
+}

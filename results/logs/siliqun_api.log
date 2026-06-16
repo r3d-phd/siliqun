@@ -1,0 +1,210 @@
+=== SiliQun API Service Starting ===
+Job ID: 174481.khead2
+Node: kcn172
+Date: Mon May  4 15:33:23 +03 2026
+=== Sourced conda from: /home/ralshehri0468/miniconda3/etc/profile.d/conda.sh ===
+=== Python: /home/ralshehri0468/.conda/envs/quantum_drl_gpu/bin/python3 ===
+=== Python version: Python 3.12.4 ===
+=== Installing FastAPI + uvicorn ===
+WARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x2b864bf94bc0>: Failed to establish a new connection: [Errno -2] Name or service not known')': /simple/pip/
+WARNING: Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x2b864c0ff290>: Failed to establish a new connection: [Errno -2] Name or service not known')': /simple/pip/
+WARNING: Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x2b864c2bf1d0>: Failed to establish a new connection: [Errno -2] Name or service not known')': /simple/pip/
+WARNING: Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x2b864c2bf6b0>: Failed to establish a new connection: [Errno -2] Name or service not known')': /simple/pip/
+WARNING: Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x2b864c2bf110>: Failed to establish a new connection: [Errno -2] Name or service not known')': /simple/pip/
+Running uvicorn 0.46.0 with CPython 3.12.4 on Linux
+=== Using existing siliqun clone, pulling latest ===
+fatal: 'origin' does not appear to be a git repository
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+  DEPRECATION: Legacy editable install of siliqun==1.0.0 from file:///home/ralshehri0468/siliqun (setup.py develop) is deprecated. pip 25.0 will enforce this behaviour change. A possible replacement is to add a pyproject.toml or enable --use-pep517, and use setuptools >= 64. If the resulting installation is not behaving as expected, try using --config-settings editable_mode=compat. Please consult the setuptools documentation for more information. Discussion can be found at https://github.com/pypa/pip/issues/11457
+=== Verifying siliqun.api.server import ===
+/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/pydantic/_internal/_config.py:386: UserWarning: Valid config keys have changed in V2:
+* 'schema_extra' has been renamed to 'json_schema_extra'
+  warnings.warn(message, UserWarning)
+Import OK: SiliQun API
+=== Service URL: http://10.113.41.172:8765 ===
+=== Starting uvicorn server ===
+INFO:     Uvicorn running on http://0.0.0.0:8765 (Press CTRL+C to quit)
+INFO:     Started parent process [15363]
+/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/pydantic/_internal/_config.py:386: UserWarning: Valid config keys have changed in V2:
+* 'schema_extra' has been renamed to 'json_schema_extra'
+  warnings.warn(message, UserWarning)
+/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/pydantic/_internal/_config.py:386: UserWarning: Valid config keys have changed in V2:
+* 'schema_extra' has been renamed to 'json_schema_extra'
+  warnings.warn(message, UserWarning)
+INFO:     Started server process [15365]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Started server process [15366]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/pydantic/_internal/_config.py:386: UserWarning: Valid config keys have changed in V2:
+* 'schema_extra' has been renamed to 'json_schema_extra'
+  warnings.warn(message, UserWarning)
+/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/pydantic/_internal/_config.py:386: UserWarning: Valid config keys have changed in V2:
+* 'schema_extra' has been renamed to 'json_schema_extra'
+  warnings.warn(message, UserWarning)
+INFO:     Started server process [15367]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Started server process [15368]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     10.113.40.6:55218 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.113.40.6:55812 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.113.40.6:55834 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.113.40.6:55838 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.113.40.6:56004 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.113.40.6:56006 - "GET /devices HTTP/1.1" 200 OK
+INFO:     10.113.40.6:56008 - "POST /simulate/circuit HTTP/1.1" 200 OK
+INFO:     10.113.40.6:56010 - "POST /simulate/circuit HTTP/1.1" 200 OK
+INFO:     10.113.40.6:56012 - "POST /simulate/circuit HTTP/1.1" 200 OK
+Simulation failed: NoiseParams.__init__() got an unexpected keyword argument 'T1'
+Traceback (most recent call last):
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 285, in _get_device_profile
+    from siliqun.physics.devices.profiles import get_device
+ImportError: cannot import name 'get_device' from 'siliqun.physics.devices.profiles' (/home/ralshehri0468/siliqun/siliqun/physics/devices/profiles.py)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 492, in _run
+    result = _run_circuit_simulation(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 325, in _run_circuit_simulation
+    device = _get_device_profile(request.device)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 293, in _get_device_profile
+    noise_params=NoiseParams(
+                 ^^^^^^^^^^^^
+TypeError: NoiseParams.__init__() got an unexpected keyword argument 'T1'
+Simulation failed: NoiseParams.__init__() got an unexpected keyword argument 'T1'
+Traceback (most recent call last):
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 285, in _get_device_profile
+    from siliqun.physics.devices.profiles import get_device
+ImportError: cannot import name 'get_device' from 'siliqun.physics.devices.profiles' (/home/ralshehri0468/siliqun/siliqun/physics/devices/profiles.py)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 492, in _run
+    result = _run_circuit_simulation(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 325, in _run_circuit_simulation
+    device = _get_device_profile(request.device)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 293, in _get_device_profile
+    noise_params=NoiseParams(
+                 ^^^^^^^^^^^^
+TypeError: NoiseParams.__init__() got an unexpected keyword argument 'T1'
+Simulation failed: NoiseParams.__init__() got an unexpected keyword argument 'T1'
+Traceback (most recent call last):
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 285, in _get_device_profile
+    from siliqun.physics.devices.profiles import get_device
+ImportError: cannot import name 'get_device' from 'siliqun.physics.devices.profiles' (/home/ralshehri0468/siliqun/siliqun/physics/devices/profiles.py)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 492, in _run
+    result = _run_circuit_simulation(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 325, in _run_circuit_simulation
+    device = _get_device_profile(request.device)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 293, in _get_device_profile
+    noise_params=NoiseParams(
+                 ^^^^^^^^^^^^
+TypeError: NoiseParams.__init__() got an unexpected keyword argument 'T1'
+INFO:     10.113.40.6:56026 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.113.40.6:56028 - "GET /devices HTTP/1.1" 200 OK
+INFO:     10.113.40.6:56030 - "POST /simulate/circuit HTTP/1.1" 200 OK
+Simulation failed: NoiseParams.__init__() got an unexpected keyword argument 'T1'
+Traceback (most recent call last):
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 285, in _get_device_profile
+    from siliqun.physics.devices.profiles import get_device
+ImportError: cannot import name 'get_device' from 'siliqun.physics.devices.profiles' (/home/ralshehri0468/siliqun/siliqun/physics/devices/profiles.py)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 492, in _run
+    result = _run_circuit_simulation(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 325, in _run_circuit_simulation
+    device = _get_device_profile(request.device)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 293, in _get_device_profile
+    noise_params=NoiseParams(
+                 ^^^^^^^^^^^^
+TypeError: NoiseParams.__init__() got an unexpected keyword argument 'T1'
+INFO:     10.113.40.6:56032 - "POST /simulate/circuit HTTP/1.1" 200 OK
+Simulation failed: NoiseParams.__init__() got an unexpected keyword argument 'T1'
+Traceback (most recent call last):
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 285, in _get_device_profile
+    from siliqun.physics.devices.profiles import get_device
+ImportError: cannot import name 'get_device' from 'siliqun.physics.devices.profiles' (/home/ralshehri0468/siliqun/siliqun/physics/devices/profiles.py)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 492, in _run
+    result = _run_circuit_simulation(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 325, in _run_circuit_simulation
+    device = _get_device_profile(request.device)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 293, in _get_device_profile
+    noise_params=NoiseParams(
+                 ^^^^^^^^^^^^
+TypeError: NoiseParams.__init__() got an unexpected keyword argument 'T1'
+INFO:     10.113.40.6:56034 - "POST /simulate/circuit HTTP/1.1" 200 OK
+Simulation failed: NoiseParams.__init__() got an unexpected keyword argument 'T1'
+Traceback (most recent call last):
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 285, in _get_device_profile
+    from siliqun.physics.devices.profiles import get_device
+ImportError: cannot import name 'get_device' from 'siliqun.physics.devices.profiles' (/home/ralshehri0468/siliqun/siliqun/physics/devices/profiles.py)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 492, in _run
+    result = _run_circuit_simulation(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 325, in _run_circuit_simulation
+    device = _get_device_profile(request.device)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/siliqun/siliqun/api/server.py", line 293, in _get_device_profile
+    noise_params=NoiseParams(
+                 ^^^^^^^^^^^^
+TypeError: NoiseParams.__init__() got an unexpected keyword argument 'T1'
+INFO:     10.113.40.6:56360 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.113.40.6:56364 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.113.40.6:56402 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.113.40.6:56408 - "GET /health HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Shutting down
+INFO:     Shutting down
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Waiting for application shutdown.
+INFO:     Finished server process [15366]
+INFO:     Application shutdown complete.
+INFO:     Finished server process [15368]
+INFO:     Received SIGTERM, exiting.
+INFO:     Terminated child process [15365]
+INFO:     Terminated child process [15367]
+INFO:     Waiting for child process [15365]
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [15367]
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [15365]
+INFO:     Waiting for child process [15366]
+INFO:     Waiting for child process [15367]
+INFO:     Waiting for child process [15368]
+INFO:     Stopping parent process [15363]

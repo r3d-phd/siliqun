@@ -1,0 +1,11 @@
+============================================================
+QUASAR v9.51 Unified Job (CST enabled)
+Node    : kcn522
+GPUs    : NVIDIA H100 NVL|
+Date    : Tue May 12 13:29:06 +03 2026
+Job ID  : 175758.khead2
+============================================================
+ModuleCmd_Load.c(213):ERROR:105: Unable to locate a modulefile for 'cuda/12.2'
+ModuleCmd_Load.c(213):ERROR:105: Unable to locate a modulefile for 'python/3.11'
+ModuleCmd_Load.c(213):ERROR:105: Unable to locate a modulefile for 'gcc/12'
+mkdir: cannot create directory ‘/scratch’: Permission denied

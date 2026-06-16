@@ -1,0 +1,20 @@
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+datasets 5.0.0 requires multiprocess<0.70.20, which is not installed.
+datasets 5.0.0 requires xxhash, which is not installed.
+huggingface-hub 1.19.0 requires hf-xet<2.0.0,>=1.5.1; platform_machine == "x86_64" or platform_machine == "amd64" or platform_machine == "AMD64" or platform_machine == "arm64" or platform_machine == "aarch64", which is not installed.
+transformers 5.11.0 requires tokenizers<=0.23.0,>=0.22.0, but you have tokenizers 0.23.1 which is incompatible.
+datasets 5.0.0 requires pyarrow>=21.0.0, but you have pyarrow 17.0.0 which is incompatible.
+huggingface-hub 1.19.0 requires click>=8.4.0, but you have click 8.3.3 which is incompatible.
+huggingface-hub 1.19.0 requires typer<0.26.0,>=0.20.0, but you have typer 0.26.7 which is incompatible.
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+datasets 5.0.0 requires multiprocess<0.70.20, which is not installed.
+datasets 5.0.0 requires xxhash, which is not installed.
+peft 0.19.1 requires huggingface_hub>=0.25.0, but you have huggingface-hub 0.24.7 which is incompatible.
+transformers 5.11.0 requires huggingface-hub<2.0,>=1.5.0, but you have huggingface-hub 0.24.7 which is incompatible.
+transformers 5.11.0 requires tokenizers<=0.23.0,>=0.22.0, but you have tokenizers 0.23.1 which is incompatible.
+datasets 5.0.0 requires huggingface-hub<2.0,>=0.25.0, but you have huggingface-hub 0.24.7 which is incompatible.
+datasets 5.0.0 requires pyarrow>=21.0.0, but you have pyarrow 17.0.0 which is incompatible.
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+peft 0.19.1 requires huggingface_hub>=0.25.0, but you have huggingface-hub 0.24.7 which is incompatible.
+trl 1.5.1 requires transformers>=4.56.2, but you have transformers 4.44.2 which is incompatible.
+ALL_DONE

@@ -1,0 +1,748 @@
+=== QUASAR v9 3q GHZ Benchmark - Seed 42 ===
+Node: 4f366791b977
+GPU: N/A
+Python: Python 3.11.0rc1
+Start: Tue Jun 9 04:26:50 UTC 2026
+07:27:11 [QUASAR] INFO: CUDA_VISIBLE_DEVICES=0
+07:27:11 [QUASAR] INFO: ======================================================================
+07:27:11 [QUASAR] INFO: QUASAR v9.0 — CAMEL-Q Hybrid Actor + T-SAC Curriculum
+07:27:11 [QUASAR] INFO: ======================================================================
+07:27:11 [QUASAR] INFO: Mode            : TRAIN
+07:27:11 [QUASAR] INFO: Device profile  : SIMOS
+07:27:11 [QUASAR] INFO: Curriculum stages: 3
+07:27:11 [QUASAR] INFO: Max steps/stage : 500,000
+07:27:11 [QUASAR] INFO: Target fidelity : 0.99
+07:27:11 [QUASAR] INFO: Effective batch : 512
+07:27:11 [QUASAR] INFO: CUDA available  : True
+07:27:11 [QUASAR] INFO:   GPU 0: NVIDIA A100-PCIE-40GB
+07:27:11 [QUASAR] INFO: Active components: ['vapor_lite', 'swdft', 'erl', 'sdft', 'ttt', 'brfd', 'pbt']
+07:27:11 [QUASAR] INFO: ======================================================================
+07:27:11 [quasar.v9_0.components] INFO: [Registry] Component activation: 
+  vapor_lite     [ON ]
+  swdft          [ON ]
+  erl            [ON ]
+  sdft           [ON ]
+  ttt            [ON ]
+  brfd           [ON ]
+  dehb_inner     [off]
+  pbt            [ON ]
+  hmrl           [off]
+  sequraity_hmrl [off]
+07:27:11 [quasar.v9_0.components] INFO: [Registry] VAPOR-lite: Q-ensemble critic installed.
+07:27:11 [quasar.v9_0.components] INFO: [Registry] BRFD: Bi-level reward optimiser ready.
+07:27:11 [quasar.v9_0.components] INFO: [Registry] SWDFT: Sliding-Window DFT monitor ready.
+07:27:11 [quasar.v9_0.components] INFO: [Registry] ERL: Experiential Reflection Loop (Shi et al. 2025) ready.
+07:27:11 [quasar.v9_0.components] INFO: [Registry] SDFT: Self-Distillation Fine-Tuning ready.
+07:27:11 [quasar.v9_0.components] INFO: [Registry] TTT: Test-Time Training ready.
+07:27:11 [quasar.v9_0.components] INFO: [Registry] PBT: Elite-Preservation PBT ready.
+07:27:11 [quasar.v9_0.components] INFO: [Registry] vapor_lite     [ON ] mode=proactive  subscriptions=['trainer_created']
+07:27:11 [quasar.v9_0.components] INFO: [Registry] brfd           [ON ] mode=proactive  subscriptions=['stage_start', 'step_complete']
+07:27:11 [quasar.v9_0.components] INFO: [Registry] swdft          [ON ] mode=proactive  subscriptions=['eval_complete']
+07:27:11 [quasar.v9_0.components] INFO: [Registry] erl            [ON ] mode=reactive   subscriptions=['stagnation_detected', 'bond_collapse', 'stage_start']
+07:27:11 [quasar.v9_0.components] INFO: [Registry] sdft           [ON ] mode=reactive   subscriptions=['erl_complete', 'stage_complete']
+07:27:11 [quasar.v9_0.components] INFO: [Registry] ttt            [ON ] mode=reactive   subscriptions=['sdft_complete']
+07:27:11 [quasar.v9_0.components] INFO: [Registry] pbt            [ON ] mode=boundary   subscriptions=['stage_complete']
+07:27:11 [quasar.v9_0.components] INFO: [Registry] Build complete. Active components: ['vapor_lite', 'brfd', 'swdft', 'erl', 'sdft', 'ttt', 'pbt']
+07:27:11 [QUASAR.curriculum] INFO: 
+======================================================================
+07:27:11 [QUASAR.curriculum] INFO: STAGE 0: 3 qubits (SIMOS)
+07:27:11 [QUASAR.curriculum] INFO: ======================================================================
+07:27:11 [QUASAR.env] INFO: SiliQunEnvAdapter: n_qubits=3, device=simos, max_bond_dim=4 (chi=2^2), svd_cutoff=1e-14
+07:27:11 [QUASAR.env] INFO:   obs_dim=10, act_dim=10, episode_length=80, sim_mode=mps
+07:27:11 [QUASAR.curriculum] INFO: Stage 0: initialising networks from scratch
+07:27:15 [QUASAR.trainer] INFO: T-SAC transfer: obs (10→10), act (10→10), qubits (3→3), gumbel_temp reset 1.0000→1.0000
+07:27:15 [QUASAR.curriculum] INFO:   obs_dim=10, act_dim=10, max_steps=500,000, target_fidelity=0.99
+07:27:18 [QUASAR.curriculum] INFO: Stage 0 | Step   2,000 | F=0.2194 | noise=0.0000 | bond=[2, 2] | alpha=0.0000 | tau_g=1.0000
+07:27:21 [QUASAR.curriculum] INFO: Stage 0 | Step   4,000 | F=0.0727 | noise=0.0000 | bond=[2, 2] | alpha=0.0000 | tau_g=1.0000
+07:27:40 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step   5,000 | F_eval=0.5984 | best=0.0000 | elapsed=25s
+07:27:40 [QUASAR.curriculum] INFO:   Checkpoint saved: quasar_v9_stage0_best.pt (F=0.5984)
+07:27:48 [QUASAR.curriculum] INFO: Stage 0 | Step   6,000 | F=0.2597 | noise=0.0000 | bond=[2, 2] | alpha=0.2000 | tau_g=1.0000
+07:28:03 [QUASAR.curriculum] INFO: Stage 0 | Step   8,000 | F=0.1208 | noise=0.0000 | bond=[2, 2] | alpha=0.2000 | tau_g=1.0000
+07:28:19 [QUASAR.curriculum] INFO: Stage 0 | Step  10,000 | F=0.0724 | noise=0.0000 | bond=[2, 2] | alpha=0.2000 | tau_g=1.0000
+07:28:35 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step  10,000 | F_eval=0.8125 | best=0.5984 | elapsed=81s
+07:28:35 [QUASAR.curriculum] INFO:   Checkpoint saved: quasar_v9_stage0_best.pt (F=0.8125)
+07:28:51 [QUASAR.curriculum] INFO: Stage 0 | Step  12,000 | F=0.0170 | noise=0.0000 | bond=[2, 2] | alpha=0.2000 | tau_g=0.9802
+07:29:07 [QUASAR.curriculum] INFO: Stage 0 | Step  14,000 | F=0.0107 | noise=0.0000 | bond=[2, 2] | alpha=0.2000 | tau_g=0.9608
+07:29:31 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step  15,000 | F_eval=0.6331 | best=0.8125 | elapsed=136s
+07:29:39 [QUASAR.curriculum] INFO: Stage 0 | Step  16,000 | F=0.0212 | noise=0.0000 | bond=[2, 2] | alpha=0.2000 | tau_g=0.9418
+07:29:54 [QUASAR.curriculum] INFO: Stage 0 | Step  18,000 | F=0.1393 | noise=0.0000 | bond=[2, 2] | alpha=0.2000 | tau_g=0.9231
+07:30:11 [QUASAR.curriculum] INFO: Stage 0 | Step  20,000 | F=0.1949 | noise=0.0000 | bond=[2, 2] | alpha=0.2000 | tau_g=0.9048
+07:30:27 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step  20,000 | F_eval=0.5426 | best=0.8125 | elapsed=192s
+07:30:44 [QUASAR.curriculum] INFO: Stage 0 | Step  22,000 | F=0.0386 | noise=0.0000 | bond=[2, 2] | alpha=0.2000 | tau_g=0.8869
+07:31:03 [QUASAR.curriculum] INFO: Stage 0 | Step  24,000 | F=0.0272 | noise=0.0000 | bond=[2, 2] | alpha=0.2000 | tau_g=0.8694
+07:31:31 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step  25,000 | F_eval=0.6170 | best=0.8125 | elapsed=256s
+07:31:38 [QUASAR.curriculum] INFO: Stage 0 | Step  26,000 | F=0.0956 | noise=0.0000 | bond=[2, 2] | alpha=0.2000 | tau_g=0.8521
+07:31:54 [QUASAR.curriculum] INFO: Stage 0 | Step  28,000 | F=0.0105 | noise=0.0000 | bond=[2, 2] | alpha=0.2000 | tau_g=0.8353
+07:32:10 [QUASAR.curriculum] INFO: Stage 0 | Step  30,000 | F=0.1627 | noise=0.0000 | bond=[2, 1] | alpha=0.2000 | tau_g=0.8187
+07:32:26 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step  30,000 | F_eval=0.6077 | best=0.8125 | elapsed=311s
+07:32:42 [QUASAR.curriculum] INFO: Stage 0 | Step  32,000 | F=0.2832 | noise=0.0000 | bond=[2, 2] | alpha=0.2000 | tau_g=0.8025
+07:32:57 [QUASAR.curriculum] INFO: Stage 0 | Step  34,000 | F=0.3583 | noise=0.0000 | bond=[2, 2] | alpha=0.2000 | tau_g=0.7866
+07:33:21 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step  35,000 | F_eval=0.5654 | best=0.8125 | elapsed=367s
+07:33:29 [QUASAR.curriculum] INFO: Stage 0 | Step  36,000 | F=0.0931 | noise=0.0000 | bond=[2, 2] | alpha=0.2000 | tau_g=0.7710
+07:33:45 [QUASAR.curriculum] INFO: Stage 0 | Step  38,000 | F=0.3303 | noise=0.0000 | bond=[2, 2] | alpha=0.2000 | tau_g=0.7558
+07:34:00 [QUASAR.curriculum] INFO: Stage 0 | Step  40,000 | F=0.0623 | noise=0.0000 | bond=[2, 2] | alpha=0.2000 | tau_g=0.7408
+07:34:16 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step  40,000 | F_eval=0.5500 | best=0.8125 | elapsed=422s
+07:34:32 [QUASAR.curriculum] INFO: Stage 0 | Step  42,000 | F=0.1103 | noise=0.0000 | bond=[2, 2] | alpha=0.2000 | tau_g=0.7261
+07:34:48 [QUASAR.curriculum] INFO: Stage 0 | Step  44,000 | F=0.3045 | noise=0.0000 | bond=[2, 2] | alpha=0.2000 | tau_g=0.7118
+07:35:12 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step  45,000 | F_eval=0.6067 | best=0.8125 | elapsed=477s
+07:35:20 [QUASAR.curriculum] INFO: Stage 0 | Step  46,000 | F=0.0952 | noise=0.0000 | bond=[2, 1] | alpha=0.2000 | tau_g=0.6977
+07:35:40 [QUASAR.curriculum] INFO: Stage 0 | Step  48,000 | F=0.1093 | noise=0.0000 | bond=[2, 1] | alpha=0.2000 | tau_g=0.6839
+07:35:59 [QUASAR.curriculum] INFO: Stage 0 | Step  50,000 | F=0.2480 | noise=0.0000 | bond=[2, 2] | alpha=0.1999 | tau_g=0.6703
+07:36:17 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step  50,000 | F_eval=0.5891 | best=0.8125 | elapsed=543s
+07:36:33 [QUASAR.curriculum] INFO: Stage 0 | Step  52,000 | F=0.3052 | noise=0.0000 | bond=[2, 2] | alpha=0.1723 | tau_g=0.6570
+07:36:49 [QUASAR.curriculum] INFO: Stage 0 | Step  54,000 | F=0.1472 | noise=0.0000 | bond=[1, 1] | alpha=0.1488 | tau_g=0.6440
+07:37:13 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step  55,000 | F_eval=0.6776 | best=0.8125 | elapsed=598s
+07:37:21 [QUASAR.curriculum] INFO: Stage 0 | Step  56,000 | F=0.4481 | noise=0.0000 | bond=[1, 1] | alpha=0.1286 | tau_g=0.6313
+07:37:37 [QUASAR.curriculum] INFO: Stage 0 | Step  58,000 | F=0.4018 | noise=0.0000 | bond=[1, 1] | alpha=0.1118 | tau_g=0.6188
+07:37:53 [QUASAR.curriculum] INFO: Stage 0 | Step  60,000 | F=0.1316 | noise=0.0000 | bond=[1, 1] | alpha=0.0969 | tau_g=0.6065
+07:38:10 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step  60,000 | F_eval=0.5403 | best=0.8125 | elapsed=655s
+07:38:27 [QUASAR.curriculum] INFO: Stage 0 | Step  62,000 | F=0.5000 | noise=0.0000 | bond=[1, 1] | alpha=0.0847 | tau_g=0.5945
+07:38:45 [QUASAR.curriculum] INFO: Stage 0 | Step  64,000 | F=0.0183 | noise=0.0000 | bond=[2, 2] | alpha=0.0745 | tau_g=0.5827
+07:39:10 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step  65,000 | F_eval=0.5000 | best=0.8125 | elapsed=715s
+07:39:19 [QUASAR.curriculum] INFO: Stage 0 | Step  66,000 | F=0.1179 | noise=0.0000 | bond=[2, 1] | alpha=0.0648 | tau_g=0.5712
+07:39:37 [QUASAR.curriculum] INFO: Stage 0 | Step  68,000 | F=0.0000 | noise=0.0000 | bond=[1, 2] | alpha=0.0572 | tau_g=0.5599
+07:39:54 [QUASAR.curriculum] INFO: Stage 0 | Step  70,000 | F=0.0036 | noise=0.0000 | bond=[1, 1] | alpha=0.0507 | tau_g=0.5488
+07:40:11 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step  70,000 | F_eval=0.4675 | best=0.8125 | elapsed=776s
+07:40:28 [QUASAR.curriculum] INFO: Stage 0 | Step  72,000 | F=0.0352 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.5379
+07:40:46 [QUASAR.curriculum] INFO: Stage 0 | Step  74,000 | F=0.5000 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.5273
+07:41:12 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step  75,000 | F_eval=0.7080 | best=0.8125 | elapsed=837s
+07:41:20 [QUASAR.curriculum] INFO: Stage 0 | Step  76,000 | F=0.2691 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.5169
+07:41:40 [QUASAR.curriculum] INFO: Stage 0 | Step  78,000 | F=0.0860 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.5066
+07:42:01 [QUASAR.curriculum] INFO: Stage 0 | Step  80,000 | F=0.0672 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.4966
+07:42:18 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step  80,000 | F_eval=0.6854 | best=0.8125 | elapsed=904s
+07:42:36 [QUASAR.curriculum] INFO: Stage 0 | Step  82,000 | F=0.0635 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.4868
+07:42:54 [QUASAR.curriculum] INFO: Stage 0 | Step  84,000 | F=0.0979 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.4771
+07:43:19 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step  85,000 | F_eval=0.5364 | best=0.8125 | elapsed=964s
+07:43:28 [QUASAR.curriculum] INFO: Stage 0 | Step  86,000 | F=0.1589 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.4677
+07:43:46 [QUASAR.curriculum] INFO: Stage 0 | Step  88,000 | F=0.0674 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.4584
+07:44:04 [QUASAR.curriculum] INFO: Stage 0 | Step  90,000 | F=0.5000 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.4493
+07:44:20 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step  90,000 | F_eval=0.5084 | best=0.8125 | elapsed=1025s
+07:44:30 [QUASAR.curriculum] WARNING: [BCD v9.25] bond=[1,...,1] in 80% of last 5000 steps at step 91159 — emitting bond_collapse.
+07:44:30 [quasar.v9_0.erl] INFO: [ERL v9.24] Bond collapse at step 91159 (bond=[1,...,1] for 0 steps) — recovery start.
+07:44:30 [quasar.v9_0.erl] INFO: [ERL v9.27] Zeroed priorities of 10000 recent transitions (buffer size=91159, ptr=91159). Stale data will not be sampled.
+07:44:30 [quasar.v9_0.erl] INFO: [ERL v9.24] Gumbel temperature reset to 0.8000 after bond collapse.
+07:44:30 [quasar.v9_0.erl] WARNING: [ERL v9.18] UNIQ wiki query failed (non-fatal): No module named 'aris_wiki'
+07:44:30 [quasar.v9_0.erl] INFO: [ERL v9.24] UNIQ wiki miss — no stepping stone for bond collapse at 3q.
+07:44:38 [QUASAR.curriculum] INFO: Stage 0 | Step  92,000 | F=0.3152 | noise=0.0000 | bond=[1, 2] | alpha=0.0500 | tau_g=0.7933
+07:44:56 [QUASAR.curriculum] INFO: Stage 0 | Step  94,000 | F=0.0363 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.7776
+07:45:21 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step  95,000 | F_eval=0.6581 | best=0.8125 | elapsed=1086s
+07:45:30 [QUASAR.curriculum] INFO: Stage 0 | Step  96,000 | F=0.0221 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.7622
+07:45:48 [QUASAR.curriculum] INFO: Stage 0 | Step  98,000 | F=0.0017 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.7471
+07:46:05 [QUASAR.curriculum] INFO: Stage 0 | Step 100,000 | F=0.0523 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.7323
+07:46:22 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 100,000 | F_eval=0.5700 | best=0.8125 | elapsed=1147s
+07:46:40 [QUASAR.curriculum] INFO: Stage 0 | Step 102,000 | F=0.3148 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.7178
+07:46:57 [QUASAR.curriculum] INFO: Stage 0 | Step 104,000 | F=0.0333 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.7036
+07:47:23 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 105,000 | F_eval=0.5351 | best=0.8125 | elapsed=1208s
+07:47:32 [QUASAR.curriculum] INFO: Stage 0 | Step 106,000 | F=0.1042 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.6897
+07:47:49 [QUASAR.curriculum] INFO: Stage 0 | Step 108,000 | F=0.2242 | noise=0.0000 | bond=[1, 2] | alpha=0.0500 | tau_g=0.6760
+07:48:07 [QUASAR.curriculum] INFO: Stage 0 | Step 110,000 | F=0.0042 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.6626
+07:48:23 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 110,000 | F_eval=0.5337 | best=0.8125 | elapsed=1269s
+07:48:41 [QUASAR.curriculum] INFO: Stage 0 | Step 112,000 | F=0.3995 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.6495
+07:48:59 [QUASAR.curriculum] INFO: Stage 0 | Step 114,000 | F=0.1182 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.6366
+07:49:24 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 115,000 | F_eval=0.5175 | best=0.8125 | elapsed=1330s
+07:49:33 [QUASAR.curriculum] INFO: Stage 0 | Step 116,000 | F=0.0013 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.6240
+07:49:51 [QUASAR.curriculum] INFO: Stage 0 | Step 118,000 | F=0.0419 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.6117
+07:50:09 [QUASAR.curriculum] INFO: Stage 0 | Step 120,000 | F=0.2987 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.5996
+07:50:25 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 120,000 | F_eval=0.5418 | best=0.8125 | elapsed=1390s
+07:50:43 [QUASAR.curriculum] INFO: Stage 0 | Step 122,000 | F=0.0236 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.5877
+07:51:00 [QUASAR.curriculum] INFO: Stage 0 | Step 124,000 | F=0.5000 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.5761
+07:51:26 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 125,000 | F_eval=0.6871 | best=0.8125 | elapsed=1451s
+07:51:34 [QUASAR.curriculum] INFO: Stage 0 | Step 126,000 | F=0.5000 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.5646
+07:51:43 [QUASAR.curriculum] WARNING: [BCD v9.25] bond=[1,...,1] in 80% of last 5000 steps at step 126993 — emitting bond_collapse.
+07:51:43 [quasar.v9_0.erl] INFO: [ERL v9.24] Bond collapse at step 126993 (bond=[1,...,1] for 0 steps) — recovery start.
+07:51:43 [quasar.v9_0.erl] INFO: [ERL v9.27] Zeroed priorities of 10000 recent transitions (buffer size=126993, ptr=126993). Stale data will not be sampled.
+07:51:43 [quasar.v9_0.erl] INFO: [ERL v9.24] Gumbel temperature reset to 0.8000 after bond collapse.
+07:51:43 [quasar.v9_0.erl] WARNING: [ERL v9.18] UNIQ wiki query failed (non-fatal): No module named 'aris_wiki'
+07:51:43 [quasar.v9_0.erl] INFO: [ERL v9.24] UNIQ wiki miss — no stepping stone for bond collapse at 3q.
+07:51:52 [QUASAR.curriculum] INFO: Stage 0 | Step 128,000 | F=0.2032 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.7920
+07:52:10 [QUASAR.curriculum] INFO: Stage 0 | Step 130,000 | F=0.1497 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.7763
+07:52:26 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 130,000 | F_eval=0.5356 | best=0.8125 | elapsed=1511s
+07:52:44 [QUASAR.curriculum] INFO: Stage 0 | Step 132,000 | F=0.0016 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.7609
+07:53:02 [QUASAR.curriculum] INFO: Stage 0 | Step 134,000 | F=0.1067 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.7459
+07:53:27 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 135,000 | F_eval=0.5825 | best=0.8125 | elapsed=1572s
+07:53:36 [QUASAR.curriculum] INFO: Stage 0 | Step 136,000 | F=0.3897 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.7311
+07:53:54 [QUASAR.curriculum] INFO: Stage 0 | Step 138,000 | F=0.1355 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.7166
+07:54:11 [QUASAR.curriculum] INFO: Stage 0 | Step 140,000 | F=0.0042 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.7024
+07:54:28 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 140,000 | F_eval=0.6359 | best=0.8125 | elapsed=1633s
+07:54:28 [quasar.v9_0.monitor] WARNING: [SWDFT] Stagnation #1 detected at step 140000 (F_recent_mean=0.5711, dc_improvement=-0.0081, non_dc_frac=0.005 > thr=0.25). Triggering Reactive Mode.
+07:54:28 [quasar.v9_0.erl] INFO: [ERL] Trigger #1 at step 140000 — starting ERL loop.
+07:54:28 [quasar.v9_0.erl] INFO: [ERL] Gumbel temperature reset: 0.7024 → 0.5000 (exploration restored).
+07:54:28 [quasar.v9_0.erl] INFO: [ERL v9.27] Loaded best checkpoint (F=0.9067 at step 105000) for ERL evaluation.
+07:54:28 [quasar.v9_0.erl] WARNING: [ERL v9.18] UNIQ wiki query failed (non-fatal): No module named 'aris_wiki'
+07:54:28 [quasar.v9_0.erl] INFO: [ERL v9.18] UNIQ wiki miss — no prior stepping stone for this plateau state.
+07:54:29 [quasar.v9_0.erl] INFO: [ERL] First attempt: mean_fidelity=0.6794 over 5 episodes.
+07:54:29 [quasar.v9_0.erl] INFO: [ERL] Second attempt: mean_fidelity=0.6301 over 5 episodes.
+07:54:31 [quasar.v9_0.erl] INFO: [ERL] Distillation complete: avg_loss=0.3237 (f2_mean=0.6301 > tau=0.50).
+07:54:31 [quasar.v9_0.erl] INFO: [ERL v9.27] Restored critic/alpha after ERL; actor retains ERL improvements.
+07:54:37 [quasar.v9_0.sdft] INFO: [SDFT] ZNE fidelity gate: 0.8125 (threshold=0.3500)
+07:54:39 [quasar.v9_0.sdft] INFO: [SDFT] Trigger #1 at step 140000: reverse-KL distillation on 950 elite transitions over 100 steps. avg_loss=-2.5077
+07:54:42 [quasar.v9_0.components] ERROR: [Registry] Component 'ttt' raised on signal 'sdft_complete': element 0 of tensors does not require grad and does not have a grad_fn
+Traceback (most recent call last):
+  File "/home/ralshehri0468/quasar_v9/quasar/v9_0/components.py", line 338, in signal
+    follow_up = comp.handle(name, payload)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/quasar_v9/quasar/v9_0/ttt.py", line 203, in handle
+    pg_loss.backward()
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/_tensor.py", line 521, in backward
+    torch.autograd.backward(
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/autograd/__init__.py", line 289, in backward
+    _engine_run_backward(
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/autograd/graph.py", line 768, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn
+07:55:03 [QUASAR.curriculum] INFO: Stage 0 | Step 142,000 | F=0.3871 | noise=0.0000 | bond=[1, 2] | alpha=0.0500 | tau_g=0.5484
+07:55:23 [QUASAR.curriculum] INFO: Stage 0 | Step 144,000 | F=0.2177 | noise=0.0000 | bond=[1, 2] | alpha=0.0500 | tau_g=0.5375
+07:55:52 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 145,000 | F_eval=0.5728 | best=0.8125 | elapsed=1717s
+07:56:01 [QUASAR.curriculum] INFO: Stage 0 | Step 146,000 | F=0.5847 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.5268
+07:56:22 [QUASAR.curriculum] INFO: Stage 0 | Step 148,000 | F=0.2995 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.5164
+07:56:42 [QUASAR.curriculum] INFO: Stage 0 | Step 150,000 | F=0.0617 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.5062
+07:57:01 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 150,000 | F_eval=0.5513 | best=0.8125 | elapsed=1786s
+07:57:01 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.1358 | plateau window 1/5 | bank=0
+07:57:21 [QUASAR.curriculum] INFO: Stage 0 | Step 152,000 | F=0.0950 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.4962
+07:57:42 [QUASAR.curriculum] INFO: Stage 0 | Step 154,000 | F=0.1456 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.4863
+07:58:10 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 155,000 | F_eval=0.5271 | best=0.8125 | elapsed=1855s
+07:58:10 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.0085 | plateau window 2/5 | bank=0
+07:58:20 [QUASAR.curriculum] INFO: Stage 0 | Step 156,000 | F=0.2039 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.4767
+07:58:41 [QUASAR.curriculum] INFO: Stage 0 | Step 158,000 | F=0.1313 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.4673
+07:59:01 [QUASAR.curriculum] INFO: Stage 0 | Step 160,000 | F=0.0604 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.4580
+07:59:19 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 160,000 | F_eval=0.5488 | best=0.8125 | elapsed=1924s
+07:59:19 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.0336 | plateau window 3/5 | bank=0
+07:59:36 [QUASAR.curriculum] INFO: Stage 0 | Step 162,000 | F=0.0037 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.4490
+07:59:54 [QUASAR.curriculum] INFO: Stage 0 | Step 164,000 | F=0.1660 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.4401
+08:00:19 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 165,000 | F_eval=0.5676 | best=0.8125 | elapsed=1984s
+08:00:19 [quasar.v9_0.monitor] WARNING: [SWDFT] Stagnation #2 detected at step 165000 (F_recent_mean=0.5652, dc_improvement=-0.0038, non_dc_frac=0.004 > thr=0.25). Triggering Reactive Mode.
+08:00:19 [quasar.v9_0.erl] INFO: [ERL] Trigger #2 at step 165000 — starting ERL loop.
+08:00:19 [quasar.v9_0.erl] INFO: [ERL] Gumbel temperature reset: 0.4357 → 0.5000 (exploration restored).
+08:00:19 [quasar.v9_0.erl] INFO: [ERL v9.27] Loaded best checkpoint (F=0.9853 at step 170000) for ERL evaluation.
+08:00:19 [quasar.v9_0.erl] WARNING: [ERL v9.18] UNIQ wiki query failed (non-fatal): No module named 'aris_wiki'
+08:00:19 [quasar.v9_0.erl] INFO: [ERL v9.18] UNIQ wiki miss — no prior stepping stone for this plateau state.
+08:00:20 [quasar.v9_0.erl] INFO: [ERL] First attempt: mean_fidelity=0.8787 over 5 episodes.
+08:00:20 [quasar.v9_0.erl] INFO: [ERL] Second attempt: mean_fidelity=0.8531 over 5 episodes.
+08:00:22 [quasar.v9_0.erl] INFO: [ERL] Distillation complete: avg_loss=0.2931 (f2_mean=0.8531 > tau=0.50).
+08:00:22 [quasar.v9_0.erl] INFO: [ERL v9.27] Restored critic/alpha after ERL; actor retains ERL improvements.
+08:00:28 [quasar.v9_0.sdft] INFO: [SDFT] ZNE fidelity gate: 0.8125 (threshold=0.3500)
+08:00:29 [quasar.v9_0.sdft] INFO: [SDFT] Trigger #2 at step 165000: reverse-KL distillation on 1355 elite transitions over 100 steps. avg_loss=-1.2668
+08:00:32 [quasar.v9_0.components] ERROR: [Registry] Component 'ttt' raised on signal 'sdft_complete': element 0 of tensors does not require grad and does not have a grad_fn
+Traceback (most recent call last):
+  File "/home/ralshehri0468/quasar_v9/quasar/v9_0/components.py", line 338, in signal
+    follow_up = comp.handle(name, payload)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/quasar_v9/quasar/v9_0/ttt.py", line 203, in handle
+    pg_loss.backward()
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/_tensor.py", line 521, in backward
+    torch.autograd.backward(
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/autograd/__init__.py", line 289, in backward
+    _engine_run_backward(
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/autograd/graph.py", line 768, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn
+08:00:32 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.0683 | plateau window 4/5 | bank=0
+08:00:43 [QUASAR.curriculum] INFO: Stage 0 | Step 166,000 | F=0.4288 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.3000
+08:01:03 [QUASAR.curriculum] INFO: Stage 0 | Step 168,000 | F=0.1826 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.3000
+08:01:23 [QUASAR.curriculum] INFO: Stage 0 | Step 170,000 | F=0.0157 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:01:41 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 170,000 | F_eval=0.5067 | best=0.8125 | elapsed=2066s
+08:01:41 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.0661 | plateau window 5/5 | bank=0
+08:01:41 [QUASAR.curriculum] INFO: [DBA] Stage 0 plateau patience reached but best_F=0.8125 < 0.99 (min_fidelity_to_stop) — NOT early-stopping, resetting patience.
+08:01:59 [QUASAR.curriculum] INFO: Stage 0 | Step 172,000 | F=0.0602 | noise=0.0000 | bond=[1, 2] | alpha=0.0500 | tau_g=0.3000
+08:02:17 [QUASAR.curriculum] INFO: Stage 0 | Step 174,000 | F=0.0051 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.3000
+08:02:42 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 175,000 | F_eval=0.5460 | best=0.8125 | elapsed=2127s
+08:02:42 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.0053 | plateau window 1/5 | bank=0
+08:02:50 [QUASAR.curriculum] INFO: Stage 0 | Step 176,000 | F=0.0374 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.3000
+08:03:08 [QUASAR.curriculum] INFO: Stage 0 | Step 178,000 | F=0.1128 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:03:26 [QUASAR.curriculum] INFO: Stage 0 | Step 180,000 | F=0.2036 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.3000
+08:03:42 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 180,000 | F_eval=0.5667 | best=0.8125 | elapsed=2187s
+08:04:00 [QUASAR.curriculum] INFO: Stage 0 | Step 182,000 | F=0.0615 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.3000
+08:04:18 [QUASAR.curriculum] INFO: Stage 0 | Step 184,000 | F=0.2623 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.3000
+08:04:43 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 185,000 | F_eval=0.5000 | best=0.8125 | elapsed=2248s
+08:04:43 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.0488 | plateau window 1/5 | bank=0
+08:04:51 [QUASAR.curriculum] INFO: Stage 0 | Step 186,000 | F=0.2802 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:05:09 [QUASAR.curriculum] INFO: Stage 0 | Step 188,000 | F=0.2558 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:05:27 [QUASAR.curriculum] INFO: Stage 0 | Step 190,000 | F=0.0525 | noise=0.0000 | bond=[1, 2] | alpha=0.0500 | tau_g=0.3000
+08:05:43 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 190,000 | F_eval=0.5693 | best=0.8125 | elapsed=2308s
+08:05:43 [quasar.v9_0.monitor] WARNING: [SWDFT] Stagnation #3 detected at step 190000 (F_recent_mean=0.5415, dc_improvement=-0.0365, non_dc_frac=0.003 > thr=0.25). Triggering Reactive Mode.
+08:05:43 [quasar.v9_0.erl] INFO: [ERL] Trigger #3 at step 190000 — starting ERL loop.
+08:05:43 [quasar.v9_0.erl] INFO: [ERL] Gumbel temperature reset: 0.3000 → 0.5000 (exploration restored).
+08:05:43 [quasar.v9_0.erl] INFO: [ERL v9.27] Loaded best checkpoint (F=0.9956 at step 185000) for ERL evaluation.
+08:05:43 [quasar.v9_0.erl] WARNING: [ERL v9.18] UNIQ wiki query failed (non-fatal): No module named 'aris_wiki'
+08:05:43 [quasar.v9_0.erl] INFO: [ERL v9.18] UNIQ wiki miss — no prior stepping stone for this plateau state.
+08:05:44 [quasar.v9_0.erl] INFO: [ERL] First attempt: mean_fidelity=0.9449 over 5 episodes.
+08:05:44 [quasar.v9_0.erl] INFO: [ERL] Second attempt: mean_fidelity=0.9837 over 5 episodes.
+08:05:46 [quasar.v9_0.erl] INFO: [ERL] Distillation complete: avg_loss=0.2683 (f2_mean=0.9837 > tau=0.50).
+08:05:46 [quasar.v9_0.erl] INFO: [ERL v9.27] Restored critic/alpha after ERL; actor retains ERL improvements.
+08:05:51 [quasar.v9_0.sdft] INFO: [SDFT] ZNE fidelity gate: 0.8125 (threshold=0.3500)
+08:05:53 [quasar.v9_0.sdft] INFO: [SDFT] Trigger #3 at step 190000: reverse-KL distillation on 1704 elite transitions over 100 steps. avg_loss=-1.1356
+08:05:56 [quasar.v9_0.components] ERROR: [Registry] Component 'ttt' raised on signal 'sdft_complete': element 0 of tensors does not require grad and does not have a grad_fn
+Traceback (most recent call last):
+  File "/home/ralshehri0468/quasar_v9/quasar/v9_0/components.py", line 338, in signal
+    follow_up = comp.handle(name, payload)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/quasar_v9/quasar/v9_0/ttt.py", line 203, in handle
+    pg_loss.backward()
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/_tensor.py", line 521, in backward
+    torch.autograd.backward(
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/autograd/__init__.py", line 289, in backward
+    _engine_run_backward(
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/autograd/graph.py", line 768, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn
+08:05:56 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=+0.0017 | plateau window 2/5 | bank=0
+08:06:16 [QUASAR.curriculum] INFO: Stage 0 | Step 192,000 | F=0.1030 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:06:36 [QUASAR.curriculum] INFO: Stage 0 | Step 194,000 | F=0.0796 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:07:05 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 195,000 | F_eval=0.7057 | best=0.8125 | elapsed=2390s
+08:07:14 [QUASAR.curriculum] INFO: Stage 0 | Step 196,000 | F=0.0611 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:07:31 [QUASAR.curriculum] INFO: Stage 0 | Step 198,000 | F=0.5988 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:07:49 [QUASAR.curriculum] INFO: Stage 0 | Step 200,000 | F=0.9524 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:08:03 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 200,000 | F_eval=0.9806 | best=0.8125 | elapsed=2448s
+08:08:03 [QUASAR.curriculum] INFO:   Checkpoint saved: quasar_v9_stage0_best.pt (F=0.9806)
+08:08:21 [QUASAR.curriculum] INFO: Stage 0 | Step 202,000 | F=0.0562 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.3000
+08:08:39 [QUASAR.curriculum] INFO: Stage 0 | Step 204,000 | F=0.0421 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.3000
+08:09:03 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 205,000 | F_eval=0.9261 | best=0.9806 | elapsed=2508s
+08:09:12 [QUASAR.curriculum] INFO: Stage 0 | Step 206,000 | F=0.0281 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.3000
+08:09:29 [QUASAR.curriculum] INFO: Stage 0 | Step 208,000 | F=0.0201 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:09:47 [QUASAR.curriculum] INFO: Stage 0 | Step 210,000 | F=0.6892 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:10:03 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 210,000 | F_eval=0.9724 | best=0.9806 | elapsed=2568s
+08:10:20 [QUASAR.curriculum] INFO: Stage 0 | Step 212,000 | F=0.9682 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:10:38 [QUASAR.curriculum] INFO: Stage 0 | Step 214,000 | F=0.5000 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.3000
+08:11:03 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 215,000 | F_eval=0.9264 | best=0.9806 | elapsed=2628s
+08:11:12 [QUASAR.curriculum] INFO: Stage 0 | Step 216,000 | F=0.1087 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.3000
+08:11:30 [QUASAR.curriculum] INFO: Stage 0 | Step 218,000 | F=0.1678 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.3000
+08:11:47 [QUASAR.curriculum] INFO: Stage 0 | Step 220,000 | F=0.2906 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.3000
+08:12:03 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 220,000 | F_eval=0.9552 | best=0.9806 | elapsed=2688s
+08:12:20 [QUASAR.curriculum] INFO: Stage 0 | Step 222,000 | F=0.8499 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:12:38 [QUASAR.curriculum] INFO: Stage 0 | Step 224,000 | F=0.4764 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:13:03 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 225,000 | F_eval=0.8826 | best=0.9806 | elapsed=2748s
+08:13:03 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.0980 | plateau window 1/5 | bank=0
+08:13:12 [QUASAR.curriculum] INFO: Stage 0 | Step 226,000 | F=0.2901 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.3000
+08:13:29 [QUASAR.curriculum] INFO: Stage 0 | Step 228,000 | F=0.8152 | noise=0.0000 | bond=[2, 2] | alpha=0.0501 | tau_g=0.3000
+08:13:47 [QUASAR.curriculum] INFO: Stage 0 | Step 230,000 | F=0.1739 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.3000
+08:14:02 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 230,000 | F_eval=0.9858 | best=0.9806 | elapsed=2807s
+08:14:02 [QUASAR.curriculum] INFO:   Checkpoint saved: quasar_v9_stage0_best.pt (F=0.9858)
+08:14:20 [QUASAR.curriculum] INFO: Stage 0 | Step 232,000 | F=0.9570 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:14:37 [QUASAR.curriculum] INFO: Stage 0 | Step 234,000 | F=0.5000 | noise=0.0000 | bond=[2, 2] | alpha=0.0502 | tau_g=0.3000
+08:15:01 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 235,000 | F_eval=0.9682 | best=0.9858 | elapsed=2866s
+08:15:01 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.0042 | plateau window 1/5 | bank=0
+08:15:10 [QUASAR.curriculum] INFO: Stage 0 | Step 236,000 | F=0.9862 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:15:28 [QUASAR.curriculum] INFO: Stage 0 | Step 238,000 | F=0.8868 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:15:45 [QUASAR.curriculum] INFO: Stage 0 | Step 240,000 | F=0.1432 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.3000
+08:16:00 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 240,000 | F_eval=0.9851 | best=0.9858 | elapsed=2925s
+08:16:18 [QUASAR.curriculum] INFO: Stage 0 | Step 242,000 | F=0.9197 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:16:36 [QUASAR.curriculum] INFO: Stage 0 | Step 244,000 | F=0.8767 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:16:59 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 245,000 | F_eval=0.9817 | best=0.9858 | elapsed=2984s
+08:17:08 [QUASAR.curriculum] INFO: Stage 0 | Step 246,000 | F=0.3755 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.3000
+08:17:26 [QUASAR.curriculum] INFO: Stage 0 | Step 248,000 | F=0.3804 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.3000
+08:17:43 [QUASAR.curriculum] INFO: Stage 0 | Step 250,000 | F=0.8312 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:17:59 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 250,000 | F_eval=0.9754 | best=0.9858 | elapsed=3044s
+08:18:17 [QUASAR.curriculum] INFO: Stage 0 | Step 252,000 | F=0.5305 | noise=0.0000 | bond=[2, 2] | alpha=0.0519 | tau_g=0.3000
+08:18:34 [QUASAR.curriculum] INFO: Stage 0 | Step 254,000 | F=0.3016 | noise=0.0000 | bond=[2, 1] | alpha=0.0548 | tau_g=0.3000
+08:18:59 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 255,000 | F_eval=0.9749 | best=0.9858 | elapsed=3104s
+08:18:59 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.0108 | plateau window 1/5 | bank=0
+08:19:08 [QUASAR.curriculum] INFO: Stage 0 | Step 256,000 | F=0.8974 | noise=0.0000 | bond=[2, 2] | alpha=0.0520 | tau_g=0.3000
+08:19:26 [QUASAR.curriculum] INFO: Stage 0 | Step 258,000 | F=0.0000 | noise=0.0000 | bond=[2, 2] | alpha=0.0592 | tau_g=0.3000
+08:19:43 [QUASAR.curriculum] INFO: Stage 0 | Step 260,000 | F=0.2123 | noise=0.0000 | bond=[2, 2] | alpha=0.0676 | tau_g=0.3000
+08:20:00 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 260,000 | F_eval=0.8939 | best=0.9858 | elapsed=3165s
+08:20:00 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.0743 | plateau window 2/5 | bank=0
+08:20:18 [QUASAR.curriculum] INFO: Stage 0 | Step 262,000 | F=0.8865 | noise=0.0000 | bond=[2, 2] | alpha=0.0706 | tau_g=0.3000
+08:20:36 [QUASAR.curriculum] INFO: Stage 0 | Step 264,000 | F=0.1625 | noise=0.0000 | bond=[2, 2] | alpha=0.0690 | tau_g=0.3000
+08:21:01 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 265,000 | F_eval=0.9238 | best=0.9858 | elapsed=3226s
+08:21:01 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.0614 | plateau window 3/5 | bank=0
+08:21:10 [QUASAR.curriculum] INFO: Stage 0 | Step 266,000 | F=0.1981 | noise=0.0000 | bond=[2, 1] | alpha=0.0683 | tau_g=0.3000
+08:21:27 [QUASAR.curriculum] INFO: Stage 0 | Step 268,000 | F=0.3388 | noise=0.0000 | bond=[2, 1] | alpha=0.0680 | tau_g=0.3000
+08:21:45 [QUASAR.curriculum] INFO: Stage 0 | Step 270,000 | F=0.0012 | noise=0.0000 | bond=[2, 2] | alpha=0.0656 | tau_g=0.3000
+08:22:02 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 270,000 | F_eval=0.8710 | best=0.9858 | elapsed=3287s
+08:22:02 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.1107 | plateau window 4/5 | bank=0
+08:22:19 [QUASAR.curriculum] INFO: Stage 0 | Step 272,000 | F=0.8383 | noise=0.0000 | bond=[2, 2] | alpha=0.0582 | tau_g=0.3000
+08:22:37 [QUASAR.curriculum] INFO: Stage 0 | Step 274,000 | F=0.2890 | noise=0.0000 | bond=[2, 1] | alpha=0.0588 | tau_g=0.3000
+08:23:02 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 275,000 | F_eval=0.8333 | best=0.9858 | elapsed=3348s
+08:23:02 [quasar.v9_0.monitor] WARNING: [SWDFT] Stagnation #4 detected at step 275000 (F_recent_mean=0.9299, dc_improvement=-0.0198, non_dc_frac=0.025 > thr=0.25). Triggering Reactive Mode.
+08:23:02 [quasar.v9_0.erl] INFO: [ERL] Trigger #4 at step 275000 — starting ERL loop.
+08:23:02 [quasar.v9_0.erl] INFO: [ERL] Gumbel temperature reset: 0.3000 → 0.5000 (exploration restored).
+08:23:02 [quasar.v9_0.erl] INFO: [ERL v9.27] Loaded best checkpoint (F=0.9858 at step 230000) for ERL evaluation.
+08:23:02 [quasar.v9_0.erl] WARNING: [ERL v9.18] UNIQ wiki query failed (non-fatal): No module named 'aris_wiki'
+08:23:02 [quasar.v9_0.erl] INFO: [ERL v9.18] UNIQ wiki miss — no prior stepping stone for this plateau state.
+08:23:03 [quasar.v9_0.erl] INFO: [ERL] First attempt: mean_fidelity=0.9486 over 5 episodes.
+08:23:03 [quasar.v9_0.erl] INFO: [ERL] Second attempt: mean_fidelity=0.4738 over 5 episodes.
+08:23:05 [quasar.v9_0.erl] INFO: [ERL] Distillation skipped: f2_mean=0.4738 ≤ tau=0.50.
+08:23:05 [quasar.v9_0.erl] INFO: [ERL v9.27] Restored critic/alpha after ERL; actor retains ERL improvements.
+08:23:10 [quasar.v9_0.sdft] INFO: [SDFT] ZNE fidelity gate: 0.9858 (threshold=0.3500)
+08:23:11 [quasar.v9_0.sdft] INFO: [SDFT] Trigger #4 at step 275000: reverse-KL distillation on 19385 elite transitions over 100 steps. avg_loss=-1.7198
+08:23:14 [quasar.v9_0.components] ERROR: [Registry] Component 'ttt' raised on signal 'sdft_complete': element 0 of tensors does not require grad and does not have a grad_fn
+Traceback (most recent call last):
+  File "/home/ralshehri0468/quasar_v9/quasar/v9_0/components.py", line 338, in signal
+    follow_up = comp.handle(name, payload)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/quasar_v9/quasar/v9_0/ttt.py", line 203, in handle
+    pg_loss.backward()
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/_tensor.py", line 521, in backward
+    torch.autograd.backward(
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/autograd/__init__.py", line 289, in backward
+    _engine_run_backward(
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/autograd/graph.py", line 768, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn
+08:23:14 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.1422 | plateau window 5/5 | bank=0
+08:23:14 [QUASAR.curriculum] INFO: [DBA] Stage 0 plateau patience reached but best_F=0.9858 < 0.99 (min_fidelity_to_stop) — NOT early-stopping, resetting patience.
+08:23:25 [QUASAR.curriculum] INFO: Stage 0 | Step 276,000 | F=0.0321 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.3000
+08:23:45 [QUASAR.curriculum] INFO: Stage 0 | Step 278,000 | F=0.5000 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.3000
+08:24:05 [QUASAR.curriculum] INFO: Stage 0 | Step 280,000 | F=0.5000 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.3000
+08:24:23 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 280,000 | F_eval=0.6393 | best=0.9858 | elapsed=3429s
+08:24:23 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.3356 | plateau window 1/5 | bank=0
+08:24:41 [QUASAR.curriculum] INFO: Stage 0 | Step 282,000 | F=0.5000 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.3000
+08:24:44 [QUASAR.curriculum] WARNING: [BCD v9.25] bond=[1,...,1] in 80% of last 5000 steps at step 282320 — emitting bond_collapse.
+08:24:44 [quasar.v9_0.erl] INFO: [ERL v9.24] Bond collapse at step 282320 (bond=[1,...,1] for 0 steps) — recovery start.
+08:24:44 [quasar.v9_0.erl] INFO: [ERL v9.27] Zeroed priorities of 10000 recent transitions (buffer size=285009, ptr=285009). Stale data will not be sampled.
+08:24:44 [quasar.v9_0.erl] INFO: [ERL v9.24] Gumbel temperature reset to 0.8000 after bond collapse.
+08:24:44 [quasar.v9_0.erl] WARNING: [ERL v9.18] UNIQ wiki query failed (non-fatal): No module named 'aris_wiki'
+08:24:44 [quasar.v9_0.erl] INFO: [ERL v9.24] UNIQ wiki miss — no stepping stone for bond collapse at 3q.
+08:24:59 [QUASAR.curriculum] INFO: Stage 0 | Step 284,000 | F=0.3266 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.7867
+08:25:21 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 285,000 | F_eval=0.9860 | best=0.9858 | elapsed=3487s
+08:25:22 [QUASAR.curriculum] INFO:   Checkpoint saved: quasar_v9_stage0_best.pt (F=0.9860)
+08:25:31 [QUASAR.curriculum] INFO: Stage 0 | Step 286,000 | F=0.0885 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.7711
+08:25:48 [QUASAR.curriculum] INFO: Stage 0 | Step 288,000 | F=0.0616 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.7558
+08:26:06 [QUASAR.curriculum] INFO: Stage 0 | Step 290,000 | F=0.0818 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.7409
+08:26:22 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 290,000 | F_eval=0.8019 | best=0.9860 | elapsed=3547s
+08:26:22 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.1219 | plateau window 1/5 | bank=0
+08:26:40 [QUASAR.curriculum] INFO: Stage 0 | Step 292,000 | F=0.0706 | noise=0.0000 | bond=[2, 1] | alpha=0.0501 | tau_g=0.7262
+08:26:58 [QUASAR.curriculum] INFO: Stage 0 | Step 294,000 | F=0.1482 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.7118
+08:27:22 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 295,000 | F_eval=0.9230 | best=0.9860 | elapsed=3607s
+08:27:31 [QUASAR.curriculum] INFO: Stage 0 | Step 296,000 | F=0.0700 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.6977
+08:27:49 [QUASAR.curriculum] INFO: Stage 0 | Step 298,000 | F=0.1442 | noise=0.0000 | bond=[2, 1] | alpha=0.0505 | tau_g=0.6839
+08:28:06 [QUASAR.curriculum] INFO: Stage 0 | Step 300,000 | F=0.1147 | noise=0.0000 | bond=[2, 2] | alpha=0.0508 | tau_g=0.6704
+08:28:23 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 300,000 | F_eval=0.9199 | best=0.9860 | elapsed=3668s
+08:28:23 [quasar.v9_0.monitor] WARNING: [SWDFT] Stagnation #5 detected at step 300000 (F_recent_mean=0.8623, dc_improvement=-0.0937, non_dc_frac=0.011 > thr=0.25). Triggering Reactive Mode.
+08:28:23 [quasar.v9_0.erl] INFO: [ERL] Trigger #5 at step 300000 — starting ERL loop.
+08:28:23 [quasar.v9_0.erl] INFO: [ERL] Gumbel temperature reset: 0.6704 → 0.5000 (exploration restored).
+08:28:23 [quasar.v9_0.erl] INFO: [ERL v9.27] Loaded best checkpoint (F=0.9649 at step 295000) for ERL evaluation.
+08:28:23 [quasar.v9_0.erl] WARNING: [ERL v9.18] UNIQ wiki query failed (non-fatal): No module named 'aris_wiki'
+08:28:23 [quasar.v9_0.erl] INFO: [ERL v9.18] UNIQ wiki miss — no prior stepping stone for this plateau state.
+08:28:24 [quasar.v9_0.erl] INFO: [ERL] First attempt: mean_fidelity=0.7916 over 5 episodes.
+08:28:25 [quasar.v9_0.erl] INFO: [ERL] Second attempt: mean_fidelity=0.7300 over 5 episodes.
+08:28:27 [quasar.v9_0.erl] INFO: [ERL] Distillation complete: avg_loss=0.1945 (f2_mean=0.7300 > tau=0.50).
+08:28:27 [quasar.v9_0.erl] INFO: [ERL v9.27] Restored critic/alpha after ERL; actor retains ERL improvements.
+08:28:33 [quasar.v9_0.sdft] INFO: [SDFT] ZNE fidelity gate: 0.9860 (threshold=0.3500)
+08:28:34 [quasar.v9_0.sdft] INFO: [SDFT] Trigger #5 at step 300000: reverse-KL distillation on 20197 elite transitions over 100 steps. avg_loss=-1.7601
+08:28:37 [quasar.v9_0.components] ERROR: [Registry] Component 'ttt' raised on signal 'sdft_complete': element 0 of tensors does not require grad and does not have a grad_fn
+Traceback (most recent call last):
+  File "/home/ralshehri0468/quasar_v9/quasar/v9_0/components.py", line 338, in signal
+    follow_up = comp.handle(name, payload)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/quasar_v9/quasar/v9_0/ttt.py", line 203, in handle
+    pg_loss.backward()
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/_tensor.py", line 521, in backward
+    torch.autograd.backward(
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/autograd/__init__.py", line 289, in backward
+    _engine_run_backward(
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/autograd/graph.py", line 768, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn
+08:28:58 [QUASAR.curriculum] INFO: Stage 0 | Step 302,000 | F=0.1823 | noise=0.0000 | bond=[1, 2] | alpha=0.0500 | tau_g=0.6185
+08:29:18 [QUASAR.curriculum] INFO: Stage 0 | Step 304,000 | F=0.0669 | noise=0.0000 | bond=[1, 2] | alpha=0.0500 | tau_g=0.6062
+08:29:46 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 305,000 | F_eval=0.5000 | best=0.9860 | elapsed=3752s
+08:29:46 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.1393 | plateau window 1/5 | bank=0
+08:29:52 [QUASAR.curriculum] WARNING: [BCD v9.25] bond=[1,...,1] in 80% of last 5000 steps at step 305641 — emitting bond_collapse.
+08:29:52 [quasar.v9_0.erl] INFO: [ERL v9.24] Bond collapse at step 305641 (bond=[1,...,1] for 0 steps) — recovery start.
+08:29:52 [quasar.v9_0.erl] INFO: [ERL v9.27] Zeroed priorities of 10000 recent transitions (buffer size=300000, ptr=9130). Stale data will not be sampled.
+08:29:52 [quasar.v9_0.erl] INFO: [ERL v9.24] Gumbel temperature reset to 0.8000 after bond collapse.
+08:29:52 [quasar.v9_0.erl] WARNING: [ERL v9.18] UNIQ wiki query failed (non-fatal): No module named 'aris_wiki'
+08:29:52 [quasar.v9_0.erl] INFO: [ERL v9.24] UNIQ wiki miss — no stepping stone for bond collapse at 3q.
+08:29:55 [QUASAR.curriculum] INFO: Stage 0 | Step 306,000 | F=0.5000 | noise=0.0000 | bond=[1, 1] | alpha=0.0507 | tau_g=0.7971
+08:30:13 [QUASAR.curriculum] INFO: Stage 0 | Step 308,000 | F=0.0793 | noise=0.0000 | bond=[2, 2] | alpha=0.0503 | tau_g=0.7813
+08:30:31 [QUASAR.curriculum] INFO: Stage 0 | Step 310,000 | F=0.2183 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.7659
+08:30:46 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 310,000 | F_eval=0.9787 | best=0.9860 | elapsed=3811s
+08:30:46 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.0074 | plateau window 2/5 | bank=0
+08:31:04 [QUASAR.curriculum] INFO: Stage 0 | Step 312,000 | F=0.3074 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.7507
+08:31:22 [QUASAR.curriculum] INFO: Stage 0 | Step 314,000 | F=0.3101 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.7358
+08:31:47 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 315,000 | F_eval=0.8364 | best=0.9860 | elapsed=3872s
+08:31:56 [QUASAR.curriculum] INFO: Stage 0 | Step 316,000 | F=0.1572 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.7213
+08:32:13 [QUASAR.curriculum] INFO: Stage 0 | Step 318,000 | F=0.5000 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.7070
+08:32:31 [QUASAR.curriculum] INFO: Stage 0 | Step 320,000 | F=0.3858 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.6930
+08:32:47 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 320,000 | F_eval=0.9465 | best=0.9860 | elapsed=3932s
+08:33:05 [QUASAR.curriculum] INFO: Stage 0 | Step 322,000 | F=0.2313 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.6793
+08:33:22 [QUASAR.curriculum] INFO: Stage 0 | Step 324,000 | F=0.5000 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.6658
+08:33:48 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 325,000 | F_eval=0.9541 | best=0.9860 | elapsed=3993s
+08:33:48 [quasar.v9_0.monitor] WARNING: [SWDFT] Stagnation #6 detected at step 325000 (F_recent_mean=0.8575, dc_improvement=-0.0296, non_dc_frac=0.004 > thr=0.25). Triggering Reactive Mode.
+08:33:48 [quasar.v9_0.erl] INFO: [ERL] Trigger #6 at step 325000 — starting ERL loop.
+08:33:48 [quasar.v9_0.erl] INFO: [ERL] Gumbel temperature reset: 0.6592 → 0.5000 (exploration restored).
+08:33:48 [quasar.v9_0.erl] INFO: [ERL v9.27] Loaded best checkpoint (F=0.9649 at step 295000) for ERL evaluation.
+08:33:48 [quasar.v9_0.erl] WARNING: [ERL v9.18] UNIQ wiki query failed (non-fatal): No module named 'aris_wiki'
+08:33:48 [quasar.v9_0.erl] INFO: [ERL v9.18] UNIQ wiki miss — no prior stepping stone for this plateau state.
+08:33:48 [quasar.v9_0.erl] INFO: [ERL] First attempt: mean_fidelity=0.7844 over 5 episodes.
+08:33:49 [quasar.v9_0.erl] INFO: [ERL] Second attempt: mean_fidelity=0.8079 over 5 episodes.
+08:33:51 [quasar.v9_0.erl] INFO: [ERL] Distillation complete: avg_loss=0.1971 (f2_mean=0.8079 > tau=0.50).
+08:33:51 [quasar.v9_0.erl] INFO: [ERL v9.27] Restored critic/alpha after ERL; actor retains ERL improvements.
+08:33:57 [quasar.v9_0.sdft] INFO: [SDFT] ZNE fidelity gate: 0.9860 (threshold=0.3500)
+08:33:58 [quasar.v9_0.sdft] INFO: [SDFT] Trigger #6 at step 325000: reverse-KL distillation on 20958 elite transitions over 100 steps. avg_loss=-1.7952
+08:34:01 [quasar.v9_0.components] ERROR: [Registry] Component 'ttt' raised on signal 'sdft_complete': element 0 of tensors does not require grad and does not have a grad_fn
+Traceback (most recent call last):
+  File "/home/ralshehri0468/quasar_v9/quasar/v9_0/components.py", line 338, in signal
+    follow_up = comp.handle(name, payload)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/quasar_v9/quasar/v9_0/ttt.py", line 203, in handle
+    pg_loss.backward()
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/_tensor.py", line 521, in backward
+    torch.autograd.backward(
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/autograd/__init__.py", line 289, in backward
+    _engine_run_backward(
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/autograd/graph.py", line 768, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn
+08:34:11 [QUASAR.curriculum] INFO: Stage 0 | Step 326,000 | F=0.1482 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.6247
+08:34:32 [QUASAR.curriculum] INFO: Stage 0 | Step 328,000 | F=0.1529 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.6123
+08:34:52 [QUASAR.curriculum] INFO: Stage 0 | Step 330,000 | F=0.5000 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.6002
+08:35:11 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 330,000 | F_eval=0.5000 | best=0.9860 | elapsed=4076s
+08:35:11 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.0000 | plateau window 1/5 | bank=0
+08:35:17 [QUASAR.curriculum] WARNING: [BCD v9.25] bond=[1,...,1] in 80% of last 5000 steps at step 330767 — emitting bond_collapse.
+08:35:17 [quasar.v9_0.erl] INFO: [ERL v9.24] Bond collapse at step 330767 (bond=[1,...,1] for 0 steps) — recovery start.
+08:35:17 [quasar.v9_0.erl] INFO: [ERL v9.27] Zeroed priorities of 10000 recent transitions (buffer size=300000, ptr=35010). Stale data will not be sampled.
+08:35:17 [quasar.v9_0.erl] INFO: [ERL v9.24] Gumbel temperature reset to 0.8000 after bond collapse.
+08:35:17 [quasar.v9_0.erl] WARNING: [ERL v9.18] UNIQ wiki query failed (non-fatal): No module named 'aris_wiki'
+08:35:17 [quasar.v9_0.erl] INFO: [ERL v9.24] UNIQ wiki miss — no stepping stone for bond collapse at 3q.
+08:35:28 [QUASAR.curriculum] INFO: Stage 0 | Step 332,000 | F=0.3294 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.7902
+08:35:46 [QUASAR.curriculum] INFO: Stage 0 | Step 334,000 | F=0.0391 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.7746
+08:36:11 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 335,000 | F_eval=0.5000 | best=0.9860 | elapsed=4136s
+08:36:11 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.4787 | plateau window 2/5 | bank=0
+08:36:21 [QUASAR.curriculum] INFO: Stage 0 | Step 336,000 | F=0.5000 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.7592
+08:36:42 [QUASAR.curriculum] INFO: Stage 0 | Step 338,000 | F=0.2280 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.7442
+08:37:02 [QUASAR.curriculum] INFO: Stage 0 | Step 340,000 | F=0.0491 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.7294
+08:37:20 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 340,000 | F_eval=0.5105 | best=0.9860 | elapsed=4205s
+08:37:20 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.3259 | plateau window 3/5 | bank=0
+08:37:38 [QUASAR.curriculum] INFO: Stage 0 | Step 342,000 | F=0.2003 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.7150
+08:37:55 [QUASAR.curriculum] INFO: Stage 0 | Step 344,000 | F=0.1099 | noise=0.0000 | bond=[1, 2] | alpha=0.0500 | tau_g=0.7008
+08:38:21 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 345,000 | F_eval=0.5929 | best=0.9860 | elapsed=4266s
+08:38:21 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.3537 | plateau window 4/5 | bank=0
+08:38:29 [QUASAR.curriculum] INFO: Stage 0 | Step 346,000 | F=0.5000 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.6870
+08:38:47 [QUASAR.curriculum] INFO: Stage 0 | Step 348,000 | F=0.5000 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.6734
+08:39:05 [QUASAR.curriculum] INFO: Stage 0 | Step 350,000 | F=0.4028 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.6600
+08:39:21 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 350,000 | F_eval=0.9572 | best=0.9860 | elapsed=4326s
+08:39:21 [quasar.v9_0.monitor] WARNING: [SWDFT] Stagnation #7 detected at step 350000 (F_recent_mean=0.7247, dc_improvement=-0.0981, non_dc_frac=0.009 > thr=0.25). Triggering Reactive Mode.
+08:39:21 [quasar.v9_0.erl] INFO: [ERL] Trigger #7 at step 350000 — starting ERL loop.
+08:39:21 [quasar.v9_0.erl] INFO: [ERL] Gumbel temperature reset: 0.6600 → 0.5000 (exploration restored).
+08:39:21 [quasar.v9_0.erl] INFO: [ERL v9.27] Loaded best checkpoint (F=0.9949 at step 330000) for ERL evaluation.
+08:39:21 [quasar.v9_0.erl] WARNING: [ERL v9.18] UNIQ wiki query failed (non-fatal): No module named 'aris_wiki'
+08:39:21 [quasar.v9_0.erl] INFO: [ERL v9.18] UNIQ wiki miss — no prior stepping stone for this plateau state.
+08:39:22 [quasar.v9_0.erl] INFO: [ERL] First attempt: mean_fidelity=0.9713 over 5 episodes.
+08:39:22 [quasar.v9_0.erl] INFO: [ERL] Second attempt: mean_fidelity=0.9739 over 5 episodes.
+08:39:24 [quasar.v9_0.erl] INFO: [ERL] Distillation complete: avg_loss=0.2222 (f2_mean=0.9739 > tau=0.50).
+08:39:24 [quasar.v9_0.erl] INFO: [ERL v9.27] Restored critic/alpha after ERL; actor retains ERL improvements.
+08:39:29 [quasar.v9_0.sdft] INFO: [SDFT] ZNE fidelity gate: 0.9860 (threshold=0.3500)
+08:39:31 [quasar.v9_0.sdft] INFO: [SDFT] Trigger #7 at step 350000: reverse-KL distillation on 21188 elite transitions over 100 steps. avg_loss=-1.5205
+08:39:34 [quasar.v9_0.components] ERROR: [Registry] Component 'ttt' raised on signal 'sdft_complete': element 0 of tensors does not require grad and does not have a grad_fn
+Traceback (most recent call last):
+  File "/home/ralshehri0468/quasar_v9/quasar/v9_0/components.py", line 338, in signal
+    follow_up = comp.handle(name, payload)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/quasar_v9/quasar/v9_0/ttt.py", line 203, in handle
+    pg_loss.backward()
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/_tensor.py", line 521, in backward
+    torch.autograd.backward(
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/autograd/__init__.py", line 289, in backward
+    _engine_run_backward(
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/autograd/graph.py", line 768, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn
+08:39:34 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=+0.0031 | plateau window 5/5 | bank=0
+08:39:34 [QUASAR.curriculum] INFO: [DBA] Stage 0 plateau patience reached but best_F=0.9860 < 0.99 (min_fidelity_to_stop) — NOT early-stopping, resetting patience.
+08:39:54 [QUASAR.curriculum] INFO: Stage 0 | Step 352,000 | F=0.4444 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.4358
+08:40:15 [QUASAR.curriculum] INFO: Stage 0 | Step 354,000 | F=0.2987 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.4272
+08:40:44 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 355,000 | F_eval=0.7635 | best=0.9860 | elapsed=4409s
+08:40:52 [QUASAR.curriculum] INFO: Stage 0 | Step 356,000 | F=0.5000 | noise=0.0000 | bond=[2, 2] | alpha=0.0509 | tau_g=0.4187
+08:41:10 [QUASAR.curriculum] INFO: Stage 0 | Step 358,000 | F=0.0949 | noise=0.0000 | bond=[2, 1] | alpha=0.0511 | tau_g=0.4104
+08:41:28 [QUASAR.curriculum] INFO: Stage 0 | Step 360,000 | F=0.0593 | noise=0.0000 | bond=[1, 1] | alpha=0.0517 | tau_g=0.4023
+08:41:44 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 360,000 | F_eval=0.8408 | best=0.9860 | elapsed=4470s
+08:42:02 [QUASAR.curriculum] INFO: Stage 0 | Step 362,000 | F=0.4062 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.3944
+08:42:20 [QUASAR.curriculum] INFO: Stage 0 | Step 364,000 | F=0.3940 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.3865
+08:42:45 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 365,000 | F_eval=0.9285 | best=0.9860 | elapsed=4530s
+08:42:54 [QUASAR.curriculum] INFO: Stage 0 | Step 366,000 | F=0.4222 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.3789
+08:43:12 [QUASAR.curriculum] INFO: Stage 0 | Step 368,000 | F=0.0800 | noise=0.0000 | bond=[2, 1] | alpha=0.0506 | tau_g=0.3714
+08:43:30 [QUASAR.curriculum] INFO: Stage 0 | Step 370,000 | F=0.3591 | noise=0.0000 | bond=[2, 1] | alpha=0.0523 | tau_g=0.3640
+08:43:46 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 370,000 | F_eval=0.8355 | best=0.9860 | elapsed=4592s
+08:44:04 [QUASAR.curriculum] INFO: Stage 0 | Step 372,000 | F=0.5859 | noise=0.0000 | bond=[2, 2] | alpha=0.0537 | tau_g=0.3568
+08:44:22 [QUASAR.curriculum] INFO: Stage 0 | Step 374,000 | F=0.5942 | noise=0.0000 | bond=[2, 2] | alpha=0.0508 | tau_g=0.3498
+08:44:47 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 375,000 | F_eval=0.9088 | best=0.9860 | elapsed=4652s
+08:44:47 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.0484 | plateau window 1/5 | bank=0
+08:44:56 [QUASAR.curriculum] INFO: Stage 0 | Step 376,000 | F=0.0410 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.3428
+08:45:13 [QUASAR.curriculum] INFO: Stage 0 | Step 378,000 | F=0.5000 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3360
+08:45:31 [QUASAR.curriculum] INFO: Stage 0 | Step 380,000 | F=0.1888 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.3294
+08:45:48 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 380,000 | F_eval=0.6480 | best=0.9860 | elapsed=4713s
+08:45:48 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.1156 | plateau window 2/5 | bank=0
+08:46:06 [QUASAR.curriculum] INFO: Stage 0 | Step 382,000 | F=0.1429 | noise=0.0000 | bond=[2, 2] | alpha=0.0508 | tau_g=0.3229
+08:46:23 [QUASAR.curriculum] INFO: Stage 0 | Step 384,000 | F=0.3429 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.3165
+08:46:48 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 385,000 | F_eval=0.8110 | best=0.9860 | elapsed=4774s
+08:46:48 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.0298 | plateau window 3/5 | bank=0
+08:46:57 [QUASAR.curriculum] INFO: Stage 0 | Step 386,000 | F=0.2252 | noise=0.0000 | bond=[2, 1] | alpha=0.0523 | tau_g=0.3102
+08:47:15 [QUASAR.curriculum] INFO: Stage 0 | Step 388,000 | F=0.1411 | noise=0.0000 | bond=[1, 1] | alpha=0.0540 | tau_g=0.3041
+08:47:33 [QUASAR.curriculum] INFO: Stage 0 | Step 390,000 | F=0.3463 | noise=0.0000 | bond=[2, 1] | alpha=0.0599 | tau_g=0.3000
+08:47:48 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 390,000 | F_eval=0.9235 | best=0.9860 | elapsed=4833s
+08:47:48 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.0050 | plateau window 4/5 | bank=0
+08:48:06 [QUASAR.curriculum] INFO: Stage 0 | Step 392,000 | F=0.2309 | noise=0.0000 | bond=[1, 1] | alpha=0.0622 | tau_g=0.3000
+08:48:24 [QUASAR.curriculum] INFO: Stage 0 | Step 394,000 | F=0.5000 | noise=0.0000 | bond=[2, 2] | alpha=0.0672 | tau_g=0.3000
+08:48:48 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 395,000 | F_eval=0.8176 | best=0.9860 | elapsed=4893s
+08:48:48 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.0179 | plateau window 5/5 | bank=0
+08:48:48 [QUASAR.curriculum] INFO: [DBA] Stage 0 plateau patience reached but best_F=0.9860 < 0.99 (min_fidelity_to_stop) — NOT early-stopping, resetting patience.
+08:48:57 [QUASAR.curriculum] INFO: Stage 0 | Step 396,000 | F=0.9169 | noise=0.0000 | bond=[2, 2] | alpha=0.0663 | tau_g=0.3000
+08:49:15 [QUASAR.curriculum] INFO: Stage 0 | Step 398,000 | F=0.3421 | noise=0.0000 | bond=[2, 1] | alpha=0.0636 | tau_g=0.3000
+08:49:33 [QUASAR.curriculum] INFO: Stage 0 | Step 400,000 | F=0.3522 | noise=0.0000 | bond=[2, 1] | alpha=0.0616 | tau_g=0.3000
+08:49:49 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 400,000 | F_eval=0.7203 | best=0.9860 | elapsed=4954s
+08:49:49 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.1886 | plateau window 1/5 | bank=0
+08:50:07 [QUASAR.curriculum] INFO: Stage 0 | Step 402,000 | F=0.0240 | noise=0.0000 | bond=[2, 1] | alpha=0.0658 | tau_g=0.3000
+08:50:24 [QUASAR.curriculum] INFO: Stage 0 | Step 404,000 | F=0.0042 | noise=0.0000 | bond=[2, 2] | alpha=0.0610 | tau_g=0.3000
+08:50:49 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 405,000 | F_eval=0.9201 | best=0.9860 | elapsed=5014s
+08:50:58 [QUASAR.curriculum] INFO: Stage 0 | Step 406,000 | F=0.2690 | noise=0.0000 | bond=[2, 1] | alpha=0.0556 | tau_g=0.3000
+08:51:15 [QUASAR.curriculum] INFO: Stage 0 | Step 408,000 | F=0.5000 | noise=0.0000 | bond=[2, 2] | alpha=0.0569 | tau_g=0.3000
+08:51:33 [QUASAR.curriculum] INFO: Stage 0 | Step 410,000 | F=0.5000 | noise=0.0000 | bond=[2, 2] | alpha=0.0532 | tau_g=0.3000
+08:51:48 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 410,000 | F_eval=0.9601 | best=0.9860 | elapsed=5074s
+08:52:06 [QUASAR.curriculum] INFO: Stage 0 | Step 412,000 | F=0.0541 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.3000
+08:52:24 [QUASAR.curriculum] INFO: Stage 0 | Step 414,000 | F=0.5000 | noise=0.0000 | bond=[2, 2] | alpha=0.0514 | tau_g=0.3000
+08:52:50 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 415,000 | F_eval=0.8567 | best=0.9860 | elapsed=5135s
+08:52:50 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.0667 | plateau window 1/5 | bank=0
+08:52:58 [QUASAR.curriculum] INFO: Stage 0 | Step 416,000 | F=0.5000 | noise=0.0000 | bond=[2, 2] | alpha=0.0504 | tau_g=0.3000
+08:53:16 [QUASAR.curriculum] INFO: Stage 0 | Step 418,000 | F=0.8151 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:53:34 [QUASAR.curriculum] INFO: Stage 0 | Step 420,000 | F=0.5000 | noise=0.0000 | bond=[2, 2] | alpha=0.0505 | tau_g=0.3000
+08:53:50 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 420,000 | F_eval=0.8480 | best=0.9860 | elapsed=5195s
+08:54:08 [QUASAR.curriculum] INFO: Stage 0 | Step 422,000 | F=0.5002 | noise=0.0000 | bond=[2, 2] | alpha=0.0503 | tau_g=0.3000
+08:54:26 [QUASAR.curriculum] INFO: Stage 0 | Step 424,000 | F=0.3056 | noise=0.0000 | bond=[2, 2] | alpha=0.0541 | tau_g=0.3000
+08:54:51 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 425,000 | F_eval=0.8284 | best=0.9860 | elapsed=5256s
+08:55:00 [QUASAR.curriculum] INFO: Stage 0 | Step 426,000 | F=0.9756 | noise=0.0000 | bond=[2, 2] | alpha=0.0517 | tau_g=0.3000
+08:55:18 [QUASAR.curriculum] INFO: Stage 0 | Step 428,000 | F=0.1950 | noise=0.0000 | bond=[2, 1] | alpha=0.0527 | tau_g=0.3000
+08:55:36 [QUASAR.curriculum] INFO: Stage 0 | Step 430,000 | F=0.3188 | noise=0.0000 | bond=[1, 1] | alpha=0.0531 | tau_g=0.3000
+08:55:51 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 430,000 | F_eval=0.8953 | best=0.9860 | elapsed=5317s
+08:55:51 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.0248 | plateau window 1/5 | bank=0
+08:56:09 [QUASAR.curriculum] INFO: Stage 0 | Step 432,000 | F=0.5000 | noise=0.0000 | bond=[2, 2] | alpha=0.0519 | tau_g=0.3000
+08:56:27 [QUASAR.curriculum] INFO: Stage 0 | Step 434,000 | F=0.1534 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.3000
+08:56:50 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 435,000 | F_eval=0.9782 | best=0.9860 | elapsed=5375s
+08:56:59 [QUASAR.curriculum] INFO: Stage 0 | Step 436,000 | F=0.2511 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.3000
+08:57:16 [QUASAR.curriculum] INFO: Stage 0 | Step 438,000 | F=0.3723 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.3000
+08:57:34 [QUASAR.curriculum] INFO: Stage 0 | Step 440,000 | F=0.3788 | noise=0.0000 | bond=[1, 1] | alpha=0.0534 | tau_g=0.3000
+08:57:50 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 440,000 | F_eval=0.6008 | best=0.9860 | elapsed=5436s
+08:57:50 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.2559 | plateau window 1/5 | bank=0
+08:58:08 [QUASAR.curriculum] INFO: Stage 0 | Step 442,000 | F=0.9592 | noise=0.0000 | bond=[2, 2] | alpha=0.0510 | tau_g=0.3000
+08:58:26 [QUASAR.curriculum] INFO: Stage 0 | Step 444,000 | F=0.0000 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:58:50 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 445,000 | F_eval=0.9128 | best=0.9860 | elapsed=5495s
+08:58:59 [QUASAR.curriculum] INFO: Stage 0 | Step 446,000 | F=0.9758 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:59:17 [QUASAR.curriculum] INFO: Stage 0 | Step 448,000 | F=0.0000 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+08:59:37 [QUASAR.curriculum] INFO: Stage 0 | Step 450,000 | F=0.4120 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.3000
+08:59:53 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 450,000 | F_eval=0.9856 | best=0.9860 | elapsed=5558s
+09:00:11 [QUASAR.curriculum] INFO: Stage 0 | Step 452,000 | F=0.9892 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+09:00:28 [QUASAR.curriculum] INFO: Stage 0 | Step 454,000 | F=0.9823 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.3000
+09:00:52 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 455,000 | F_eval=0.9091 | best=0.9860 | elapsed=5618s
+09:01:01 [QUASAR.curriculum] INFO: Stage 0 | Step 456,000 | F=0.1175 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.3000
+09:01:19 [QUASAR.curriculum] INFO: Stage 0 | Step 458,000 | F=0.0082 | noise=0.0000 | bond=[2, 1] | alpha=0.0504 | tau_g=0.3000
+09:01:37 [QUASAR.curriculum] INFO: Stage 0 | Step 460,000 | F=0.0045 | noise=0.0000 | bond=[2, 1] | alpha=0.0500 | tau_g=0.3000
+09:01:53 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 460,000 | F_eval=0.5372 | best=0.9860 | elapsed=5678s
+09:01:53 [quasar.v9_0.monitor] WARNING: [SWDFT] Stagnation #8 detected at step 460000 (F_recent_mean=0.8309, dc_improvement=-0.0262, non_dc_frac=0.008 > thr=0.25). Triggering Reactive Mode.
+09:01:53 [quasar.v9_0.erl] INFO: [ERL] Trigger #8 at step 460000 — starting ERL loop.
+09:01:53 [quasar.v9_0.erl] INFO: [ERL] Gumbel temperature reset: 0.3000 → 0.5000 (exploration restored).
+09:01:53 [quasar.v9_0.erl] INFO: [ERL v9.27] Loaded best checkpoint (F=0.9949 at step 330000) for ERL evaluation.
+09:01:53 [quasar.v9_0.erl] WARNING: [ERL v9.18] UNIQ wiki query failed (non-fatal): No module named 'aris_wiki'
+09:01:53 [quasar.v9_0.erl] INFO: [ERL v9.18] UNIQ wiki miss — no prior stepping stone for this plateau state.
+09:01:53 [quasar.v9_0.erl] INFO: [ERL] First attempt: mean_fidelity=0.9892 over 5 episodes.
+09:01:54 [quasar.v9_0.erl] INFO: [ERL] Second attempt: mean_fidelity=0.9713 over 5 episodes.
+09:01:56 [quasar.v9_0.erl] INFO: [ERL] Distillation complete: avg_loss=0.2639 (f2_mean=0.9713 > tau=0.50).
+09:01:56 [quasar.v9_0.erl] INFO: [ERL v9.27] Restored critic/alpha after ERL; actor retains ERL improvements.
+09:02:02 [quasar.v9_0.sdft] INFO: [SDFT] ZNE fidelity gate: 0.9860 (threshold=0.3500)
+09:02:03 [quasar.v9_0.sdft] INFO: [SDFT] Trigger #8 at step 460000: reverse-KL distillation on 30836 elite transitions over 100 steps. avg_loss=-1.6300
+09:02:06 [quasar.v9_0.components] ERROR: [Registry] Component 'ttt' raised on signal 'sdft_complete': element 0 of tensors does not require grad and does not have a grad_fn
+Traceback (most recent call last):
+  File "/home/ralshehri0468/quasar_v9/quasar/v9_0/components.py", line 338, in signal
+    follow_up = comp.handle(name, payload)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/quasar_v9/quasar/v9_0/ttt.py", line 203, in handle
+    pg_loss.backward()
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/_tensor.py", line 521, in backward
+    torch.autograd.backward(
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/autograd/__init__.py", line 289, in backward
+    _engine_run_backward(
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/autograd/graph.py", line 768, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn
+09:02:06 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.4410 | plateau window 1/5 | bank=0
+09:02:27 [QUASAR.curriculum] INFO: Stage 0 | Step 462,000 | F=0.5000 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.4358
+09:02:47 [QUASAR.curriculum] INFO: Stage 0 | Step 464,000 | F=0.0000 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.4272
+09:02:51 [QUASAR.curriculum] WARNING: [BCD v9.25] bond=[1,...,1] in 80% of last 5000 steps at step 464374 — emitting bond_collapse.
+09:02:51 [quasar.v9_0.erl] INFO: [ERL v9.24] Bond collapse at step 464374 (bond=[1,...,1] for 0 steps) — recovery start.
+09:02:51 [quasar.v9_0.erl] INFO: [ERL v9.27] Zeroed priorities of 10000 recent transitions (buffer size=300000, ptr=169683). Stale data will not be sampled.
+09:02:51 [quasar.v9_0.erl] INFO: [ERL v9.24] Gumbel temperature reset to 0.8000 after bond collapse.
+09:02:51 [quasar.v9_0.erl] WARNING: [ERL v9.18] UNIQ wiki query failed (non-fatal): No module named 'aris_wiki'
+09:02:51 [quasar.v9_0.erl] INFO: [ERL v9.24] UNIQ wiki miss — no stepping stone for bond collapse at 3q.
+09:03:15 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 465,000 | F_eval=0.5000 | best=0.9860 | elapsed=5761s
+09:03:15 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.1008 | plateau window 2/5 | bank=0
+09:03:24 [QUASAR.curriculum] INFO: Stage 0 | Step 466,000 | F=0.5000 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.7871
+09:03:42 [QUASAR.curriculum] INFO: Stage 0 | Step 468,000 | F=0.0000 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.7715
+09:04:00 [QUASAR.curriculum] INFO: Stage 0 | Step 470,000 | F=0.5000 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.7562
+09:04:16 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 470,000 | F_eval=0.5000 | best=0.9860 | elapsed=5821s
+09:04:16 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.4128 | plateau window 3/5 | bank=0
+09:04:33 [QUASAR.curriculum] INFO: Stage 0 | Step 472,000 | F=0.5000 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.7413
+09:04:51 [QUASAR.curriculum] INFO: Stage 0 | Step 474,000 | F=0.0012 | noise=0.0000 | bond=[1, 1] | alpha=0.0529 | tau_g=0.7266
+09:05:16 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 475,000 | F_eval=0.5410 | best=0.9860 | elapsed=5881s
+09:05:16 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=-0.4447 | plateau window 4/5 | bank=0
+09:05:25 [QUASAR.curriculum] INFO: Stage 0 | Step 476,000 | F=0.3891 | noise=0.0000 | bond=[2, 1] | alpha=0.0562 | tau_g=0.7122
+09:05:43 [QUASAR.curriculum] INFO: Stage 0 | Step 478,000 | F=0.5000 | noise=0.0000 | bond=[2, 2] | alpha=0.0577 | tau_g=0.6981
+09:06:01 [QUASAR.curriculum] INFO: Stage 0 | Step 480,000 | F=0.8118 | noise=0.0000 | bond=[2, 2] | alpha=0.0533 | tau_g=0.6843
+09:06:17 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 480,000 | F_eval=0.9670 | best=0.9860 | elapsed=5942s
+09:06:34 [QUASAR.curriculum] INFO: Stage 0 | Step 482,000 | F=0.0145 | noise=0.0000 | bond=[2, 2] | alpha=0.0507 | tau_g=0.6707
+09:06:52 [QUASAR.curriculum] INFO: Stage 0 | Step 484,000 | F=0.3570 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.6574
+09:07:17 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 485,000 | F_eval=0.9100 | best=0.9860 | elapsed=6002s
+09:07:17 [quasar.v9_0.monitor] WARNING: [SWDFT] Stagnation #9 detected at step 485000 (F_recent_mean=0.7312, dc_improvement=-0.1288, non_dc_frac=0.010 > thr=0.25). Triggering Reactive Mode.
+09:07:17 [quasar.v9_0.erl] INFO: [ERL] Trigger #9 at step 485000 — starting ERL loop.
+09:07:17 [quasar.v9_0.erl] INFO: [ERL] Gumbel temperature reset: 0.6509 → 0.5000 (exploration restored).
+09:07:17 [quasar.v9_0.erl] INFO: [ERL v9.27] Loaded best checkpoint (F=0.9949 at step 330000) for ERL evaluation.
+09:07:17 [quasar.v9_0.erl] WARNING: [ERL v9.18] UNIQ wiki query failed (non-fatal): No module named 'aris_wiki'
+09:07:17 [quasar.v9_0.erl] INFO: [ERL v9.18] UNIQ wiki miss — no prior stepping stone for this plateau state.
+09:07:17 [quasar.v9_0.erl] INFO: [ERL] First attempt: mean_fidelity=0.8718 over 5 episodes.
+09:07:18 [quasar.v9_0.erl] INFO: [ERL] Second attempt: mean_fidelity=0.9865 over 5 episodes.
+09:07:20 [quasar.v9_0.erl] INFO: [ERL] Distillation complete: avg_loss=0.2101 (f2_mean=0.9865 > tau=0.50).
+09:07:20 [quasar.v9_0.erl] INFO: [ERL v9.27] Restored critic/alpha after ERL; actor retains ERL improvements.
+09:07:26 [quasar.v9_0.sdft] INFO: [SDFT] ZNE fidelity gate: 0.9860 (threshold=0.3500)
+09:07:27 [quasar.v9_0.sdft] INFO: [SDFT] Trigger #9 at step 485000: reverse-KL distillation on 31582 elite transitions over 100 steps. avg_loss=-1.0997
+09:07:30 [quasar.v9_0.components] ERROR: [Registry] Component 'ttt' raised on signal 'sdft_complete': element 0 of tensors does not require grad and does not have a grad_fn
+Traceback (most recent call last):
+  File "/home/ralshehri0468/quasar_v9/quasar/v9_0/components.py", line 338, in signal
+    follow_up = comp.handle(name, payload)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/quasar_v9/quasar/v9_0/ttt.py", line 203, in handle
+    pg_loss.backward()
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/_tensor.py", line 521, in backward
+    torch.autograd.backward(
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/autograd/__init__.py", line 289, in backward
+    _engine_run_backward(
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/torch/autograd/graph.py", line 768, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn
+09:07:40 [QUASAR.curriculum] INFO: Stage 0 | Step 486,000 | F=0.5000 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.4402
+09:08:01 [QUASAR.curriculum] INFO: Stage 0 | Step 488,000 | F=0.5000 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.4315
+09:08:07 [QUASAR.curriculum] WARNING: [BCD v9.25] bond=[1,...,1] in 80% of last 5000 steps at step 488600 — emitting bond_collapse.
+09:08:07 [quasar.v9_0.erl] INFO: [ERL v9.24] Bond collapse at step 488600 (bond=[1,...,1] for 0 steps) — recovery start.
+09:08:07 [quasar.v9_0.erl] INFO: [ERL v9.27] Zeroed priorities of 10000 recent transitions (buffer size=300000, ptr=194668). Stale data will not be sampled.
+09:08:07 [quasar.v9_0.erl] INFO: [ERL v9.24] Gumbel temperature reset to 0.8000 after bond collapse.
+09:08:07 [quasar.v9_0.erl] WARNING: [ERL v9.18] UNIQ wiki query failed (non-fatal): No module named 'aris_wiki'
+09:08:07 [quasar.v9_0.erl] INFO: [ERL v9.24] UNIQ wiki miss — no stepping stone for bond collapse at 3q.
+09:08:21 [QUASAR.curriculum] INFO: Stage 0 | Step 490,000 | F=0.5000 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.7889
+09:08:39 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 490,000 | F_eval=0.5004 | best=0.9860 | elapsed=6084s
+09:08:39 [QUASAR.curriculum] INFO: [DBA] Stage 0 (3q) | ΔF=+0.0004 | plateau window 1/5 | bank=0
+09:08:57 [QUASAR.curriculum] INFO: Stage 0 | Step 492,000 | F=0.5000 | noise=0.0000 | bond=[1, 1] | alpha=0.0500 | tau_g=0.7733
+09:09:15 [QUASAR.curriculum] INFO: Stage 0 | Step 494,000 | F=0.5194 | noise=0.0000 | bond=[2, 2] | alpha=0.0500 | tau_g=0.7579
+09:09:39 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 495,000 | F_eval=0.9855 | best=0.9860 | elapsed=6144s
+09:09:48 [QUASAR.curriculum] INFO: Stage 0 | Step 496,000 | F=0.1707 | noise=0.0000 | bond=[2, 1] | alpha=0.0513 | tau_g=0.7429
+09:10:06 [QUASAR.curriculum] INFO: Stage 0 | Step 498,000 | F=0.0184 | noise=0.0000 | bond=[2, 2] | alpha=0.0560 | tau_g=0.7282
+09:10:24 [QUASAR.curriculum] INFO: Stage 0 | Step 500,000 | F=0.2004 | noise=0.0000 | bond=[2, 2] | alpha=0.0597 | tau_g=0.7138
+09:10:40 [QUASAR.curriculum] INFO: Stage 0 EVAL | Step 500,000 | F_eval=0.5949 | best=0.9860 | elapsed=6205s
+09:10:40 [quasar.v9_0.sdft] INFO: [SDFT v9.32] Stage complete — resetting EMA teacher state (was obs_dim=1024) to avoid dimension mismatch on next stage.
+09:10:40 [quasar.v9_0.pbt] INFO: [PBT] Generation 1 after stage 0: elite fitness=[0.9860], bottom fitness=[0.0000]
+09:10:40 [quasar.v9_0.pbt] INFO: [PBT] Applied elite config (fitness=0.9860) to trainer.
+09:10:40 [QUASAR.curriculum] INFO: Stage 0 COMPLETE: n_qubits=3, best_fidelity=0.9860
+09:10:40 [QUASAR.curriculum] INFO: 
+======================================================================
+09:10:40 [QUASAR.curriculum] INFO: QUASAR v9.0 TRAINING COMPLETE
+09:10:40 [QUASAR.curriculum] INFO: ======================================================================
+09:10:40 [QUASAR.curriculum] INFO:   stage_0: F=0.9860 (3q)
+09:10:40 [QUASAR.curriculum] INFO: Results saved to: quasar_v9_results.json
+End: Tue Jun 9 04:26:50 UTC 2026
+Exit code: 0

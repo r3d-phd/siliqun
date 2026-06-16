@@ -1,0 +1,27 @@
+Python: Python 3.10.20
+PyTorch: 2.5.1+cu121
+=== QUASAR v9.8 PREFLIGHT ===
+Node: kcn502
+GPU: NVIDIA A100-PCIE-40GB
+Date: Fri May 15 20:30:48 +03 2026
+  [PASS] v9.8 Fix 1: Meyer-Wallach reward in env.py
+  [PASS] v9.8 Fix 2: noise_level=0.08 in config.py
+  [PASS] v9.8 Fix 1: coherence_reward_scale=0.30 in config.py
+  [PASS] v9.8 Fix 1: meyer_wallach_reward_scale=0.50 in config.py
+  [PASS] v9.8 Fix 4: cross-stage EMA retention in sdft.py
+Overall: ALL PASS
+=== STARTING QUASAR v9.8 TRAINING ===
+Key changes vs v9.76:
+  Fix 1: Meyer-Wallach entanglement reward (scale=0.50) + coherence reward (scale=0.30)
+  Fix 2: Noise acceleration noise_level 0.02->0.08 (4q cap: 0.0067->0.0267)
+  Fix 4: Cross-stage EMA retention (SDAR-inspired privileged context)
+Expected: Break 4q GHZ product-state attractor (was stuck at F=0.5858)
+Traceback (most recent call last):
+  File "/home/ralshehri0468/quasar_v9/code/src/quasar/v9_0/run_quasar_v950.py", line 87, in <module>
+    from quasar.v9_0.evolve     import EvolveOrchestrator, QUASARGenome as Genome
+  File "/home/ralshehri0468/quasar_v9/quasar/v9_0/evolve.py", line 46, in <module>
+    import requests
+ModuleNotFoundError: No module named 'requests'
+=== QUASAR v9.8 TRAINING COMPLETE ===
+Exit code: 0
+Date: Fri May 15 20:30:57 +03 2026

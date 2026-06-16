@@ -1,0 +1,11 @@
+============================================================
+QUASAR v13 fix3 — Started: Tue Jun 16 12:24:30 +03 2026 | Node: kcn522
+============================================================
+Syntax OK
+Traceback (most recent call last):
+  File "/home/ralshehri0468/quasar_v13/quasar_v13_adaptive.py", line 74, in <module>
+    from envs import QuasarEnv, NOISE_CURRICULUM
+ModuleNotFoundError: No module named 'envs'
+============================================================
+QUASAR v13 fix3 — Finished: Tue Jun 16 12:24:48 +03 2026 | Exit: 0
+============================================================

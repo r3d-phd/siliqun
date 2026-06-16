@@ -1,0 +1,82 @@
+[
+  {
+    "episode": 500,
+    "mean_fidelity": 0.1545792853463407,
+    "best_fidelity": 0.15474267886824622,
+    "pct_above_999": 0.0,
+    "elapsed_sec": 1953.427716255188,
+    "eps_per_sec": 0.25596032852371076
+  },
+  {
+    "episode": 1000,
+    "mean_fidelity": 0.41231516769401333,
+    "best_fidelity": 0.4125130533094098,
+    "pct_above_999": 0.0,
+    "elapsed_sec": 4946.772068977356,
+    "eps_per_sec": 0.2021520268280179
+  },
+  {
+    "episode": 1500,
+    "mean_fidelity": 0.5751141843196793,
+    "best_fidelity": 0.5755675096713837,
+    "pct_above_999": 0.0,
+    "elapsed_sec": 9465.013837099075,
+    "eps_per_sec": 0.15847837370512854
+  },
+  {
+    "episode": 2000,
+    "mean_fidelity": 0.5939255717869392,
+    "best_fidelity": 0.5943631036241743,
+    "pct_above_999": 0.0,
+    "elapsed_sec": 12369.438195228577,
+    "eps_per_sec": 0.16168883084532376
+  },
+  {
+    "episode": 2500,
+    "mean_fidelity": 0.598926524064341,
+    "best_fidelity": 0.5993743581810136,
+    "pct_above_999": 0.0,
+    "elapsed_sec": 14815.94160079956,
+    "eps_per_sec": 0.16873716617950793
+  },
+  {
+    "episode": 3000,
+    "mean_fidelity": 0.6070837373196071,
+    "best_fidelity": 0.6077348472543742,
+    "pct_above_999": 0.0,
+    "elapsed_sec": 17198.142530679703,
+    "eps_per_sec": 0.17443744256964444
+  },
+  {
+    "episode": 3500,
+    "mean_fidelity": 0.6966816137987994,
+    "best_fidelity": 0.6972234592885531,
+    "pct_above_999": 0.0,
+    "elapsed_sec": 21210.42077064514,
+    "eps_per_sec": 0.16501322806589203
+  },
+  {
+    "episode": 4000,
+    "mean_fidelity": 0.7066558963479069,
+    "best_fidelity": 0.7071735175776449,
+    "pct_above_999": 0.0,
+    "elapsed_sec": 24426.19772386551,
+    "eps_per_sec": 0.16375860235061546
+  },
+  {
+    "episode": 4500,
+    "mean_fidelity": 0.7141182758262707,
+    "best_fidelity": 0.7147273596436559,
+    "pct_above_999": 0.0,
+    "elapsed_sec": 29284.87898015976,
+    "eps_per_sec": 0.15366291945576108
+  },
+  {
+    "episode": 5000,
+    "mean_fidelity": 0.7962319111996489,
+    "best_fidelity": 0.7968384121851975,
+    "pct_above_999": 0.0,
+    "elapsed_sec": 33981.660382032394,
+    "eps_per_sec": 0.1471381899468256
+  }
+]

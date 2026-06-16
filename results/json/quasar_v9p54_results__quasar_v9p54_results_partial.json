@@ -1,0 +1,24 @@
+{
+  "_t0": 1780442957.6390676,
+  "version": "9.54",
+  "stage_0": {
+    "n_qubits": 2,
+    "step": 20000,
+    "best_fidelity": 0.6118142306081424,
+    "elapsed": 122.42011404037476
+  },
+  "total_elapsed_hours": 0.06739687654707167,
+  "stage_0.1": {
+    "n_qubits": 2,
+    "step": 10000,
+    "best_fidelity": 0.0,
+    "elapsed": 9.186194896697998
+  },
+  "stage_0.2": {
+    "n_qubits": 2,
+    "step": 10000,
+    "best_fidelity": 0.0,
+    "elapsed": 9.467293977737427
+  },
+  "interrupted": true
+}

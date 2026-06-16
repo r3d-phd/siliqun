@@ -1,0 +1,93 @@
+=== QUASAR Conda Environment Setup ===
+Host: kcn063
+Date: Tue Jun  9 03:10:57 +03 2026
+=== Creating quasar conda env with Python 3.10 ===
+/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/conda/base/context.py:982: FutureWarning: Adding 'defaults' to the channel list implicitly is deprecated and will be removed in 25.3. 
+
+To remove this warning, please choose a default channel explicitly via 'conda config --add channels <name>', e.g. 'conda config --add channels defaults'.
+  deprecated.topic(
+Retrieving notices: ...working... Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x2ace6257a690>: Failed to resolve 'repo.anaconda.com' ([Errno -2] Name or service not known)")': /pkgs/main/notices.json
+
+Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x2ace6257a9d0>: Failed to resolve 'repo.anaconda.com' ([Errno -2] Name or service not known)")': /pkgs/r/notices.json
+
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x2ace5f296890>: Failed to resolve 'repo.anaconda.com' ([Errno -2] Name or service not known)")': /pkgs/main/notices.json
+
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x2ace6257bcd0>: Failed to resolve 'repo.anaconda.com' ([Errno -2] Name or service not known)")': /pkgs/r/notices.json
+
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x2ace62594610>: Failed to resolve 'repo.anaconda.com' ([Errno -2] Name or service not known)")': /pkgs/main/notices.json
+
+ERROR conda.notices.fetch:get_channel_notice_response(73): Request error <HTTPSConnectionPool(host='repo.anaconda.com', port=443): Max retries exceeded with url: /pkgs/main/notices.json (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x2ace62595490>: Failed to resolve 'repo.anaconda.com' ([Errno -2] Name or service not known)"))> for channel: defaults url: https://repo.anaconda.com/pkgs/main/notices.json
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x2ace62594d10>: Failed to resolve 'repo.anaconda.com' ([Errno -2] Name or service not known)")': /pkgs/r/notices.json
+
+ERROR conda.notices.fetch:get_channel_notice_response(73): Request error <HTTPSConnectionPool(host='repo.anaconda.com', port=443): Max retries exceeded with url: /pkgs/r/notices.json (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x2ace62595ad0>: Failed to resolve 'repo.anaconda.com' ([Errno -2] Name or service not known)"))> for channel: defaults url: https://repo.anaconda.com/pkgs/r/notices.json
+done
+/app/utils/anaconda3-2024.02/lib/python3.11/site-packages/conda/base/context.py:982: FutureWarning: Adding 'defaults' to the channel list implicitly is deprecated and will be removed in 25.3. 
+
+To remove this warning, please choose a default channel explicitly via 'conda config --add channels <name>', e.g. 'conda config --add channels defaults'.
+  deprecated.topic(
+Channels:
+ - defaults
+Platform: linux-64
+Collecting package metadata (repodata.json): ...working... Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x2ace63b2d190>: Failed to resolve 'repo.anaconda.com' ([Errno -2] Name or service not known)")': /pkgs/r/noarch/repodata.json.zst
+
+Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x2ace63b2f350>: Failed to resolve 'repo.anaconda.com' ([Errno -2] Name or service not known)")': /pkgs/main/linux-64/repodata.json.zst
+
+Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x2ace63b59b50>: Failed to resolve 'repo.anaconda.com' ([Errno -2] Name or service not known)")': /pkgs/r/linux-64/repodata.json.zst
+
+Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x2ace63b482d0>: Failed to resolve 'repo.anaconda.com' ([Errno -2] Name or service not known)")': /pkgs/main/noarch/repodata.json.zst
+
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x2ace63b48b90>: Failed to resolve 'repo.anaconda.com' ([Errno -2] Name or service not known)")': /pkgs/r/noarch/repodata.json.zst
+
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x2ace63b494d0>: Failed to resolve 'repo.anaconda.com' ([Errno -2] Name or service not known)")': /pkgs/main/linux-64/repodata.json.zst
+
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x2ace63b49e10>: Failed to resolve 'repo.anaconda.com' ([Errno -2] Name or service not known)")': /pkgs/r/linux-64/repodata.json.zst
+
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x2ace63b4a710>: Failed to resolve 'repo.anaconda.com' ([Errno -2] Name or service not known)")': /pkgs/main/noarch/repodata.json.zst
+
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x2ace63b4b090>: Failed to resolve 'repo.anaconda.com' ([Errno -2] Name or service not known)")': /pkgs/r/noarch/repodata.json.zst
+
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x2ace63b4ba10>: Failed to resolve 'repo.anaconda.com' ([Errno -2] Name or service not known)")': /pkgs/main/linux-64/repodata.json.zst
+
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x2ace63b45050>: Failed to resolve 'repo.anaconda.com' ([Errno -2] Name or service not known)")': /pkgs/main/noarch/repodata.json.zst
+
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x2ace63b44710>: Failed to resolve 'repo.anaconda.com' ([Errno -2] Name or service not known)")': /pkgs/r/linux-64/repodata.json.zst
+
+failed
+
+CondaHTTPError: HTTP 000 CONNECTION FAILED for url <https://repo.anaconda.com/pkgs/main/linux-64/repodata.json>
+Elapsed: -
+
+An HTTP error occurred when trying to retrieve this URL.
+HTTP errors are often intermittent, and a simple retry will get you on your way.
+
+If your current network has https://repo.anaconda.com blocked, please file
+a support request with your network engineering team.
+
+'https//repo.anaconda.com/pkgs/main/linux-64'
+
+
+
+EnvironmentNameNotFound: Could not find conda environment: quasar
+You can list all discoverable environments with `conda info --envs`.
+
+
+=== Python version ===
+Python 2.7.5
+=== Installing PyTorch ===
+/var/spool/pbs/mom_priv/jobs/180161.khead2.SC: line 31: pip: command not found
+=== Installing RL stack ===
+/var/spool/pbs/mom_priv/jobs/180161.khead2.SC: line 35: pip: command not found
+=== Installing SiliQun ===
+/var/spool/pbs/mom_priv/jobs/180161.khead2.SC: line 39: pip: command not found
+=== Installing scientific stack ===
+/var/spool/pbs/mom_priv/jobs/180161.khead2.SC: line 43: pip: command not found
+=== Installing DEHB ===
+DEHB install skipped — will use built-in dehb_runner.py
+=== Verifying imports ===
+Traceback (most recent call last):
+  File "<string>", line 2, in <module>
+ImportError: No module named torch
+=== Running QUASAR v9 integration test ===
+  File "test_quasar_v9_integration.py", line 3
+SyntaxError: Non-ASCII character '\xe2' in file test_quasar_v9_integration.py on line 4, but no encoding declared; see http://www.python.org/peps/pep-0263.html for details
+=== Setup complete: Tue Jun  9 03:12:31 +03 2026 ===

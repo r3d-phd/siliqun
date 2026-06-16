@@ -1,0 +1,22 @@
+[
+  {
+    "target": "ghz",
+    "seed": 42,
+    "mean_fidelity": 0.49999468028939903,
+    "std_fidelity": 3.723797420905562e-05,
+    "best_fidelity_cb": 0.0,
+    "elapsed_s": 14603.83965086937,
+    "timesteps": 600000,
+    "early_stopped": false
+  },
+  {
+    "target": "ghz",
+    "seed": 123,
+    "mean_fidelity": 0.4801753402441843,
+    "std_fidelity": 5.551115123125783e-17,
+    "best_fidelity_cb": 0.0,
+    "elapsed_s": 14535.668248653412,
+    "timesteps": 600000,
+    "early_stopped": false
+  }
+]

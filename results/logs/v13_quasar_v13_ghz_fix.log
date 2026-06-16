@@ -1,0 +1,11 @@
+usage: quasar_v13_adaptive.py [-h] [--min-qubits MIN_QUBITS]
+                              [--max-qubits MAX_QUBITS]
+                              [--targets TARGETS [TARGETS ...]]
+                              [--seeds SEEDS [SEEDS ...]]
+                              [--f-threshold F_THRESHOLD] [--f-floor F_FLOOR]
+                              [--inner-brackets INNER_BRACKETS]
+                              [--max-steps-base MAX_STEPS_BASE]
+                              [--steps-scale STEPS_SCALE]
+                              [--noise-stage NOISE_STAGE]
+                              [--results-dir RESULTS_DIR]
+quasar_v13_adaptive.py: error: unrecognized arguments: --budget 500000

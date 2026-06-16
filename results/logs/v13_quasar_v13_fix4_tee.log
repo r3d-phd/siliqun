@@ -1,0 +1,148 @@
+2026-06-16 13:25:50.889 | INFO     | __main__:main:781 - ======================================================================
+2026-06-16 13:25:50.889 | INFO     | __main__:main:782 - QUASAR v13 — Adaptive Open-Ended Scalability Experiment
+2026-06-16 13:25:50.889 | INFO     | __main__:main:783 -   Device:      cuda
+2026-06-16 13:25:50.889 | INFO     | __main__:main:784 -   Qubit range: 2 → 8 (adaptive)
+2026-06-16 13:25:50.890 | INFO     | __main__:main:785 -   Targets:     ['Cluster']
+2026-06-16 13:25:50.890 | INFO     | __main__:main:786 -   Seeds:       [42, 123, 456]
+2026-06-16 13:25:50.890 | INFO     | __main__:main:787 -   F threshold: 0.99 (advance) / 0.9 (floor)
+2026-06-16 13:25:50.890 | INFO     | __main__:main:788 -   Max steps:   500000 @ 2Q, ×1.5 per qubit
+2026-06-16 13:25:50.890 | INFO     | __main__:main:790 -   Noise stage: 5
+2026-06-16 13:25:50.890 | INFO     | __main__:main:791 - ======================================================================
+2026-06-16 13:25:50.890 | INFO     | __main__:main:814 - 
+2026-06-16 13:25:50.890 | INFO     | __main__:main:815 - ======================================================================
+2026-06-16 13:25:50.890 | INFO     | __main__:main:816 -   QUBIT LEVEL: 2Q  (budget=500,000 steps)
+2026-06-16 13:25:50.890 | INFO     | __main__:main:817 - ======================================================================
+2026-06-16 13:25:50.891 | INFO     | __main__:main:827 - DER++ buffer init: obs_dim=20, act_dim=6
+2026-06-16 13:25:50.901 | INFO     | __main__:run_qubit_level:606 -   ── 2Q / Cluster / seed=42 ──
+2026-06-16 13:28:28.582 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=10,000 best_F=0.9603 plateau=28 alpha=0.0148
+2026-06-16 13:28:56.780 | INFO     | __main__:run_cell:482 -     SLM correction applied at step=10939
+2026-06-16 13:33:23.197 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=20,000 best_F=0.9983 plateau=1,666 alpha=0.0148
+2026-06-16 13:34:18.681 | INFO     | __main__:run_cell:482 -     SLM correction applied at step=21878
+2026-06-16 13:38:16.715 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=30,000 best_F=0.9983 plateau=11,666 alpha=0.0148
+2026-06-16 13:39:39.638 | INFO     | __main__:run_cell:482 -     SLM correction applied at step=32817
+2026-06-16 13:43:09.777 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=40,000 best_F=0.9984 plateau=7,186 alpha=0.0148
+2026-06-16 13:44:59.948 | INFO     | __main__:run_cell:482 -     SLM correction applied at step=43756
+2026-06-16 13:48:01.781 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=50,000 best_F=0.9984 plateau=17,186 alpha=0.0148
+2026-06-16 13:48:40.495 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=51332
+2026-06-16 13:48:40.497 | INFO     | __main__:run_qubit_level:645 -     HP trial 1/12: best_F=0.9984
+2026-06-16 13:51:09.913 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=10,000 best_F=0.8574 plateau=5,799 alpha=0.0225
+2026-06-16 13:56:02.132 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=20,000 best_F=0.9013 plateau=2,010 alpha=0.0225
+2026-06-16 14:00:52.110 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=30,000 best_F=0.9125 plateau=1,796 alpha=0.0225
+2026-06-16 14:05:41.256 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=40,000 best_F=0.9900 plateau=3,639 alpha=0.0225
+2026-06-16 14:10:30.286 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=50,000 best_F=0.9916 plateau=6,204 alpha=0.0225
+2026-06-16 14:13:08.410 | INFO     | __main__:run_cell:482 -     SLM correction applied at step=55443
+2026-06-16 14:13:11.640 | INFO     | __main__:run_qubit_level:645 -     HP trial 2/12: best_F=0.9947
+2026-06-16 14:15:40.929 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=10,000 best_F=0.8574 plateau=5,799 alpha=0.0186
+2026-06-16 14:20:32.225 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=20,000 best_F=0.8574 plateau=15,799 alpha=0.0186
+2026-06-16 14:25:22.697 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=30,000 best_F=0.9079 plateau=1,750 alpha=0.0186
+2026-06-16 14:30:13.903 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=40,000 best_F=0.9079 plateau=11,750 alpha=0.0186
+2026-06-16 14:33:31.012 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=46768
+2026-06-16 14:33:31.013 | INFO     | __main__:run_qubit_level:645 -     HP trial 3/12: best_F=0.9079
+2026-06-16 14:36:00.491 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=10,000 best_F=0.9112 plateau=727 alpha=0.0252
+2026-06-16 14:40:53.133 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=20,000 best_F=0.9112 plateau=10,727 alpha=0.0252
+2026-06-16 14:44:39.698 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=27791
+2026-06-16 14:44:39.700 | INFO     | __main__:run_qubit_level:645 -     HP trial 4/12: best_F=0.9112
+2026-06-16 14:47:08.812 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=10,000 best_F=0.9094 plateau=1,125 alpha=0.0025
+2026-06-16 14:52:00.817 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=20,000 best_F=0.9931 plateau=4,015 alpha=0.0025
+2026-06-16 14:56:52.851 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=30,000 best_F=0.9931 plateau=14,015 alpha=0.0025
+2026-06-16 14:59:05.162 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=34503
+2026-06-16 14:59:05.164 | INFO     | __main__:run_qubit_level:645 -     HP trial 5/12: best_F=0.9931
+2026-06-16 15:01:33.433 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=10,000 best_F=0.8574 plateau=5,799 alpha=0.0018
+2026-06-16 15:06:25.117 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=20,000 best_F=0.8574 plateau=15,799 alpha=0.0018
+2026-06-16 15:07:44.502 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=22719
+2026-06-16 15:07:44.504 | INFO     | __main__:run_qubit_level:645 -     HP trial 6/12: best_F=0.8574
+2026-06-16 15:10:13.302 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=10,000 best_F=0.9450 plateau=17 alpha=0.0231
+2026-06-16 15:15:03.436 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=20,000 best_F=0.9888 plateau=2,077 alpha=0.0231
+2026-06-16 15:19:54.236 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=30,000 best_F=0.9888 plateau=12,077 alpha=0.0231
+2026-06-16 15:23:01.843 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=36441
+2026-06-16 15:23:01.846 | INFO     | __main__:run_qubit_level:645 -     HP trial 7/12: best_F=0.9888
+2026-06-16 15:25:30.745 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=10,000 best_F=0.9426 plateau=384 alpha=0.0190
+2026-06-16 15:30:22.631 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=20,000 best_F=0.9896 plateau=3,546 alpha=0.0190
+2026-06-16 15:35:14.300 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=30,000 best_F=0.9995 plateau=4,724 alpha=0.0190
+2026-06-16 15:40:03.798 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=40,000 best_F=0.9995 plateau=14,724 alpha=0.0190
+2026-06-16 15:41:53.479 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=43794
+2026-06-16 15:41:53.481 | INFO     | __main__:run_qubit_level:645 -     HP trial 8/12: best_F=0.9995
+2026-06-16 15:44:22.007 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=10,000 best_F=0.8574 plateau=5,799 alpha=0.0084
+2026-06-16 15:49:12.766 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=20,000 best_F=0.8733 plateau=5,114 alpha=0.0084
+2026-06-16 15:54:03.655 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=30,000 best_F=0.9805 plateau=2,544 alpha=0.0084
+2026-06-16 15:58:54.345 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=40,000 best_F=0.9805 plateau=12,544 alpha=0.0084
+2026-06-16 16:01:48.034 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=45974
+2026-06-16 16:01:48.035 | INFO     | __main__:run_qubit_level:645 -     HP trial 9/12: best_F=0.9805
+2026-06-16 16:04:17.245 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=10,000 best_F=0.8739 plateau=624 alpha=0.0103
+2026-06-16 16:09:10.625 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=20,000 best_F=0.9543 plateau=3,546 alpha=0.0103
+2026-06-16 16:14:05.194 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=30,000 best_F=0.9543 plateau=13,546 alpha=0.0103
+2026-06-16 16:16:31.515 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=34972
+2026-06-16 16:16:31.518 | INFO     | __main__:run_qubit_level:645 -     HP trial 10/12: best_F=0.9543
+2026-06-16 16:19:02.423 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=10,000 best_F=0.8747 plateau=1,048 alpha=0.0053
+2026-06-16 16:23:56.702 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=20,000 best_F=0.8747 plateau=11,048 alpha=0.0053
+2026-06-16 16:27:36.383 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=27470
+2026-06-16 16:27:36.385 | INFO     | __main__:run_qubit_level:645 -     HP trial 11/12: best_F=0.8747
+2026-06-16 16:30:05.618 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=10,000 best_F=0.8574 plateau=5,799 alpha=0.0111
+2026-06-16 16:34:56.902 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=20,000 best_F=0.8675 plateau=5,060 alpha=0.0111
+2026-06-16 16:39:47.736 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=30,000 best_F=0.9248 plateau=2,051 alpha=0.0111
+2026-06-16 16:44:38.294 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=40,000 best_F=0.9248 plateau=12,051 alpha=0.0111
+2026-06-16 16:47:46.445 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=46467
+2026-06-16 16:47:46.447 | INFO     | __main__:run_qubit_level:645 -     HP trial 12/12: best_F=0.9248
+2026-06-16 16:47:46.448 | INFO     | __main__:run_qubit_level:654 -   Best HP (F=0.9995), running full budget 500,000 steps...
+2026-06-16 16:47:46.483 | INFO     | __main__:transfer_agent:362 -   Transfer: 20→20 obs, 6→6 act
+2026-06-16 16:50:15.400 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=10,000 best_F=0.9909 plateau=3,069 alpha=0.0190
+2026-06-16 16:55:07.487 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=20,000 best_F=0.9970 plateau=5,334 alpha=0.0190
+2026-06-16 16:59:58.648 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=30,000 best_F=0.9970 plateau=15,334 alpha=0.0190
+2026-06-16 17:04:49.063 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=40,000 best_F=0.9972 plateau=6,157 alpha=0.0190
+2026-06-16 17:09:39.448 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=50,000 best_F=0.9984 plateau=116 alpha=0.0190
+2026-06-16 17:14:30.440 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=60,000 best_F=0.9984 plateau=10,116 alpha=0.0190
+2026-06-16 17:19:20.772 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=70,000 best_F=0.9984 plateau=20,116 alpha=0.0190
+2026-06-16 17:24:10.229 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=80,000 best_F=0.9984 plateau=30,116 alpha=0.0190
+2026-06-16 17:26:09.804 | INFO     | __main__:run_cell:482 -     SLM correction applied at step=84113
+2026-06-16 17:29:00.180 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=90,000 best_F=0.9984 plateau=40,116 alpha=0.0190
+2026-06-16 17:33:52.318 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=100,000 best_F=0.9984 plateau=50,116 alpha=0.0190
+2026-06-16 17:38:44.147 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=110,000 best_F=0.9984 plateau=60,116 alpha=0.0190
+2026-06-16 17:43:36.508 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=120,000 best_F=0.9984 plateau=70,116 alpha=0.0190
+2026-06-16 17:48:27.052 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=130,000 best_F=0.9984 plateau=80,116 alpha=0.0190
+2026-06-16 17:53:17.991 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=140,000 best_F=0.9988 plateau=2,918 alpha=0.0190
+2026-06-16 17:58:09.122 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=150,000 best_F=0.9988 plateau=12,918 alpha=0.0190
+2026-06-16 18:03:00.150 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=160,000 best_F=0.9988 plateau=22,918 alpha=0.0190
+2026-06-16 18:06:59.856 | INFO     | __main__:run_cell:482 -     SLM correction applied at step=168226
+2026-06-16 18:07:51.391 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=170,000 best_F=0.9989 plateau=2,431 alpha=0.0190
+2026-06-16 18:12:41.944 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=180,000 best_F=0.9989 plateau=12,431 alpha=0.0190
+2026-06-16 18:17:32.846 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=190,000 best_F=0.9989 plateau=22,431 alpha=0.0190
+2026-06-16 18:22:24.036 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=200,000 best_F=0.9989 plateau=32,431 alpha=0.0190
+2026-06-16 18:27:14.956 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=210,000 best_F=0.9989 plateau=42,431 alpha=0.0190
+2026-06-16 18:32:05.559 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=220,000 best_F=0.9989 plateau=52,431 alpha=0.0190
+2026-06-16 18:36:54.198 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=230,000 best_F=0.9989 plateau=62,431 alpha=0.0190
+2026-06-16 18:41:42.716 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=240,000 best_F=0.9989 plateau=72,431 alpha=0.0190
+2026-06-16 18:46:31.163 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=250,000 best_F=0.9989 plateau=82,431 alpha=0.0190
+2026-06-16 18:47:38.909 | INFO     | __main__:run_cell:482 -     SLM correction applied at step=252339
+2026-06-16 18:51:19.663 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=260,000 best_F=0.9998 plateau=718 alpha=0.0190
+2026-06-16 18:56:08.090 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=270,000 best_F=0.9998 plateau=10,718 alpha=0.0190
+2026-06-16 19:00:56.829 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=280,000 best_F=0.9998 plateau=20,718 alpha=0.0190
+2026-06-16 19:05:46.723 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=290,000 best_F=0.9998 plateau=30,718 alpha=0.0190
+2026-06-16 19:10:36.603 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=300,000 best_F=0.9998 plateau=40,718 alpha=0.0190
+2026-06-16 19:15:26.245 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=310,000 best_F=0.9998 plateau=50,718 alpha=0.0190
+2026-06-16 19:20:16.080 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=320,000 best_F=0.9998 plateau=60,718 alpha=0.0190
+2026-06-16 19:25:07.312 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=330,000 best_F=0.9998 plateau=70,718 alpha=0.0190
+2026-06-16 19:28:16.035 | INFO     | __main__:run_cell:482 -     SLM correction applied at step=336452
+2026-06-16 19:29:59.702 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=340,000 best_F=0.9998 plateau=80,718 alpha=0.0190
+2026-06-16 19:34:51.978 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=350,000 best_F=0.9998 plateau=90,718 alpha=0.0190
+2026-06-16 19:39:44.101 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=360,000 best_F=0.9998 plateau=100,718 alpha=0.0190
+2026-06-16 19:44:36.330 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=370,000 best_F=0.9998 plateau=110,718 alpha=0.0190
+2026-06-16 19:49:28.864 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=380,000 best_F=0.9998 plateau=120,718 alpha=0.0190
+2026-06-16 19:54:20.990 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=390,000 best_F=0.9998 plateau=130,718 alpha=0.0190
+2026-06-16 19:59:13.240 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=400,000 best_F=0.9998 plateau=140,718 alpha=0.0190
+2026-06-16 20:04:05.445 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=410,000 best_F=0.9998 plateau=150,718 alpha=0.0190
+2026-06-16 20:08:57.685 | INFO     | __main__:run_cell:486 -     2Q/cluster_linear/s42 step=420,000 best_F=0.9998 plateau=160,718 alpha=0.0190
+2026-06-16 20:09:14.620 | INFO     | __main__:run_cell:482 -     SLM correction applied at step=420565
+2026-06-16 20:11:52.270 | INFO     | __main__:run_cell:491 -     PLATEAU → early stop at step=425948
+2026-06-16 20:11:52.272 | INFO     | __main__:run_qubit_level:677 -   ✓ 2Q/Cluster/s42 → best_F=0.9998
+Traceback (most recent call last):
+  File "/home/ralshehri0468/quasar_v13/quasar_v13_adaptive.py", line 904, in <module>
+    main()
+  File "/home/ralshehri0468/quasar_v13/quasar_v13_adaptive.py", line 828, in main
+    cell_results, best_agent = run_qubit_level(
+                               ^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/quasar_v13/quasar_v13_adaptive.py", line 697, in run_qubit_level
+    _add_to_der_buffer(der_buffer, _best_agent_cell, n_qubits,
+  File "/home/ralshehri0468/quasar_v13/quasar_v13_adaptive.py", line 729, in _add_to_der_buffer
+    der_buffer.add_task_sample(obs, action, reward, next_obs, float(done), target_vec)
+    ^^^^^^^^^^^^^^
+AttributeError: 'DERPlusPlusBuffer' object has no attribute 'add'

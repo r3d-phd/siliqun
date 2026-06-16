@@ -1,0 +1,118 @@
+--- a/quasar_v13_adaptive.py
++++ b/quasar_v14_acc_patch.py
+@@ -1,6 +1,7 @@
+ # QUASAR v14 — ACC Integration Patch
+ # Apply with: patch -p1 < quasar_v14_acc_patch.diff
+ # Or manually follow the BEFORE/AFTER blocks below.
++# Requires: acc.py in the same directory (or on PYTHONPATH)
+
+ # ════════════════════════════════════════════════════════════════════
+ # CHANGE 1: Import ACC at the top of the file
+@@ -10,6 +11,7 @@
+ # BEFORE (near top of file, after existing imports):
+ # (no ACC import)
+ #
++from acc import AdaptiveConvergenceController, StopReason
+ # ════════════════════════════════════════════════════════════════════
+
+
+@@ -20,18 +23,22 @@
+ # BEFORE (inside train_single_cell() or equivalent training function):
+ #
+ #   plateau = 0
+ #   plateau_limit = args.plateau_limit  # e.g. 20_000
+ #   best_F = 0.0
+ #   for step in range(0, max_steps + 1, checkpoint_interval):
+ #       ...train...
+ #       if new_F > best_F:
+ #           best_F = new_F
+ #           plateau = 0
+ #       else:
+ #           plateau += checkpoint_interval
+ #       if plateau >= plateau_limit:
+ #           logger.info(f"Plateau limit reached at step {step}")
+ #           break
+ #
+ # AFTER:
+ #
++#   acc = AdaptiveConvergenceController(
++#       F_threshold   = args.fidelity_threshold,  # default 0.99
++#       safety_margin = 1.20,
++#       window        = 5,
++#       min_points    = 5,
++#       r2_min        = 0.70,
++#       slope_eps     = 1e-7,
++#       diminish_frac = 0.05,
++#       max_budget    = max_steps,
++#       label         = f"{n_qubits}Q/{target_name}/s{seed}",
++#   )
++#   best_F = 0.0
++#   for step in range(checkpoint_interval, max_steps + 1, checkpoint_interval):
++#       ...train...
++#       best_F = max(best_F, new_F)
++#       decision = acc.update(step, best_F)
++#       if decision.stop:
++#           logger.info(
++#               f"ACC stop at step {step}: {decision.reason.name} | "
++#               f"F={best_F:.5f} | F_inf={decision.F_inf} | "
++#               f"T*={decision.T_star} | msg={decision.message}"
++#           )
++#           break
++#   # Save ACC log alongside result JSON
++#   acc.save_log(result_path.replace('.json', '_acc.json'))
+ # ════════════════════════════════════════════════════════════════════
+
+
+@@ -50,12 +57,14 @@
+ # CHANGE 3: Replace fixed max_steps with ACC-predicted budget for next qubit level
+ #
+ # BEFORE (inside the qubit-level loop):
+ #
+ #   max_steps = int(args.base_steps * (args.steps_scale ** (n_qubits - 2)))
+ #
+ # AFTER:
+ #
++#   if prev_acc is not None and prev_acc.recommended_budget is not None:
++#       # Scale the recommended budget from the previous qubit level
++#       tau_ratio = (prev_acc._decisions[-1].tau or 1.0)
++#       max_steps = int(prev_acc.recommended_budget * (args.steps_scale ** 1))
++#       max_steps = max(max_steps, args.min_steps)  # floor
++#   else:
++#       max_steps = int(args.base_steps * (args.steps_scale ** (n_qubits - 2)))
+ # ════════════════════════════════════════════════════════════════════
+
+
+@@ -70,10 +79,12 @@
+ # CHANGE 4: Add --fidelity-threshold and --min-steps CLI arguments
+ #
+ # BEFORE (in argparse setup):
+ #   parser.add_argument('--plateau-limit', type=int, default=20000)
+ #
+ # AFTER:
++#   parser.add_argument('--fidelity-threshold', type=float, default=0.99,
++#                       help='ACC stop threshold (default: 0.99)')
++#   parser.add_argument('--min-steps', type=int, default=50_000,
++#                       help='Minimum steps per cell regardless of ACC prediction')
++#   # Keep --plateau-limit for backward compatibility but ignore it when ACC is active
++#   parser.add_argument('--plateau-limit', type=int, default=20000,
++#                       help='[DEPRECATED] Use ACC instead')
+ # ════════════════════════════════════════════════════════════════════
+
+
+@@ -90,12 +101,14 @@
+ # CHANGE 5: Log ACC summary in the result JSON
+ #
+ # BEFORE (when saving result JSON):
+ #   result = {'target': target_name, 'n_qubits': n_qubits, 'seed': seed,
+ #             'best_F': best_F, 'steps': step, ...}
+ #
+ # AFTER:
++#   result = {'target': target_name, 'n_qubits': n_qubits, 'seed': seed,
++#             'best_F': best_F, 'steps': step,
++#             'acc_stop_reason': decision.reason.name,
++#             'acc_F_inf': decision.F_inf,
++#             'acc_T_star': decision.T_star,
++#             'acc_recommended_budget': acc.recommended_budget,
++#             'acc_r2': decision.r2,
++#             ...}
+ # ════════════════════════════════════════════════════════════════════

@@ -8,7 +8,7 @@
 
 ## 1. Project Overview
 
-SiliQun is a modular, open-source silicon spin qubit simulator designed to support reinforcement learning (RL) based quantum gate synthesis. It targets the silicon metal-oxide-semiconductor (SiMOS) and gate-all-around (GAA) device platforms, and is architected to scale up to a projected 6 × 6 qubit grid. The simulator is entirely standalone and does not depend on QUASAR or any other external RL framework.
+SiliQun is a modular, open-source silicon spin qubit simulator designed to support reinforcement learning (RL) based quantum gate synthesis. It targets the silicon metal-oxide-semiconductor (SiMOS) and gate-all-around (GAA) device platforms, and is architected to scale up to a projected 6 × 6 qubit grid. The simulator is entirely standalone and does not depend on any external RL framework.
 
 The core research question addressed by this paper is: *Can a physics-accurate silicon spin simulator, coupled with a standard deep RL agent (PPO), reliably synthesise high-fidelity two-qubit gates across multiple device profiles?*
 
@@ -21,7 +21,7 @@ The core research question addressed by this paper is: *Can a physics-accurate s
 | Repository | https://github.com/r3d-phd/siliqun |
 | Visibility | Private (r3d-phd organisation) |
 | Primary branch | `main` |
-| Latest commit | `37eec0a` — Advisor report package (Jun 2026) |
+| Latest commit | `5ad1933` — Advisor report package (Jun 2026) |
 | Package size | ~350 KB Python source |
 | Lines of code | ~12,000 (core package) |
 
@@ -44,16 +44,13 @@ siliqun/
 │   ├── tensor/               ← MPS/MPO tensor operations
 │   └── plugins/              ← PennyLane device, statevector compat
 ├── experiments/              ← PBS scripts and experiment runners
-│   ├── siliqun_e4_v6/        ← Latest standalone experiment
-│   └── run_quasar_v5.py      ← Historical experiment runner
-├── results/                  ← All experimental results (JSON, logs, figures)
-│   ├── json/                 ← 42 result JSON files
-│   ├── logs/                 ← 44 training log files
-│   ├── figures/              ← 8 publication figures (PDF + PNG)
-│   └── source/               ← Archived training scripts
-├── paper/                    ← Paper drafts
-├── paper_tqe/                ← IEEE TQE submission version
-└── tests/                    ← Unit tests
+│   └── siliqun_e4_v6/        ← Latest standalone experiment
+├── advisor_report/           ← This report + reproducibility guide
+└── results/                  ← All experimental results
+    ├── json/                 ← 42 result JSON files
+    ├── logs/                 ← 44 training log files
+    ├── figures_siliqun/      ← 8 publication figures (PDF + PNG)
+    └── gen_siliqun_figures.py← Figure generation script
 ```
 
 ---
@@ -67,7 +64,6 @@ All experiments were executed on the **Aziz HPC supercomputer** at KAU, on NVIDI
 | Parameter | Value |
 |-----------|-------|
 | Node | kcn512 (NVIDIA A100-PCIE-40GB) |
-| PBS Job | Submitted via `siliqun_r3_v5.pbs` |
 | Algorithm | PPO (Stable-Baselines3) |
 | Device profile | `simos_nominal` |
 | Target gate | CZ (2-qubit) |
@@ -106,7 +102,7 @@ Key observations:
 - No reward collapse or catastrophic forgetting is observed
 - The reward function is shaped as: `R = 10 × F + bonus_term`, where `F` is the instantaneous gate fidelity
 
-![F1: PPO Reward Curves](figures/F1_ppo_reward_curves.png)
+![F1: PPO Reward Curves — R3 (5 seeds, A100 kcn512)](https://files.manuscdn.com/user_upload_by_module/session_file/108534803/kdFforsNSCUaKmuw.png)
 
 ---
 
@@ -119,9 +115,9 @@ Key observations:
 - Reward (orange, right axis) tracks fidelity tightly, confirming reward shaping is effective
 - The smoothing window is 300 episodes (equivalent to TensorBoard's exponential moving average)
 
-![F3: TensorBoard-Style Monitor](figures/F3_tensorboard_monitor_r3_seed0.png)
+![F3: TensorBoard-Style Dual-Axis Monitor — R3 Seed 0](https://files.manuscdn.com/user_upload_by_module/session_file/108534803/rtvfbIZBAUgvtXrR.png)
 
-> **Note on TensorBoard files:** The R3 experiment was run with `SB3` logging to JSON rather than TensorBoard event files, due to a TensorFlow/TensorBoard compatibility issue on the A100 node (protobuf version conflict). The JSON history files contain identical scalar data and are provided in `results/json/siliqun_r3_v5_results__r3_v5_results.json`.
+> **Note on TensorBoard files:** The R3 experiment used SB3's JSON logger rather than TensorBoard event files due to a TensorFlow/protobuf version conflict on the A100 node. The JSON history files contain identical scalar data and are in `results/json/siliqun_r3_v5_results__r3_v5_results.json`. Fix for camera-ready: downgrade `protobuf` to `3.20.x` on the PBS job script.
 
 ---
 
@@ -129,7 +125,7 @@ Key observations:
 
 ### R1 vs R3 Comparison (Figure F2)
 
-**Figure F2** directly compares the two main experimental runs:
+**Figure F2** directly compares the two main experimental runs side by side.
 
 | Metric | R1 (Daraeizadeh replication) | R3 (SiMOS nominal, fixed) |
 |--------|------------------------------|---------------------------|
@@ -140,20 +136,17 @@ Key observations:
 | Mean F (final) | 0.487 | **1.0000** |
 | Seeds reaching F ≥ 0.999 | 0 / 3 | **5 / 5** |
 
-The dramatic improvement from R1 to R3 is attributed to:
-1. Corrected device profile parameters (SiMOS nominal vs. Daraeizadeh's CZ parameters)
-2. Doubled training budget (20k vs. 10k episodes)
-3. Fixed gym environment reward normalisation bug
+The dramatic improvement from R1 to R3 is attributed to: (1) corrected device profile parameters, (2) doubled training budget, and (3) fixed gym environment reward normalisation bug.
 
-![F2: Fidelity vs Episode R1 vs R3](figures/F2_fidelity_vs_episode_r1_vs_r3.png)
+![F2: Fidelity vs Episode — R1 Replication vs R3 Corrected Run](https://files.manuscdn.com/user_upload_by_module/session_file/108534803/pBJAORGeyskfvPLC.png)
 
 ### R3 All Seeds with Mean ± Std Band (Figure F4)
 
 **Figure F4** shows the publication-quality fidelity convergence plot for R3, with the mean ± 1 standard deviation band across all 5 seeds.
 
-Key result: **All 5 seeds converge to F ≥ 0.999 within the first 5,000 episodes**, with the mean fidelity remaining at 1.0000 ± 0.0001 for the remainder of training.
+**Key result: All 5 seeds converge to F ≥ 0.999 within the first 5,000 episodes**, with the mean fidelity remaining at 1.0000 ± 0.0001 for the remainder of training.
 
-![F4: Fidelity vs Episode R3 All Seeds](figures/F4_fidelity_vs_episode_r3_all_seeds.png)
+![F4: Fidelity vs Episode — R3 All Seeds with Mean ± Std Band](https://files.manuscdn.com/user_upload_by_module/session_file/108534803/qpiFZmpdcefSTkKZ.png)
 
 ---
 
@@ -188,9 +181,6 @@ python experiments/siliqun_e4_v6/siliqun_e4_v6.py \
   --n-episodes 20000 \
   --algorithm PPO \
   --output results/r3_repro/
-
-# 4. On Aziz HPC (PBS):
-qsub experiments/siliqun_e4_v6/siliqun_r3.pbs
 ```
 
 ---
@@ -205,12 +195,11 @@ qsub experiments/siliqun_e4_v6/siliqun_r3.pbs
 | Total wall time | 8,128 s (2.26 hours) |
 | Per-seed average | ~1,626 s (27 min) |
 | Throughput | 12.3 ep/s |
-| GPU utilisation | ~85% (estimated from throughput) |
 | Memory usage | ~8 GB VRAM (statevector, 2Q) |
 
-The A100 provides approximately **0.8× the throughput of CPU-only** for 2-qubit statevector simulation, because the simulation is memory-bandwidth bound rather than compute-bound at this scale. The GPU advantage becomes significant at 4Q and above.
+The A100 provides ~0.8× the throughput of CPU-only for 2-qubit statevector simulation (memory-bandwidth bound at this scale). The GPU advantage becomes significant at 4Q and above.
 
-![F8: A100 Runtime Summary](figures/F8_a100_runtime_summary.png)
+![F8: A100 Runtime Summary — R3 Experiment (Aziz HPC, kcn512)](https://files.manuscdn.com/user_upload_by_module/session_file/108534803/wzuwTugogImEKEfH.png)
 
 ---
 
@@ -218,7 +207,7 @@ The A100 provides approximately **0.8× the throughput of CPU-only** for 2-qubit
 
 ### 9.1 Scaling Ablation — Fidelity vs Qubit Count (Figure F5)
 
-This ablation tests how SiliQun's PPO agent scales across qubit counts for four target state families.
+This ablation tests how the SiliQun + PPO system scales across qubit counts for four target state families.
 
 | Family | 2Q best_F | 3Q best_F | 4Q best_F | 5Q best_F |
 |--------|-----------|-----------|-----------|-----------|
@@ -227,9 +216,9 @@ This ablation tests how SiliQun's PPO agent scales across qubit counts for four 
 | Cluster-linear | **0.9994** | 0.8883 | 0.3379 | — |
 | Dicke-k3 | 0.9876 | **0.9906** | 0.4817 | 0.2798 |
 
-**Key finding:** The SiliQun + PPO system achieves near-perfect fidelity (F > 0.99) at 2 qubits for all families, and at 3 qubits for Dicke-k3. Fidelity degrades sharply beyond 3 qubits, motivating the QUASAR v13 adaptive framework as a follow-on work.
+**Key finding:** Near-perfect fidelity (F > 0.99) is achieved at 2 qubits for all families, and at 3 qubits for Dicke-k3. Fidelity degrades sharply beyond 3 qubits, motivating the QUASAR v13 adaptive framework as a follow-on work.
 
-![F5: Scaling Ablation](figures/F5_scaling_ablation.png)
+![F5: Scaling Ablation — Fidelity vs Qubit Count (4 Target Families)](https://files.manuscdn.com/user_upload_by_module/session_file/108534803/fkSNKynfdPttmrdP.png)
 
 ### 9.2 Device Ablation — SiMOS vs GAA (Figure F6)
 
@@ -240,9 +229,9 @@ This ablation compares performance across two silicon spin device technologies.
 | SiMOS nominal | PPO (5 seeds) | **1.0000 ± 0.0** | 1.0000 | Yes (5/5) |
 | GAA (seed 4) | SAC | 0.9968 | 0.6641 | Partial |
 
-**Key finding:** The SiMOS nominal profile is significantly more amenable to PPO-based gate synthesis than the GAA profile. The GAA device's stronger charge noise and asymmetric exchange coupling create a harder optimisation landscape. The SAC agent achieves a high peak fidelity (0.9968) but fails to maintain it stably, suggesting the need for entropy regularisation tuning.
+**Key finding:** The SiMOS nominal profile is significantly more amenable to PPO-based gate synthesis than the GAA profile. The GAA device's stronger charge noise and asymmetric exchange coupling create a harder optimisation landscape.
 
-![F6: Device Ablation](figures/F6_device_ablation_simos_vs_gaa.png)
+![F6: Device Ablation — SiMOS (PPO) vs GAA (SAC)](https://files.manuscdn.com/user_upload_by_module/session_file/108534803/ZJFEeVSjsytldGlq.png)
 
 ### 9.3 Algorithm Ablation — R1 vs R3 (Figure F7)
 
@@ -255,7 +244,7 @@ This ablation isolates the effect of training budget and environment corrections
 
 **Key finding:** The environment correction (fixing reward normalisation and device profile) has a larger impact than the training budget increase. This validates the importance of physics-accurate device modelling in SiliQun.
 
-![F7: Algorithm Ablation R1 vs R3](figures/F7_algorithm_ablation_r1_vs_r3.png)
+![F7: Algorithm Ablation — R1 (10k ep) vs R3 (20k ep)](https://files.manuscdn.com/user_upload_by_module/session_file/108534803/SBpNjeDUrCiRoKUr.png)
 
 ---
 
@@ -264,11 +253,11 @@ This ablation isolates the effect of training budget and environment corrections
 | Experiment | Device | Algorithm | Seeds | Best F | Status |
 |------------|--------|-----------|-------|--------|--------|
 | R1 (Daraeizadeh replication) | SiMOS CZ | PPO | 3 | 0.8215 | Baseline |
-| R3 (SiMOS nominal, fixed) | SiMOS nominal | PPO | 5 | **1.0000** | ✓ Primary result |
+| **R3 (SiMOS nominal, fixed)** | SiMOS nominal | PPO | 5 | **1.0000** | ✓ Primary result |
 | GAA device | GAA | SAC | 1 | 0.9968 | Partial |
 | Scaling 2Q | SiMOS | PPO | 3 | 0.9994 | ✓ |
-| Scaling 3Q | SiMOS | PPO | 3 | 0.9906 (Dicke) | ✓ (Dicke only) |
-| Scaling 4Q+ | SiMOS | PPO | 3 | 0.4817 | ✗ (needs QUASAR) |
+| Scaling 3Q Dicke-k3 | SiMOS | PPO | 3 | 0.9906 | ✓ |
+| Scaling 4Q+ | SiMOS | PPO | 3 | 0.4817 | ✗ (needs QUASAR v13) |
 
 ---
 
@@ -276,15 +265,13 @@ This ablation isolates the effect of training budget and environment corrections
 
 1. **Complete the SiliQun paper draft** — incorporate R3 results as the primary experimental contribution
 2. **Add comparative analysis** with Moro et al., Yao et al., and Kuo et al. (prior silicon spin RL work)
-3. **Submit to IEEE Transactions on Quantum Engineering (TQE)** — target submission: August 2026
+3. **Submit to IEEE Transactions on Quantum Engineering (TQE)** — target: August 2026
 4. **Extend to 3Q GHZ and W-state** using the QUASAR v13 adaptive framework (Paper 2)
-5. **Address TensorBoard logging** — fix the protobuf conflict on Aziz to enable native TensorBoard export for the camera-ready version
+5. **Fix TensorBoard logging** — downgrade `protobuf` to `3.20.x` on Aziz PBS script
 
 ---
 
-## Appendix A: Data Availability
-
-All data supporting the results in this report are available in the GitHub repository:
+## Appendix: Data Availability
 
 | Data type | Location in repo |
 |-----------|-----------------|
@@ -294,6 +281,7 @@ All data supporting the results in this report are available in the GitHub repos
 | Scaling summary | `results/json/scaling__scaling_summary.json` |
 | A100 runtime log | `results/logs/r3_aziz.log` |
 | All training logs | `results/logs/` (44 files) |
-| Publication figures | `results/figures/` (16 files: 8 × PDF + PNG) |
+| Publication figures | `results/figures_siliqun/` (16 files: 8 × PDF + PNG) |
+| Figure generation script | `results/gen_siliqun_figures.py` |
 | Simulator source | `siliqun/` package (42 Python files) |
 | Experiment scripts | `experiments/siliqun_e4_v6/` |

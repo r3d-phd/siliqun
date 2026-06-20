@@ -1,0 +1,12 @@
+{
+  "experiment": "Replication 2: He et al. (2025)",
+  "hardware_profile": "donor_electron",
+  "target_gate": "Universal",
+  "algorithms": ["DQN", "PPO"],
+  "seeds": [0, 1, 2, 3, 4],
+  "episodes_per_seed": 5000,
+  "threshold_fidelity": 0.999,
+  "learning_rate": 3e-4,
+  "batch_size": 128,
+  "gamma": 0.99
+}

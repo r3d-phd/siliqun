@@ -1,0 +1,58 @@
+[
+  {
+    "episode": 500,
+    "mean_fidelity": 0.15266355617354999,
+    "best_fidelity": 0.1528237580547679,
+    "pct_above_999": 0.0,
+    "elapsed_sec": 2251.6462852954865,
+    "eps_per_sec": 0.22205974502535347
+  },
+  {
+    "episode": 1000,
+    "mean_fidelity": 0.007190121115701871,
+    "best_fidelity": 0.007278442291895448,
+    "pct_above_999": 0.0,
+    "elapsed_sec": 3837.9703936576843,
+    "eps_per_sec": 0.26055438094377126
+  },
+  {
+    "episode": 1500,
+    "mean_fidelity": 0.36927515798435295,
+    "best_fidelity": 0.3695710030800473,
+    "pct_above_999": 0.0,
+    "elapsed_sec": 5519.912871599197,
+    "eps_per_sec": 0.271743419668403
+  },
+  {
+    "episode": 2000,
+    "mean_fidelity": 0.3958823233375706,
+    "best_fidelity": 0.39600142504125513,
+    "pct_above_999": 0.0,
+    "elapsed_sec": 7133.328854560852,
+    "eps_per_sec": 0.2803740078128118
+  },
+  {
+    "episode": 2500,
+    "mean_fidelity": 0.40855180316397216,
+    "best_fidelity": 0.40881371806580113,
+    "pct_above_999": 0.0,
+    "elapsed_sec": 8784.648271083832,
+    "eps_per_sec": 0.28458737593731287
+  },
+  {
+    "episode": 3000,
+    "mean_fidelity": 0.4073025537273925,
+    "best_fidelity": 0.40751770298191803,
+    "pct_above_999": 0.0,
+    "elapsed_sec": 10405.779206752777,
+    "eps_per_sec": 0.28830133144216297
+  },
+  {
+    "episode": 3500,
+    "mean_fidelity": 0.416808982044537,
+    "best_fidelity": 0.41695301786680483,
+    "pct_above_999": 0.0,
+    "elapsed_sec": 12102.67770075798,
+    "eps_per_sec": 0.28919220081195735
+  }
+]

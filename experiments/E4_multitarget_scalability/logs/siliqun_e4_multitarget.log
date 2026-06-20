@@ -1,0 +1,130 @@
+======================================================
+SiliQun E4 — Multi-Target SAC Generalisation (H100)
+Job ID: 180521.khead2  Node: kcn521  Started: Thu Jun 11 13:36:34 +03 2026
+======================================================
+Python:  Python 3.12.4
+PyTorch: 2.4.0
+GPU:     NVIDIA H100 NVL
+SiliQun: 2.2.0
+SB3:     2.8.0
+2026-06-11 13:37:04,184 | INFO | SiliQun imported OK (v2.2.0)
+2026-06-11 13:37:12,307 | INFO | stable-baselines3 SAC available
+2026-06-11 13:37:12,357 | INFO | PyTorch device: cuda | CUDA: True
+2026-06-11 13:37:12,385 | INFO | GPU: NVIDIA H100 NVL
+2026-06-11 13:37:12,390 | INFO | ============================================================
+2026-06-11 13:37:12,390 | INFO | SiliQun E4 v2 — stable-baselines3 SAC (FIXED)
+2026-06-11 13:37:12,390 | INFO | Device: simos | n_qubits=3 | timesteps=600,000
+2026-06-11 13:37:12,390 | INFO | Targets: ['ghz', 'w', 'cluster_1d', 'dicke_k3']
+2026-06-11 13:37:12,390 | INFO | Seeds:   [42, 123, 456]
+2026-06-11 13:37:12,390 | INFO | Results: /home/ralshehri0468/siliqun_e4_results.json
+2026-06-11 13:37:12,390 | INFO | ============================================================
+2026-06-11 13:37:12,393 | INFO | Loaded 2 existing results from /home/ralshehri0468/siliqun_e4_results.json
+2026-06-11 13:37:12,393 | INFO | [1/12] SKIP (already done): target=ghz seed=42
+2026-06-11 13:37:12,393 | INFO | [2/12] SKIP (already done): target=ghz seed=123
+2026-06-11 13:37:12,394 | INFO | [3/12] START: target=ghz seed=456
+2026-06-11 13:37:12,394 | INFO |   [SB3-SAC v2] target=ghz  seed=456  steps=600,000
+2026-06-11 13:41:06,825 | INFO |   step=  5,000  rolling_F=0.0661  best_F=0.0661
+2026-06-11 13:44:53,882 | INFO |   step= 10,000  rolling_F=0.0680  best_F=0.0680
+2026-06-11 13:48:40,540 | INFO |   step= 15,000  rolling_F=0.0739  best_F=0.0739
+2026-06-11 13:52:27,395 | INFO |   step= 20,000  rolling_F=0.0768  best_F=0.0768
+2026-06-11 13:56:14,304 | INFO |   step= 25,000  rolling_F=0.0806  best_F=0.0806
+2026-06-11 14:00:01,099 | INFO |   step= 30,000  rolling_F=0.0797  best_F=0.0806
+2026-06-11 14:03:47,954 | INFO |   step= 35,000  rolling_F=0.0761  best_F=0.0806
+2026-06-11 14:07:34,843 | INFO |   step= 40,000  rolling_F=0.0803  best_F=0.0806
+2026-06-11 14:11:23,016 | INFO |   step= 45,000  rolling_F=0.0775  best_F=0.0806
+2026-06-11 14:15:11,456 | INFO |   step= 50,000  rolling_F=0.0756  best_F=0.0806
+2026-06-11 14:18:59,802 | INFO |   step= 55,000  rolling_F=0.0653  best_F=0.0806
+2026-06-11 14:22:48,379 | INFO |   step= 60,000  rolling_F=0.0756  best_F=0.0806
+2026-06-11 14:26:37,026 | INFO |   step= 65,000  rolling_F=0.0631  best_F=0.0806
+2026-06-11 14:30:26,106 | INFO |   step= 70,000  rolling_F=0.0843  best_F=0.0843
+2026-06-11 14:34:15,038 | INFO |   step= 75,000  rolling_F=0.0665  best_F=0.0843
+2026-06-11 14:38:04,551 | INFO |   step= 80,000  rolling_F=0.0748  best_F=0.0843
+2026-06-11 14:41:53,969 | INFO |   step= 85,000  rolling_F=0.0681  best_F=0.0843
+2026-06-11 14:45:43,202 | INFO |   step= 90,000  rolling_F=0.0800  best_F=0.0843
+2026-06-11 14:49:30,317 | INFO |   step= 95,000  rolling_F=0.0680  best_F=0.0843
+2026-06-11 14:53:16,663 | INFO |   step=100,000  rolling_F=0.0638  best_F=0.0843
+2026-06-11 14:57:03,034 | INFO |   step=105,000  rolling_F=0.0745  best_F=0.0843
+2026-06-11 15:00:49,635 | INFO |   step=110,000  rolling_F=0.0776  best_F=0.0843
+2026-06-11 15:04:38,764 | INFO |   step=115,000  rolling_F=0.0664  best_F=0.0843
+2026-06-11 15:08:27,162 | INFO |   step=120,000  rolling_F=0.0678  best_F=0.0843
+2026-06-11 15:12:17,478 | INFO |   step=125,000  rolling_F=0.0625  best_F=0.0843
+2026-06-11 15:16:06,095 | INFO |   step=130,000  rolling_F=0.0787  best_F=0.0843
+2026-06-11 15:19:52,969 | INFO |   step=135,000  rolling_F=0.0790  best_F=0.0843
+2026-06-11 15:23:39,576 | INFO |   step=140,000  rolling_F=0.0695  best_F=0.0843
+2026-06-11 15:27:26,987 | INFO |   step=145,000  rolling_F=0.0605  best_F=0.0843
+2026-06-11 15:31:15,582 | INFO |   step=150,000  rolling_F=0.0698  best_F=0.0843
+2026-06-11 15:35:04,173 | INFO |   step=155,000  rolling_F=0.0682  best_F=0.0843
+2026-06-11 15:38:52,736 | INFO |   step=160,000  rolling_F=0.0677  best_F=0.0843
+2026-06-11 15:42:41,337 | INFO |   step=165,000  rolling_F=0.0723  best_F=0.0843
+2026-06-11 15:46:29,923 | INFO |   step=170,000  rolling_F=0.0761  best_F=0.0843
+2026-06-11 15:50:18,647 | INFO |   step=175,000  rolling_F=0.0706  best_F=0.0843
+2026-06-11 15:54:07,223 | INFO |   step=180,000  rolling_F=0.0745  best_F=0.0843
+2026-06-11 15:57:55,660 | INFO |   step=185,000  rolling_F=0.0738  best_F=0.0843
+2026-06-11 16:01:44,055 | INFO |   step=190,000  rolling_F=0.0641  best_F=0.0843
+2026-06-11 16:05:32,040 | INFO |   step=195,000  rolling_F=0.0821  best_F=0.0843
+2026-06-11 16:09:20,693 | INFO |   step=200,000  rolling_F=0.0733  best_F=0.0843
+2026-06-11 16:13:09,606 | INFO |   step=205,000  rolling_F=0.0659  best_F=0.0843
+2026-06-11 16:16:58,014 | INFO |   step=210,000  rolling_F=0.0716  best_F=0.0843
+2026-06-11 16:20:46,764 | INFO |   step=215,000  rolling_F=0.0713  best_F=0.0843
+2026-06-11 16:24:35,575 | INFO |   step=220,000  rolling_F=0.0692  best_F=0.0843
+2026-06-11 16:28:22,066 | INFO |   step=225,000  rolling_F=0.0708  best_F=0.0843
+2026-06-11 16:32:08,387 | INFO |   step=230,000  rolling_F=0.0735  best_F=0.0843
+2026-06-11 16:35:55,581 | INFO |   step=235,000  rolling_F=0.0626  best_F=0.0843
+2026-06-11 16:39:43,280 | INFO |   step=240,000  rolling_F=0.0768  best_F=0.0843
+2026-06-11 16:43:31,063 | INFO |   step=245,000  rolling_F=0.0607  best_F=0.0843
+2026-06-11 16:47:18,683 | INFO |   step=250,000  rolling_F=0.0675  best_F=0.0843
+2026-06-11 16:51:05,090 | INFO |   step=255,000  rolling_F=0.0691  best_F=0.0843
+2026-06-11 16:54:51,470 | INFO |   step=260,000  rolling_F=0.0650  best_F=0.0843
+2026-06-11 16:58:37,964 | INFO |   step=265,000  rolling_F=0.0748  best_F=0.0843
+2026-06-11 17:02:24,754 | INFO |   step=270,000  rolling_F=0.0667  best_F=0.0843
+2026-06-11 17:06:12,180 | INFO |   step=275,000  rolling_F=0.0744  best_F=0.0843
+2026-06-11 17:09:59,539 | INFO |   step=280,000  rolling_F=0.0685  best_F=0.0843
+2026-06-11 17:13:45,864 | INFO |   step=285,000  rolling_F=0.0757  best_F=0.0843
+2026-06-11 17:17:32,036 | INFO |   step=290,000  rolling_F=0.0702  best_F=0.0843
+2026-06-11 17:21:18,387 | INFO |   step=295,000  rolling_F=0.0767  best_F=0.0843
+2026-06-11 17:25:04,664 | INFO |   step=300,000  rolling_F=0.0708  best_F=0.0843
+2026-06-11 17:28:50,900 | INFO |   step=305,000  rolling_F=0.0785  best_F=0.0843
+2026-06-11 17:32:37,064 | INFO |   step=310,000  rolling_F=0.0721  best_F=0.0843
+2026-06-11 17:36:23,327 | INFO |   step=315,000  rolling_F=0.0719  best_F=0.0843
+2026-06-11 17:40:11,124 | INFO |   step=320,000  rolling_F=0.0667  best_F=0.0843
+2026-06-11 17:43:59,189 | INFO |   step=325,000  rolling_F=0.0741  best_F=0.0843
+2026-06-11 17:47:47,108 | INFO |   step=330,000  rolling_F=0.0727  best_F=0.0843
+2026-06-11 17:51:34,905 | INFO |   step=335,000  rolling_F=0.0603  best_F=0.0843
+2026-06-11 17:55:22,525 | INFO |   step=340,000  rolling_F=0.0654  best_F=0.0843
+2026-06-11 17:59:10,258 | INFO |   step=345,000  rolling_F=0.0737  best_F=0.0843
+2026-06-11 18:02:58,116 | INFO |   step=350,000  rolling_F=0.0730  best_F=0.0843
+2026-06-11 18:06:45,711 | INFO |   step=355,000  rolling_F=0.0948  best_F=0.0948
+2026-06-11 18:10:33,824 | INFO |   step=360,000  rolling_F=0.0788  best_F=0.0948
+2026-06-11 18:14:21,913 | INFO |   step=365,000  rolling_F=0.0852  best_F=0.0948
+2026-06-11 18:18:09,899 | INFO |   step=370,000  rolling_F=0.0856  best_F=0.0948
+2026-06-11 18:21:57,793 | INFO |   step=375,000  rolling_F=0.0864  best_F=0.0948
+2026-06-11 18:25:45,763 | INFO |   step=380,000  rolling_F=0.0746  best_F=0.0948
+2026-06-11 18:29:33,677 | INFO |   step=385,000  rolling_F=0.0761  best_F=0.0948
+2026-06-11 18:33:23,435 | INFO |   step=390,000  rolling_F=0.0761  best_F=0.0948
+2026-06-11 18:37:13,918 | INFO |   step=395,000  rolling_F=0.0814  best_F=0.0948
+2026-06-11 18:41:04,392 | INFO |   step=400,000  rolling_F=0.0675  best_F=0.0948
+2026-06-11 18:44:54,846 | INFO |   step=405,000  rolling_F=0.0737  best_F=0.0948
+2026-06-11 18:48:45,406 | INFO |   step=410,000  rolling_F=0.0717  best_F=0.0948
+2026-06-11 18:52:35,795 | INFO |   step=415,000  rolling_F=0.0737  best_F=0.0948
+2026-06-11 18:56:25,996 | INFO |   step=420,000  rolling_F=0.0706  best_F=0.0948
+2026-06-11 19:00:16,280 | INFO |   step=425,000  rolling_F=0.0707  best_F=0.0948
+2026-06-11 19:04:07,200 | INFO |   step=430,000  rolling_F=0.0653  best_F=0.0948
+2026-06-11 19:07:58,205 | INFO |   step=435,000  rolling_F=0.0726  best_F=0.0948
+2026-06-11 19:11:49,149 | INFO |   step=440,000  rolling_F=0.0665  best_F=0.0948
+2026-06-11 19:15:36,038 | INFO |   step=445,000  rolling_F=0.0615  best_F=0.0948
+2026-06-11 19:19:22,845 | INFO |   step=450,000  rolling_F=0.0658  best_F=0.0948
+2026-06-11 19:23:10,312 | INFO |   step=455,000  rolling_F=0.0728  best_F=0.0948
+2026-06-11 19:26:58,015 | INFO |   step=460,000  rolling_F=0.0750  best_F=0.0948
+2026-06-11 19:30:47,554 | INFO |   step=465,000  rolling_F=0.0651  best_F=0.0948
+2026-06-11 19:34:38,886 | INFO |   step=470,000  rolling_F=0.0741  best_F=0.0948
+2026-06-11 19:38:29,428 | INFO |   step=475,000  rolling_F=0.0704  best_F=0.0948
+2026-06-11 19:42:19,015 | INFO |   step=480,000  rolling_F=0.0687  best_F=0.0948
+2026-06-11 19:46:07,508 | INFO |   step=485,000  rolling_F=0.0728  best_F=0.0948
+2026-06-11 19:49:56,062 | INFO |   step=490,000  rolling_F=0.0702  best_F=0.0948
+2026-06-11 19:53:44,776 | INFO |   step=495,000  rolling_F=0.0833  best_F=0.0948
+2026-06-11 19:57:34,453 | INFO |   step=500,000  rolling_F=0.0624  best_F=0.0948
+2026-06-11 20:01:24,160 | INFO |   step=505,000  rolling_F=0.0692  best_F=0.0948
+2026-06-11 20:05:12,784 | INFO |   step=510,000  rolling_F=0.0815  best_F=0.0948
+2026-06-11 20:09:02,327 | INFO |   step=515,000  rolling_F=0.0786  best_F=0.0948
+2026-06-11 20:12:53,029 | INFO |   step=520,000  rolling_F=0.0734  best_F=0.0948
+2026-06-11 20:16:39,430 | INFO |   step=525,000  rolling_F=0.0705  best_F=0.0948

@@ -1,0 +1,12 @@
+{
+  "experiment": "Replication 1: Daraeizadeh et al. (2020)",
+  "hardware_profile": "simos_nominal",
+  "target_gate": "CZ",
+  "algorithms": ["DQL", "SARSA", "PPO"],
+  "seeds": [0, 1, 2, 3, 4],
+  "episodes_per_seed": 10000,
+  "threshold_fidelity": 0.999,
+  "learning_rate": 3e-4,
+  "batch_size": 64,
+  "gamma": 0.99
+}

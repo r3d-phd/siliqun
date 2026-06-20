@@ -1,0 +1,13 @@
+{
+  "experiment": "Extension 4: Multi-Target Scalability",
+  "hardware_profile": "simos_nominal",
+  "targets": ["GHZ", "W", "Cluster", "Dicke-k3"],
+  "max_qubits": 12,
+  "algorithms": ["PPO", "SAC", "GRAPE", "GAA"],
+  "seeds": [0, 1, 2, 3, 4],
+  "episodes_per_seed": 20000,
+  "threshold_fidelity": 0.999,
+  "learning_rate": 3e-4,
+  "batch_size": 256,
+  "gamma": 0.99
+}

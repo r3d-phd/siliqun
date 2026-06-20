@@ -1,0 +1,27 @@
+=== Node: kcn502 | Tue Jun  2 17:59:01 +03 2026 ===
+=== GPU: NVIDIA A100-PCIE-40GB ===
+/var/spool/pbs/mom_priv/jobs/179442.khead2.SC: line 15: /opt/share/anaconda3/2024.06/etc/profile.d/conda.sh: No such file or directory
+/var/spool/pbs/mom_priv/jobs/179442.khead2.SC: line 16: /opt/share/anaconda3/2023.09/etc/profile.d/conda.sh: No such file or directory
+=== Python: /home/ralshehri0468/.conda/envs/quantum_drl_gpu/bin/python3 | Python 3.12.4 ===
+=== Installing sb3_contrib if needed ===
+=== Verifying torch ===
+torch: 2.4.0 | cuda: True | device: NVIDIA A100-PCIE-40GB
+=== Running SiliQun R4 seed 1453 ===
+Traceback (most recent call last):
+  File "/home/ralshehri0468/r4_seed1453.py", line 12, in <module>
+    from env_faithful import GaAsCNOTEnvVec
+  File "/home/ralshehri0468/siliqun_gaas_v2/env_faithful.py", line 30, in <module>
+    from .hamiltonian import QuantumDot2, gate_infidelity, CNOT_TARGET, COMPUTATIONAL_INDICES
+ImportError: attempted relative import with no known parent package
+=== Results ===
+{
+  "666": {
+    "seed": 666,
+    "best_F": 0.8427,
+    "mean_F_final": 0.0,
+    "std_F_final": 0.0,
+    "pct_above_999": 0.0,
+    "n_episodes": 20000,
+    "completed": true
+  }
+}=== SiliQun R4 seed 1453 complete at Tue Jun  2 17:59:23 +03 2026 ===

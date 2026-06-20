@@ -1,0 +1,8 @@
+{
+  "description": "Random seeds used across all SiliQun experiments for exact reproducibility.",
+  "E1_replication_daraeizadeh": [0, 1, 2, 3, 4],
+  "E2_replication_he": [0, 1, 2, 3, 4],
+  "E3_cross_backend_validation": [0, 1, 2, 3, 4],
+  "E4_multitarget_scalability": [0, 1, 2, 3, 4],
+  "additional_seeds_tested": [42, 123, 456, 789, 1000, 2024]
+}

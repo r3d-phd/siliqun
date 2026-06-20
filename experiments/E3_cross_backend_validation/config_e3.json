@@ -1,0 +1,13 @@
+{
+  "experiment": "Replication 3: Cross-Backend Validation",
+  "hardware_profile": "singlet_triplet",
+  "target_gate": "CZ",
+  "algorithms": ["DQN"],
+  "backends": ["qiskit_aer_statevector", "ibm_fakesherbrooke"],
+  "seeds": [0, 1, 2, 3, 4],
+  "episodes_per_seed": 5000,
+  "threshold_fidelity": 0.99,
+  "learning_rate": 3e-4,
+  "batch_size": 128,
+  "gamma": 0.99
+}

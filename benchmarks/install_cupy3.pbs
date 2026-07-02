@@ -1,0 +1,106 @@
+#!/bin/bash
+#PBS -N cupy_fix
+#PBS -q A100
+#PBS -l select=1:ncpus=32:mem=64gb
+#PBS -l walltime=00:30:00
+#PBS -o /home/ralshehri0468/siliqun/benchmarks/cupy_fix.out
+#PBS -e /home/ralshehri0468/siliqun/benchmarks/cupy_fix.err
+
+source /opt/share/anaconda3/2024.06/etc/profile.d/conda.sh 2>/dev/null || \
+source /opt/share/anaconda3/2023.09/etc/profile.d/conda.sh 2>/dev/null || \
+source ~/miniconda3/etc/profile.d/conda.sh 2>/dev/null || \
+{ echo "FATAL: Cannot find conda"; exit 1; }
+
+conda activate quantum_drl_gpu || { echo "FATAL: Cannot activate env"; exit 1; }
+
+echo "=== Finding CUDA libraries ==="
+find / -name "libcudart.so*" 2>/dev/null | head -10
+echo "---"
+find / -name "libcublas.so*" 2>/dev/null | head -10
+echo "---"
+echo "nvidia-smi CUDA:"
+nvidia-smi 2>/dev/null | grep "CUDA"
+echo "---"
+echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
+echo "---"
+echo "ldconfig cuda:"
+ldconfig -p 2>/dev/null | grep -i cuda | head -10
+echo "---"
+
+# Find CUDA toolkit path
+CUDA_PATH=""
+for p in /usr/local/cuda-12.4 /usr/local/cuda-12 /usr/local/cuda /opt/cuda /usr/lib64; do
+    if [ -f "$p/lib64/libcudart.so" ] || [ -f "$p/lib/libcudart.so" ]; then
+        CUDA_PATH="$p"
+        echo "Found CUDA at: $CUDA_PATH"
+        break
+    fi
+done
+
+# Check conda env for bundled CUDA
+echo "---"
+echo "Conda env CUDA libs:"
+find $CONDA_PREFIX -name "libcudart*" 2>/dev/null | head -5
+find $CONDA_PREFIX -name "libcublas*" 2>/dev/null | head -5
+
+echo ""
+echo "=== Installing cupy with CUDA lib path ==="
+
+# Install cupy-cuda12x and set LD_LIBRARY_PATH
+pip install --no-deps cupy-cuda12x==13.3.0 2>&1 | tail -3
+
+# Try various CUDA lib paths
+for CUDA_LIB in \
+    "/usr/local/cuda-12.4/lib64" \
+    "/usr/local/cuda/lib64" \
+    "/usr/lib64" \
+    "$CONDA_PREFIX/lib" \
+    "/usr/local/cuda-12.4/targets/x86_64-linux/lib"; do
+    
+    if [ -d "$CUDA_LIB" ]; then
+        echo "Trying LD_LIBRARY_PATH=$CUDA_LIB"
+        export LD_LIBRARY_PATH="$CUDA_LIB:$LD_LIBRARY_PATH"
+        python3 -c "import cupy; print(f'SUCCESS with {\"$CUDA_LIB\"}: cupy {cupy.__version__}')" 2>&1
+        if [ $? -eq 0 ]; then
+            break
+        fi
+    fi
+done
+
+# If still failing, install CUDA toolkit via conda
+python3 -c "import cupy" 2>/dev/null
+if [ $? -ne 0 ]; then
+    echo ""
+    echo "=== Installing CUDA toolkit via conda ==="
+    conda install -y cuda-cudart cuda-libraries -c nvidia 2>&1 | tail -10
+    export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
+    python3 -c "import cupy as cp; print(f'SUCCESS after conda cuda: cupy {cp.__version__}')" 2>&1
+fi
+
+echo ""
+echo "=== Final Test ==="
+python3 -c "
+try:
+    import cupy as cp
+    print(f'CuPy: {cp.__version__}')
+    print(f'CUDA runtime: {cp.cuda.runtime.runtimeGetVersion()}')
+    a = cp.array([1.0, 2.0, 3.0])
+    print(f'GPU test: {a * 2}')
+    print(f'Device: {cp.cuda.Device().name}')
+    print('CUPY_VERIFIED_OK')
+except Exception as e:
+    print(f'CUPY_FAILED: {e}')
+" 2>&1
+
+# If cupy works, run benchmark
+python3 -c "import cupy" 2>/dev/null
+if [ $? -eq 0 ]; then
+    echo ""
+    echo "=== GPU BENCHMARK ==="
+    cd /home/ralshehri0468/siliqun
+    python3 benchmarks/benchmark_sv.py --max-qubits 25 --output benchmarks/sv25_gpu_results.json 2>&1
+fi
+
+echo ""
+echo "=== DONE ==="
+echo "End: $(date)"

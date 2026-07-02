@@ -1,0 +1,144 @@
+#!/bin/bash
+#PBS -N gpu_verify2
+#PBS -q A100
+#PBS -l select=1:ncpus=32:mem=64gb
+#PBS -l walltime=00:30:00
+#PBS -o /home/ralshehri0468/siliqun/benchmarks/gpu_verify2.out
+#PBS -e /home/ralshehri0468/siliqun/benchmarks/gpu_verify2.err
+
+# Proper conda activation
+source /opt/share/anaconda3/2024.06/etc/profile.d/conda.sh 2>/dev/null || \
+source /opt/share/anaconda3/2023.09/etc/profile.d/conda.sh 2>/dev/null || \
+source ~/miniconda3/etc/profile.d/conda.sh 2>/dev/null
+conda activate quantum_drl_gpu
+export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
+
+echo "=== Environment ==="
+echo "Node: $(hostname)"
+echo "Python: $(which python3) ($(python3 --version))"
+echo "CONDA_PREFIX: $CONDA_PREFIX"
+echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
+nvidia-smi 2>/dev/null | grep -E "CUDA|A100"
+echo ""
+
+# Step 1: Verify CuPy GPU
+echo "=== CuPy GPU Verification ==="
+python3 << 'PYEOF'
+import cupy as cp
+import numpy as np
+import time
+
+print(f"CuPy version: {cp.__version__}")
+print(f"CUDA runtime: {cp.cuda.runtime.runtimeGetVersion()}")
+
+dev = cp.cuda.Device(0)
+mem = dev.mem_info
+print(f"GPU Memory: {mem[1]/1e9:.1f} GB total, {mem[0]/1e9:.1f} GB free")
+
+# Test: 33M element multiply (same as 25-qubit SV)
+n = 2**25
+print(f"\n--- GPU vs CPU: {n} complex128 elements ---")
+
+a_cpu = np.random.randn(n).astype(np.complex128)
+t0 = time.perf_counter()
+for _ in range(10):
+    c = a_cpu * 2.0
+t_cpu = (time.perf_counter() - t0) / 10
+print(f"CPU element-wise: {t_cpu*1000:.2f} ms")
+
+a_gpu = cp.array(a_cpu)
+cp.cuda.Device().synchronize()
+t0 = time.perf_counter()
+for _ in range(10):
+    c = a_gpu * 2.0
+    cp.cuda.Device().synchronize()
+t_gpu = (time.perf_counter() - t0) / 10
+print(f"GPU element-wise: {t_gpu*1000:.2f} ms")
+print(f"Speedup: {t_cpu/t_gpu:.1f}x")
+
+# Gate simulation test: 16-qubit
+print(f"\n--- 16-qubit gate simulation ---")
+dim = 2**16
+sv = np.random.randn(dim).astype(np.complex128)
+sv /= np.linalg.norm(sv)
+gate = np.array([[0, 1], [1, 0]], dtype=np.complex128)
+
+t0 = time.perf_counter()
+for _ in range(100):
+    psi = sv.reshape(2, dim//2)
+    psi = gate @ psi
+    sv = psi.reshape(dim)
+t_cpu16 = (time.perf_counter() - t0) / 100
+print(f"CPU 16q gate: {t_cpu16*1e6:.1f} us")
+
+sv_gpu = cp.array(sv)
+gate_gpu = cp.array(gate)
+cp.cuda.Device().synchronize()
+t0 = time.perf_counter()
+for _ in range(100):
+    psi = sv_gpu.reshape(2, dim//2)
+    psi = gate_gpu @ psi
+    sv_gpu = psi.reshape(dim)
+    cp.cuda.Device().synchronize()
+t_gpu16 = (time.perf_counter() - t0) / 100
+print(f"GPU 16q gate: {t_gpu16*1e6:.1f} us")
+print(f"Speedup: {t_cpu16/t_gpu16:.1f}x")
+
+# 25-qubit gate test
+print(f"\n--- 25-qubit gate simulation ---")
+dim25 = 2**25
+sv25 = cp.zeros(dim25, dtype=cp.complex128)
+sv25[0] = 1.0
+cp.cuda.Device().synchronize()
+print(f"25q SV allocated: {sv25.nbytes/1e6:.0f} MB GPU")
+
+t0 = time.perf_counter()
+for _ in range(10):
+    psi = sv25.reshape(2, dim25//2)
+    psi = gate_gpu @ psi
+    sv25 = psi.reshape(dim25)
+    cp.cuda.Device().synchronize()
+t_gpu25 = (time.perf_counter() - t0) / 10
+print(f"GPU 25q gate: {t_gpu25*1e3:.2f} ms")
+
+# Compare with CPU 25q
+sv25_cpu = np.zeros(dim25, dtype=np.complex128)
+sv25_cpu[0] = 1.0
+t0 = time.perf_counter()
+for _ in range(3):
+    psi = sv25_cpu.reshape(2, dim25//2)
+    psi = gate @ psi
+    sv25_cpu = psi.reshape(dim25)
+t_cpu25 = (time.perf_counter() - t0) / 3
+print(f"CPU 25q gate: {t_cpu25*1e3:.2f} ms")
+print(f"Speedup: {t_cpu25/t_gpu25:.1f}x")
+
+print("\nGPU_VERIFY_OK")
+PYEOF
+
+echo ""
+
+# Step 2: Check if SiliQun simulator detects CuPy
+echo "=== SiliQun CuPy Detection ==="
+cd /home/ralshehri0468/siliqun
+python3 -c "
+from siliqun.engine.statevector_simulator import StateVectorSimulator
+sim = StateVectorSimulator(n_qubits=4)
+xp = type(sim.psi).__module__
+print(f'Simulator array backend: {xp}')
+print(f'Array type: {type(sim.psi)}')
+if 'cupy' in xp:
+    print('GPU_MODE_ACTIVE')
+else:
+    print('CPU_MODE (numpy)')
+" 2>&1
+
+echo ""
+
+# Step 3: Run the full SiliQun benchmark
+echo "=== SiliQun Full Benchmark ==="
+python3 benchmarks/benchmark_sv.py --max-qubits 25 --output benchmarks/sv25_gpu_results.json 2>&1
+
+echo ""
+echo "=== DONE ==="
+echo "End: $(date)"

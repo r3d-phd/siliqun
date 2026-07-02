@@ -2835,6 +2835,10 @@ class SiliQunEnvWrapper:
         # and pass it directly to make_siliqun_env as a np.ndarray
         _v23_sv = _build_v23_target_sv(target_state, n_qubits)
         siliqun_target = self._TARGET_MAP.get(target_state, target_state.lower())
+        # FIX-5 (HB-81): For v23 hard targets (complete_graph, dicke_k2, ghz_w_hybrid),
+        # pass the pre-built numpy state vector directly to make_siliqun_env so that
+        # SiliQunEnv does not raise "Unknown target state: <name>".
+        _siliqun_target_arg = _v23_sv if _v23_sv is not None else siliqun_target
         # Fix: Dicke-k3 requires k <= n_qubits; cap k dynamically
         import re as _re
         _dk_match = _re.match(r"dicke_k(\d+)$", siliqun_target)
@@ -2880,7 +2884,7 @@ class SiliQunEnvWrapper:
         self._env = make_siliqun_env(
             n_qubits=n_qubits,
             device=_simos_dev,
-            target=siliqun_target,
+            target=_siliqun_target_arg,  # FIX-5: numpy array for v23 hard targets
             sim_mode=sim_mode,
             noise=noise_enabled,
             max_bond_dim=min(64, 2 ** (n_qubits // 2)),

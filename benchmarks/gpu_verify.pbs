@@ -1,0 +1,133 @@
+#!/bin/bash
+#PBS -N gpu_verify
+#PBS -q A100
+#PBS -l select=1:ncpus=32:mem=64gb
+#PBS -l walltime=00:30:00
+#PBS -o /home/ralshehri0468/siliqun/benchmarks/gpu_verify.out
+#PBS -e /home/ralshehri0468/siliqun/benchmarks/gpu_verify.err
+
+# Activate environment
+source ~/siliqun/benchmarks/activate_gpu.sh
+
+echo "=== GPU Verification ==="
+echo "Node: $(hostname)"
+nvidia-smi 2>/dev/null | grep -E "CUDA|A100"
+echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
+echo ""
+
+# Step 1: Verify CuPy GPU operations
+echo "=== CuPy GPU Test ==="
+python3 << 'PYEOF'
+import cupy as cp
+import numpy as np
+import time
+
+print(f"CuPy version: {cp.__version__}")
+print(f"CUDA runtime: {cp.cuda.runtime.runtimeGetVersion()}")
+
+# GPU info
+dev = cp.cuda.Device(0)
+mem = dev.mem_info
+print(f"GPU Memory: {mem[1]/1e9:.1f} GB total, {mem[0]/1e9:.1f} GB free")
+
+# Test: large array multiply on GPU
+n = 2**25  # 33M elements, same as 25-qubit state vector
+print(f"\n--- GPU vs CPU: {n} complex128 elements ---")
+
+# CPU
+a_cpu = np.random.randn(n) + 1j * np.random.randn(n)
+b_cpu = np.random.randn(n, n).astype(np.complex128) if n < 1000 else None
+
+t0 = time.perf_counter()
+for _ in range(10):
+    c_cpu = a_cpu * 2.0
+t_cpu = (time.perf_counter() - t0) / 10
+print(f"CPU element-wise multiply: {t_cpu*1000:.2f} ms")
+
+# GPU
+a_gpu = cp.array(a_cpu)
+cp.cuda.Device().synchronize()
+
+t0 = time.perf_counter()
+for _ in range(10):
+    c_gpu = a_gpu * 2.0
+    cp.cuda.Device().synchronize()
+t_gpu = (time.perf_counter() - t0) / 10
+print(f"GPU element-wise multiply: {t_gpu*1000:.2f} ms")
+print(f"Speedup: {t_cpu/t_gpu:.1f}x")
+
+# Test: matrix-vector product (simulates gate application)
+print(f"\n--- Gate simulation test (kron product approach) ---")
+dim = 2**16  # 16-qubit test
+sv = np.random.randn(dim) + 1j * np.random.randn(dim)
+sv /= np.linalg.norm(sv)
+gate = np.array([[0, 1], [1, 0]], dtype=np.complex128)  # X gate
+
+# CPU reshape approach
+t0 = time.perf_counter()
+for _ in range(100):
+    psi = sv.reshape(2, dim//2)
+    psi = gate @ psi
+    sv = psi.reshape(dim)
+t_cpu_gate = (time.perf_counter() - t0) / 100
+print(f"CPU 16q 1Q gate: {t_cpu_gate*1e6:.1f} us")
+
+# GPU reshape approach
+sv_gpu = cp.array(sv)
+gate_gpu = cp.array(gate)
+cp.cuda.Device().synchronize()
+
+t0 = time.perf_counter()
+for _ in range(100):
+    psi_gpu = sv_gpu.reshape(2, dim//2)
+    psi_gpu = gate_gpu @ psi_gpu
+    sv_gpu = psi_gpu.reshape(dim)
+    cp.cuda.Device().synchronize()
+t_gpu_gate = (time.perf_counter() - t0) / 100
+print(f"GPU 16q 1Q gate: {t_gpu_gate*1e6:.1f} us")
+print(f"Speedup: {t_cpu_gate/t_gpu_gate:.1f}x")
+
+# 25-qubit test
+print(f"\n--- 25-qubit gate simulation ---")
+dim25 = 2**25
+sv25_gpu = cp.zeros(dim25, dtype=cp.complex128)
+sv25_gpu[0] = 1.0
+cp.cuda.Device().synchronize()
+print(f"25q state vector allocated: {sv25_gpu.nbytes/1e6:.0f} MB on GPU")
+
+mem_after = cp.cuda.Device().mem_info
+print(f"GPU Memory after alloc: {mem_after[0]/1e9:.1f} GB free")
+
+t0 = time.perf_counter()
+for _ in range(10):
+    psi = sv25_gpu.reshape(2, dim25//2)
+    psi = gate_gpu @ psi
+    sv25_gpu = psi.reshape(dim25)
+    cp.cuda.Device().synchronize()
+t_gpu_25 = (time.perf_counter() - t0) / 10
+print(f"GPU 25q 1Q gate: {t_gpu_25*1e3:.2f} ms")
+
+print("\nGPU_VERIFY_OK")
+PYEOF
+
+echo ""
+echo "=== SiliQun StateVectorSimulator GPU Benchmark ==="
+cd /home/ralshehri0468/siliqun
+
+# Quick test: does the simulator detect CuPy?
+python3 -c "
+from siliqun.engine.statevector_simulator import StateVectorSimulator
+sim = StateVectorSimulator(n_qubits=4)
+xp = type(sim.psi).__module__
+print(f'Simulator backend: {xp}')
+print(f'Array type: {type(sim.psi)}')
+" 2>&1
+
+echo ""
+
+# Run the full benchmark
+python3 benchmarks/benchmark_sv.py --max-qubits 25 --output benchmarks/sv25_gpu_results.json 2>&1
+
+echo ""
+echo "=== DONE ==="
+echo "End: $(date)"

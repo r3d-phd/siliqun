@@ -1,0 +1,28 @@
+Metadata-Version: 2.4
+Name: siliqun
+Version: 1.0.0
+Summary: Tensor-network simulator for silicon spin qubit systems
+Author: Raad Al-Shehri
+Author-email: ralshehri0468@stu.kau.edu.sa
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering :: Physics
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.9
+Requires-Dist: numpy>=1.22
+Requires-Dist: scipy>=1.9
+Requires-Dist: gymnasium>=0.26
+Provides-Extra: gpu
+Requires-Dist: jax[cuda]>=0.4; extra == "gpu"
+Provides-Extra: hpc
+Requires-Dist: quimb>=1.6; extra == "hpc"
+Requires-Dist: cotengra>=0.5; extra == "hpc"
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary

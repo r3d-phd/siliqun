@@ -1,0 +1,134 @@
+=== Environment ===
+Node: kcn501
+Python: /home/ralshehri0468/.conda/envs/quantum_drl_gpu/bin/python3 (Python 3.12.4)
+CONDA_PREFIX: /home/ralshehri0468/.conda/envs/quantum_drl_gpu
+| NVIDIA-SMI 550.144.03             Driver Version: 550.144.03     CUDA Version: 12.4     |
+|   0  NVIDIA A100-PCIE-40GB          Off |   00000000:1F:00.0 Off |                    0 |
+CuPy: 13.0.0, CUDA: 12020
+
+CuPy 13.0.0 detected - GPU mode enabled
+
+--- SV Backend: donor_2q (2 qubits, dim=4) ---
+  Init:        2617.14 ms
+  1Q gate:     2862.4 us
+  2Q gate:     1899.0 us
+  <Z>:         489149.8 us
+  S(A:B):      13.60 ms
+  Fidelity:    1245.39 ms
+  Peak memory: 1.7 MB
+  SV memory:   0.0 MB
+  Backend:     GPU (CuPy)
+
+--- SV Backend: donor_4q (4 qubits, dim=16) ---
+  Init:        2.25 ms
+  1Q gate:     2011.9 us
+  2Q gate:     1963.2 us
+  <Z>:         725.5 us
+  S(A:B):      0.76 ms
+  Fidelity:    0.78 ms
+  Peak memory: 1.2 MB
+  SV memory:   0.0 MB
+  Backend:     GPU (CuPy)
+
+--- SV Backend: donor_8q (8 qubits, dim=256) ---
+  Init:        1.84 ms
+  1Q gate:     1985.0 us
+  2Q gate:     1987.6 us
+  <Z>:         688.5 us
+  S(A:B):      0.48 ms
+  Fidelity:    0.79 ms
+  Peak memory: 0.1 MB
+  SV memory:   0.0 MB
+  Backend:     GPU (CuPy)
+
+--- SV Backend: sledge_2x2 (4 qubits, dim=16) ---
+  Init:        4.20 ms
+  1Q gate:     1844.0 us
+  2Q gate:     1877.1 us
+  <Z>:         668.1 us
+  S(A:B):      0.26 ms
+  Fidelity:    0.67 ms
+  Peak memory: 0.0 MB
+  SV memory:   0.0 MB
+  Backend:     GPU (CuPy)
+
+--- SV Backend: sledge_3x3 (9 qubits, dim=512) ---
+  Init:        3.60 ms
+  1Q gate:     1884.4 us
+  2Q gate:     1893.2 us
+  <Z>:         655.4 us
+  S(A:B):      0.65 ms
+  Fidelity:    0.77 ms
+  Peak memory: 0.0 MB
+  SV memory:   0.0 MB
+  Backend:     GPU (CuPy)
+
+--- SV Backend: sledge_4x4 (16 qubits, dim=65536) ---
+  Init:        3.50 ms
+  1Q gate:     1903.9 us
+  2Q gate:     1905.3 us
+  <Z>:         694.9 us
+  S(A:B):      100.44 ms
+  Fidelity:    2.18 ms
+  Peak memory: 3.0 MB
+  SV memory:   1.0 MB
+  Backend:     GPU (CuPy)
+
+--- SV Backend: sledge_5x5 (25 qubits, dim=33554432) ---
+  Init:        4.15 ms
+  1Q gate:     4285.6 us
+  2Q gate:     3778.3 us
+  <Z>:         15576.0 us
+  S(A:B):      13060.06 ms
+  Fidelity:    197.49 ms
+  Peak memory: 1280.1 MB
+  SV memory:   512.0 MB
+  Backend:     GPU (CuPy)
+
+--- SV Backend (CPU reference for comparison) ---
+  donor_2q CPU: 1Q=15.7us, 2Q=10.1us
+  donor_4q CPU: 1Q=13.6us, 2Q=10.6us
+  donor_8q CPU: 1Q=17.0us, 2Q=16.5us
+  sledge_2x2 CPU: 1Q=14.3us, 2Q=11.1us
+  sledge_3x3 CPU: 1Q=20.1us, 2Q=21.2us
+  sledge_4x4 CPU: 1Q=725.7us, 2Q=1129.3us
+
+--- MPS Backend: donor_2q (2 qubits, chi=32) ---
+  Init:        1.28 ms
+  1Q gate:     35.5 us
+  2Q gate:     109.2 us
+  <Z>:         85.1 us
+  S(A:B):      0.19 ms
+  Peak memory: 0.0 MB
+
+--- MPS Backend: donor_4q (4 qubits, chi=32) ---
+  Init:        1.18 ms
+  1Q gate:     33.6 us
+  2Q gate:     112.3 us
+  <Z>:         76.5 us
+  S(A:B):      0.13 ms
+  Peak memory: 0.0 MB
+
+--- MPS Backend: donor_8q (8 qubits, chi=32) ---
+  Init:        1.18 ms
+  1Q gate:     32.0 us
+  2Q gate:     119.8 us
+  <Z>:         249.9 us
+  S(A:B):      0.19 ms
+  Peak memory: 0.6 MB
+
+
+=== CPU vs GPU Comparison (25 qubits) ===
+  25q 1Q gate: CPU=317.19 ms, GPU=10.58 ms, Speedup=30.0x
+  25q 2Q gate: CPU=555.94 ms, GPU=6.24 ms, Speedup=89.0x
+  25q <Z>:     CPU=122.82 ms, GPU=1.32 ms, Speedup=93.1x
+
+
+=== DFS Leakage Analysis ===
+  theta=0.010: leakage=1.543197e-05
+  theta=3.142: leakage=6.172840e-01
+
+Results saved to benchmarks/sv25_gpu_definitive.json
+
+=== DONE ===
+End: Fri Apr  3 22:27:09 +03 2026

@@ -1,0 +1,152 @@
+=== System ===
+Node: kcn501
+| NVIDIA-SMI 550.144.03             Driver Version: 550.144.03     CUDA Version: 12.4     |
+|   0  NVIDIA A100-PCIE-40GB          Off |   00000000:1F:00.0 Off |                    0 |
+
+=== Cleanup ===
+  Successfully uninstalled cupy-cuda12x-13.3.0
+WARNING: Skipping cupy-cuda11x as it is not installed.
+  Successfully uninstalled cuda-python-12.9.0
+  Successfully uninstalled cuda-bindings-12.9.0
+
+=== Install fastrlock ===
+Downloading fastrlock-0.8.3-cp312-cp312-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_28_x86_64.whl (53 kB)
+Installing collected packages: fastrlock
+Successfully installed fastrlock-0.8.3
+
+=== Install CuPy 13.3.0 with deps ===
+Collecting cupy-cuda12x==13.3.0
+  Using cached cupy_cuda12x-13.3.0-cp312-cp312-manylinux2014_x86_64.whl.metadata (2.7 kB)
+Requirement already satisfied: numpy<2.3,>=1.22 in ./.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages (from cupy-cuda12x==13.3.0) (1.26.4)
+Requirement already satisfied: fastrlock>=0.5 in ./.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages (from cupy-cuda12x==13.3.0) (0.8.3)
+Using cached cupy_cuda12x-13.3.0-cp312-cp312-manylinux2014_x86_64.whl (91.0 MB)
+Installing collected packages: cupy-cuda12x
+Successfully installed cupy-cuda12x-13.3.0
+EXIT: 0
+
+=== Verify CuPy ===
+Traceback (most recent call last):
+  File "<string>", line 7, in <module>
+AttributeError: 'cupy.cuda.device.Device' object has no attribute 'name'
+CuPy: 13.3.0
+CUDA runtime: 12060
+GPU test: [2. 4. 6.]
+
+=== CuPy 13.3.0 failed, trying 13.0.0 ===
+Found existing installation: cupy-cuda12x 13.3.0
+Uninstalling cupy-cuda12x-13.3.0:
+  Successfully uninstalled cupy-cuda12x-13.3.0
+Requirement already satisfied: numpy<1.29,>=1.22 in ./.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages (from cupy-cuda12x==13.0.0) (1.26.4)
+Requirement already satisfied: fastrlock>=0.5 in ./.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages (from cupy-cuda12x==13.0.0) (0.8.3)
+Using cached cupy_cuda12x-13.0.0-cp312-cp312-manylinux2014_x86_64.whl (88.7 MB)
+Installing collected packages: cupy-cuda12x
+Successfully installed cupy-cuda12x-13.0.0
+CuPy 13.0.0 OK
+[2 4 6]
+
+=== GPU BENCHMARK ===
+
+--- SV Backend: donor_2q (2 qubits, dim=4) ---
+  Init:        4.51 ms
+  1Q gate:     119.4 us
+  2Q gate:     85.3 us
+  <Z>:         188.2 us
+  S(A:B):      14.09 ms
+  Fidelity:    0.18 ms
+  Peak memory: 0.0 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: donor_4q (4 qubits, dim=16) ---
+  Init:        4.26 ms
+  1Q gate:     154.0 us
+  2Q gate:     104.4 us
+  <Z>:         114.2 us
+  S(A:B):      0.41 ms
+  Fidelity:    0.09 ms
+  Peak memory: 0.0 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: donor_8q (8 qubits, dim=256) ---
+  Init:        2.87 ms
+  1Q gate:     94.7 us
+  2Q gate:     66.2 us
+  <Z>:         77.2 us
+  S(A:B):      0.34 ms
+  Fidelity:    0.07 ms
+  Peak memory: 0.1 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: sledge_2x2 (4 qubits, dim=16) ---
+  Init:        3.74 ms
+  1Q gate:     50.4 us
+  2Q gate:     39.3 us
+  <Z>:         55.6 us
+  S(A:B):      0.16 ms
+  Fidelity:    0.05 ms
+  Peak memory: 0.0 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: sledge_3x3 (9 qubits, dim=512) ---
+  Init:        3.11 ms
+  1Q gate:     59.1 us
+  2Q gate:     55.7 us
+  <Z>:         56.5 us
+  S(A:B):      0.88 ms
+  Fidelity:    0.06 ms
+  Peak memory: 0.1 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: sledge_4x4 (16 qubits, dim=65536) ---
+  Init:        3.56 ms
+  1Q gate:     1098.9 us
+  2Q gate:     1729.9 us
+  <Z>:         385.9 us
+  S(A:B):      102.10 ms
+  Fidelity:    0.68 ms
+  Peak memory: 3.0 MB
+  SV memory:   1.0 MB
+
+--- SV Backend: sledge_5x5 (25 qubits, dim=33554432) ---
+  Init:        4.02 ms
+  1Q gate:     413589.7 us
+  2Q gate:     640063.5 us
+  <Z>:         162664.8 us
+  S(A:B):      12484.97 ms
+  Fidelity:    217.32 ms
+  Peak memory: 1536.0 MB
+  SV memory:   512.0 MB
+
+--- MPS Backend: donor_2q (2 qubits, chi=32) ---
+  Init:        2.52 ms
+  1Q gate:     37.8 us
+  2Q gate:     117.8 us
+  <Z>:         94.6 us
+  S(A:B):      0.24 ms
+  Peak memory: 0.0 MB
+
+--- MPS Backend: donor_4q (4 qubits, chi=32) ---
+  Init:        1.22 ms
+  1Q gate:     33.7 us
+  2Q gate:     111.9 us
+  <Z>:         84.9 us
+  S(A:B):      0.18 ms
+  Peak memory: 0.0 MB
+
+--- MPS Backend: donor_8q (8 qubits, chi=32) ---
+  Init:        1.18 ms
+  1Q gate:     31.9 us
+  2Q gate:     116.6 us
+  <Z>:         143.3 us
+  S(A:B):      0.16 ms
+  Peak memory: 0.2 MB
+
+
+=== DFS Leakage Analysis ===
+  theta=0.010: leakage=1.543197e-05
+  theta=3.142: leakage=6.172840e-01
+
+Results saved to benchmarks/sv25_gpu_results.json
+Saved activate_gpu.sh
+
+=== DONE ===
+End: Fri Apr  3 21:56:01 +03 2026

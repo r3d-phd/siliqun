@@ -1,0 +1,25 @@
+=== GPU Verification ===
+Node: kcn501
+| NVIDIA-SMI 550.144.03             Driver Version: 550.144.03     CUDA Version: 12.4     |
+|   0  NVIDIA A100-PCIE-40GB          Off |   00000000:1F:00.0 Off |                    0 |
+LD_LIBRARY_PATH: /lib:/app/openmpi/3.0.0/gcc-5.3.0/lib:
+
+=== CuPy GPU Test ===
+
+=== SiliQun StateVectorSimulator GPU Benchmark ===
+Traceback (most recent call last):
+  File "<string>", line 2, in <module>
+  File "/home/ralshehri0468/siliqun/siliqun/engine/__init__.py", line 5, in <module>
+    from .simulator import SiliQunSimulator, SimConfig
+  File "/home/ralshehri0468/siliqun/siliqun/engine/simulator.py", line 10
+    from __future__ import annotations
+    ^
+SyntaxError: future feature annotations is not defined
+
+Traceback (most recent call last):
+  File "benchmarks/benchmark_sv.py", line 18, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+=== DONE ===
+End: Fri Apr  3 22:02:51 +03 2026

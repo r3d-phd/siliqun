@@ -1,0 +1,62 @@
+#!/bin/bash
+#PBS -N siliqun_sv25
+#PBS -q A100
+#PBS -l select=1:ncpus=32:mem=128gb
+#PBS -l walltime=01:00:00
+#PBS -o /home/ralshehri0468/siliqun/benchmarks/sv25_benchmark.out
+#PBS -e /home/ralshehri0468/siliqun/benchmarks/sv25_benchmark.err
+#PBS -m abe
+#PBS -M ralshehri0468@stu.kau.edu.sa
+
+# ── Conda activation with fallback chain ──
+source /opt/share/anaconda3/2024.06/etc/profile.d/conda.sh 2>/dev/null || \
+source /opt/share/anaconda3/2023.09/etc/profile.d/conda.sh 2>/dev/null || \
+source ~/miniconda3/etc/profile.d/conda.sh 2>/dev/null || \
+{ echo "FATAL: Cannot find conda"; exit 1; }
+
+conda activate quantum_drl_gpu || conda activate mqcf || \
+{ echo "FATAL: Cannot activate conda env"; exit 1; }
+
+# ── Environment info ──
+echo "=== JOB INFO ==="
+echo "Job ID: $PBS_JOBID"
+echo "Node: $(hostname)"
+echo "Date: $(date)"
+echo "Python: $(which python3)"
+echo "Python version: $(python3 --version)"
+nvidia-smi 2>/dev/null || echo "No GPU detected on this node"
+echo ""
+
+# ── Navigate to project ──
+cd /home/ralshehri0468/siliqun
+
+# ── Install pytest if missing ──
+pip install pytest --quiet 2>/dev/null
+
+# ── Check for CuPy (GPU) ──
+python3 -c "
+try:
+    import cupy
+    print(f'CuPy {cupy.__version__} available - GPU mode enabled')
+    print(f'CUDA version: {cupy.cuda.runtime.runtimeGetVersion()}')
+except ImportError:
+    print('CuPy not available - running in CPU mode (numpy)')
+" 2>&1
+
+echo ""
+echo "=== RUNNING 25-QUBIT BENCHMARK ==="
+echo ""
+
+# ── Run the benchmark (up to 25 qubits) ──
+python3 benchmarks/benchmark_sv.py --max-qubits 25 --output benchmarks/sv25_benchmark_results.json 2>&1
+
+echo ""
+echo "=== RUNNING TEST SUITE ==="
+echo ""
+
+# ── Run the full test suite ──
+python3 -m pytest tests/test_statevector_simulator.py -v --tb=short 2>&1
+
+echo ""
+echo "=== JOB COMPLETE ==="
+echo "End time: $(date)"

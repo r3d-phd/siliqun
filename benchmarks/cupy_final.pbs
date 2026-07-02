@@ -1,0 +1,87 @@
+#!/bin/bash
+#PBS -N cupy_final
+#PBS -q A100
+#PBS -l select=1:ncpus=32:mem=64gb
+#PBS -l walltime=00:30:00
+#PBS -o /home/ralshehri0468/siliqun/benchmarks/cupy_final.out
+#PBS -e /home/ralshehri0468/siliqun/benchmarks/cupy_final.err
+
+source /opt/share/anaconda3/2024.06/etc/profile.d/conda.sh 2>/dev/null || \
+source /opt/share/anaconda3/2023.09/etc/profile.d/conda.sh 2>/dev/null || \
+source ~/miniconda3/etc/profile.d/conda.sh 2>/dev/null || \
+{ echo "FATAL: Cannot find conda"; exit 1; }
+
+conda activate quantum_drl_gpu || { echo "FATAL: Cannot activate env"; exit 1; }
+export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
+
+echo "=== System ==="
+echo "Node: $(hostname)"
+nvidia-smi 2>/dev/null | grep -E "CUDA|A100"
+echo ""
+
+# Step 1: Install cuda-python (the missing 'cuda' module)
+echo "=== Installing cuda-python ==="
+pip install cuda-python 2>&1 | tail -5
+echo "EXIT: $?"
+echo ""
+
+# Step 2: Verify CuPy
+echo "=== Verify CuPy ==="
+python3 -c "
+import cupy as cp
+print(f'CuPy: {cp.__version__}')
+print(f'CUDA runtime: {cp.cuda.runtime.runtimeGetVersion()}')
+a = cp.array([1.0, 2.0, 3.0])
+print(f'GPU test: {a * 2}')
+print(f'Device: {cp.cuda.Device().name}')
+mem = cp.cuda.Device().mem_info
+print(f'GPU Memory: {mem[1]/1e9:.1f} GB total, {mem[0]/1e9:.1f} GB free')
+print('CUPY_VERIFIED_OK')
+" 2>&1
+echo ""
+
+# Step 3: Update activate script
+cat > ~/siliqun/benchmarks/activate_gpu.sh << 'ACTIVATE'
+#!/bin/bash
+source /opt/share/anaconda3/2024.06/etc/profile.d/conda.sh 2>/dev/null || \
+source /opt/share/anaconda3/2023.09/etc/profile.d/conda.sh 2>/dev/null
+conda activate quantum_drl_gpu
+export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
+ACTIVATE
+echo "Saved activate_gpu.sh"
+
+# Step 4: Run GPU benchmark if CuPy works
+python3 -c "import cupy" 2>/dev/null
+if [ $? -eq 0 ]; then
+    echo ""
+    echo "=== GPU BENCHMARK ==="
+    cd /home/ralshehri0468/siliqun
+    python3 benchmarks/benchmark_sv.py --max-qubits 25 --output benchmarks/sv25_gpu_results.json 2>&1
+else
+    echo "CuPy still not working"
+    # Try downgrading cupy to avoid cuda-python dependency
+    echo "=== Trying CuPy 13.x (no cuda-python needed) ==="
+    pip uninstall -y cupy-cuda12x 2>/dev/null
+    pip install --no-deps cupy-cuda12x==13.3.0 2>&1 | tail -3
+    python3 -c "
+import cupy as cp
+print(f'CuPy: {cp.__version__}')
+a = cp.array([1.0, 2.0, 3.0])
+print(f'GPU test: {a * 2}')
+print('CUPY_13_OK')
+" 2>&1
+    
+    python3 -c "import cupy" 2>/dev/null
+    if [ $? -eq 0 ]; then
+        echo ""
+        echo "=== GPU BENCHMARK (CuPy 13.x) ==="
+        cd /home/ralshehri0468/siliqun
+        python3 benchmarks/benchmark_sv.py --max-qubits 25 --output benchmarks/sv25_gpu_results.json 2>&1
+    else
+        echo "CUPY INSTALLATION FAILED COMPLETELY"
+    fi
+fi
+
+echo ""
+echo "=== DONE ==="
+echo "End: $(date)"

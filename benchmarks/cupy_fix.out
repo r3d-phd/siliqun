@@ -1,0 +1,11 @@
+=== Finding CUDA libraries ===
+/home/hyamany/myconda_envs/pkgs/cuda-cudart-12.4.127-0/lib/libcudart.so.12
+/home/hyamany/myconda_envs/pkgs/cuda-cudart-12.4.127-0/lib/libcudart.so.12.4.127
+/home/hyamany/.conda/envs/vllm-A100/lib/libcudart.so.12
+/home/hyamany/.conda/envs/vllm-A100/lib/python3.12/site-packages/nvidia/cuda_runtime/lib/libcudart.so.12
+/home/hyamany/.conda/envs/vllm-A100/lib/libcudart.so.12.4.127
+/home/hyamany/.conda/pkgs/cuda-cudart-12.4.127-0/lib/libcudart.so.12.4.127
+/home/hyamany/.conda/pkgs/cuda-cudart-12.4.127-0/lib/libcudart.so.12
+/home/hyamany/myconda-envs/envs/pt_env_test/lib/libcudart.so.12
+/home/hyamany/myconda-envs/envs/pt_env_test/lib/libcudart.so.12.4.127
+/home/analkhathlan/.conda/envs/deepspeed/lib/libcudart.so.11.8.89

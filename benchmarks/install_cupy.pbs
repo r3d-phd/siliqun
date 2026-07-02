@@ -1,0 +1,51 @@
+#!/bin/bash
+#PBS -N install_cupy
+#PBS -q A100
+#PBS -l select=1:ncpus=32:mem=32gb
+#PBS -l walltime=00:30:00
+#PBS -o /home/ralshehri0468/siliqun/benchmarks/install_cupy.out
+#PBS -e /home/ralshehri0468/siliqun/benchmarks/install_cupy.err
+
+source /opt/share/anaconda3/2024.06/etc/profile.d/conda.sh 2>/dev/null || \
+source /opt/share/anaconda3/2023.09/etc/profile.d/conda.sh 2>/dev/null || \
+source ~/miniconda3/etc/profile.d/conda.sh 2>/dev/null || \
+{ echo "FATAL: Cannot find conda"; exit 1; }
+
+conda activate quantum_drl_gpu || conda activate mqcf || \
+{ echo "FATAL: Cannot activate conda env"; exit 1; }
+
+echo "=== ENVIRONMENT ==="
+echo "Node: $(hostname)"
+echo "Date: $(date)"
+echo "Python: $(which python3)"
+nvidia-smi 2>/dev/null | head -5
+
+echo ""
+echo "=== INSTALLING CUPY ==="
+
+# Try pip with pre-built wheel first (fastest)
+pip install cupy-cuda12x 2>&1 || {
+    echo "pip cupy-cuda12x failed, trying conda..."
+    conda install -y -c conda-forge cupy 2>&1 | tail -20
+}
+
+echo ""
+echo "=== VERIFYING CUPY ==="
+python3 -c "
+import cupy as cp
+print(f'CuPy version: {cp.__version__}')
+print(f'CUDA runtime: {cp.cuda.runtime.runtimeGetVersion()}')
+a = cp.array([1, 2, 3])
+print(f'GPU array test: {a}')
+print(f'GPU device: {cp.cuda.Device().name}')
+print('CUPY_INSTALL_SUCCESS')
+" 2>&1
+
+echo ""
+echo "=== RUNNING 25-QUBIT GPU BENCHMARK ==="
+cd /home/ralshehri0468/siliqun
+python3 benchmarks/benchmark_sv.py --max-qubits 25 --output benchmarks/sv25_gpu_benchmark_results.json 2>&1
+
+echo ""
+echo "=== JOB COMPLETE ==="
+echo "End time: $(date)"

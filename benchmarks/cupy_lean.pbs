@@ -1,0 +1,87 @@
+#!/bin/bash
+#PBS -N cupy_lean
+#PBS -q A100
+#PBS -l select=1:ncpus=32:mem=64gb
+#PBS -l walltime=00:30:00
+#PBS -o /home/ralshehri0468/siliqun/benchmarks/cupy_lean.out
+#PBS -e /home/ralshehri0468/siliqun/benchmarks/cupy_lean.err
+
+source /opt/share/anaconda3/2024.06/etc/profile.d/conda.sh 2>/dev/null || \
+source /opt/share/anaconda3/2023.09/etc/profile.d/conda.sh 2>/dev/null || \
+source ~/miniconda3/etc/profile.d/conda.sh 2>/dev/null || \
+{ echo "FATAL: Cannot find conda"; exit 1; }
+
+conda activate quantum_drl_gpu || { echo "FATAL: Cannot activate env"; exit 1; }
+
+echo "=== System ==="
+echo "Node: $(hostname)"
+nvidia-smi 2>/dev/null | grep -E "CUDA|A100"
+echo "Python: $(python3 --version)"
+echo "CONDA_PREFIX: $CONDA_PREFIX"
+echo ""
+
+# Step 1: Install CUDA runtime libraries into the conda env
+echo "=== Step 1: Install CUDA runtime via conda ==="
+conda install -y -c nvidia cuda-cudart cuda-nvrtc libcublas libcusparse libcufft libcurand cuda-libraries 2>&1 | tail -5
+echo "CUDA_INSTALL_EXIT: $?"
+echo ""
+
+# Step 2: Verify CUDA libs are in conda env
+echo "=== Step 2: Verify CUDA libs ==="
+ls $CONDA_PREFIX/lib/libcudart.so* 2>/dev/null && echo "libcudart: FOUND" || echo "libcudart: MISSING"
+ls $CONDA_PREFIX/lib/libcublas.so* 2>/dev/null && echo "libcublas: FOUND" || echo "libcublas: MISSING"
+echo ""
+
+# Step 3: Set LD_LIBRARY_PATH
+export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
+echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
+echo ""
+
+# Step 4: Install CuPy
+echo "=== Step 3: Install CuPy ==="
+pip install --no-deps cupy-cuda12x 2>&1 | tail -5
+echo "CUPY_INSTALL_EXIT: $?"
+echo ""
+
+# Step 5: Verify CuPy
+echo "=== Step 4: Verify CuPy ==="
+python3 -c "
+import cupy as cp
+print(f'CuPy: {cp.__version__}')
+print(f'CUDA runtime: {cp.cuda.runtime.runtimeGetVersion()}')
+a = cp.array([1.0, 2.0, 3.0])
+print(f'GPU test: {a * 2}')
+print(f'Device: {cp.cuda.Device().name}')
+print('CUPY_VERIFIED_OK')
+" 2>&1
+echo ""
+
+# Step 6: Save LD_LIBRARY_PATH setup for future jobs
+echo "=== Step 5: Save env setup ==="
+cat > ~/siliqun/benchmarks/activate_gpu.sh << 'ACTIVATE'
+#!/bin/bash
+# Source this before running SiliQun with GPU
+source /opt/share/anaconda3/2024.06/etc/profile.d/conda.sh 2>/dev/null || \
+source /opt/share/anaconda3/2023.09/etc/profile.d/conda.sh 2>/dev/null
+conda activate quantum_drl_gpu
+export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
+ACTIVATE
+echo "Saved activate_gpu.sh"
+echo ""
+
+# Step 7: Run 25-qubit benchmark if CuPy works
+python3 -c "import cupy" 2>/dev/null
+if [ $? -eq 0 ]; then
+    echo "=== Step 6: GPU BENCHMARK ==="
+    cd /home/ralshehri0468/siliqun
+    python3 benchmarks/benchmark_sv.py --max-qubits 25 --output benchmarks/sv25_gpu_results.json 2>&1
+else
+    echo "CuPy not working - skipping GPU benchmark"
+    echo "Running CPU benchmark instead..."
+    cd /home/ralshehri0468/siliqun
+    python3 benchmarks/benchmark_sv.py --max-qubits 25 --output benchmarks/sv25_cpu_results.json 2>&1
+fi
+
+echo ""
+echo "=== DONE ==="
+echo "End: $(date)"

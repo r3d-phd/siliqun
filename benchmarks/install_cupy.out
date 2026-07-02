@@ -1,0 +1,189 @@
+=== ENVIRONMENT ===
+Node: kcn501
+Date: Fri Apr  3 20:47:17 +03 2026
+Python: /home/ralshehri0468/.conda/envs/quantum_drl_gpu/bin/python3
+Fri Apr  3 20:47:19 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.144.03             Driver Version: 550.144.03     CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+
+=== INSTALLING CUPY ===
+Collecting cupy-cuda12x
+  Using cached cupy_cuda12x-14.0.1-cp312-cp312-manylinux2014_x86_64.whl.metadata (2.8 kB)
+Collecting numpy<2.6,>=2.0 (from cupy-cuda12x)
+  Using cached numpy-2.4.4.tar.gz (20.7 MB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Installing backend dependencies: started
+  Installing backend dependencies: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'error'
+  error: subprocess-exited-with-error
+  
+  × Preparing metadata (pyproject.toml) did not run successfully.
+  │ exit code: 1
+  ╰─> [19 lines of output]
+      + /home/ralshehri0468/.conda/envs/quantum_drl_gpu/bin/python /var/tmp/pbs.169612.khead2/pip-install-x5ya_tw_/numpy_8b41a4181d1542c58820bfeb18456bcb/vendored-meson/meson/meson.py setup /var/tmp/pbs.169612.khead2/pip-install-x5ya_tw_/numpy_8b41a4181d1542c58820bfeb18456bcb /var/tmp/pbs.169612.khead2/pip-install-x5ya_tw_/numpy_8b41a4181d1542c58820bfeb18456bcb/.mesonpy-df1fj0sc -Dbuildtype=release -Db_ndebug=if-release -Db_vscrt=md --native-file=/var/tmp/pbs.169612.khead2/pip-install-x5ya_tw_/numpy_8b41a4181d1542c58820bfeb18456bcb/.mesonpy-df1fj0sc/meson-python-native-file.ini
+      The Meson build system
+      Version: 1.9.2
+      Source dir: /var/tmp/pbs.169612.khead2/pip-install-x5ya_tw_/numpy_8b41a4181d1542c58820bfeb18456bcb
+      Build dir: /var/tmp/pbs.169612.khead2/pip-install-x5ya_tw_/numpy_8b41a4181d1542c58820bfeb18456bcb/.mesonpy-df1fj0sc
+      Build type: native build
+      Project name: NumPy
+      Project version: 2.4.4
+      C compiler for the host machine: cc (gcc 4.8.5 "cc (GCC) 4.8.5 20150623 (Red Hat 4.8.5-44)")
+      C linker for the host machine: cc ld.bfd 2.27-44
+      C++ compiler for the host machine: c++ (gcc 4.8.5 "c++ (GCC) 4.8.5 20150623 (Red Hat 4.8.5-44)")
+      C++ linker for the host machine: c++ ld.bfd 2.27-44
+      Cython compiler for the host machine: cython (cython 3.2.4)
+      Host machine cpu family: x86_64
+      Host machine cpu: x86_64
+      
+      ../meson.build:25:4: ERROR: Problem encountered: NumPy requires GCC >= 9.3
+      
+      A full log can be found at /var/tmp/pbs.169612.khead2/pip-install-x5ya_tw_/numpy_8b41a4181d1542c58820bfeb18456bcb/.mesonpy-df1fj0sc/meson-logs/meson-log.txt
+      [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+error: metadata-generation-failed
+
+× Encountered error while generating package metadata.
+╰─> See above for output.
+
+note: This is an issue with the package mentioned above, not pip.
+hint: See above for details.
+pip cupy-cuda12x failed, trying conda...
+├─ libcusparse 12.0.2.55.*  is not installable because it conflicts with any installable versions previously reported;
+├─ libgomp 11.2.0.*  is not installable because it conflicts with any installable versions previously reported;
+├─ libstdcxx-ng 11.2.0.*  is not installable because it conflicts with any installable versions previously reported;
+├─ numpy-base 1.26.4.*  is installable with the potential options
+│  ├─ numpy-base 1.26.4 conflicts with any installable versions previously reported;
+│  ├─ numpy-base 1.26.4 would require
+│  │  └─ python >=3.10,<3.11.0a0 , which can be installed;
+│  ├─ numpy-base 1.26.4 would require
+│  │  └─ __glibc >=2.28,<3.0.a0 , which is missing on the system;
+│  ├─ numpy-base 1.26.4 would require
+│  │  └─ python >=3.11,<3.12.0a0 , which can be installed;
+│  └─ numpy-base 1.26.4 would require
+│     └─ python >=3.9,<3.10.0a0 , which can be installed;
+└─ pin-1 is not installable because it requires
+   └─ python 3.12.* , which conflicts with any installable versions previously reported.
+
+Pins seem to be involved in the conflict. Currently pinned specs:
+ - python 3.12.* (labeled as 'pin-1')
+
+
+
+=== VERIFYING CUPY ===
+Traceback (most recent call last):
+  File "<string>", line 2, in <module>
+ModuleNotFoundError: No module named 'cupy'
+
+=== RUNNING 25-QUBIT GPU BENCHMARK ===
+
+--- SV Backend: donor_2q (2 qubits, dim=4) ---
+  Init:        3.90 ms
+  1Q gate:     152.0 us
+  2Q gate:     100.7 us
+  <Z>:         165.3 us
+  S(A:B):      13.27 ms
+  Fidelity:    0.18 ms
+  Peak memory: 0.0 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: donor_4q (4 qubits, dim=16) ---
+  Init:        4.35 ms
+  1Q gate:     147.2 us
+  2Q gate:     106.8 us
+  <Z>:         155.5 us
+  S(A:B):      0.51 ms
+  Fidelity:    0.10 ms
+  Peak memory: 0.0 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: donor_8q (8 qubits, dim=256) ---
+  Init:        2.59 ms
+  1Q gate:     97.7 us
+  2Q gate:     58.6 us
+  <Z>:         67.0 us
+  S(A:B):      0.29 ms
+  Fidelity:    0.06 ms
+  Peak memory: 0.1 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: sledge_2x2 (4 qubits, dim=16) ---
+  Init:        4.10 ms
+  1Q gate:     52.8 us
+  2Q gate:     40.8 us
+  <Z>:         56.4 us
+  S(A:B):      0.17 ms
+  Fidelity:    0.05 ms
+  Peak memory: 0.0 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: sledge_3x3 (9 qubits, dim=512) ---
+  Init:        3.13 ms
+  1Q gate:     63.6 us
+  2Q gate:     54.4 us
+  <Z>:         57.4 us
+  S(A:B):      0.90 ms
+  Fidelity:    0.07 ms
+  Peak memory: 0.1 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: sledge_4x4 (16 qubits, dim=65536) ---
+  Init:        3.57 ms
+  1Q gate:     964.3 us
+  2Q gate:     1659.4 us
+  <Z>:         389.5 us
+  S(A:B):      58.26 ms
+  Fidelity:    0.43 ms
+  Peak memory: 3.0 MB
+  SV memory:   1.0 MB
+
+--- SV Backend: sledge_5x5 (25 qubits, dim=33554432) ---
+  Init:        3.62 ms
+  1Q gate:     443617.9 us
+  2Q gate:     626338.6 us
+  <Z>:         156429.0 us
+  S(A:B):      12665.91 ms
+  Fidelity:    207.70 ms
+  Peak memory: 1536.0 MB
+  SV memory:   512.0 MB
+
+--- MPS Backend: donor_2q (2 qubits, chi=32) ---
+  Init:        2.25 ms
+  1Q gate:     38.5 us
+  2Q gate:     116.9 us
+  <Z>:         92.5 us
+  S(A:B):      0.22 ms
+  Peak memory: 0.0 MB
+
+--- MPS Backend: donor_4q (4 qubits, chi=32) ---
+  Init:        1.21 ms
+  1Q gate:     35.2 us
+  2Q gate:     112.6 us
+  <Z>:         87.3 us
+  S(A:B):      0.16 ms
+  Peak memory: 0.0 MB
+
+--- MPS Backend: donor_8q (8 qubits, chi=32) ---
+  Init:        1.18 ms
+  1Q gate:     33.4 us
+  2Q gate:     116.4 us
+  <Z>:         149.1 us
+  S(A:B):      0.15 ms
+  Peak memory: 0.2 MB
+
+
+=== DFS Leakage Analysis ===
+  theta=0.010: leakage=1.543197e-05
+  theta=3.142: leakage=6.172840e-01
+
+Results saved to benchmarks/sv25_gpu_benchmark_results.json
+
+=== JOB COMPLETE ===
+End time: Fri Apr  3 20:51:41 +03 2026

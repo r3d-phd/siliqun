@@ -1,0 +1,30 @@
+#!/bin/bash
+#PBS -N gpu_bench
+#PBS -q A100
+#PBS -l select=1:ncpus=32:mem=128gb
+#PBS -l walltime=00:30:00
+#PBS -o /home/ralshehri0468/siliqun/benchmarks/gpu_definitive.out
+#PBS -e /home/ralshehri0468/siliqun/benchmarks/gpu_definitive.err
+
+# Proper conda activation
+source /opt/share/anaconda3/2024.06/etc/profile.d/conda.sh 2>/dev/null || \
+source /opt/share/anaconda3/2023.09/etc/profile.d/conda.sh 2>/dev/null || \
+source ~/miniconda3/etc/profile.d/conda.sh 2>/dev/null
+conda activate quantum_drl_gpu
+export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
+
+echo "=== Environment ==="
+echo "Node: $(hostname)"
+echo "Python: $(which python3) ($(python3 --version 2>&1))"
+echo "CONDA_PREFIX: $CONDA_PREFIX"
+nvidia-smi 2>/dev/null | grep -E "CUDA|A100"
+python3 -c "import cupy as cp; print(f'CuPy: {cp.__version__}, CUDA: {cp.cuda.runtime.runtimeGetVersion()}')" 2>&1
+echo ""
+
+# Run the updated benchmark with GPU auto-detection
+cd /home/ralshehri0468/siliqun
+python3 benchmarks/benchmark_sv.py --max-qubits 25 --output benchmarks/sv25_gpu_definitive.json 2>&1
+
+echo ""
+echo "=== DONE ==="
+echo "End: $(date)"

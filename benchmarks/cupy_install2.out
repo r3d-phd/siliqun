@@ -1,0 +1,519 @@
+=== System Info ===
+Node: kcn501
+glibc: ldd (GNU libc) 2.17
+gcc: gcc (GCC) 4.8.5 20150623 (Red Hat 4.8.5-44)
+Python: Python 3.12.4
+numpy: 1.26.4
+Fri Apr  3 20:56:40 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.144.03             Driver Version: 550.144.03     CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+
+=== Trying cupy-cuda12x versions ===
+--- Trying cupy-cuda12x==13.3.0 ---
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 91.0/91.0 MB 31.7 MB/s eta 0:00:00
+Installing collected packages: cupy-cuda12x
+Successfully installed cupy-cuda12x-13.3.0
+Traceback (most recent call last):
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/__init__.py", line 16, in <module>
+    from cupy import _core  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/_core/__init__.py", line 3, in <module>
+    from cupy._core import core  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "cupy/_core/core.pyx", line 1, in init cupy._core.core
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/cuda/__init__.py", line 9, in <module>
+    from cupy.cuda import compiler  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/cuda/compiler.py", line 14, in <module>
+    from cupy.cuda import function
+  File "cupy/cuda/function.pyx", line 1, in init cupy.cuda.function
+  File "cupy/_core/_carray.pyx", line 1, in init cupy._core._carray
+  File "cupy/_core/internal.pyx", line 1, in init cupy._core.internal
+  File "cupy/cuda/memory.pyx", line 1, in init cupy.cuda.memory
+ModuleNotFoundError: No module named 'fastrlock'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/__init__.py", line 18, in <module>
+    raise ImportError(f'''
+ImportError: 
+================================================================
+Failed to import CuPy.
+
+If you installed CuPy via wheels (cupy-cudaXXX or cupy-rocm-X-X), make sure that the package matches with the version of CUDA or ROCm installed.
+
+On Linux, you may need to set LD_LIBRARY_PATH environment variable depending on how you installed CUDA/ROCm.
+On Windows, try setting CUDA_PATH environment variable.
+
+Check the Installation Guide for details:
+  https://docs.cupy.dev/en/latest/install.html
+
+Original error:
+  ModuleNotFoundError: No module named 'fastrlock'
+================================================================
+
+Found existing installation: cupy-cuda12x 13.3.0
+Uninstalling cupy-cuda12x-13.3.0:
+  Successfully uninstalled cupy-cuda12x-13.3.0
+--- Trying cupy-cuda12x==13.2.0 ---
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 89.9/89.9 MB 25.6 MB/s eta 0:00:00
+Installing collected packages: cupy-cuda12x
+Successfully installed cupy-cuda12x-13.2.0
+Traceback (most recent call last):
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/__init__.py", line 16, in <module>
+    from cupy import _core  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/_core/__init__.py", line 3, in <module>
+    from cupy._core import core  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "cupy/_core/core.pyx", line 1, in init cupy._core.core
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/cuda/__init__.py", line 9, in <module>
+    from cupy.cuda import compiler  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/cuda/compiler.py", line 14, in <module>
+    from cupy.cuda import function
+  File "cupy/cuda/function.pyx", line 1, in init cupy.cuda.function
+  File "cupy/_core/_carray.pyx", line 1, in init cupy._core._carray
+  File "cupy/_core/internal.pyx", line 1, in init cupy._core.internal
+  File "cupy/cuda/memory.pyx", line 1, in init cupy.cuda.memory
+ModuleNotFoundError: No module named 'fastrlock'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/__init__.py", line 18, in <module>
+    raise ImportError(f'''
+ImportError: 
+================================================================
+Failed to import CuPy.
+
+If you installed CuPy via wheels (cupy-cudaXXX or cupy-rocm-X-X), make sure that the package matches with the version of CUDA or ROCm installed.
+
+On Linux, you may need to set LD_LIBRARY_PATH environment variable depending on how you installed CUDA/ROCm.
+On Windows, try setting CUDA_PATH environment variable.
+
+Check the Installation Guide for details:
+  https://docs.cupy.dev/en/latest/install.html
+
+Original error:
+  ModuleNotFoundError: No module named 'fastrlock'
+================================================================
+
+Found existing installation: cupy-cuda12x 13.2.0
+Uninstalling cupy-cuda12x-13.2.0:
+  Successfully uninstalled cupy-cuda12x-13.2.0
+--- Trying cupy-cuda12x==13.1.0 ---
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 89.8/89.8 MB 31.6 MB/s eta 0:00:00
+Installing collected packages: cupy-cuda12x
+Successfully installed cupy-cuda12x-13.1.0
+Traceback (most recent call last):
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/__init__.py", line 17, in <module>
+    from cupy import _core  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/_core/__init__.py", line 3, in <module>
+    from cupy._core import core  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "cupy/_core/core.pyx", line 1, in init cupy._core.core
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/cuda/__init__.py", line 9, in <module>
+    from cupy.cuda import compiler  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/cuda/compiler.py", line 14, in <module>
+    from cupy.cuda import function
+  File "cupy/cuda/function.pyx", line 1, in init cupy.cuda.function
+  File "cupy/_core/_carray.pyx", line 1, in init cupy._core._carray
+  File "cupy/_core/internal.pyx", line 1, in init cupy._core.internal
+  File "cupy/cuda/memory.pyx", line 1, in init cupy.cuda.memory
+ModuleNotFoundError: No module named 'fastrlock'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/__init__.py", line 19, in <module>
+    raise ImportError(f'''
+ImportError: 
+================================================================
+Failed to import CuPy.
+
+If you installed CuPy via wheels (cupy-cudaXXX or cupy-rocm-X-X), make sure that the package matches with the version of CUDA or ROCm installed.
+
+On Linux, you may need to set LD_LIBRARY_PATH environment variable depending on how you installed CUDA/ROCm.
+On Windows, try setting CUDA_PATH environment variable.
+
+Check the Installation Guide for details:
+  https://docs.cupy.dev/en/latest/install.html
+
+Original error:
+  ModuleNotFoundError: No module named 'fastrlock'
+================================================================
+
+Found existing installation: cupy-cuda12x 13.1.0
+Uninstalling cupy-cuda12x-13.1.0:
+  Successfully uninstalled cupy-cuda12x-13.1.0
+--- Trying cupy-cuda12x==13.0.0 ---
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 88.7/88.7 MB 31.4 MB/s eta 0:00:00
+Installing collected packages: cupy-cuda12x
+Successfully installed cupy-cuda12x-13.0.0
+Traceback (most recent call last):
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/__init__.py", line 17, in <module>
+    from cupy import _core  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/_core/__init__.py", line 3, in <module>
+    from cupy._core import core  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "cupy/_core/core.pyx", line 1, in init cupy._core.core
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/cuda/__init__.py", line 9, in <module>
+    from cupy.cuda import compiler  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/cuda/compiler.py", line 14, in <module>
+    from cupy.cuda import function
+  File "cupy/cuda/function.pyx", line 1, in init cupy.cuda.function
+  File "cupy/_core/_carray.pyx", line 1, in init cupy._core._carray
+  File "cupy/_core/internal.pyx", line 1, in init cupy._core.internal
+  File "cupy/cuda/memory.pyx", line 1, in init cupy.cuda.memory
+ModuleNotFoundError: No module named 'fastrlock'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/__init__.py", line 19, in <module>
+    raise ImportError(f'''
+ImportError: 
+================================================================
+Failed to import CuPy.
+
+If you installed CuPy via wheels (cupy-cudaXXX or cupy-rocm-X-X), make sure that the package matches with the version of CUDA or ROCm installed.
+
+On Linux, you may need to set LD_LIBRARY_PATH environment variable depending on how you installed CUDA/ROCm.
+On Windows, try setting CUDA_PATH environment variable.
+
+Check the Installation Guide for details:
+  https://docs.cupy.dev/en/latest/install.html
+
+Original error:
+  ModuleNotFoundError: No module named 'fastrlock'
+================================================================
+
+Found existing installation: cupy-cuda12x 13.0.0
+Uninstalling cupy-cuda12x-13.0.0:
+  Successfully uninstalled cupy-cuda12x-13.0.0
+--- Trying cupy-cuda12x==12.3.0 ---
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 82.1/82.1 MB 19.8 MB/s eta 0:00:00
+Installing collected packages: cupy-cuda12x
+Successfully installed cupy-cuda12x-12.3.0
+Traceback (most recent call last):
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/__init__.py", line 17, in <module>
+    from cupy import _core  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/_core/__init__.py", line 3, in <module>
+    from cupy._core import core  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "cupy/_core/core.pyx", line 1, in init cupy._core.core
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/cuda/__init__.py", line 8, in <module>
+    from cupy.cuda import compiler  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/cuda/compiler.py", line 14, in <module>
+    from cupy.cuda import function
+  File "cupy/cuda/function.pyx", line 1, in init cupy.cuda.function
+  File "cupy/_core/_carray.pyx", line 1, in init cupy._core._carray
+  File "cupy/_core/internal.pyx", line 1, in init cupy._core.internal
+  File "cupy/cuda/memory.pyx", line 1, in init cupy.cuda.memory
+ModuleNotFoundError: No module named 'fastrlock'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/__init__.py", line 19, in <module>
+    raise ImportError(f'''
+ImportError: 
+================================================================
+Failed to import CuPy.
+
+If you installed CuPy via wheels (cupy-cudaXXX or cupy-rocm-X-X), make sure that the package matches with the version of CUDA or ROCm installed.
+
+On Linux, you may need to set LD_LIBRARY_PATH environment variable depending on how you installed CUDA/ROCm.
+On Windows, try setting CUDA_PATH environment variable.
+
+Check the Installation Guide for details:
+  https://docs.cupy.dev/en/latest/install.html
+
+Original error:
+  ModuleNotFoundError: No module named 'fastrlock'
+================================================================
+
+Found existing installation: cupy-cuda12x 12.3.0
+Uninstalling cupy-cuda12x-12.3.0:
+  Successfully uninstalled cupy-cuda12x-12.3.0
+--- Trying cupy-cuda12x==12.2.0 ---
+ERROR: Ignored the following yanked versions: 13.5.0
+ERROR: Could not find a version that satisfies the requirement cupy-cuda12x==12.2.0 (from versions: 12.3.0, 13.0.0, 13.1.0, 13.2.0, 13.3.0, 13.4.0, 13.4.1, 13.5.1, 13.6.0, 14.0.0, 14.0.1)
+ERROR: No matching distribution found for cupy-cuda12x==12.2.0
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'cupy'
+--- Trying cupy-cuda12x==12.1.0 ---
+ERROR: Ignored the following yanked versions: 13.5.0
+ERROR: Could not find a version that satisfies the requirement cupy-cuda12x==12.1.0 (from versions: 12.3.0, 13.0.0, 13.1.0, 13.2.0, 13.3.0, 13.4.0, 13.4.1, 13.5.1, 13.6.0, 14.0.0, 14.0.1)
+ERROR: No matching distribution found for cupy-cuda12x==12.1.0
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'cupy'
+--- Trying cupy-cuda12x==12.0.0 ---
+ERROR: Ignored the following yanked versions: 13.5.0
+ERROR: Could not find a version that satisfies the requirement cupy-cuda12x==12.0.0 (from versions: 12.3.0, 13.0.0, 13.1.0, 13.2.0, 13.3.0, 13.4.0, 13.4.1, 13.5.1, 13.6.0, 14.0.0, 14.0.1)
+ERROR: No matching distribution found for cupy-cuda12x==12.0.0
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'cupy'
+
+=== Trying cupy-cuda11x ===
+--- Trying cupy-cuda11x==13.3.0 ---
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.0/97.0 MB 8.6 MB/s eta 0:00:00
+Installing collected packages: cupy-cuda11x
+Successfully installed cupy-cuda11x-13.3.0
+Traceback (most recent call last):
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/__init__.py", line 16, in <module>
+    from cupy import _core  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/_core/__init__.py", line 3, in <module>
+    from cupy._core import core  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "cupy/_core/core.pyx", line 1, in init cupy._core.core
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/cuda/__init__.py", line 9, in <module>
+    from cupy.cuda import compiler  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/cuda/compiler.py", line 14, in <module>
+    from cupy.cuda import function
+  File "cupy/cuda/function.pyx", line 1, in init cupy.cuda.function
+  File "cupy/_core/_carray.pyx", line 1, in init cupy._core._carray
+  File "cupy/_core/internal.pyx", line 1, in init cupy._core.internal
+  File "cupy/cuda/memory.pyx", line 1, in init cupy.cuda.memory
+ModuleNotFoundError: No module named 'fastrlock'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/__init__.py", line 18, in <module>
+    raise ImportError(f'''
+ImportError: 
+================================================================
+Failed to import CuPy.
+
+If you installed CuPy via wheels (cupy-cudaXXX or cupy-rocm-X-X), make sure that the package matches with the version of CUDA or ROCm installed.
+
+On Linux, you may need to set LD_LIBRARY_PATH environment variable depending on how you installed CUDA/ROCm.
+On Windows, try setting CUDA_PATH environment variable.
+
+Check the Installation Guide for details:
+  https://docs.cupy.dev/en/latest/install.html
+
+Original error:
+  ModuleNotFoundError: No module named 'fastrlock'
+================================================================
+
+Found existing installation: cupy-cuda11x 13.3.0
+Uninstalling cupy-cuda11x-13.3.0:
+  Successfully uninstalled cupy-cuda11x-13.3.0
+--- Trying cupy-cuda11x==13.2.0 ---
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 95.8/95.8 MB 31.1 MB/s eta 0:00:00
+Installing collected packages: cupy-cuda11x
+Successfully installed cupy-cuda11x-13.2.0
+Traceback (most recent call last):
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/__init__.py", line 16, in <module>
+    from cupy import _core  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/_core/__init__.py", line 3, in <module>
+    from cupy._core import core  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "cupy/_core/core.pyx", line 1, in init cupy._core.core
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/cuda/__init__.py", line 9, in <module>
+    from cupy.cuda import compiler  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/cuda/compiler.py", line 14, in <module>
+    from cupy.cuda import function
+  File "cupy/cuda/function.pyx", line 1, in init cupy.cuda.function
+  File "cupy/_core/_carray.pyx", line 1, in init cupy._core._carray
+  File "cupy/_core/internal.pyx", line 1, in init cupy._core.internal
+  File "cupy/cuda/memory.pyx", line 1, in init cupy.cuda.memory
+ModuleNotFoundError: No module named 'fastrlock'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/__init__.py", line 18, in <module>
+    raise ImportError(f'''
+ImportError: 
+================================================================
+Failed to import CuPy.
+
+If you installed CuPy via wheels (cupy-cudaXXX or cupy-rocm-X-X), make sure that the package matches with the version of CUDA or ROCm installed.
+
+On Linux, you may need to set LD_LIBRARY_PATH environment variable depending on how you installed CUDA/ROCm.
+On Windows, try setting CUDA_PATH environment variable.
+
+Check the Installation Guide for details:
+  https://docs.cupy.dev/en/latest/install.html
+
+Original error:
+  ModuleNotFoundError: No module named 'fastrlock'
+================================================================
+
+Found existing installation: cupy-cuda11x 13.2.0
+Uninstalling cupy-cuda11x-13.2.0:
+  Successfully uninstalled cupy-cuda11x-13.2.0
+--- Trying cupy-cuda11x==13.1.0 ---
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 95.8/95.8 MB 31.3 MB/s eta 0:00:00
+Installing collected packages: cupy-cuda11x
+Successfully installed cupy-cuda11x-13.1.0
+Traceback (most recent call last):
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/__init__.py", line 17, in <module>
+    from cupy import _core  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/_core/__init__.py", line 3, in <module>
+    from cupy._core import core  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "cupy/_core/core.pyx", line 1, in init cupy._core.core
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/cuda/__init__.py", line 9, in <module>
+    from cupy.cuda import compiler  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/cuda/compiler.py", line 14, in <module>
+    from cupy.cuda import function
+  File "cupy/cuda/function.pyx", line 1, in init cupy.cuda.function
+  File "cupy/_core/_carray.pyx", line 1, in init cupy._core._carray
+  File "cupy/_core/internal.pyx", line 1, in init cupy._core.internal
+  File "cupy/cuda/memory.pyx", line 1, in init cupy.cuda.memory
+ModuleNotFoundError: No module named 'fastrlock'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/__init__.py", line 19, in <module>
+    raise ImportError(f'''
+ImportError: 
+================================================================
+Failed to import CuPy.
+
+If you installed CuPy via wheels (cupy-cudaXXX or cupy-rocm-X-X), make sure that the package matches with the version of CUDA or ROCm installed.
+
+On Linux, you may need to set LD_LIBRARY_PATH environment variable depending on how you installed CUDA/ROCm.
+On Windows, try setting CUDA_PATH environment variable.
+
+Check the Installation Guide for details:
+  https://docs.cupy.dev/en/latest/install.html
+
+Original error:
+  ModuleNotFoundError: No module named 'fastrlock'
+================================================================
+
+Found existing installation: cupy-cuda11x 13.1.0
+Uninstalling cupy-cuda11x-13.1.0:
+  Successfully uninstalled cupy-cuda11x-13.1.0
+--- Trying cupy-cuda11x==13.0.0 ---
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 95.6/95.6 MB 31.7 MB/s eta 0:00:00
+Installing collected packages: cupy-cuda11x
+Successfully installed cupy-cuda11x-13.0.0
+Traceback (most recent call last):
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/__init__.py", line 17, in <module>
+    from cupy import _core  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/_core/__init__.py", line 3, in <module>
+    from cupy._core import core  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "cupy/_core/core.pyx", line 1, in init cupy._core.core
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/cuda/__init__.py", line 9, in <module>
+    from cupy.cuda import compiler  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/cuda/compiler.py", line 14, in <module>
+    from cupy.cuda import function
+  File "cupy/cuda/function.pyx", line 1, in init cupy.cuda.function
+  File "cupy/_core/_carray.pyx", line 1, in init cupy._core._carray
+  File "cupy/_core/internal.pyx", line 1, in init cupy._core.internal
+  File "cupy/cuda/memory.pyx", line 1, in init cupy.cuda.memory
+ModuleNotFoundError: No module named 'fastrlock'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/__init__.py", line 19, in <module>
+    raise ImportError(f'''
+ImportError: 
+================================================================
+Failed to import CuPy.
+
+If you installed CuPy via wheels (cupy-cudaXXX or cupy-rocm-X-X), make sure that the package matches with the version of CUDA or ROCm installed.
+
+On Linux, you may need to set LD_LIBRARY_PATH environment variable depending on how you installed CUDA/ROCm.
+On Windows, try setting CUDA_PATH environment variable.
+
+Check the Installation Guide for details:
+  https://docs.cupy.dev/en/latest/install.html
+
+Original error:
+  ModuleNotFoundError: No module named 'fastrlock'
+================================================================
+
+Found existing installation: cupy-cuda11x 13.0.0
+Uninstalling cupy-cuda11x-13.0.0:
+  Successfully uninstalled cupy-cuda11x-13.0.0
+--- Trying cupy-cuda11x==12.3.0 ---
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 89.7/89.7 MB 18.5 MB/s eta 0:00:00
+Installing collected packages: cupy-cuda11x
+Successfully installed cupy-cuda11x-12.3.0
+Traceback (most recent call last):
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/__init__.py", line 17, in <module>
+    from cupy import _core  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/_core/__init__.py", line 3, in <module>
+    from cupy._core import core  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: libcudart.so.11.0: cannot open shared object file: No such file or directory
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/__init__.py", line 19, in <module>
+    raise ImportError(f'''
+ImportError: 
+================================================================
+Failed to import CuPy.
+
+If you installed CuPy via wheels (cupy-cudaXXX or cupy-rocm-X-X), make sure that the package matches with the version of CUDA or ROCm installed.
+
+On Linux, you may need to set LD_LIBRARY_PATH environment variable depending on how you installed CUDA/ROCm.
+On Windows, try setting CUDA_PATH environment variable.
+
+Check the Installation Guide for details:
+  https://docs.cupy.dev/en/latest/install.html
+
+Original error:
+  ImportError: libcudart.so.11.0: cannot open shared object file: No such file or directory
+================================================================
+
+Found existing installation: cupy-cuda11x 12.3.0
+Uninstalling cupy-cuda11x-12.3.0:
+  Successfully uninstalled cupy-cuda11x-12.3.0
+--- Trying cupy-cuda11x==12.2.0 ---
+ERROR: Ignored the following yanked versions: 13.5.0
+ERROR: Could not find a version that satisfies the requirement cupy-cuda11x==12.2.0 (from versions: 12.3.0, 13.0.0, 13.1.0, 13.2.0, 13.3.0, 13.4.0, 13.4.1, 13.5.1, 13.6.0)
+ERROR: No matching distribution found for cupy-cuda11x==12.2.0
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'cupy'
+
+=== Final Verification ===
+CUPY_FAILED: No module named 'cupy'
+
+=== DONE ===
+End: Fri Apr  3 21:03:11 +03 2026

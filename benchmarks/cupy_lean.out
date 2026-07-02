@@ -1,0 +1,152 @@
+=== System ===
+Node: kcn505
+| NVIDIA-SMI 550.144.03             Driver Version: 550.144.03     CUDA Version: 12.4     |
+|   0  NVIDIA A100-PCIE-40GB          Off |   00000000:1F:00.0 Off |                    0 |
+Python: Python 3.12.4
+CONDA_PREFIX: /home/ralshehri0468/.conda/envs/quantum_drl_gpu
+
+=== Step 1: Install CUDA runtime via conda ===
+
+Downloading and Extracting Packages: ...working... done
+Preparing transaction: ...working... done
+Verifying transaction: ...working... done
+Executing transaction: ...working... done
+CUDA_INSTALL_EXIT: 0
+
+=== Step 2: Verify CUDA libs ===
+/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/libcudart.so.12
+/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/libcudart.so.12.1.105
+libcudart: FOUND
+/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/libcublas.so.12
+/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/libcublas.so.12.1.0.26
+libcublas: FOUND
+
+LD_LIBRARY_PATH=/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib:/app/openmpi/3.0.0/gcc-5.3.0/lib:
+
+=== Step 3: Install CuPy ===
+  Using cached cupy_cuda12x-14.0.1-cp312-cp312-manylinux2014_x86_64.whl.metadata (2.8 kB)
+Downloading cupy_cuda12x-14.0.1-cp312-cp312-manylinux2014_x86_64.whl (134.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 134.6/134.6 MB 32.3 MB/s eta 0:00:00
+Installing collected packages: cupy-cuda12x
+Successfully installed cupy-cuda12x-14.0.1
+CUPY_INSTALL_EXIT: 0
+
+=== Step 4: Verify CuPy ===
+Traceback (most recent call last):
+  File "<string>", line 2, in <module>
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/__init__.py", line 14, in <module>
+    _environment._preload_library('cutensor')  # NOQA
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib/python3.12/site-packages/cupy/_environment.py", line 392, in _preload_library
+    from cuda.pathfinder import (
+ModuleNotFoundError: No module named 'cuda'
+
+=== Step 5: Save env setup ===
+Saved activate_gpu.sh
+
+CuPy not working - skipping GPU benchmark
+Running CPU benchmark instead...
+
+--- SV Backend: donor_2q (2 qubits, dim=4) ---
+  Init:        4.58 ms
+  1Q gate:     121.2 us
+  2Q gate:     84.4 us
+  <Z>:         196.7 us
+  S(A:B):      16.03 ms
+  Fidelity:    0.20 ms
+  Peak memory: 0.0 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: donor_4q (4 qubits, dim=16) ---
+  Init:        4.56 ms
+  1Q gate:     136.1 us
+  2Q gate:     86.3 us
+  <Z>:         125.6 us
+  S(A:B):      0.49 ms
+  Fidelity:    0.11 ms
+  Peak memory: 0.0 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: donor_8q (8 qubits, dim=256) ---
+  Init:        3.12 ms
+  1Q gate:     83.7 us
+  2Q gate:     61.0 us
+  <Z>:         58.3 us
+  S(A:B):      0.26 ms
+  Fidelity:    0.06 ms
+  Peak memory: 0.1 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: sledge_2x2 (4 qubits, dim=16) ---
+  Init:        3.65 ms
+  1Q gate:     52.8 us
+  2Q gate:     40.5 us
+  <Z>:         58.9 us
+  S(A:B):      0.17 ms
+  Fidelity:    0.05 ms
+  Peak memory: 0.0 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: sledge_3x3 (9 qubits, dim=512) ---
+  Init:        3.19 ms
+  1Q gate:     61.4 us
+  2Q gate:     54.7 us
+  <Z>:         57.2 us
+  S(A:B):      0.98 ms
+  Fidelity:    0.06 ms
+  Peak memory: 0.1 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: sledge_4x4 (16 qubits, dim=65536) ---
+  Init:        3.74 ms
+  1Q gate:     1053.5 us
+  2Q gate:     1757.7 us
+  <Z>:         392.1 us
+  S(A:B):      96.27 ms
+  Fidelity:    0.72 ms
+  Peak memory: 3.0 MB
+  SV memory:   1.0 MB
+
+--- SV Backend: sledge_5x5 (25 qubits, dim=33554432) ---
+  Init:        4.12 ms
+  1Q gate:     408971.7 us
+  2Q gate:     574840.3 us
+  <Z>:         177427.5 us
+  S(A:B):      12722.36 ms
+  Fidelity:    241.22 ms
+  Peak memory: 1536.0 MB
+  SV memory:   512.0 MB
+
+--- MPS Backend: donor_2q (2 qubits, chi=32) ---
+  Init:        2.47 ms
+  1Q gate:     37.2 us
+  2Q gate:     109.8 us
+  <Z>:         89.1 us
+  S(A:B):      0.25 ms
+  Peak memory: 0.0 MB
+
+--- MPS Backend: donor_4q (4 qubits, chi=32) ---
+  Init:        1.21 ms
+  1Q gate:     33.6 us
+  2Q gate:     112.8 us
+  <Z>:         84.0 us
+  S(A:B):      0.14 ms
+  Peak memory: 0.0 MB
+
+--- MPS Backend: donor_8q (8 qubits, chi=32) ---
+  Init:        1.20 ms
+  1Q gate:     31.6 us
+  2Q gate:     124.6 us
+  <Z>:         247.5 us
+  S(A:B):      0.21 ms
+  Peak memory: 0.6 MB
+
+
+=== DFS Leakage Analysis ===
+  theta=0.010: leakage=1.543197e-05
+  theta=3.142: leakage=6.172840e-01
+
+Results saved to benchmarks/sv25_cpu_results.json
+
+=== DONE ===
+End: Fri Apr  3 21:39:40 +03 2026

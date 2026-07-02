@@ -1,0 +1,141 @@
+=== Environment ===
+Node: kcn501
+Python: /home/ralshehri0468/.conda/envs/quantum_drl_gpu/bin/python3 (Python 3.12.4)
+CONDA_PREFIX: /home/ralshehri0468/.conda/envs/quantum_drl_gpu
+LD_LIBRARY_PATH: /home/ralshehri0468/.conda/envs/quantum_drl_gpu/lib:/app/openmpi/3.0.0/gcc-5.3.0/lib:
+| NVIDIA-SMI 550.144.03             Driver Version: 550.144.03     CUDA Version: 12.4     |
+|   0  NVIDIA A100-PCIE-40GB          Off |   00000000:1F:00.0 Off |                    0 |
+
+=== CuPy GPU Verification ===
+CuPy version: 13.0.0
+CUDA runtime: 12020
+GPU Memory: 42.3 GB total, 41.8 GB free
+
+--- GPU vs CPU: 33554432 complex128 elements ---
+CPU element-wise: 142.65 ms
+GPU element-wise: 47.05 ms
+Speedup: 3.0x
+
+--- 16-qubit gate simulation ---
+CPU 16q gate: 232.2 us
+GPU 16q gate: 2773.6 us
+Speedup: 0.1x
+
+--- 25-qubit gate simulation ---
+25q SV allocated: 537 MB GPU
+GPU 25q gate: 7.64 ms
+CPU 25q gate: 78.55 ms
+Speedup: 10.3x
+
+GPU_VERIFY_OK
+
+=== SiliQun CuPy Detection ===
+Traceback (most recent call last):
+  File "<string>", line 3, in <module>
+TypeError: StateVectorSimulator.__init__() got an unexpected keyword argument 'n_qubits'
+
+=== SiliQun Full Benchmark ===
+
+--- SV Backend: donor_2q (2 qubits, dim=4) ---
+  Init:        3.94 ms
+  1Q gate:     120.4 us
+  2Q gate:     76.8 us
+  <Z>:         177.6 us
+  S(A:B):      10.59 ms
+  Fidelity:    0.13 ms
+  Peak memory: 0.0 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: donor_4q (4 qubits, dim=16) ---
+  Init:        2.83 ms
+  1Q gate:     97.7 us
+  2Q gate:     71.8 us
+  <Z>:         105.5 us
+  S(A:B):      0.39 ms
+  Fidelity:    0.09 ms
+  Peak memory: 0.0 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: donor_8q (8 qubits, dim=256) ---
+  Init:        2.65 ms
+  1Q gate:     73.6 us
+  2Q gate:     58.8 us
+  <Z>:         58.1 us
+  S(A:B):      0.27 ms
+  Fidelity:    0.05 ms
+  Peak memory: 0.1 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: sledge_2x2 (4 qubits, dim=16) ---
+  Init:        3.43 ms
+  1Q gate:     49.4 us
+  2Q gate:     38.6 us
+  <Z>:         55.6 us
+  S(A:B):      0.16 ms
+  Fidelity:    0.05 ms
+  Peak memory: 0.0 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: sledge_3x3 (9 qubits, dim=512) ---
+  Init:        3.10 ms
+  1Q gate:     60.0 us
+  2Q gate:     54.4 us
+  <Z>:         55.6 us
+  S(A:B):      0.90 ms
+  Fidelity:    0.06 ms
+  Peak memory: 0.1 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: sledge_4x4 (16 qubits, dim=65536) ---
+  Init:        3.59 ms
+  1Q gate:     1126.5 us
+  2Q gate:     1707.7 us
+  <Z>:         385.6 us
+  S(A:B):      85.52 ms
+  Fidelity:    0.49 ms
+  Peak memory: 3.0 MB
+  SV memory:   1.0 MB
+
+--- SV Backend: sledge_5x5 (25 qubits, dim=33554432) ---
+  Init:        3.78 ms
+  1Q gate:     407612.1 us
+  2Q gate:     606252.9 us
+  <Z>:         163139.6 us
+  S(A:B):      12862.16 ms
+  Fidelity:    214.27 ms
+  Peak memory: 1536.0 MB
+  SV memory:   512.0 MB
+
+--- MPS Backend: donor_2q (2 qubits, chi=32) ---
+  Init:        2.40 ms
+  1Q gate:     37.2 us
+  2Q gate:     117.7 us
+  <Z>:         93.8 us
+  S(A:B):      0.25 ms
+  Peak memory: 0.0 MB
+
+--- MPS Backend: donor_4q (4 qubits, chi=32) ---
+  Init:        1.23 ms
+  1Q gate:     33.5 us
+  2Q gate:     112.4 us
+  <Z>:         83.6 us
+  S(A:B):      0.16 ms
+  Peak memory: 0.0 MB
+
+--- MPS Backend: donor_8q (8 qubits, chi=32) ---
+  Init:        1.18 ms
+  1Q gate:     31.7 us
+  2Q gate:     119.5 us
+  <Z>:         252.6 us
+  S(A:B):      0.21 ms
+  Peak memory: 0.6 MB
+
+
+=== DFS Leakage Analysis ===
+  theta=0.010: leakage=1.543197e-05
+  theta=3.142: leakage=6.172840e-01
+
+Results saved to benchmarks/sv25_gpu_results.json
+
+=== DONE ===
+End: Fri Apr  3 22:14:50 +03 2026

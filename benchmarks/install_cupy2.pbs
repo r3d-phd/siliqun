@@ -1,0 +1,83 @@
+#!/bin/bash
+#PBS -N cupy_install2
+#PBS -q A100
+#PBS -l select=1:ncpus=32:mem=64gb
+#PBS -l walltime=00:30:00
+#PBS -o /home/ralshehri0468/siliqun/benchmarks/cupy_install2.out
+#PBS -e /home/ralshehri0468/siliqun/benchmarks/cupy_install2.err
+
+source /opt/share/anaconda3/2024.06/etc/profile.d/conda.sh 2>/dev/null || \
+source /opt/share/anaconda3/2023.09/etc/profile.d/conda.sh 2>/dev/null || \
+source ~/miniconda3/etc/profile.d/conda.sh 2>/dev/null || \
+{ echo "FATAL: Cannot find conda"; exit 1; }
+
+conda activate quantum_drl_gpu || { echo "FATAL: Cannot activate env"; exit 1; }
+
+echo "=== System Info ==="
+echo "Node: $(hostname)"
+echo "glibc: $(ldd --version 2>&1 | head -1)"
+echo "gcc: $(gcc --version 2>&1 | head -1)"
+echo "Python: $(python3 --version)"
+echo "numpy: $(python3 -c 'import numpy; print(numpy.__version__)')"
+nvidia-smi 2>/dev/null | head -5
+echo ""
+
+# Strategy: try multiple cupy versions from newest to oldest
+# The key issue is glibc 2.17 - we need a wheel built for manylinux2014
+echo "=== Trying cupy-cuda12x versions ==="
+
+for VER in 13.3.0 13.2.0 13.1.0 13.0.0 12.3.0 12.2.0 12.1.0 12.0.0; do
+    echo "--- Trying cupy-cuda12x==$VER ---"
+    pip install --no-deps "cupy-cuda12x==$VER" 2>&1 | tail -3
+    python3 -c "import cupy; print(f'SUCCESS: cupy {cupy.__version__}')" 2>&1
+    if [ $? -eq 0 ]; then
+        echo "CUPY_INSTALLED_VERSION=$VER"
+        break
+    fi
+    pip uninstall -y cupy-cuda12x 2>/dev/null
+done
+
+# If none worked, try cupy-cuda11x
+python3 -c "import cupy" 2>/dev/null
+if [ $? -ne 0 ]; then
+    echo ""
+    echo "=== Trying cupy-cuda11x ==="
+    for VER in 13.3.0 13.2.0 13.1.0 13.0.0 12.3.0 12.2.0; do
+        echo "--- Trying cupy-cuda11x==$VER ---"
+        pip install --no-deps "cupy-cuda11x==$VER" 2>&1 | tail -3
+        python3 -c "import cupy; print(f'SUCCESS: cupy {cupy.__version__}')" 2>&1
+        if [ $? -eq 0 ]; then
+            echo "CUPY_INSTALLED_VERSION=$VER (cuda11x)"
+            break
+        fi
+        pip uninstall -y cupy-cuda11x 2>/dev/null
+    done
+fi
+
+echo ""
+echo "=== Final Verification ==="
+python3 -c "
+try:
+    import cupy as cp
+    print(f'CuPy: {cp.__version__}')
+    print(f'CUDA runtime: {cp.cuda.runtime.runtimeGetVersion()}')
+    a = cp.array([1.0, 2.0, 3.0])
+    print(f'GPU test: {a * 2}')
+    print(f'Device: {cp.cuda.Device().name}')
+    print('CUPY_VERIFIED_OK')
+except Exception as e:
+    print(f'CUPY_FAILED: {e}')
+" 2>&1
+
+# If cupy works, run the GPU benchmark
+python3 -c "import cupy" 2>/dev/null
+if [ $? -eq 0 ]; then
+    echo ""
+    echo "=== RUNNING GPU BENCHMARK ==="
+    cd /home/ralshehri0468/siliqun
+    python3 benchmarks/benchmark_sv.py --max-qubits 25 --output benchmarks/sv25_gpu_results.json 2>&1
+fi
+
+echo ""
+echo "=== DONE ==="
+echo "End: $(date)"

@@ -1,0 +1,192 @@
+=== JOB INFO ===
+Job ID: 169611.khead2
+Node: kcn501
+Date: Fri Apr  3 20:35:27 +03 2026
+Python: /home/ralshehri0468/.conda/envs/quantum_drl_gpu/bin/python3
+Python version: Python 3.12.4
+Fri Apr  3 20:35:29 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.144.03             Driver Version: 550.144.03     CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA A100-PCIE-40GB          Off |   00000000:1F:00.0 Off |                    0 |
+| N/A   54C    P0             46W /  250W |       1MiB /  40960MiB |      4%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+
+CuPy not available - running in CPU mode (numpy)
+
+=== RUNNING 25-QUBIT BENCHMARK ===
+
+
+--- SV Backend: donor_2q (2 qubits, dim=4) ---
+  Init:        4.40 ms
+  1Q gate:     121.0 us
+  2Q gate:     84.5 us
+  <Z>:         190.8 us
+  S(A:B):      13.17 ms
+  Fidelity:    0.22 ms
+  Peak memory: 0.0 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: donor_4q (4 qubits, dim=16) ---
+  Init:        4.41 ms
+  1Q gate:     156.2 us
+  2Q gate:     97.3 us
+  <Z>:         115.6 us
+  S(A:B):      0.44 ms
+  Fidelity:    0.10 ms
+  Peak memory: 0.0 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: donor_8q (8 qubits, dim=256) ---
+  Init:        2.81 ms
+  1Q gate:     95.5 us
+  2Q gate:     66.4 us
+  <Z>:         79.9 us
+  S(A:B):      0.36 ms
+  Fidelity:    0.07 ms
+  Peak memory: 0.1 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: sledge_2x2 (4 qubits, dim=16) ---
+  Init:        3.64 ms
+  1Q gate:     50.8 us
+  2Q gate:     39.2 us
+  <Z>:         55.5 us
+  S(A:B):      0.16 ms
+  Fidelity:    0.04 ms
+  Peak memory: 0.0 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: sledge_3x3 (9 qubits, dim=512) ---
+  Init:        3.12 ms
+  1Q gate:     61.1 us
+  2Q gate:     54.9 us
+  <Z>:         57.9 us
+  S(A:B):      0.92 ms
+  Fidelity:    0.06 ms
+  Peak memory: 0.1 MB
+  SV memory:   0.0 MB
+
+--- SV Backend: sledge_4x4 (16 qubits, dim=65536) ---
+  Init:        3.58 ms
+  1Q gate:     1074.0 us
+  2Q gate:     1705.4 us
+  <Z>:         387.2 us
+  S(A:B):      110.18 ms
+  Fidelity:    0.71 ms
+  Peak memory: 3.0 MB
+  SV memory:   1.0 MB
+
+--- SV Backend: sledge_5x5 (25 qubits, dim=33554432) ---
+  Init:        4.09 ms
+  1Q gate:     385590.2 us
+  2Q gate:     653852.7 us
+  <Z>:         164254.6 us
+  S(A:B):      12581.02 ms
+  Fidelity:    210.88 ms
+  Peak memory: 1536.0 MB
+  SV memory:   512.0 MB
+
+--- MPS Backend: donor_2q (2 qubits, chi=32) ---
+  Init:        2.37 ms
+  1Q gate:     36.9 us
+  2Q gate:     117.2 us
+  <Z>:         92.2 us
+  S(A:B):      0.22 ms
+  Peak memory: 0.0 MB
+
+--- MPS Backend: donor_4q (4 qubits, chi=32) ---
+  Init:        1.21 ms
+  1Q gate:     33.8 us
+  2Q gate:     111.4 us
+  <Z>:         83.8 us
+  S(A:B):      0.16 ms
+  Peak memory: 0.0 MB
+
+--- MPS Backend: donor_8q (8 qubits, chi=32) ---
+  Init:        1.18 ms
+  1Q gate:     32.1 us
+  2Q gate:     115.4 us
+  <Z>:         124.2 us
+  S(A:B):      0.13 ms
+  Peak memory: 0.1 MB
+
+
+=== DFS Leakage Analysis ===
+  theta=0.010: leakage=1.543197e-05
+  theta=3.142: leakage=6.172840e-01
+
+Results saved to benchmarks/sv25_benchmark_results.json
+
+=== RUNNING TEST SUITE ===
+
+============================= test session starts ==============================
+platform linux -- Python 3.12.4, pytest-9.0.2, pluggy-1.6.0 -- /home/ralshehri0468/.conda/envs/quantum_drl_gpu/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/ralshehri0468/siliqun
+collecting ... collected 46 items
+
+tests/test_statevector_simulator.py::TestInitialization::test_basic_init PASSED [  2%]
+tests/test_statevector_simulator.py::TestInitialization::test_initial_state_is_zero PASSED [  4%]
+tests/test_statevector_simulator.py::TestInitialization::test_reset PASSED [  6%]
+tests/test_statevector_simulator.py::TestInitialization::test_dfs_init PASSED [  8%]
+tests/test_statevector_simulator.py::TestInitialization::test_norm_preserved PASSED [ 10%]
+tests/test_statevector_simulator.py::TestSingleQubitGates::test_rx_pi PASSED [ 13%]
+tests/test_statevector_simulator.py::TestSingleQubitGates::test_ry_pi_half PASSED [ 15%]
+tests/test_statevector_simulator.py::TestSingleQubitGates::test_rz_phase PASSED [ 17%]
+tests/test_statevector_simulator.py::TestSingleQubitGates::test_norm_after_gates PASSED [ 19%]
+tests/test_statevector_simulator.py::TestTwoQubitGates::test_cnot_creates_bell PASSED [ 21%]
+tests/test_statevector_simulator.py::TestTwoQubitGates::test_cz_gate PASSED [ 23%]
+tests/test_statevector_simulator.py::TestTwoQubitGates::test_sqrt_swap PASSED [ 26%]
+tests/test_statevector_simulator.py::TestTwoQubitGates::test_non_adjacent_cnot PASSED [ 28%]
+tests/test_statevector_simulator.py::TestTwoQubitGates::test_norm_after_two_qubit PASSED [ 30%]
+tests/test_statevector_simulator.py::TestDFSProjection::test_projector_creation PASSED [ 32%]
+tests/test_statevector_simulator.py::TestDFSProjection::test_single_qubit_generators PASSED [ 34%]
+tests/test_statevector_simulator.py::TestDFSProjection::test_exchange_12_unitarity PASSED [ 36%]
+tests/test_statevector_simulator.py::TestDFSProjection::test_exchange_23_unitarity PASSED [ 39%]
+tests/test_statevector_simulator.py::TestDFSProjection::test_inter_qubit_exchange_unitarity PASSED [ 41%]
+tests/test_statevector_simulator.py::TestDFSProjection::test_leakage_rate_small_angle PASSED [ 43%]
+tests/test_statevector_simulator.py::TestDFSProjection::test_leakage_rate_large_angle PASSED [ 45%]
+tests/test_statevector_simulator.py::TestObservables::test_z_expectation_zero_state PASSED [ 47%]
+tests/test_statevector_simulator.py::TestObservables::test_z_expectation_one_state PASSED [ 50%]
+tests/test_statevector_simulator.py::TestObservables::test_z_expectation_superposition PASSED [ 52%]
+tests/test_statevector_simulator.py::TestObservables::test_zz_correlator_product PASSED [ 54%]
+tests/test_statevector_simulator.py::TestObservables::test_zz_correlator_bell PASSED [ 56%]
+tests/test_statevector_simulator.py::TestObservables::test_entanglement_entropy_product PASSED [ 58%]
+tests/test_statevector_simulator.py::TestObservables::test_entanglement_entropy_bell PASSED [ 60%]
+tests/test_statevector_simulator.py::TestMeasurement::test_measure_deterministic_zero PASSED [ 63%]
+tests/test_statevector_simulator.py::TestMeasurement::test_measure_deterministic_one PASSED [ 65%]
+tests/test_statevector_simulator.py::TestMeasurement::test_measure_collapses_state PASSED [ 67%]
+tests/test_statevector_simulator.py::TestMeasurement::test_measure_all PASSED [ 69%]
+tests/test_statevector_simulator.py::TestFidelity::test_fidelity_self PASSED [ 71%]
+tests/test_statevector_simulator.py::TestFidelity::test_fidelity_orthogonal PASSED [ 73%]
+tests/test_statevector_simulator.py::TestFidelity::test_fidelity_bell PASSED [ 76%]
+tests/test_statevector_simulator.py::TestNoise::test_noisy_fidelity_decreases PASSED [ 78%]
+tests/test_statevector_simulator.py::TestScaling::test_4_qubit_donor PASSED [ 80%]
+tests/test_statevector_simulator.py::TestScaling::test_8_qubit_donor PASSED [ 82%]
+tests/test_statevector_simulator.py::TestScaling::test_sledge_2x2 PASSED [ 84%]
+tests/test_statevector_simulator.py::TestScaling::test_sledge_3x3 PASSED [ 86%]
+tests/test_statevector_simulator.py::TestScaling::test_sledge_4x4 PASSED [ 89%]
+tests/test_statevector_simulator.py::TestScaling::test_sledge_5x5 SKIPPED [ 91%]
+tests/test_statevector_simulator.py::TestCircuitExecution::test_simple_circuit PASSED [ 93%]
+tests/test_statevector_simulator.py::TestCircuitExecution::test_circuit_with_measurement PASSED [ 95%]
+tests/test_statevector_simulator.py::TestSnapshot::test_snapshot PASSED  [ 97%]
+tests/test_statevector_simulator.py::TestSnapshot::test_history PASSED   [100%]
+
+======================== 45 passed, 1 skipped in 1.23s =========================
+
+=== JOB COMPLETE ===
+End time: Fri Apr  3 20:37:43 +03 2026

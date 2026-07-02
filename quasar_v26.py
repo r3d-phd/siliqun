@@ -3546,10 +3546,13 @@ class OuterTargetFactory:
 
     def __call__(self, config, fidelity=None, **kwargs):
         # DEHB calls self.f(config, fidelity=fidelity) — accept as keyword or positional
-        budget = fidelity if fidelity is not None else kwargs.get('budget', 1.0)
+        # FIX-10 (HB-87): DEHB may pass fidelity as numpy array shape (1,) — cast to scalar
+        budget = float(fidelity.item() if hasattr(fidelity, 'item') else fidelity) if fidelity is not None else float(kwargs.get('budget', 1.0))
         self._n_calls += 1
         # v25 P3: extract noise_stage_t from DEHB config
-        _noise_stage_t = int(config.get("noise_stage_t", self.noise_stage))
+        # FIX-10b: ensure scalar int even if config returns numpy array
+        _nst_raw = config.get("noise_stage_t", self.noise_stage)
+        _noise_stage_t = int(_nst_raw.item() if hasattr(_nst_raw, 'item') else _nst_raw)
         _effective_noise = _noise_stage_t
         if self.curriculum_ctrl is not None:
             self.curriculum_ctrl.set_stage(_noise_stage_t)

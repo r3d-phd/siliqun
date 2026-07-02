@@ -316,6 +316,18 @@ class SiliQunEnv(BASE_CLASS):
                         f"Use 'dicke_k{{n}}' e.g. 'dicke_k2'."
                     )
                 self._target_state = MPS.dicke_state(self.n_qubits, k)
+            elif target_state == "complete_graph":
+                # FIX-4 (v26 hot-patch): complete graph state via dense sv
+                n = self.n_qubits
+                dim = 2 ** n
+                sv = np.ones(dim, dtype=np.complex128) / float(dim)**0.5
+                for i in range(n):
+                    for j in range(i + 1, n):
+                        for idx in range(dim):
+                            if ((idx >> (n - 1 - i)) & 1) and ((idx >> (n - 1 - j)) & 1):
+                                sv[idx] *= -1
+                sv /= np.linalg.norm(sv)
+                self._target_state = sv
             else:
                 raise ValueError(f"Unknown target state: {target_state}")
 
@@ -364,6 +376,17 @@ class SiliQunEnv(BASE_CLASS):
                     bit_qp1 = (idx >> (n - 2 - q)) & 1
                     if bit_q == 1 and bit_qp1 == 1:
                         sv[idx] *= -1
+            sv /= np.linalg.norm(sv)
+            return sv
+        elif target_state == "complete_graph":
+            # FIX-4 (v26 hot-patch): n-qubit complete graph state
+            # H on all qubits, then CZ on every pair (i,j) with i<j
+            sv = np.ones(dim, dtype=np.complex128) / float(dim)**0.5
+            for i in range(n):
+                for j in range(i + 1, n):
+                    for idx in range(dim):
+                        if ((idx >> (n - 1 - i)) & 1) and ((idx >> (n - 1 - j)) & 1):
+                            sv[idx] *= -1
             sv /= np.linalg.norm(sv)
             return sv
         else:

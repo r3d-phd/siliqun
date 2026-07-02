@@ -911,6 +911,182 @@ class OPIDTraceCollector(TraceCollector):
 # Inspired by CausalMix (Tang et al. 2026, arXiv:2607.01104), adapted to the
 # online non-stationary RL setting of QUASAR.
 # ─────────────────────────────────────────────────────────────────────────────
+
+# =============================================================================
+# ACI-SLM (HB-79): AutoTrainess-inspired Agent-Computer Interface for SLM ops
+# Reference: AutoTrainess (arXiv:2606.31551)
+# =============================================================================
+class SLMACIEvent:
+    """Single structured event in the ACI operation journal."""
+    __slots__ = ("step", "module", "op", "status", "payload", "ts")
+
+    def __init__(self, step, module, op, status, payload):
+        import time as _time
+        self.step    = step
+        self.module  = module
+        self.op      = op
+        self.status  = status
+        self.payload = payload
+        self.ts      = _time.time()
+
+    def to_dict(self):
+        return {
+            "step":    self.step,
+            "module":  self.module,
+            "op":      self.op,
+            "status":  self.status,
+            "payload": self.payload,
+            "ts":      round(self.ts, 2),
+        }
+
+
+class SLMACIRepository:
+    """
+    Structured ACI repository for all SLM operations in QUASAR.
+    Inspired by AutoTrainess (arXiv:2606.31551).
+
+    5 ACI Modules:
+      PLAN  -> SLMReflector.reflect()    (cooldown + budget + gap guards)
+      DATA  -> TraceCollector.add()      (noise-floor guard)
+      TRAIN -> SLMLoRATrainer.finetune() (min-traces guard)
+      EVAL  -> post-finetune regression  (rollback if F drops > tol)
+      LOG   -> SLMACIEvent journal       (rolling experiment log)
+    """
+    MIN_TRACE_F         = 0.05
+    MIN_TRACES_FOR_FT   = 20
+    REGRESS_TOL         = 0.02
+    MAX_JOURNAL_ENTRIES = 2000
+    PLAN_COOLDOWN_STEPS = 50
+
+    def __init__(self):
+        self._journal = []
+        self._step = 0
+        self._last_plan_step = -9999
+        self._best_F_at_last_ft = 0.0
+        self._n_guard_fails = {"PLAN": 0, "DATA": 0, "TRAIN": 0, "EVAL": 0}
+        self._n_ops = {"PLAN": 0, "DATA": 0, "TRAIN": 0, "EVAL": 0, "LOG": 0}
+
+    # -- PLAN module ----------------------------------------------------------
+    def aci_plan_gate(self, slm_reflector, n_qubits, fidelity_gap, **kwargs):
+        if self._step - self._last_plan_step < self.PLAN_COOLDOWN_STEPS:
+            self._log("PLAN", "reflect_gate", "skip",
+                      {"reason": "cooldown",
+                       "steps_since_last": self._step - self._last_plan_step})
+            return False
+        budget     = getattr(slm_reflector, "_activation_count", 0)
+        max_budget = getattr(slm_reflector, "max_activations_per_cell", 999)
+        if budget >= max_budget:
+            self._n_guard_fails["PLAN"] += 1
+            self._log("PLAN", "reflect_gate", "guard_fail",
+                      {"reason": "budget_exhausted", "budget": budget, "max": max_budget})
+            return False
+        if fidelity_gap < 0.05:
+            self._log("PLAN", "reflect_gate", "skip",
+                      {"reason": "gap_too_small", "fidelity_gap": round(fidelity_gap, 4)})
+            return False
+        self._last_plan_step = self._step
+        self._n_ops["PLAN"] += 1
+        self._log("PLAN", "reflect_gate", "ok",
+                  {"n_qubits": n_qubits, "fidelity_gap": round(fidelity_gap, 4)})
+        return True
+
+    def aci_plan_done(self, delta, sigma_scale, strategy):
+        self._log("PLAN", "reflect_done", "ok",
+                  {"delta": [round(float(x), 4) for x in delta] if delta is not None else None,
+                   "sigma_scale": round(sigma_scale, 3), "strategy": strategy})
+
+    # -- DATA module ----------------------------------------------------------
+    def aci_data_gate(self, outcome_F, source, n_qubits):
+        if outcome_F < self.MIN_TRACE_F:
+            self._n_guard_fails["DATA"] += 1
+            self._log("DATA", "add_trace", "guard_fail",
+                      {"reason": "below_noise_floor",
+                       "outcome_F": round(outcome_F, 4), "min_F": self.MIN_TRACE_F})
+            return False
+        self._n_ops["DATA"] += 1
+        self._log("DATA", "add_trace", "ok",
+                  {"outcome_F": round(outcome_F, 4), "source": source, "n_qubits": n_qubits})
+        return True
+
+    # -- TRAIN module ---------------------------------------------------------
+    def aci_train_gate(self, n_new_traces, n_total_traces, current_best_F):
+        if n_new_traces < self.MIN_TRACES_FOR_FT:
+            self._n_guard_fails["TRAIN"] += 1
+            self._log("TRAIN", "finetune_gate", "guard_fail",
+                      {"reason": "insufficient_traces",
+                       "n_new": n_new_traces, "min_required": self.MIN_TRACES_FOR_FT})
+            return False
+        self._best_F_at_last_ft = current_best_F
+        self._n_ops["TRAIN"] += 1
+        self._log("TRAIN", "finetune_gate", "ok",
+                  {"n_new_traces": n_new_traces, "best_F_before": round(current_best_F, 4)})
+        return True
+
+    def aci_train_done(self, loss, n_examples, cate_summary=None):
+        payload = {"loss": round(loss, 5) if loss else None, "n_examples": n_examples}
+        if cate_summary:
+            payload["cate_b"] = cate_summary
+        self._log("TRAIN", "finetune_done", "ok", payload)
+
+    # -- EVAL module ----------------------------------------------------------
+    def aci_eval_gate(self, new_best_F, slm_lora_trainer):
+        regression = self._best_F_at_last_ft - new_best_F
+        if regression > self.REGRESS_TOL:
+            self._n_guard_fails["EVAL"] += 1
+            self._log("EVAL", "regression_check", "guard_fail",
+                      {"reason": "fidelity_regression",
+                       "best_F_before": round(self._best_F_at_last_ft, 4),
+                       "best_F_after":  round(new_best_F, 4),
+                       "regression":    round(regression, 4)})
+            try:
+                bak = getattr(slm_lora_trainer, "_prev_adapter_state", None)
+                if bak is not None:
+                    slm_lora_trainer._model.load_state_dict(bak, strict=False)
+                    log.warning(
+                        "SLM-ACI EVAL: rolled back LoRA adapter "
+                        "(regression=%.4f > tol=%.2f)" % (regression, self.REGRESS_TOL))
+            except Exception as _e:
+                log.warning("SLM-ACI EVAL: rollback failed (%s)" % _e)
+            return False
+        self._n_ops["EVAL"] += 1
+        self._log("EVAL", "regression_check", "ok",
+                  {"best_F_before": round(self._best_F_at_last_ft, 4),
+                   "best_F_after":  round(new_best_F, 4),
+                   "delta_F":       round(new_best_F - self._best_F_at_last_ft, 4)})
+        return True
+
+    # -- LOG module -----------------------------------------------------------
+    def aci_log_step(self, step, best_F, n_qubits, target, source="SAC"):
+        self._step = step
+        self._n_ops["LOG"] += 1
+        self._log("LOG", "step_milestone", "ok",
+                  {"step": step, "best_F": round(best_F, 4),
+                   "n_qubits": n_qubits, "target": target, "source": source})
+
+    def _log(self, module, op, status, payload):
+        evt = SLMACIEvent(self._step, module, op, status, payload)
+        self._journal.append(evt)
+        if len(self._journal) > self.MAX_JOURNAL_ENTRIES:
+            evict_n = self.MAX_JOURNAL_ENTRIES // 10
+            self._journal = self._journal[evict_n:]
+
+    def summary(self):
+        recent = [e.status for e in self._journal[-50:]]
+        ok_rate = recent.count("ok") / max(len(recent), 1)
+        return {
+            "n_ops":              self._n_ops.copy(),
+            "n_guard_fails":      self._n_guard_fails.copy(),
+            "journal_len":        len(self._journal),
+            "recent_ok_rate":     round(ok_rate, 3),
+            "best_F_at_last_ft":  round(self._best_F_at_last_ft, 4),
+        }
+
+    def recent_events(self, n=10):
+        return [e.to_dict() for e in self._journal[-n:]]
+
+# End of ACI-SLM classes
+# =============================================================================
+
 class CATEWeightedSampler:
     """
     Estimates the Conditional Average Treatment Effect (CATE) of each trace
@@ -1045,14 +1221,24 @@ class SLMLoRATrainer:
         self._n_finetunes = 0
         self._last_loss: Optional[float] = None
         self._cate_sampler = CATEWeightedSampler()  # CATE-B (HB-79)
+        self._aci_repo = None  # ACI-SLM (HB-79): set by main()
 
-    def finetune(self, traces: List[dict], slm_reflector: "SLMReflector") -> bool:
+    def finetune(self, traces: List[dict], slm_reflector: "SLMReflector",
+                 current_best_F: float = 0.0) -> bool:
         """
         Run LoRA fine-tuning on the provided traces.
         Returns True on success, False on graceful degradation.
+        ACI-SLM (HB-79): TRAIN gate checked before fine-tuning.
         """
         if not traces:
             return False
+        # ACI-SLM TRAIN gate
+        if self._aci_repo is not None:
+            if not self._aci_repo.aci_train_gate(
+                    n_new_traces=len(traces),
+                    n_total_traces=len(traces),
+                    current_best_F=current_best_F):
+                return False
         try:
             from peft import LoraConfig, get_peft_model, TaskType
         except ImportError as _e:
@@ -1129,6 +1315,13 @@ class SLMLoRATrainer:
         except Exception as _me:
             log.warning(f"SLMLoRATrainer: merge_and_unload failed ({_me}) — adapter saved to disk only")
         self._n_finetunes += 1
+        # ACI-SLM: record train_done event
+        if self._aci_repo is not None:
+            _cate_sum = self._cate_sampler.summary() if hasattr(self, "_cate_sampler") else None
+            self._aci_repo.aci_train_done(
+                loss=self._last_loss,
+                n_examples=len(traces),
+                cate_summary=_cate_sum)
         return True
 
     def _build_examples(self, traces: List[dict], tok,
@@ -1207,6 +1400,8 @@ class SLMLoRATrainer:
         }
         if hasattr(self, "_cate_sampler"):
             d["cate_b"] = self._cate_sampler.summary()
+        if self._aci_repo is not None:
+            d["aci"] = self._aci_repo.summary()
         return d
 
 
@@ -4116,6 +4311,10 @@ def main():
         lora_epochs=LORA_EPOCHS,
         lora_batch=LORA_BATCH_SIZE,
     )
+    # ACI-SLM (HB-79): wire SLMACIRepository to the LoRA trainer
+    _slm_aci = SLMACIRepository()
+    slm_lora_trainer._aci_repo = _slm_aci
+    log.info("SLM-ACI: SLMACIRepository wired to slm_lora_trainer")
     _lora_last_ft_step = 0
     _total_training_steps = 0  # accumulated across all cells for LoRA trigger
     log.info(f"  TraceCollector: {trace_collector.summary()}")
@@ -4216,6 +4415,7 @@ def main():
             _ft_ok = slm_lora_trainer.finetune(
                 traces=trace_collector.get_training_batch(),
                 slm_reflector=None,  # no shared SLMReflector in main loop
+                current_best_F=float(best_F),
             )
             if _ft_ok:
                 trace_collector.mark_finetuned()

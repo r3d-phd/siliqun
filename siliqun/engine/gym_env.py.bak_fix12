@@ -703,10 +703,8 @@ class SiliQunEnv(BASE_CLASS):
             # Potential-based shaping: Phi(s') - Phi(s)
             # Phi(s) = log(fidelity + eps)
             eps = 1e-10
-            fidelity_clamped = float(np.clip(fidelity, 0.0, 1.0))
-            prev_fidelity_clamped = float(np.clip(self._prev_fidelity, 0.0, 1.0))
-            phi_new = np.log(fidelity_clamped + eps)
-            phi_old = np.log(prev_fidelity_clamped + eps)
+            phi_new = np.log(fidelity + eps)
+            phi_old = np.log(self._prev_fidelity + eps)
             shaping = phi_new - phi_old
 
             # Success bonus

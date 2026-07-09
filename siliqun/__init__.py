@@ -16,9 +16,10 @@ Architecture:
   siliqun.tensor       — MPS/MPO tensor network primitives
   siliqun.tomography   — Quantum process and state tomography
   siliqun.hpc          — PBS/SLURM job generation for Aziz HPC and similar clusters
+  siliqun.library      — SiliQunLib: 50 pre-trained primitive gate policy checkpoints
 """
 
-__version__ = "2.2.0"
+__version__ = "2.3.0"
 __author__ = "Raad Alshehri"
 __email__ = "ralshehri0468@stu.kau.edu.sa"
 __license__ = "MIT"

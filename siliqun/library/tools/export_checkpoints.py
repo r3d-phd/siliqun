@@ -45,6 +45,14 @@ import numpy as np
 
 
 def _parse_args() -> argparse.Namespace:
+    """Parse command-line arguments for the export script.
+
+    Returns
+    -------
+    argparse.Namespace
+        Parsed arguments with fields ``results_dir``, ``output_dir``,
+        ``dry_run``, and ``min_fidelity``.
+    """
     parser = argparse.ArgumentParser(
         description="Export QUASAR actor checkpoints to SiliQunLib .npz format."
     )
@@ -108,6 +116,15 @@ def _family_from_target(target: str) -> str:
 
 
 def main() -> None:
+    """Entry point for the export_checkpoints CLI tool.
+
+    Scans ``args.results_dir`` for QUASAR training result JSON files,
+    pairs each with its companion ``.pt`` actor checkpoint, and writes
+    a ``.npz`` weight file to ``args.output_dir`` for every checkpoint
+    whose ``best_F`` meets the ``--min-fidelity`` threshold.
+
+    Prints a progress line for each file processed and a summary at the end.
+    """
     args = _parse_args()
     results_dir: Path = args.results_dir
     output_dir: Path = args.output_dir

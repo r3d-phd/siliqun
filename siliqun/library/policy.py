@@ -54,6 +54,20 @@ class PrimitivePolicy:
         weights: Dict[str, np.ndarray],
         metadata: Dict[str, Any],
     ) -> None:
+        """Initialise a PrimitivePolicy from raw weight arrays and registry metadata.
+
+        Parameters
+        ----------
+        weights : dict[str, np.ndarray]
+            Actor network weights keyed by layer name
+            (``"fc1.weight"``, ``"fc1.bias"``, ``"fc2.weight"``,
+            ``"fc2.bias"``, ``"fc3.weight"``, ``"fc3.bias"``).
+        metadata : dict
+            Registry record for this checkpoint.  Must contain at minimum
+            ``obs_dim``, ``action_dim``, ``hidden_dims``, ``family``,
+            ``n_qubits``, ``seed``, ``best_fidelity``, and
+            ``hardware_profile``.
+        """
         self._weights = weights
         self._metadata = metadata
         self.obs_dim: int = metadata["obs_dim"]
@@ -163,6 +177,7 @@ class PrimitivePolicy:
     # ------------------------------------------------------------------
 
     def __repr__(self) -> str:
+        """Return a concise string representation of this policy."""
         return (
             f"PrimitivePolicy("
             f"family='{self.family}', "

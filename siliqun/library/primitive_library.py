@@ -60,6 +60,20 @@ class PrimitiveLibrary:
         data_dir: Optional[str | Path] = None,
         allow_synthetic: bool = True,
     ) -> None:
+        """Initialise the PrimitiveLibrary.
+
+        Parameters
+        ----------
+        data_dir : str or Path, optional
+            Directory containing the checkpoint ``.npz`` / ``.pt`` files.
+            Defaults to ``siliqun/library/data/`` inside the package.
+        allow_synthetic : bool, optional
+            If ``True`` (default), return a random-weight placeholder policy
+            when a checkpoint file is not found on disk.  Set to ``False``
+            to raise ``FileNotFoundError`` instead, which is safer in
+            production workflows where missing checkpoints indicate a
+            configuration error.
+        """
         self._data_dir = Path(data_dir) if data_dir is not None else _DEFAULT_DATA_DIR
         self._allow_synthetic = allow_synthetic
         self._cache: Dict[str, PrimitivePolicy] = {}
@@ -233,13 +247,45 @@ class PrimitiveLibrary:
 
     @staticmethod
     def _make_synthetic(meta: Dict[str, Any]) -> PrimitivePolicy:
-        """Generate a random-weight placeholder policy for testing."""
+        """Generate a random-weight placeholder policy for testing.
+
+        Uses Xavier uniform initialisation seeded from the checkpoint's
+        training seed so that the same checkpoint ID always produces the
+        same synthetic weights, enabling reproducible unit tests.
+
+        Parameters
+        ----------
+        meta : dict
+            Registry record for the requested checkpoint.
+
+        Returns
+        -------
+        PrimitivePolicy
+            Placeholder policy with random weights.  A ``UserWarning`` is
+            issued by the caller before this method is invoked.
+        """
         rng = np.random.default_rng(seed=meta["seed"])
         obs_dim    = meta["obs_dim"]
         action_dim = meta["action_dim"]
         h1, h2     = meta["hidden_dims"]
 
         def _xavier(fan_in: int, fan_out: int) -> np.ndarray:
+            """Xavier uniform initialisation for a weight matrix.
+
+            Parameters
+            ----------
+            fan_in : int
+                Number of input units.
+            fan_out : int
+                Number of output units.
+
+            Returns
+            -------
+            np.ndarray
+                Weight matrix of shape ``(fan_out, fan_in)`` with values
+                drawn uniformly from ``[-limit, limit]`` where
+                ``limit = sqrt(6 / (fan_in + fan_out))``.
+            """
             limit = np.sqrt(6.0 / (fan_in + fan_out))
             return rng.uniform(-limit, limit, (fan_out, fan_in)).astype(np.float32)
 
@@ -258,6 +304,7 @@ class PrimitiveLibrary:
     # ------------------------------------------------------------------
 
     def __repr__(self) -> str:
+        """Return a concise string representation of this library."""
         return (
             f"PrimitiveLibrary("
             f"n_checkpoints={len(CHECKPOINT_REGISTRY)}, "

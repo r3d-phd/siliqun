@@ -133,6 +133,25 @@ class NoiseParams:
                 "readout": 1 - self.measurement_fidelity,
             }
 
+    @property
+    def T1(self) -> float:
+        """Mean longitudinal-relaxation time in seconds.
+
+        This compatibility accessor is intentionally read-only at the
+        single-value level: device profiles store per-qubit times in
+        ``t1_times`` while pulse-level solvers require a scalar rate.
+        """
+        if not self.t1_times:
+            raise ValueError("NoiseParams.t1_times must contain at least one value")
+        return float(np.mean(self.t1_times))
+
+    @property
+    def T2_star(self) -> float:
+        """Mean inhomogeneous-dephasing time in seconds."""
+        if not self.t2_star_times:
+            raise ValueError("NoiseParams.t2_star_times must contain at least one value")
+        return float(np.mean(self.t2_star_times))
+
     def compute_exchange_gate_error(self) -> float:
         """Compute exchange gate error from N_osc and pulse duration.
 

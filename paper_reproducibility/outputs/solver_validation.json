@@ -1,0 +1,21 @@
+{
+  "amplitude_damping": {
+    "t1_s": 4e-09,
+    "duration_s": 2e-09,
+    "observed_excited_population": 0.6065306597127305,
+    "analytic_excited_population": 0.6065306597126334,
+    "absolute_error": 9.703349235223868e-14
+  },
+  "pure_dephasing": {
+    "t2_star_s": 4e-09,
+    "duration_s": 2e-09,
+    "observed_coherence_magnitude": 0.3032653298563652,
+    "analytic_coherence_magnitude": 0.3032653298563167,
+    "absolute_error": 4.846123502488808e-14
+  },
+  "integrator_agreement": {
+    "rk4_expm_frobenius_error": 5.5455585306670116e-12,
+    "rk4_trace_error": 0.0,
+    "rk4_hermiticity_error": 0.0
+  }
+}

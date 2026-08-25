@@ -185,8 +185,12 @@ def _build_collapse_operators(
 
     Collapse operators included:
         - T1 amplitude damping: L = sigma_minus = |0><1|
-        - T2* pure dephasing:   L = sigma_z / 2
-        - Depolarising (from charge noise): L = I (scalar noise)
+        - T2* pure dephasing:   L = sigma_z
+
+    Charge-noise and depolarising channels are deliberately not added here.
+    They require nontrivial, separately parameterised collapse operators or a
+    stochastic Hamiltonian model; an identity collapse operator has a zero
+    Lindblad dissipator and is therefore not a physical implementation.
     """
     dim = 2 ** n_qubits
     I_n = np.eye(dim, dtype=np.complex128)
@@ -196,10 +200,10 @@ def _build_collapse_operators(
     # the Lindblad term is gamma_k * (L_k rho L_k† - 1/2 {L_k†L_k, rho})
     #
     # T1 amplitude damping: L = sigma_minus = |0><1|, gamma = 1/T1
-    # T2* pure dephasing:   L = sigma_z (full operator, NOT sigma_z/2),
-    #                        gamma = 1/T2star - 1/(2*T1)
-    #   Note: Using L=sigma_z/2 would require gamma *= 4 to compensate.
-    #   We use the standard convention L=sigma_z for clarity.
+        # T2* pure dephasing uses L = sigma_z. For this convention the
+        # coherence decay induced by gamma D[sigma_z] is exp(-2 gamma t),
+        # hence gamma_phi = 1/(2*T2*) - 1/(4*T1). This supplements the
+        # T1 contribution, whose coherences decay at 1/(2*T1).
     #   Ref: Breuer & Petruccione (2002), Eq. 3.67
     sigma_minus = np.array([[0, 1], [0, 0]], dtype=np.complex128)  # |0><1|
     sigma_z = np.array([[1, 0], [0, -1]], dtype=np.complex128)
@@ -213,10 +217,14 @@ def _build_collapse_operators(
         gamma_1 = 1.0 / noise_params.T1
         collapse_ops.append((L_relax, np.sqrt(gamma_1)))
 
-        # T2* pure dephasing rate: gamma_phi = 1/T2star - 1/(2*T1)
-        # This is the pure dephasing contribution beyond T1 relaxation.
-        # Using L=sigma_z (not sigma_z/2) with this rate is the standard convention.
-        gamma_phi = compute_dephasing_gamma(noise_params.T2_star, noise_params.T1)
+        # Pure dephasing rate for the full sigma_z operator. Do not use the
+        # Kraus-channel helper here: it returns a dimensionless channel
+        # probability for a finite interval, whereas the Lindblad equation
+        # requires a rate in s^-1.
+        gamma_phi = max(
+            0.0,
+            0.5 / noise_params.T2_star - 0.25 / noise_params.T1,
+        )
         if gamma_phi > 0:
             collapse_ops.append((L_deph, np.sqrt(gamma_phi)))
 
@@ -333,7 +341,7 @@ def _build_liouvillian(
 ) -> np.ndarray:
     """Build the Liouvillian superoperator L such that d vec(rho)/dt = L vec(rho).
 
-    Uses the vec(rho) = rho.flatten() convention (row-major).
+    Uses column-major vectorisation, vec(rho) = rho.reshape(-1, order="F").
 
     L = -i (I ⊗ H - H^T ⊗ I)
         + sum_k gamma_k (L_k* ⊗ L_k - 1/2 I ⊗ L_k†L_k - 1/2 (L_k†L_k)^T ⊗ I)
@@ -479,19 +487,16 @@ class LindbladSimulator:
         self._dim = 2 ** n_qubits
         self._rng = np.random.default_rng(seed)
 
-        # Try to use GPU
+        # The current RK4/expm implementation uses NumPy and SciPy matrix
+        # operations. Do not advertise a GPU path until all kernels and the
+        # matrix exponential are genuinely dispatched through a GPU backend.
+        self._xp = np
         self._use_gpu = False
         if use_gpu:
-            try:
-                import cupy as cp
-                self._xp = cp
-                self._use_gpu = True
-                logger.info("LindbladSimulator: using CuPy GPU backend")
-            except ImportError:
-                self._xp = np
-                logger.info("LindbladSimulator: CuPy not available, using NumPy")
-        else:
-            self._xp = np
+            logger.warning(
+                "GPU execution was requested but is not implemented for the "
+                "Lindblad RK4/expm path; using NumPy/SciPy on CPU."
+            )
 
         # Build noise parameters from device profile
         self._noise_params = device.noise_params
@@ -649,9 +654,9 @@ class LindbladSimulator:
         H = self._hamiltonian_at(t, sequence)
         L = _build_liouvillian(H, self._collapse_ops)
         prop = expm(L * self.dt)
-        rho_vec = rho.flatten()
+        rho_vec = rho.reshape(-1, order="F")
         rho_new_vec = prop @ rho_vec
-        return rho_new_vec.reshape(self._dim, self._dim)
+        return rho_new_vec.reshape(self._dim, self._dim, order="F")
 
     # ------------------------------------------------------------------
     # Main evolution method
@@ -733,10 +738,10 @@ class LindbladSimulator:
             # Integrate one step
             rho = step_fn(rho, t, sequence)
 
-            # Enforce Hermiticity and positivity (numerical stabilisation)
+            # RK4 can introduce negligible anti-Hermitian round-off. Restore
+            # Hermiticity and trace without discarding physical coherences or
+            # silently projecting the state to a different density matrix.
             rho = 0.5 * (rho + rho.conj().T)
-            rho = np.real(rho).astype(np.complex128)  # Remove tiny imaginary parts
-            # Re-normalise
             tr = np.real(np.trace(rho))
             if tr > 1e-12:
                 rho /= tr

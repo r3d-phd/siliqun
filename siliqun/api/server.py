@@ -282,35 +282,20 @@ class JobStatus(BaseModel):
 
 def _get_device_profile(config: DeviceConfig):
     """Load a device profile from the SiliQun physics module."""
-    try:
-        from siliqun.physics.devices.profiles import get_device
-        device = get_device(config.device, n_qubits=config.n_qubits)
-    except Exception:
-        # Fallback: create a minimal device profile
-        from siliqun.physics.devices.profiles import DeviceProfile, NoiseParams
-        device = DeviceProfile(
-            name=config.device,
-            n_qubits=config.n_qubits,
-            noise_params=NoiseParams(
-                T1=config.T1 or 1e-3,
-                T2_star=config.T2_star or 100e-6,
-                charge_noise=config.charge_noise or 1e-5,
-            ),
-            J_max_hz=config.J_max_hz or 50e6,
-            gate_time_1q=50e-9,
-            gate_time_2q=200e-9,
-            dfs_encoded=(config.device == "sledge"),
-        )
+    from siliqun.physics.devices.profiles import get_device_profile
+    device = get_device_profile(config.device, n_qubits=config.n_qubits)
 
     # Override with user-specified parameters
     if config.T1 is not None:
-        device.noise_params.T1 = config.T1
+        device.noise_params.t1_times = [config.T1] * config.n_qubits
     if config.T2_star is not None:
-        device.noise_params.T2_star = config.T2_star
+        device.noise_params.t2_star_times = [config.T2_star] * config.n_qubits
     if config.charge_noise is not None:
-        device.noise_params.charge_noise = config.charge_noise
+        device.noise_params.charge_noise_amplitude = config.charge_noise
     if config.J_max_hz is not None:
-        device.J_max_hz = config.J_max_hz
+        device.hamiltonian_params.exchange_couplings = [
+            config.J_max_hz
+        ] * max(0, config.n_qubits - 1)
 
     return device
 
@@ -347,9 +332,9 @@ def _run_circuit_simulation(request: CircuitSimRequest) -> Dict:
         compiler = GateToPulseCompiler(device)
         compiled = compiler.compile(circuit)
         warnings.extend(compiled.warnings)
-        sim = LindbladSimulator(device=device)
-        result = sim.run(compiled.sequence)
-        rho = result.density_matrix
+        sim = LindbladSimulator(device=device, n_qubits=n_qubits)
+        result = sim.evolve(compiled.sequence)
+        rho = result.rho_final
     else:  # mps
         from siliqun.engine.simulator import MPSSimulator
         sim = MPSSimulator(device=device)

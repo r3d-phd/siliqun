@@ -1,0 +1,43 @@
+{
+  "artifact_type": "SILIQUN_V2_STANDALONE_BASELINE_VERITAS_REVIEW_RECORD",
+  "version": "V1",
+  "review_scope": "Source-isolated standalone software baseline only.",
+  "factual_review": {
+    "tool": "veritas/verify_claim",
+    "verdict": "VERIFIED",
+    "confidence_percent": 95,
+    "claim": "The V2 branch is a source-isolated software baseline rather than a physics, calibration, hardware, QEC, or controller-performance result.",
+    "reviewer_recommendations_addressed": [
+      "Documented the supported OpenQASM input subset and added a regression-tested example.",
+      "Included public baseline manifest and verification receipts in the branch.",
+      "Explained the orphan-branch rationale in README and disposition."
+    ]
+  },
+  "reasoning_review": {
+    "tool": "veritas/verify_reasoning_chain",
+    "first_attempt": {
+      "verdict": "INVALID",
+      "first_error_step": "C5",
+      "issue": "The baseline-to-translation-contract dependency was implicit rather than shown."
+    },
+    "revised_attempt": {
+      "verdict": "NO_VERDICT",
+      "service_result": "argument of type 'NoneType' is not iterable",
+      "interpretation": "A service-side null-processing failure is not an approval or a scientific finding."
+    },
+    "localization": {
+      "tool": "veritas/localize_error",
+      "reported_primary_error_type": "LOGICAL_GAP",
+      "reported_context": "Receipt-processing logic produced a null-processing failure.",
+      "evidence_quality_note": "The committed purification receipt remained readable and passed its own checks; the localized service error does not replace independent review."
+    }
+  },
+  "scope_exclusions": [
+    "named-device calibration",
+    "physical noise prediction",
+    "hardware validation",
+    "QEC or fault-tolerance performance",
+    "external-controller performance",
+    "full OpenQASM or OpenPulse conformance"
+  ]
+}

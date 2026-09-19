@@ -47,8 +47,8 @@ def main() -> None:
         for path in (ROOT / "src").rglob("*.py")
     ).lower()
     absence_directories = tuple("".join(parts) for parts in (("exper", "iments"), ("res", "ults"), ("alpha", "evolve")))
-    head = command("git", "rev-parse", "HEAD")
-    parent_fields = command("git", "rev-list", "--parents", "-n", "1", "HEAD").split()
+    baseline_root = command("git", "rev-list", "--max-parents=0", "HEAD")
+    parent_fields = command("git", "rev-list", "--parents", "-n", "1", baseline_root).split()
     checks = {
         "legacy_commit_matches_manifest": json.loads((ROOT / "BASELINE_MANIFEST.json").read_text())["legacy_source"]["commit"] == LEGACY_COMMIT,
         "baseline_root_commit_is_orphan": len(parent_fields) == 1,
@@ -59,7 +59,7 @@ def main() -> None:
     receipt = {
         "artifact_type": "SILIQUN_V2_STANDALONE_BASELINE_PURIFICATION_RECEIPT",
         "status": "PASS" if all(checks.values()) else "FAIL",
-        "baseline_root_commit": head,
+        "baseline_root_commit": baseline_root,
         "legacy_commit": LEGACY_COMMIT,
         "legacy_tree_file_count": len(legacy_paths),
         "baseline_file_count": len(current),

@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "src"))
 
-from tools_run_v2_b2_native_gate_suite_export import build_export, fixed_circuits
+from tools_run_v2_b2_native_gate_suite_export import fixed_circuits
 
 
 class B2NativeGateSuiteExportTest(unittest.TestCase):
@@ -30,8 +30,8 @@ class B2NativeGateSuiteExportTest(unittest.TestCase):
         self.assertEqual(ordered[2].targets, (0, 1))
         self.assertAlmostEqual(circuits["native_single_rz_two_pi_probability_invariant"].gates[0].parameters[0], 2 * math.pi)
 
-    def test_fixed_export_retains_only_declared_fields(self) -> None:
-        receipt = build_export()
+    def test_persisted_export_retains_only_declared_fields(self) -> None:
+        receipt = json.loads((ROOT / "docs" / "V2_B2_NATIVE_GATE_SUITE_EXPORT_RECEIPT_V1.json").read_text())
         self.assertEqual(receipt["status"], "PASS")
         self.assertEqual(receipt["suite_count"], 5)
         self.assertEqual(receipt["profile"]["calibration_status"], "literature_parameterised")

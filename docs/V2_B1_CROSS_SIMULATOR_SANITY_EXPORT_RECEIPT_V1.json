@@ -1,0 +1,133 @@
+{
+  "artifact_type": "SILIQUN_V2_B1_CROSS_SIMULATOR_SANITY_EXPORT_RECEIPT",
+  "claim_ceiling": "This export supplies fixed, ideal, software-only circuit evidence for a later independent sanity check. It is not hardware evidence, calibrated SiMOS noise evidence, pulse validation, QEC evidence, a SiMORA runtime input, or an algorithm execution result.",
+  "profile": {
+    "calibration_status": "literature_parameterised",
+    "identifier": "simos-nominal-literature-v1"
+  },
+  "retention": {
+    "algorithm_answer_retained": false,
+    "fidelity_retained": false,
+    "logical_observable_retained": false,
+    "measurement_result_retained": false,
+    "noise_draw_retained": false,
+    "probability_vector_retained": false,
+    "pulse_amplitude_retained": false,
+    "pulse_duration_retained": false,
+    "pulse_phase_retained": false,
+    "reward_retained": false,
+    "state_vector_retained": false,
+    "target_state_retained": false
+  },
+  "scope": {
+    "algorithm_ingress_established": false,
+    "detector_or_decoder_bound": false,
+    "frame_action_issued": false,
+    "ppo_used": false,
+    "provider_or_hardware_accessed": false,
+    "simora_imported_or_invoked": false
+  },
+  "source": {
+    "baseline_root": "143cf5100504ab378f91c61f49c3e14b3901f04d",
+    "exporter_sha256": "53380112c850ef872003b9866e5248ff44bdfd6473c1a70c47b51c0e7f3d02b7",
+    "repository": "r3d-phd/siliqun",
+    "source_commit": "45c45a5e05621d08012409e61f53d70052ec02bf"
+  },
+  "status": "PASS",
+  "suite": [
+    {
+      "circuit_id": "native_single_rx_pi_over_2",
+      "circuit_sha256": "8e2ca9f8c0626ff244b9259110f074d06f37570d469fe2dd8b2ab89ce8d1433e",
+      "circuit_specification": {
+        "gates": [
+          {
+            "name": "rx",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              0
+            ]
+          }
+        ],
+        "n_qubits": 1
+      },
+      "operation_categories": [
+        {
+          "kind": "drive",
+          "target_arity": 1
+        }
+      ],
+      "pulse_schedule_sha256": "8e6eed59adf46eddf8e9d7ad9019f6f5e47d203ab92167b24fcc45bc5d10e322",
+      "siliqun_ideal_probability_sha256": "e2f8f70a28b53aadf0d15ba87db844c29814b1f2511f1fbedb4f15da3007c20e",
+      "translation_manifest_sha256": "6dbcb1253853a9e177c85cbd7efc2cf89316a63178b0ef4ea4b245343a08afc9"
+    },
+    {
+      "circuit_id": "native_two_qubit_cz_phase",
+      "circuit_sha256": "cba4d70e8806a3a78000587e73031a2de32fbaa4f4795d8e226ee0fa0d1df0af",
+      "circuit_specification": {
+        "gates": [
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "rx",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "cz",
+            "parameters": [],
+            "targets": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              1.0471975511965976
+            ],
+            "targets": [
+              1
+            ]
+          }
+        ],
+        "n_qubits": 2
+      },
+      "operation_categories": [
+        {
+          "kind": "drive",
+          "target_arity": 1
+        },
+        {
+          "kind": "drive",
+          "target_arity": 1
+        },
+        {
+          "kind": "exchange",
+          "target_arity": 2
+        },
+        {
+          "kind": "virtual_z",
+          "target_arity": 1
+        }
+      ],
+      "pulse_schedule_sha256": "b7fd0ef97a5b5fdceefab0046b2b35bf5e2c3dd0ed7288d52955e74f4dd457c9",
+      "siliqun_ideal_probability_sha256": "bbf4c93a5156c448b423312afc80c60a59c2fe00d7d920ec37eee909e10b022f",
+      "translation_manifest_sha256": "d318bbf742403d067f0591d420de873a39b53d6af236da2235a3e44a1717f94e"
+    }
+  ],
+  "suite_count": 2,
+  "version": "V1"
+}

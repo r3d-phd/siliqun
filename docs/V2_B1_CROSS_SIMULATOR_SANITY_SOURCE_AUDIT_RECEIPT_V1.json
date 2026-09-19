@@ -1,0 +1,18 @@
+{
+  "artifact_type": "SILIQUN_V2_B1_CROSS_SIMULATOR_SANITY_SOURCE_AUDIT_RECEIPT",
+  "audit_scope": "Source-export, fixed-suite, and retained-field audit only; no independent SiVQD evaluator, cross-simulator agreement, physical, calibration, SiMORA, algorithm, QEC, or hardware audit.",
+  "checks": {
+    "baseline_root_matches": true,
+    "exporter_has_no_downstream_import": true,
+    "fixed_suite_identity_matches": true,
+    "forbidden_values_not_retained": true,
+    "nominal_profile_status_preserved": true,
+    "operation_categories_match_fixed_suite": true,
+    "probability_digests_are_present": true,
+    "readiness_passed": true,
+    "runtime_scope_fields_are_false": true,
+    "source_commit_binds_exporter_hash": true
+  },
+  "status": "PASS",
+  "version": "V1"
+}

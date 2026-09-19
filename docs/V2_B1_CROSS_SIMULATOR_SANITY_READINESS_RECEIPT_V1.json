@@ -1,0 +1,16 @@
+{
+  "artifact_type": "SILIQUN_V2_B1_CROSS_SIMULATOR_SANITY_READINESS_RECEIPT",
+  "checks": {
+    "authority_is_export_only": true,
+    "baseline_root_is_pinned": true,
+    "catalogue_is_b1": true,
+    "exporter_has_no_prohibited_project_import": true,
+    "forbidden_fields_are_declared": true,
+    "nominal_profile_is_preserved": true,
+    "protocol_preserves_nonclaims": true,
+    "suite_is_fixed_and_native": true
+  },
+  "claim_ceiling": "This export supplies fixed, ideal, software-only circuit evidence for a later independent sanity check. It is not hardware evidence, calibrated SiMOS noise evidence, pulse validation, QEC evidence, a SiMORA runtime input, or an algorithm execution result.",
+  "status": "PASS",
+  "version": "V1"
+}

@@ -1,0 +1,31 @@
+{
+  "artifact_type": "SILIQUN_V2_B1_CROSS_SIMULATOR_SANITY_VERITAS_PREEXECUTION_RECORD",
+  "version": "V1",
+  "factual_scope_review": {
+    "endpoint": "verify_claim",
+    "verdict": "PARTIALLY_VERIFIED",
+    "confidence_percent": 70,
+    "scope": "Two fixed local ideal circuit exports, not a device, calibration, SiMORA, algorithm, QEC, or hardware experiment.",
+    "limitations": [
+      "internal design and readiness evidence only",
+      "no external validation or benchmark yet",
+      "no independent SiVQD evaluator has run"
+    ]
+  },
+  "reasoning_review": {
+    "endpoint": "verify_reasoning_chain",
+    "initial_verdict": "INVALID",
+    "initial_confidence_percent": 95,
+    "initial_issue": "The source exporter and later independent evaluator roles were conflated.",
+    "leap_correction": {
+      "learn": "Recognize the source-export and evaluator roles as causally distinct.",
+      "evaluate": "The source exporter generates comparison inputs only.",
+      "apply": "Split the B1 source-export and cross-simulator-agreement evidence stages in the protocol.",
+      "persist": "Require separate source-export and evaluator fields in the final disposition."
+    },
+    "corrected_verdict": "VALID",
+    "corrected_confidence_percent": 95,
+    "corrected_conclusion": "Only a conjunction of source export, separate evaluator agreement, audit, and scope-preserving disposition may support the narrow software-convention agreement claim."
+  },
+  "execution_permission_interpretation": "The reviewed authority permits the present fixed-suite source export only. It does not authorize any claim beyond that source-side evidence."
+}

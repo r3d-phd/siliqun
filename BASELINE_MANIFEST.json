@@ -17,6 +17,8 @@
       "native-operation pulse mapping",
       "technology profile provenance metadata",
       "ideal state-vector simulation",
+      "static profile-circuit contract validation",
+      "design-only safety-constrained PPO plugin specification",
       "unit tests and baseline documentation"
     ],
     "excluded": [

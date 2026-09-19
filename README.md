@@ -42,6 +42,10 @@ The repository includes [`examples/bell_state.qasm`](examples/bell_state.qasm), 
 
 The code is divided into three levels. The **core simulator** contains circuits, ideal evolution, pulse schedules, and profile validation. **Technology modules** contribute profile objects and physics-specific mappings. **Plugins** may add importers, compilers, or solvers only through a separately reviewed extension interface. The current baseline contains the core and one literature-parameterised technology module; plugin APIs remain an explicit next-stage task.
 
+## Static translation and DRL preparation
+
+The branch now includes a versioned [profile–circuit translation contract](docs/V2_PROFILE_CIRCUIT_TRANSLATION_CONTRACT_V1.md) and a [safety-constrained PPO calibration-plugin protocol](docs/V2_SAFE_PPO_CALIBRATION_PLUGIN_PROTOCOL_V1.md). Both are **design-only**. The static contract maps a declared circuit to a non-executable profile-bound pulse representation. The PPO specification fixes one algorithm, a maximum of five qubits, a pre-approved action-template registry, mandatory non-learning comparators, convergence and scaling ledgers, and a shadow-to-active progression. It includes no learned-control environment, training loop, checkpoint, provider API, hardware command, SiMORA modification, or performance result.
+
 ## Evidence boundary
 
 Passing the unit tests confirms only the implemented software behaviours. It does not validate hardware physics, a real device, pulse calibration, QEC, or external-controller performance. See [`docs/LEGACY_BOUNDARY.md`](docs/LEGACY_BOUNDARY.md) and [`ARCHITECTURE.md`](ARCHITECTURE.md) for the full boundary.

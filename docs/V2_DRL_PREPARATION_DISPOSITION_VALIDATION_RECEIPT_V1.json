@@ -1,0 +1,15 @@
+{
+  "artifact_type": "SILIQUN_V2_DRL_PREPARATION_DISPOSITION_VALIDATION_RECEIPT",
+  "checks": {
+    "readiness_passes_all_declared_checks": true,
+    "report_defines_supervisory_boundary": true,
+    "report_preserves_next_gate": true,
+    "report_preserves_nonclaims": true,
+    "report_states_d0_only": true,
+    "review_preserves_reasoning_limit": true,
+    "review_records_final_factual_verification": true
+  },
+  "claim_ceiling": "Receipt-bound D0 reporting only; no PPO, calibration, hardware, or runtime-performance conclusion.",
+  "status": "PASS",
+  "version": "V1"
+}

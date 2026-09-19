@@ -1,0 +1,44 @@
+{
+  "artifact_type": "SILIQUN_V2_DRL_PREPARATION_VERITAS_REVIEW_RECORD",
+  "version": "V1",
+  "review_scope": "Source-isolated D0 static preparation for a profile-circuit translation contract and a safety-constrained PPO calibration-plugin protocol.",
+  "factual_scope_review": {
+    "initial_result": {
+      "verdict": "PARTIALLY_VERIFIED",
+      "confidence_percent": 75,
+      "limitation": "The initial package documented its design-only boundary but lacked explicit code-level runtime-operation refusal assertions."
+    },
+    "corrective_action": {
+      "implementation": "Added DESIGN_ONLY_PROHIBITED_OPERATIONS and prohibit_runtime_operation() in src/siliqun/contracts.py.",
+      "coverage": "Added unit tests for training, provider API, job-submission, and supervisory-policy-modification refusals; the static receipt now checks every declared prohibited operation."
+    },
+    "final_result": {
+      "verdict": "VERIFIED",
+      "confidence_percent": 95,
+      "verifier_limitations": [
+        "The review is source- and test-based, not an independent third-party reproduction.",
+        "The static package does not and cannot validate device calibration, PPO efficacy, hardware control, or physical performance."
+      ]
+    }
+  },
+  "leap_reasoning_review": {
+    "first_pass": {
+      "verdict": "VALID",
+      "confidence_percent": 95,
+      "scope": "The prerequisite-versus-performance evidence separation was accepted by the first-pass chain review."
+    },
+    "meta_review": {
+      "verdict": "UNSOUND",
+      "confidence_percent": 95,
+      "reason": "The meta-verifier interpreted the intentionally unattempted D1-D6 gates as contradicting a chain that asserted only D0 static preparation."
+    },
+    "revised_d0_only_review": {
+      "result": "NO_VERDICT",
+      "service_error": "argument of type NoneType is not iterable",
+      "localize_error_result": "LOGICAL_GAP",
+      "localize_error_interpretation": "The localization endpoint attributed the null-processing failure to the D0-to-LEAP mapping. The revised request already supplied that mapping; therefore this is retained as a review-service limitation, not as scientific approval or rejection."
+    }
+  },
+  "review_disposition": "The factual D0 claim is VERIFIED at 95% confidence. No complete reasoning-chain approval is claimed because the meta-review and the revised chain endpoint did not yield a coherent approval path. The package retains its explicit D0-only claim ceiling.",
+  "claim_ceiling": "This review does not establish PPO training, calibration validity, named-device support, hardware access or control, SiMORA runtime behavior, QEC, TE-PWS, or physical performance."
+}

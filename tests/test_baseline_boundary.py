@@ -37,6 +37,14 @@ class BaselineBoundaryTest(unittest.TestCase):
         self.assertIn("named-device", readme)
         self.assertIn("not a claim", boundary)
 
+    def test_static_drl_preparation_stays_non_executable(self) -> None:
+        authority = (ROOT / "docs" / "V2_DRL_PREPARATION_AUTHORITY_V1.md").read_text()
+        protocol = (ROOT / "docs" / "V2_SAFE_PPO_CALIBRATION_PLUGIN_PROTOCOL_V1.md").read_text()
+        self.assertIn("DESIGN_AND_STATIC_VALIDATION_ONLY", authority)
+        self.assertIn("does **not** permit PPO training", authority)
+        self.assertIn("No policy is trained", protocol)
+        self.assertIn("No policy is trained", protocol)
+
 
 if __name__ == "__main__":
     unittest.main()

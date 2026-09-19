@@ -1,0 +1,23 @@
+{
+  "artifact_type": "SILIQUN_V2_D1_SILICON_ELIGIBILITY_VERITAS_REVIEW_RECORD",
+  "version": "V1",
+  "review_scope": "Public-evidence D1 eligibility conclusion for Intel Tunnel Falls/LQC-QCF and Quantum Motion/NQCC Silicon Cloverleaf.",
+  "factual_claim_review": {
+    "verdict": "VERIFIED",
+    "confidence_percent": 90,
+    "claim": "Neither public candidate passes the strict D1 predicate; Intel Tunnel Falls is the preferred conditional collaboration candidate only.",
+    "verifier_limitation": "The conclusion is limited to reviewed public evidence. It does not rule out undisclosed provider or laboratory arrangements."
+  },
+  "reasoning_chain_review": {
+    "result": "NO_VERDICT",
+    "service_error": "argument of type NoneType is not iterable",
+    "submitted_structure": "Four explicit Locate-Evaluate-Assess-Publish steps, each with a claim and evidence field.",
+    "localize_error_result": {
+      "primary_error_type": "LOGICAL_GAP",
+      "confidence_percent": 85,
+      "interpretation": "The localization endpoint attributed the null-processing error to a missing or malformed logical connection. The submitted request included all four steps; this diagnostic is therefore recorded as a review-service limitation and not treated as approval or disapproval of the D1 conclusion."
+    }
+  },
+  "review_disposition": "The D1 public-evidence factual conclusion is independently VERIFIED at 90% confidence. No reasoning-chain approval is claimed because the corresponding endpoint failed to produce a structured verdict.",
+  "claim_ceiling": "No claim of device access, metadata authorization, calibration availability, PPO execution, SiMORA execution, QEC performance, or physical hardware performance is reviewed or established."
+}

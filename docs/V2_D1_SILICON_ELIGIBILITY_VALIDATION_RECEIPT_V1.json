@@ -1,0 +1,17 @@
+{
+  "artifact_type": "SILIQUN_V2_D1_SILICON_ELIGIBILITY_VALIDATION_RECEIPT",
+  "checks": {
+    "decision_refuses_d1": true,
+    "disposition_preserves_claim_ceiling": true,
+    "every_candidate_refused": true,
+    "factual_review_is_verified": true,
+    "preferred_target_is_conditional": true,
+    "protocol_preserves_no_hardware_action": true,
+    "reasoning_limit_is_preserved": true,
+    "source_notes_include_both_candidates": true,
+    "sources_are_public_url_cited": true
+  },
+  "claim_ceiling": "Public-evidence D1 eligibility assessment only; no named-device authorization, calibration record, PPO training, SiMORA runtime, or hardware claim.",
+  "status": "PASS",
+  "version": "V1"
+}

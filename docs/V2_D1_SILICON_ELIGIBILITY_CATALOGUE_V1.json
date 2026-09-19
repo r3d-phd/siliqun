@@ -1,0 +1,45 @@
+{
+  "artifact_type": "SILIQUN_V2_D1_SILICON_ELIGIBILITY_CATALOGUE",
+  "version": "V1",
+  "assessment_mode": "public_evidence_only_read_only_eligibility_assessment",
+  "strict_d1_predicate": {
+    "device_identity_or_revision": "required",
+    "authorized_read_only_metadata_route": "required",
+    "topology_or_connectivity_manifest": "required",
+    "native_operations_manifest": "required",
+    "control_and_readout_metadata": "required",
+    "calibration_record_availability_and_provenance": "required"
+  },
+  "candidates": [
+    {
+      "id": "intel_tunnel_falls_lqc_qcf",
+      "role": "conditional_preferred_collaboration_candidate",
+      "platform_identity": "Intel Tunnel Falls 12-quantum-dot silicon-spin research platform",
+      "public_platform_evidence": "supported",
+      "specific_supplied_device_revision": "not_publicly_established",
+      "authorized_read_only_metadata_route": "not_publicly_established",
+      "device_specific_topology_and_native_operations_manifest": "not_publicly_established",
+      "device_specific_control_readout_and_calibration_records": "not_publicly_established",
+      "strict_d1_status": "REFUSED",
+      "reason": "The public record supports a concrete platform and collaboration route but not the required authorized device-specific metadata access."
+    },
+    {
+      "id": "quantum_motion_silicon_cloverleaf_nqcc",
+      "role": "conditional_full_stack_silicon_cmos_candidate",
+      "platform_identity": "Quantum Motion Silicon Cloverleaf NQCC testbed/project",
+      "public_platform_evidence": "supported",
+      "specific_deployed_device_revision": "not_publicly_established",
+      "authorized_read_only_metadata_route": "not_publicly_established",
+      "device_specific_topology_and_native_operations_manifest": "not_publicly_established",
+      "device_specific_control_readout_and_calibration_records": "not_publicly_established",
+      "strict_d1_status": "REFUSED",
+      "reason": "The public record supports deployment and full-stack architecture but not a named QPU revision or authorized metadata inspection."
+    }
+  ],
+  "decision": {
+    "status": "D1_REFUSED_METADATA_AUTHORIZATION_ABSENT",
+    "preferred_conditional_next_target": "intel_tunnel_falls_lqc_qcf",
+    "permitted_next_stage": "No D2 or PPO training. A provider/laboratory must first independently authorize read-only metadata inspection for a named device/revision.",
+    "prohibited_inference": "Public platform specifications, published characterization, testbed status, or collaboration availability do not constitute device-specific metadata authorization or a physical calibration package."
+  }
+}

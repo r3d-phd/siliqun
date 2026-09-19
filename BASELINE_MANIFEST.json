@@ -1,0 +1,53 @@
+{
+  "artifact_type": "SILIQUN_V2_STANDALONE_BASELINE_MANIFEST",
+  "baseline_version": "2.0.0a0",
+  "branch": "v2-standalone-baseline",
+  "purpose": "Canonical standalone software baseline for silicon-spin circuit, pulse, profile-provenance, and ideal-statevector simulation work.",
+  "legacy_source": {
+    "repository": "https://github.com/r3d-phd/siliqun",
+    "commit": "14a49bf957b7aeacffc1bd15ba91293d6fd31b83",
+    "tree": "26a6e90f638bf6893ada67f6e49c5d6548b5e75d",
+    "relationship": "The baseline is an orphan branch that preserves only the MIT license from the recorded legacy source revision. It is not a historical-tree refactor."
+  },
+  "scope": {
+    "included": [
+      "circuit data model",
+      "declared OpenQASM 3 subset parser",
+      "pulse schedule schema",
+      "native-operation pulse mapping",
+      "technology profile provenance metadata",
+      "ideal state-vector simulation",
+      "unit tests and baseline documentation"
+    ],
+    "excluded": [
+      "learned-control environments",
+      "external-controller integrations",
+      "training code and checkpoints",
+      "hardware export or device execution",
+      "virtual-QEC bridge code",
+      "named-device calibration claims"
+    ]
+  },
+  "claim_boundary": {
+    "permitted": [
+      "The branch defines a standalone, ML-free software baseline.",
+      "The included tests exercise the declared circuit, pulse, profile, and ideal-statevector interfaces.",
+      "Built-in profile data are literature-parameterised metadata."
+    ],
+    "prohibited": [
+      "Hardware validation",
+      "named-device calibration",
+      "realistic or practical SiMOS prediction",
+      "full OpenQASM or OpenPulse conformance",
+      "physical pulse calibration",
+      "QEC performance",
+      "fault tolerance",
+      "external controller performance"
+    ]
+  },
+  "standards_status": {
+    "openqasm": "A deliberately small, documented OpenQASM 3-compatible input subset is implemented.",
+    "openpulse": "A local pulse-schedule schema is implemented; it is not a full OpenPulse implementation.",
+    "third_party_sdk_plugins": "Deferred until separately implemented and tested."
+  }
+}

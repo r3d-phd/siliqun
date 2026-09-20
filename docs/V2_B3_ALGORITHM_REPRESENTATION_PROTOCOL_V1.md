@@ -6,6 +6,8 @@
 
 Can SiliQun produce a digest-only source export for three frozen, native-gate circuit representations that a separately written SiVQD evaluator may reproduce? The question concerns only declared ideal circuit ordering and output conventions. It does not compare pulse physics, noise, fidelity, hardware behavior, QEC, learned control, or algorithm success.
 
+**B3** is the project label for this bounded cross-software reproducibility stage, not a simulator, hardware backend, or quantum algorithm. A **source export** is a local JSON receipt written by the SiliQun-side script after it translates and ideally simulates a frozen circuit; it contains only allowed identifiers, circuit specifications, hashes, categories, and a canonical probability digest. The **nominal profile** is SiliQun's local `simos-nominal-literature-v1` translation profile; its declared two-qubit capacity is a software contract limit, not a hardware characterization. A **work-orbit transition** is the explicitly restricted permutation of the two-bit encoding `00,01,10,11` for `1,2,4,8` under multiplication by 2 modulo 15. It is an internal compilation-representation test, not a standard implementation of Shor's algorithm.
+
 ## Frozen representations
 
 The suite is fixed before execution and uses only `rx`, `ry`, `rz`, and `cz`.

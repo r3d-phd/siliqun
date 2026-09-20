@@ -1,0 +1,52 @@
+{
+  "artifact_type": "SILIQUN_V2_B3_ALGORITHM_REPRESENTATION_REBASELINE_RECORD",
+  "version": "V1",
+  "initial_refusal": {
+    "stage": "first bounded source-export attempt",
+    "status": "REFUSED_NO_RECEIPT",
+    "error": "ValueError: circuit requires more qubits than the profile declares",
+    "cause": "The initial third static representation used three qubits, while simos-nominal-literature-v1 declares two qubits.",
+    "retention_statement": "No B3 source export receipt, probability digest, or dynamic algorithm result was written by the refused attempt."
+  },
+  "rebaseline": {
+    "new_authority": "V2_B3_ALGORITHM_REPRESENTATION_AUTHORITY_V2.md",
+    "siliqun_static_commit": "cd4a9e33595f9c40c6f8316d11f5611403f496e9",
+    "sivqd_independent_static_commit": "7d3f86e49c221ece6427134684eec904bfabc9ba",
+    "fixed_ids": [
+      "deutsch_jozsa_two_qubit_balanced_native",
+      "grover_two_qubit_fixed_phase_oracle_native",
+      "shor_n15_order4_work_orbit_transition_native"
+    ],
+    "qubit_counts": [2, 2, 2],
+    "static_status": "PASS",
+    "independent_static_pin_status": "PASS",
+    "third_representation_boundary": "An uncontrolled two-qubit restricted work-orbit transition only; not controlled modular multiplication, order finding, a Shor execution, or factorization."
+  },
+  "veritas": {
+    "factual_rebaseline_review": {
+      "endpoint": "verify_claim",
+      "verdict": "UNVERIFIED",
+      "confidence_percent": 40,
+      "limitations": [
+        "The endpoint requested external standard-tool citations and dynamic results that this pre-execution internal software stage does not claim.",
+        "It did not contradict the recorded profile-capacity refusal, two-qubit rebaseline, or static pin receipts."
+      ]
+    },
+    "experimental_rebaseline_review": {
+      "endpoint": "verify_experimental_claims",
+      "verdict": "NO_VERDICT",
+      "service_error": "1 validation error for TextContent: text Input should be a valid string; input_value=None",
+      "interpretation": "No rendered review was returned; this is not approval or a negative experimental outcome."
+    }
+  },
+  "execution_gate": {
+    "decision": "REBASELINED_STATIC_DESIGN_READY_FOR_ONE_BOUNDED_SOURCE_EXPORT",
+    "basis": [
+      "The replacement suite is within the declared two-qubit profile capacity.",
+      "SiliQun static readiness is PASS.",
+      "Separately written SiVQD static construction and comparator validation are PASS.",
+      "V2 authority permits one local digest-only source export and prohibits all physical, hardware, SiMORA, algorithm-success, and QEC claims."
+    ],
+    "nonclaim": "This gate does not establish dynamic agreement or any algorithm, factorization, physical, SiMORA, QEC, or performance result."
+  }
+}

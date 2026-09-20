@@ -1,0 +1,761 @@
+{
+  "artifact_type": "SILIQUN_V2_B3_ALGORITHM_REPRESENTATION_STATIC_SPECIFICATION_RECEIPT",
+  "row_count": 3,
+  "rows": [
+    {
+      "circuit_specification": {
+        "gates": [
+          {
+            "name": "rx",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "cz",
+            "parameters": [],
+            "targets": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              0
+            ]
+          }
+        ],
+        "n_qubits": 2
+      },
+      "circuit_specification_sha256": "8fcff02153e97afb61c38c0b439b782c0c76b72ab3b1883ec5a391d6c160a271",
+      "gate_count": 12,
+      "n_qubits": 2,
+      "native_gate_names": [
+        "cz",
+        "rx",
+        "ry",
+        "rz"
+      ],
+      "representation_id": "deutsch_jozsa_two_qubit_balanced_native"
+    },
+    {
+      "circuit_specification": {
+        "gates": [
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "cz",
+            "parameters": [],
+            "targets": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "rx",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "rx",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "cz",
+            "parameters": [],
+            "targets": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "rx",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "rx",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              1
+            ]
+          }
+        ],
+        "n_qubits": 2
+      },
+      "circuit_specification_sha256": "d4e2e1c37039a6fe521795440902a939628cd57223d2908accb486c9de575bae",
+      "gate_count": 18,
+      "n_qubits": 2,
+      "native_gate_names": [
+        "cz",
+        "rx",
+        "ry",
+        "rz"
+      ],
+      "representation_id": "grover_two_qubit_fixed_phase_oracle_native"
+    },
+    {
+      "circuit_specification": {
+        "gates": [
+          {
+            "name": "rx",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              2
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              2
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "cz",
+            "parameters": [],
+            "targets": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              -0.7853981633974483
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "cz",
+            "parameters": [],
+            "targets": [
+              2,
+              1
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              0.7853981633974483
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "cz",
+            "parameters": [],
+            "targets": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              -0.7853981633974483
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "cz",
+            "parameters": [],
+            "targets": [
+              2,
+              1
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              0.7853981633974483
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              0.7853981633974483
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "cz",
+            "parameters": [],
+            "targets": [
+              2,
+              0
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              0.7853981633974483
+            ],
+            "targets": [
+              2
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              -0.7853981633974483
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "cz",
+            "parameters": [],
+            "targets": [
+              2,
+              0
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "cz",
+            "parameters": [],
+            "targets": [
+              2,
+              0
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              0
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              0
+            ]
+          }
+        ],
+        "n_qubits": 3
+      },
+      "circuit_specification_sha256": "5d51551dc0c839c5d297376dbc37bcc77b62aecd4ac784626f6cca7f40be1608",
+      "gate_count": 49,
+      "n_qubits": 3,
+      "native_gate_names": [
+        "cz",
+        "rx",
+        "ry",
+        "rz"
+      ],
+      "representation_id": "shor_n15_order4_compiled_orbit_component_native"
+    }
+  ],
+  "static_scope": "Pre-execution circuit structure and SHA-256 specification hashes only; no simulator state, probability, translation, pulse, hardware, algorithm answer, or physical claim.",
+  "status": "PASS",
+  "version": "V1"
+}

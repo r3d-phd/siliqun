@@ -1,0 +1,20 @@
+{
+  "artifact_type": "SILIQUN_V2_B3_ALGORITHM_REPRESENTATION_SOURCE_AUDIT_RECEIPT",
+  "audit_scope": "Source-export, static-representation, native-compilation, provenance, and retained-field audit only; no independent SiVQD evaluator, algorithm success, factorization, physical, calibration, SiMORA, QEC, or hardware audit.",
+  "checks": {
+    "baseline_root_matches": true,
+    "exact_specification_hashes_match_static_receipt": true,
+    "exporter_has_no_downstream_import": true,
+    "fixed_representation_identity_matches": true,
+    "forbidden_values_not_retained": true,
+    "native_gate_set_and_categories_match": true,
+    "nominal_profile_status_preserved": true,
+    "probability_digests_are_present": true,
+    "profile_bounded_qubit_counts_match": true,
+    "readiness_passed": true,
+    "runtime_scope_fields_are_false": true,
+    "source_commit_binds_exporter_hash": true
+  },
+  "status": "PASS",
+  "version": "V1"
+}

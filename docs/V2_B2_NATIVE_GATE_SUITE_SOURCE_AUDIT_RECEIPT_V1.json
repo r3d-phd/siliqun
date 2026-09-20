@@ -4,6 +4,7 @@
   "checks": {
     "baseline_root_matches": true,
     "exporter_has_no_downstream_import": true,
+    "fixed_circuit_specifications_match": true,
     "fixed_suite_identity_matches": true,
     "forbidden_values_not_retained": true,
     "nominal_profile_status_preserved": true,

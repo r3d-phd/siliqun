@@ -5,6 +5,7 @@ from __future__ import annotations
 import ast
 import hashlib
 import json
+import math
 import subprocess
 from pathlib import Path
 
@@ -31,6 +32,42 @@ EXPECTED_OPERATION_CATEGORIES = [
         {"kind": "drive", "target_arity": 1},
     ],
     [{"kind": "virtual_z", "target_arity": 1}],
+]
+
+EXPECTED_CIRCUIT_SPECIFICATIONS = [
+    {
+        "n_qubits": 1,
+        "gates": [{"name": "rx", "targets": [0], "parameters": [math.pi / 3]}],
+    },
+    {
+        "n_qubits": 1,
+        "gates": [
+            {"name": "ry", "targets": [0], "parameters": [-math.pi / 4]},
+            {"name": "rz", "targets": [0], "parameters": [math.pi / 5]},
+        ],
+    },
+    {
+        "n_qubits": 1,
+        "gates": [
+            {"name": "rx", "targets": [0], "parameters": [math.pi / 2]},
+            {"name": "rz", "targets": [0], "parameters": [math.pi / 2]},
+        ],
+    },
+    {
+        "n_qubits": 2,
+        "gates": [
+            {"name": "ry", "targets": [0], "parameters": [math.pi / 3]},
+            {"name": "rx", "targets": [1], "parameters": [math.pi / 5]},
+            {"name": "cz", "targets": [0, 1], "parameters": []},
+            {"name": "rz", "targets": [0], "parameters": [math.pi / 7]},
+            {"name": "ry", "targets": [0], "parameters": [math.pi / 4]},
+            {"name": "rx", "targets": [1], "parameters": [math.pi / 6]},
+        ],
+    },
+    {
+        "n_qubits": 1,
+        "gates": [{"name": "rz", "targets": [0], "parameters": [2 * math.pi]}],
+    },
 ]
 
 
@@ -70,6 +107,8 @@ def audit() -> dict[str, object]:
         "nominal_profile_status_preserved": exported["profile"] == catalogue["profile"],
         "fixed_suite_identity_matches": [row["circuit_id"] for row in rows]
         == [entry["id"] for entry in catalogue["fixed_circuits"]],
+        "fixed_circuit_specifications_match": [row["circuit_specification"] for row in rows]
+        == EXPECTED_CIRCUIT_SPECIFICATIONS,
         "operation_categories_match_fixed_suite": [row["operation_categories"] for row in rows]
         == EXPECTED_OPERATION_CATEGORIES,
         "probability_digests_are_present": all(

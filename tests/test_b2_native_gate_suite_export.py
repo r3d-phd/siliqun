@@ -19,15 +19,29 @@ class B2NativeGateSuiteExportTest(unittest.TestCase):
     def test_fixed_suite_has_declared_non_algorithm_coverage(self) -> None:
         circuits = dict(fixed_circuits())
         self.assertEqual(len(circuits), 5)
+        # Coverage C1: non-B1 x-axis rotation angle.
         self.assertEqual([gate.name for gate in circuits["native_single_rx_pi_over_3"].gates], ["rx"])
+        self.assertAlmostEqual(circuits["native_single_rx_pi_over_3"].gates[0].parameters[0], math.pi / 3)
+        # Coverage C2: signed y-axis angle and virtual-z composition.
         second = circuits["native_single_ry_minus_pi_over_4_rz_pi_over_5"].gates
         self.assertEqual([gate.name for gate in second], ["ry", "rz"])
         self.assertAlmostEqual(second[0].parameters[0], -math.pi / 4)
+        self.assertAlmostEqual(second[1].parameters[0], math.pi / 5)
+        # Coverage C3: relative phase applied after x-basis preparation.
+        phase_after_x = circuits["native_single_rx_pi_over_2_rz_pi_over_2"].gates
+        self.assertEqual([gate.name for gate in phase_after_x], ["rx", "rz"])
+        self.assertAlmostEqual(phase_after_x[0].parameters[0], math.pi / 2)
+        self.assertAlmostEqual(phase_after_x[1].parameters[0], math.pi / 2)
+        # Coverage C4: q0/q1 ordering and CZ phase followed by local rotations.
         ordered = circuits["native_two_qubit_ordered_cz_interference"].gates
         self.assertEqual([gate.name for gate in ordered], ["ry", "rx", "cz", "rz", "ry", "rx"])
         self.assertEqual(ordered[0].targets, (0,))
         self.assertEqual(ordered[1].targets, (1,))
         self.assertEqual(ordered[2].targets, (0, 1))
+        self.assertAlmostEqual(ordered[3].parameters[0], math.pi / 7)
+        self.assertAlmostEqual(ordered[4].parameters[0], math.pi / 4)
+        self.assertAlmostEqual(ordered[5].parameters[0], math.pi / 6)
+        # Coverage C5: global phase is intentionally tested only through probabilities.
         self.assertAlmostEqual(circuits["native_single_rz_two_pi_probability_invariant"].gates[0].parameters[0], 2 * math.pi)
 
     def test_persisted_export_retains_only_declared_fields(self) -> None:

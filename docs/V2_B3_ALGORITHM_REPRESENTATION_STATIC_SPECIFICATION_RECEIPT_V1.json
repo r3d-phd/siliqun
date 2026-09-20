@@ -307,6 +307,50 @@
       "circuit_specification": {
         "gates": [
           {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "cz",
+            "parameters": [],
+            "targets": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              3.141592653589793
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
+            "name": "ry",
+            "parameters": [
+              1.5707963267948966
+            ],
+            "targets": [
+              1
+            ]
+          },
+          {
             "name": "rx",
             "parameters": [
               3.141592653589793
@@ -314,445 +358,20 @@
             "targets": [
               0
             ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              3.141592653589793
-            ],
-            "targets": [
-              2
-            ]
-          },
-          {
-            "name": "ry",
-            "parameters": [
-              1.5707963267948966
-            ],
-            "targets": [
-              2
-            ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              3.141592653589793
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "ry",
-            "parameters": [
-              1.5707963267948966
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              3.141592653589793
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "ry",
-            "parameters": [
-              1.5707963267948966
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "cz",
-            "parameters": [],
-            "targets": [
-              0,
-              1
-            ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              3.141592653589793
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "ry",
-            "parameters": [
-              1.5707963267948966
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              -0.7853981633974483
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              3.141592653589793
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "ry",
-            "parameters": [
-              1.5707963267948966
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "cz",
-            "parameters": [],
-            "targets": [
-              2,
-              1
-            ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              3.141592653589793
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "ry",
-            "parameters": [
-              1.5707963267948966
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              0.7853981633974483
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              3.141592653589793
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "ry",
-            "parameters": [
-              1.5707963267948966
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "cz",
-            "parameters": [],
-            "targets": [
-              0,
-              1
-            ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              3.141592653589793
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "ry",
-            "parameters": [
-              1.5707963267948966
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              -0.7853981633974483
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              3.141592653589793
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "ry",
-            "parameters": [
-              1.5707963267948966
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "cz",
-            "parameters": [],
-            "targets": [
-              2,
-              1
-            ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              3.141592653589793
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "ry",
-            "parameters": [
-              1.5707963267948966
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              0.7853981633974483
-            ],
-            "targets": [
-              0
-            ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              0.7853981633974483
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              3.141592653589793
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "ry",
-            "parameters": [
-              1.5707963267948966
-            ],
-            "targets": [
-              1
-            ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              3.141592653589793
-            ],
-            "targets": [
-              0
-            ]
-          },
-          {
-            "name": "ry",
-            "parameters": [
-              1.5707963267948966
-            ],
-            "targets": [
-              0
-            ]
-          },
-          {
-            "name": "cz",
-            "parameters": [],
-            "targets": [
-              2,
-              0
-            ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              3.141592653589793
-            ],
-            "targets": [
-              0
-            ]
-          },
-          {
-            "name": "ry",
-            "parameters": [
-              1.5707963267948966
-            ],
-            "targets": [
-              0
-            ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              0.7853981633974483
-            ],
-            "targets": [
-              2
-            ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              -0.7853981633974483
-            ],
-            "targets": [
-              0
-            ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              3.141592653589793
-            ],
-            "targets": [
-              0
-            ]
-          },
-          {
-            "name": "ry",
-            "parameters": [
-              1.5707963267948966
-            ],
-            "targets": [
-              0
-            ]
-          },
-          {
-            "name": "cz",
-            "parameters": [],
-            "targets": [
-              2,
-              0
-            ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              3.141592653589793
-            ],
-            "targets": [
-              0
-            ]
-          },
-          {
-            "name": "ry",
-            "parameters": [
-              1.5707963267948966
-            ],
-            "targets": [
-              0
-            ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              3.141592653589793
-            ],
-            "targets": [
-              0
-            ]
-          },
-          {
-            "name": "ry",
-            "parameters": [
-              1.5707963267948966
-            ],
-            "targets": [
-              0
-            ]
-          },
-          {
-            "name": "cz",
-            "parameters": [],
-            "targets": [
-              2,
-              0
-            ]
-          },
-          {
-            "name": "rz",
-            "parameters": [
-              3.141592653589793
-            ],
-            "targets": [
-              0
-            ]
-          },
-          {
-            "name": "ry",
-            "parameters": [
-              1.5707963267948966
-            ],
-            "targets": [
-              0
-            ]
           }
         ],
-        "n_qubits": 3
+        "n_qubits": 2
       },
-      "circuit_specification_sha256": "5d51551dc0c839c5d297376dbc37bcc77b62aecd4ac784626f6cca7f40be1608",
-      "gate_count": 49,
-      "n_qubits": 3,
+      "circuit_specification_sha256": "4e6739454f8a7e01b1cd70ca9745e5061a646f8f2c318268f79e022a346c9d59",
+      "gate_count": 6,
+      "n_qubits": 2,
       "native_gate_names": [
         "cz",
         "rx",
         "ry",
         "rz"
       ],
-      "representation_id": "shor_n15_order4_compiled_orbit_component_native"
+      "representation_id": "shor_n15_order4_work_orbit_transition_native"
     }
   ],
   "static_scope": "Pre-execution circuit structure and SHA-256 specification hashes only; no simulator state, probability, translation, pulse, hardware, algorithm answer, or physical claim.",

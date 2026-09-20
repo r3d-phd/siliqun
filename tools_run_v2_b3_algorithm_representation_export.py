@@ -21,7 +21,7 @@ from siliqun.profiles import simos_nominal_profile
 ROOT = Path(__file__).resolve().parent
 DOCS = ROOT / "docs"
 CATALOGUE = DOCS / "V2_B3_ALGORITHM_REPRESENTATION_CATALOGUE_V1.json"
-AUTHORITY = DOCS / "V2_B3_ALGORITHM_REPRESENTATION_AUTHORITY_V1.md"
+AUTHORITY = DOCS / "V2_B3_ALGORITHM_REPRESENTATION_AUTHORITY_V2.md"
 OUTPUT = DOCS / "V2_B3_ALGORITHM_REPRESENTATION_EXPORT_RECEIPT_V1.json"
 STATIC_SPECIFICATION = DOCS / "V2_B3_ALGORITHM_REPRESENTATION_STATIC_SPECIFICATION_RECEIPT_V1.json"
 BASELINE_ROOT = "143cf5100504ab378f91c61f49c3e14b3901f04d"
@@ -103,27 +103,26 @@ def _grover_representation() -> Circuit:
     return _native_h(circuit, 1)
 
 
-def _shor_order4_component() -> Circuit:
-    """Compile a controlled cyclic orbit component, not a full Shor implementation.
+def _shor_order4_work_orbit_transition() -> Circuit:
+    """Compile one uncontrolled order-four work-orbit transition, not Shor.
 
-    q0 and q1 encode the restricted work orbit 1,2,4,8 as 00,01,10,11;
-    q2 is the control. The controlled increment implements multiplication by
-    two on that orbit only. No QFT, measurement, post-processing, order, or
-    factoring answer is represented.
+    q0 and q1 encode the restricted work orbit 1,2,4,8 as 00,01,10,11.
+    The native CNOT-equivalent q0 -> q1 followed by X-equivalent on q0
+    advances this encoding modulo four, corresponding to multiplication by
+    two on that restricted orbit. There is no control register, QFT,
+    measurement, post-processing, order, or factoring answer.
     """
-    work_lsb, work_msb, control = 0, 1, 2
-    circuit = Circuit(3)
-    _native_x(circuit, work_lsb)
-    _native_h(circuit, control)
-    _native_ccx(circuit, control, work_lsb, work_msb)
-    return _native_cx(circuit, control, work_lsb)
+    work_lsb, work_msb = 0, 1
+    circuit = Circuit(2)
+    _native_cx(circuit, work_lsb, work_msb)
+    return _native_x(circuit, work_lsb)
 
 
 def fixed_representations() -> tuple[tuple[str, Circuit], ...]:
     return (
         ("deutsch_jozsa_two_qubit_balanced_native", _deutsch_jozsa_representation()),
         ("grover_two_qubit_fixed_phase_oracle_native", _grover_representation()),
-        ("shor_n15_order4_compiled_orbit_component_native", _shor_order4_component()),
+        ("shor_n15_order4_work_orbit_transition_native", _shor_order4_work_orbit_transition()),
     )
 
 
@@ -195,7 +194,7 @@ def build_export() -> dict[str, Any]:
 
 
 def main() -> None:
-    if "FIXED_IDEAL_ALGORITHM_REPRESENTATION_EXPORT_ONLY" not in AUTHORITY.read_text():
+    if "REBASELINED_TWO_QUBIT_FIXED_IDEAL_EXPORT_ONLY" not in AUTHORITY.read_text():
         raise SystemExit("b3_export_refused_authority")
     OUTPUT.write_text(json.dumps(build_export(), indent=2, sort_keys=True) + "\n")
 

@@ -1,7 +1,7 @@
 {
   "artifact_type": "SILIQUN_V2_B3_ALGORITHM_REPRESENTATION_READINESS_RECEIPT",
   "checks": {
-    "authority_is_export_only": true,
+    "authority_is_rebaselined_export_only": true,
     "baseline_root_is_pinned": true,
     "catalogue_is_b3": true,
     "exporter_has_no_prohibited_project_import": true,
@@ -9,7 +9,7 @@
     "nominal_profile_is_preserved": true,
     "protocol_preserves_algorithm_nonclaims": true,
     "release_validation_is_required": true,
-    "static_specifications_are_native_and_bounded": true,
+    "static_specifications_are_native_and_profile_bounded": true,
     "three_representations_are_fixed": true
   },
   "claim_ceiling": "A B3 pass can establish only fixed-representation ideal software-convention agreement between a SiliQun source export and a separately written SiVQD evaluator. It is not evidence that Deutsch\u2013Jozsa, Grover, or Shor executed as an algorithm; it is not a general equivalence proof, hardware evidence, named-device calibration, calibrated SiMOS-noise evidence, pulse validation, QEC evidence, a SiMORA runtime input, or an algorithm-protection result.",

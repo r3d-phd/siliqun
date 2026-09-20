@@ -52,7 +52,7 @@ def audit() -> dict[str, object]:
         "fixed_representation_identity_matches": [row["representation_id"] for row in rows] == expected_ids,
         "exact_specification_hashes_match_static_receipt": all(row["representation_id"] in static_by_id and row["circuit_specification_sha256"] == row["static_specification_sha256"] == static_by_id[row["representation_id"]]["circuit_specification_sha256"] for row in rows),
         "native_gate_set_and_categories_match": all(set(gate["name"] for gate in row["circuit_specification"]["gates"]) <= set(catalogue["native_gate_set"]) and row["operation_categories"] == _expected_categories(row["circuit_specification"]) for row in rows),
-        "bounded_qubit_counts_match": [row["circuit_specification"]["n_qubits"] for row in rows] == [2, 2, 3],
+        "profile_bounded_qubit_counts_match": [row["circuit_specification"]["n_qubits"] for row in rows] == [2, 2, 2],
         "probability_digests_are_present": all(isinstance(row.get("siliqun_ideal_probability_sha256"), str) and len(row["siliqun_ideal_probability_sha256"]) == 64 for row in rows),
         "forbidden_values_not_retained": all(value is False for value in exported["retention"].values()),
         "runtime_scope_fields_are_false": all(value is False for value in exported["scope"].values()),

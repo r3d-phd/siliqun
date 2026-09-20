@@ -27,9 +27,9 @@
       "role": "A fixed two-qubit Grover circuit representation with a declared CZ phase oracle and native diffusion compilation."
     },
     {
-      "id": "shor_n15_order4_compiled_orbit_component_native",
-      "qubit_count": 3,
-      "role": "A fixed three-qubit compiled controlled order-four work-orbit component for a=2 modulo 15, with a two-bit encoding of the orbit 1,2,4,8; not a full Shor or order-finding execution."
+      "id": "shor_n15_order4_work_orbit_transition_native",
+      "qubit_count": 2,
+      "role": "A fixed two-qubit work-orbit transition for multiplication by 2 on the restricted encoding 1,2,4,8 modulo 15; not a controlled operation, full Shor, or order-finding execution."
     }
   ],
   "native_gate_set": ["rx", "ry", "rz", "cz"],

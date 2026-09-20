@@ -22,13 +22,13 @@ class B3AlgorithmRepresentationExportTest(unittest.TestCase):
             [
                 "deutsch_jozsa_two_qubit_balanced_native",
                 "grover_two_qubit_fixed_phase_oracle_native",
-                "shor_n15_order4_compiled_orbit_component_native",
+                "shor_n15_order4_work_orbit_transition_native",
             ],
         )
-        self.assertEqual([circuit.n_qubits for circuit in representations.values()], [2, 2, 3])
+        self.assertEqual([circuit.n_qubits for circuit in representations.values()], [2, 2, 2])
         self.assertTrue(all({gate.name for gate in circuit.gates} <= {"rx", "ry", "rz", "cz"} for circuit in representations.values()))
         self.assertTrue(all(circuit.gates for circuit in representations.values()))
-        self.assertGreater(len(representations["shor_n15_order4_compiled_orbit_component_native"].gates), 20)
+        self.assertGreaterEqual(len(representations["shor_n15_order4_work_orbit_transition_native"].gates), 6)
 
     def test_static_specification_and_readiness_pass(self) -> None:
         subprocess.run([sys.executable, "tools_validate_v2_b3_algorithm_representation.py"], cwd=ROOT, check=True)

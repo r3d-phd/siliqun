@@ -2,7 +2,7 @@
 
 This directory contains the complete experimental record for the SiliQun framework as presented in the paper **"SiliQun: A Deep Reinforcement Learning Framework for Silicon Spin Qubit Control"** (IEEE Transactions on Quantum Engineering, 2026).
 
-All experiments were conducted on the King Abdulaziz University Aziz HPC cluster (NVIDIA A100-PCIE-40GB, CUDA 12.1, PyTorch 2.5.1). Results are reported as mean ± std across five independent seeds.
+Experiments ran on the King Abdulaziz University Aziz HPC cluster (NVIDIA A100-PCIE-40GB for E1; H100 NVL for the E4 multi-target jobs 180521/180658); software versions per `requirements.txt` and the run-log headers (PyTorch 2.4.0, Stable-Baselines3 2.8.0). Seed sets per `seeds.json` (primary seeds 0--4; additional seeds 42/123/456/789/1000/2024).
 
 ## Directory Structure
 
@@ -71,11 +71,16 @@ cd .. && python3 generate_plots.py
 
 ## Key Results Summary
 
-| Experiment | Best Algorithm | Best Fidelity | Hardware |
-|-----------|---------------|---------------|----------|
-| E1 (SiMOS CZ gate) | PPO | F = 1.0000 | A100 |
-| E2 (Donor Universal) | DQN | F = 0.9999 | A100 |
-| E3 (Cross-Backend) | DQN | F = 0.9995 | A100 |
-| E4 (3Q GHZ) | PPO | F = 0.9999 | A100 |
+| Experiment | Algorithm | Best Fidelity | Status | Hardware |
+|-----------|-----------|---------------|--------|----------|
+| E1 (SiMOS CZ gate) | PPO | 0.8215 | NEGATIVE vs published 0.999 (0/3 seeds) | A100 |
+| E1-R4 (donor TQC 4-qubit) | DQN | 0.8444 | NEGATIVE vs 0.99 (0/4 seeds) | A100/H100 |
+| E2 (Donor Universal) | DQN | — | PENDING_REGENERATION (no per-seed artifact) | A100 |
+| E3 (GAA nanowire) | SAC | 0.9705 final; ~1.0 in-training | PARTIAL (0/4 runs final >= 0.99) | A100 |
+| E4 2Q cluster | SAC | 0.9994 | PASS (1/3 seeds) | A100 |
+| E4 2Q GHZ / Dicke-k3 | SAC | 0.9869 / 0.9876 | FAIL (< 0.99) | A100 |
+| E4 3Q multi-target | SAC | 0.4438 (best callback) | FAIL (non-converged) | H100 NVL |
+
+The original summary table (E1 PPO 1.0000, E2 DQN 0.9999, E3 DQN 0.9995, E4 3Q PPO 0.9999) and the DQL/SARSA rows have been removed: no per-seed artifacts exist for those values (see `results_summary.csv`, 2026-10-13 audit).
 
 See `results_summary.csv` for the full per-seed breakdown and `runtime_profile.md` for hardware details.

@@ -1,0 +1,18 @@
+{
+  "package": "siliqun-paper-reproducibility",
+  "status": "remediation-baseline",
+  "baseline_public_commit": "14a49bf957b7aeacffc1bd15ba91293d6fd31b83",
+  "remediation_branch": "fix/siliqun-paper-remediation-20260825",
+  "included_validation": [
+    "trace and Hermiticity preservation",
+    "complex coherence preservation",
+    "T2-star collapse-rate convention",
+    "RK4 and matrix-exponential agreement for a static one-qubit reference"
+  ],
+  "excluded_until_regenerated": [
+    "historical PPO/SiMOS control results",
+    "cross-platform numerical comparisons",
+    "GPU-performance claims",
+    "charge-noise Lindblad claims"
+  ]
+}

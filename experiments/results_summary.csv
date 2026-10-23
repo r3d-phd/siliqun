@@ -1,0 +1,13 @@
+Experiment,Hardware_Profile,Target,Algorithm,N_Qubits,Mean_Fidelity,Std_Fidelity,Best_Fidelity,Status
+E1,simos_nominal,CZ,PPO,2,0.4865,0.0098,0.8215,NEGATIVE_RESULT 0/3 seeds >= 0.999 (10000 eps/seed; results/json/siliqun_r1_ppo_results__r1_ppo_results.json)
+E1-R4,donor_electron,TQC_4q,DQN,4,0.8140,0.0419,0.8444,NEGATIVE_RESULT 0/4 seeds >= 0.99 (mean/std over the 2 completed seeds; seeds 24428/555 completed; 666 v3 rerun final best 0.8427; 1453 crashed ep 500; experiments/E1_replication_daraeizadeh/results/)
+E2,donor_electron,Universal,DQN,2,,,,PENDING_REGENERATION no per-seed artifact in repository
+E3,gaa_nanowire,CZ,SAC,2,,,,PARTIAL final F 0.33-0.97 (3-seed mean 0.752); in-training best ~1.0; 0/4 runs final >= 0.99 (experiments/E4_multitarget_scalability/results/results__gaa_seeds_234_results.json + results__gaa_seed4_v3_results.json)
+E4,simos_nominal,Cluster_linear,SAC,2,0.9960,0.0045,0.9994,PASS 2/3 seeds >= 0.99 (seed 123 @20000 steps; seed 777 @60000 after run extension; seed 42 best 0.9897 within 50000-step budget) (scaling__2Q_cluster_linear.json)
+E4,simos_nominal,GHZ,SAC,2,0.9825,0.0032,0.9869,FAIL reaches 0.95 at 10000 steps (scaling__2Q_ghz.json)
+E4,simos_nominal,Dicke_k3,SAC,2,0.9870,0.0009,0.9876,FAIL reaches 0.95 at 30000 steps (scaling__2Q_dicke_k3.json)
+E4,simos_nominal,GHZ_multi,SAC,3,,,,FAIL 3Q multi-target non-converged; completed runs F<=0.0542; best callback 0.4438 (jobs 180521/180658; results/logs/siliqun_e4_{multitarget,v3}.log; results/json/siliqun_e4_v3_results.json)
+E1,simos_nominal,CZ,GRAPE,2,0.9971,0.0013,0.9982,PASS oracle 5/5 (noise-robust; results__grape_crab_results.json)
+E1,simos_nominal,CZ,CRAB,2,0.9963,0.0020,0.9978,PASS oracle 5/5 (noise-robust; results__grape_crab_results.json)
+E1,simos_nominal,CZ,DQL,2,,,,PENDING_REGENERATION no per-seed artifact in repository
+E1,simos_nominal,CZ,SARSA,2,,,,PENDING_REGENERATION no per-seed artifact in repository

@@ -1,0 +1,32 @@
+{
+  "experiment": "E6: Survey benchmark - standardised comparison of 7 DRL algorithms (bench_env_v5)",
+  "environment": {
+    "name": "bench_env_v5",
+    "base": "SiliQunEnv: device=simos, n_qubits=2, target=ghz, sim_mode=sv (exact state vector), noise_enabled=true (Lindblad), reward_type=shaped",
+    "action_space": "Discrete(7): 6 single-qubit rotations (RX/RY/RZ pi/2 on q0/q1) + CNOT(0->1)",
+    "task": "Prepare |GHZ_2> = (|00>+|11>)/sqrt(2) from |00>; optimal circuit = 3 gates",
+    "max_episode_steps": 200,
+    "fidelity_threshold": 0.99
+  },
+  "algorithms": ["dqn", "dqn_nas", "ppo", "ppo_ent", "ppo_hier", "sac", "ddpg"],
+  "seeds": [0, 1, 2, 3, 4],
+  "total_timesteps": 500000,
+  "eval_every": 2500,
+  "eval_protocol": "10 held-out episodes per eval point, deterministic policy, rotating noise seeds 12345..12354, 20-gate cap per episode; metric = mean best fidelity over the 10 episodes (episodes terminate at F >= 0.99). The 20-gate cap was fixed after protocol validation: with the original 200-gate cap a random policy reaches best F >= 0.99 in 92.5% of episodes (per-depth analysis, results/e6_random_baseline_per_depth.json), which destroys the solve metric. At the 20-gate cap the random floor is mean 0.621 (25% of episodes >= 0.99, results/e6_random_baseline.json).",
+  "failure_criterion": "final mean held-out F < 0.75 (between the random 20-gate floor ~0.64 and the solve threshold 0.99; degenerate fixed-gate policies plateau ~0.25-0.50)",
+  "shared_hyperparameters": {
+    "learning_rate": 0.0003,
+    "batch_size": 128,
+    "gamma": 0.99
+  },
+  "variants": {
+    "dqn": "SB3 DQN, MlpPolicy [256,256], target_update_interval=1000",
+    "dqn_nas": "SB3 DQN, MlpPolicy [512,512,512] (wider architecture stand-in for the NAS-extended variant)",
+    "ppo": "SB3 PPO, MlpPolicy [256,256], n_steps=2048, ent_coef=0.0",
+    "ppo_ent": "SB3 PPO as 'ppo' with ent_coef=0.05",
+    "ppo_hier": "SB3 PPO (base hyperparameters) on BenchHistoryEnv: observation + one-hot of last 2 actions (flat temporal abstraction)",
+    "sac": "SB3 SAC, MlpPolicy [256,256] (temperature always learned, SB3 default) on BenchRelaxationEnv: this SB3 build's SAC only supports Box action spaces, so it shares the DDPG row's Box(7,) continuous relaxation (argmax gate selection); SAC adds the stochastic squashed-Gaussian policy + max-entropy objective",
+    "ddpg": "SB3 DDPG, MlpPolicy [256,256] on BenchRelaxationEnv (Box(7,) logits, argmax)"
+  },
+  "notes": "Reconstruction of the survey Section-12 benchmark (original bench_env_v5 code was hosted in the removed quasar-v6 repository). Shared hyperparameters match experiments/E2_replication_he/config_e2.json. Hardware: local RTX 5090 laptop (CPU-only NumPy/CuPy-free SiliQun backend; torch CPU for policies)."
+}

@@ -1,0 +1,14 @@
+{
+  "source_doi": "10.1103/PhysRevApplied.23.034001",
+  "source_description": "Tanamoto and Ono, 'Noise characterization of gate-all-around silicon spin qubits via TCAD simulation', Physical Review Applied 23, 034001 (2025)",
+  "raw_values": {
+    "T1_ms": 0.5,
+    "T2_ms": 0.1,
+    "sigma_eps_ueV": 2.0,
+    "sigma_J_MHz": 1.0,
+    "tau1_ns": 5,
+    "tau2_ns": 50,
+    "p2_percent": 1.5
+  },
+  "additional_sources": []
+}

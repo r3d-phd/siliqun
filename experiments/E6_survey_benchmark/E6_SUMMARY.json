@@ -1,0 +1,126 @@
+{
+  "dqn": {
+    "n_receipts": 5,
+    "solved_count": 5,
+    "stable_final_count": 5,
+    "first_solve_steps": [
+      2500,
+      2500,
+      2500,
+      2500,
+      2500
+    ],
+    "first_solve_mean": 2500.0,
+    "post_solve_retention_mean": 1.0,
+    "final_F_mean": 1.0,
+    "best_F_mean": 1.0,
+    "wall_hours": 3.0601450966464148
+  },
+  "dqn_nas": {
+    "n_receipts": 5,
+    "solved_count": 5,
+    "stable_final_count": 5,
+    "first_solve_steps": [
+      2500,
+      2500,
+      2500,
+      2500,
+      2500
+    ],
+    "first_solve_mean": 2500.0,
+    "post_solve_retention_mean": 0.9400000000000001,
+    "final_F_mean": 1.0,
+    "best_F_mean": 1.0,
+    "wall_hours": 5.292728713883294
+  },
+  "ppo": {
+    "n_receipts": 5,
+    "solved_count": 5,
+    "stable_final_count": 3,
+    "first_solve_steps": [
+      2500,
+      2500,
+      2500,
+      2500,
+      2500
+    ],
+    "first_solve_mean": 2500.0,
+    "post_solve_retention_mean": 0.741,
+    "final_F_mean": 0.8,
+    "best_F_mean": 1.0,
+    "wall_hours": 2.5468345514933266
+  },
+  "ppo_ent": {
+    "n_receipts": 5,
+    "solved_count": 5,
+    "stable_final_count": 5,
+    "first_solve_steps": [
+      2500,
+      2500,
+      2500,
+      2500,
+      2500
+    ],
+    "first_solve_mean": 2500.0,
+    "post_solve_retention_mean": 0.958,
+    "final_F_mean": 1.0,
+    "best_F_mean": 1.0,
+    "wall_hours": 1.5491338846418592
+  },
+  "ppo_hier": {
+    "n_receipts": 5,
+    "solved_count": 5,
+    "stable_final_count": 4,
+    "first_solve_steps": [
+      2500,
+      2500,
+      52500,
+      2500,
+      2500
+    ],
+    "first_solve_mean": 12500.0,
+    "post_solve_retention_mean": 0.8802222222222221,
+    "final_F_mean": 0.9,
+    "best_F_mean": 1.0,
+    "wall_hours": 1.5206631406148274
+  },
+  "sac": {
+    "n_receipts": 5,
+    "solved_count": 5,
+    "stable_final_count": 5,
+    "first_solve_steps": [
+      2500,
+      2500,
+      2500,
+      52500,
+      52500
+    ],
+    "first_solve_mean": 22500.0,
+    "post_solve_retention_mean": 1.0,
+    "final_F_mean": 1.0,
+    "best_F_mean": 1.0,
+    "wall_hours": 10.60353099750148
+  },
+  "ddpg": {
+    "n_receipts": 5,
+    "solved_count": 1,
+    "stable_final_count": 0,
+    "first_solve_steps": [
+      202500
+    ],
+    "first_solve_mean": 202500.0,
+    "post_solve_retention_mean": 0.16666666666666666,
+    "final_F_mean": 0.4500000000000002,
+    "best_F_mean": 0.6000000000000002,
+    "wall_hours": 6.444002379841275
+  },
+  "random_baseline": {
+    "experiment": "E6_survey_benchmark",
+    "protocol": "random tokens, best fidelity over <= 20 gates, 200 episodes (eval-protocol cap)",
+    "n_episodes": 200,
+    "mean_best_F": 0.62125,
+    "std_best_F": 0.22076217406974402,
+    "fidelity_max": 1.0,
+    "frac_ge_threshold": 0.25
+  }
+}

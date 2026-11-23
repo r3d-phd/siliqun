@@ -1,0 +1,74 @@
+{
+  "launched": "2026-11-23T14:24:46",
+  "wall_seconds": 12354.354227781296,
+  "jobs": [
+    [
+      "sac",
+      0
+    ],
+    [
+      "sac",
+      1
+    ],
+    [
+      "sac",
+      2
+    ],
+    [
+      "sac",
+      3
+    ],
+    [
+      "sac",
+      4
+    ],
+    [
+      "ddpg",
+      0
+    ],
+    [
+      "ddpg",
+      1
+    ],
+    [
+      "ddpg",
+      2
+    ],
+    [
+      "ddpg",
+      3
+    ],
+    [
+      "ddpg",
+      4
+    ]
+  ],
+  "all_ok": true,
+  "results": [
+    {
+      "seed": 0,
+      "pid": 12280,
+      "exit_code": 0
+    },
+    {
+      "seed": 1,
+      "pid": 8708,
+      "exit_code": 0
+    },
+    {
+      "seed": 2,
+      "pid": 27912,
+      "exit_code": 0
+    },
+    {
+      "seed": 3,
+      "pid": 936,
+      "exit_code": 0
+    },
+    {
+      "seed": 4,
+      "pid": 21704,
+      "exit_code": 0
+    }
+  ]
+}

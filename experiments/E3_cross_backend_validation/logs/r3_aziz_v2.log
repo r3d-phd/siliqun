@@ -1,0 +1,30 @@
+=== Node: kcn514 | GPU: NVIDIA A100-PCIE-40GB ===
+=== Installing sb3_contrib ===
+
+[notice] A new release of pip is available: 25.3 -> 26.1.1
+[notice] To update, run: /app/utils/anaconda3-2024.02/bin/python -m pip install --upgrade pip
+=== Verifying environment ===
+torch: 2.5.1+cu121 cuda: True device: NVIDIA A100-PCIE-40GB
+=== Running R3 remaining seeds (666, 1453) ===
+TQC loaded from sb3_contrib
+
+============================================================
+Running seed 666 (1/2)
+============================================================
+  Seed 666 | Ep 500/5000 | mean_F=0.0000 | best_F=0.0000 | elapsed=0.21h
+  Seed 666 | Ep 1000/5000 | mean_F=0.0000 | best_F=0.0000 | elapsed=0.47h
+  Seed 666 | Ep 1500/5000 | mean_F=0.0000 | best_F=0.0000 | elapsed=0.73h
+  Seed 666 | Ep 2000/5000 | mean_F=0.0000 | best_F=0.0000 | elapsed=1.00h
+  Seed 666 | Ep 2500/5000 | mean_F=0.0000 | best_F=0.0000 | elapsed=1.25h
+  Seed 666 | Ep 3000/5000 | mean_F=0.0000 | best_F=0.0000 | elapsed=1.51h
+  Seed 666 | Ep 3500/5000 | mean_F=0.0000 | best_F=0.0000 | elapsed=1.77h
+  Seed 666 | Ep 4000/5000 | mean_F=0.0000 | best_F=0.0000 | elapsed=2.03h
+  Seed 666 | Ep 4500/5000 | mean_F=0.0000 | best_F=0.0000 | elapsed=2.28h
+  Seed 666 | Ep 5000/5000 | mean_F=0.0000 | best_F=0.0000 | elapsed=2.54h
+Seed 666 DONE: best_F=0.000000, mean_F=0.0000
+
+============================================================
+Running seed 1453 (2/2)
+============================================================
+  Seed 1453 | Ep 500/5000 | mean_F=0.0000 | best_F=0.0000 | elapsed=0.21h
+=>> PBS: job killed: walltime 10837 exceeded limit 10800

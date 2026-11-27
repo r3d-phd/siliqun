@@ -1,0 +1,10 @@
+[
+  {
+    "episode": 500,
+    "mean_fidelity": 0.0,
+    "best_fidelity": 0.0,
+    "pct_above_999": 0.0,
+    "elapsed_sec": 742.0242133140564,
+    "eps_per_sec": 0.6738324586025046
+  }
+]

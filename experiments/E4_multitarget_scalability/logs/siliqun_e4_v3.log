@@ -1,0 +1,141 @@
+SiliQun E4 v3 (PATCHED) — Job: 180658.khead2  Node: kcn522  Started: Thu Jun 11 21:36:39 +03 2026
+Python:  Python 3.12.4
+GPU:     NVIDIA H100 NVL
+SiliQun: 2.2.0
+SB3:     2.8.0
+2026-06-11 21:37:04,829 | INFO | SiliQun imported OK (v2.2.0)
+2026-06-11 21:37:13,230 | INFO | SB3 imported OK. Device: cuda
+2026-06-11 21:37:13,235 | INFO | [1/12] START: target=ghz seed=42
+2026-06-11 21:37:13,235 | INFO |   [SB3-SAC v3] target=ghz  seed=42  steps=1000000
+2026-06-11 21:45:22,842 | INFO |   step=5000  rolling_F=0.0661  best_F=0.0661  [IMPROVED]
+2026-06-11 21:53:22,863 | INFO |   step=10000  rolling_F=0.0382  best_F=0.0661  plateau=5000
+2026-06-11 22:01:29,854 | INFO |   step=15000  rolling_F=0.0963  best_F=0.0963  [IMPROVED]
+2026-06-11 22:09:27,840 | INFO |   step=20000  rolling_F=0.0367  best_F=0.0963  plateau=5000
+2026-06-11 22:17:22,301 | INFO |   step=25000  rolling_F=0.0103  best_F=0.0963  plateau=10000
+2026-06-11 22:25:13,067 | INFO |   step=30000  rolling_F=0.0813  best_F=0.0963  plateau=15000
+2026-06-11 22:33:03,342 | INFO |   step=35000  rolling_F=0.1131  best_F=0.1131  [IMPROVED]
+2026-06-11 22:40:54,449 | INFO |   step=40000  rolling_F=0.1413  best_F=0.1413  [IMPROVED]
+2026-06-11 22:48:44,634 | INFO |   step=45000  rolling_F=0.0986  best_F=0.1413  plateau=5000
+2026-06-11 22:56:33,690 | INFO |   step=50000  rolling_F=0.0742  best_F=0.1413  plateau=10000
+2026-06-11 23:04:25,421 | INFO |   step=55000  rolling_F=0.0475  best_F=0.1413  plateau=15000
+2026-06-11 23:12:19,316 | INFO |   step=60000  rolling_F=0.0699  best_F=0.1413  plateau=20000
+2026-06-11 23:20:13,252 | INFO |   step=65000  rolling_F=0.0461  best_F=0.1413  plateau=25000
+2026-06-11 23:28:07,342 | INFO |   step=70000  rolling_F=0.0477  best_F=0.1413  plateau=30000
+2026-06-11 23:36:00,597 | INFO |   step=75000  rolling_F=0.0828  best_F=0.1413  plateau=35000
+2026-06-11 23:43:54,852 | INFO |   step=80000  rolling_F=0.0595  best_F=0.1413  plateau=40000
+2026-06-11 23:51:49,063 | INFO |   step=85000  rolling_F=0.0388  best_F=0.1413  plateau=45000
+2026-06-11 23:59:38,463 | INFO |   step=90000  rolling_F=0.065  best_F=0.1413  plateau=50000
+2026-06-12 00:07:26,507 | INFO |   step=95000  rolling_F=0.0708  best_F=0.1413  plateau=55000
+2026-06-12 00:15:16,184 | INFO |   step=100000  rolling_F=0.0631  best_F=0.1413  plateau=60000
+2026-06-12 00:23:06,339 | INFO |   step=105000  rolling_F=0.074  best_F=0.1413  plateau=65000
+2026-06-12 00:30:56,766 | INFO |   step=110000  rolling_F=0.0349  best_F=0.1413  plateau=70000
+2026-06-12 00:38:45,923 | INFO |   step=115000  rolling_F=0.0983  best_F=0.1413  plateau=75000
+2026-06-12 00:46:36,547 | INFO |   step=120000  rolling_F=0.0653  best_F=0.1413  plateau=80000
+2026-06-12 00:54:25,689 | INFO |   step=125000  rolling_F=0.0666  best_F=0.1413  plateau=85000
+2026-06-12 01:02:19,157 | INFO |   step=130000  rolling_F=0.0676  best_F=0.1413  plateau=90000
+2026-06-12 01:10:09,318 | INFO |   step=135000  rolling_F=0.0708  best_F=0.1413  plateau=95000
+2026-06-12 01:18:02,225 | INFO |   step=140000  rolling_F=0.0819  best_F=0.1413  plateau=100000
+2026-06-12 01:25:56,400 | INFO |   step=145000  rolling_F=0.0563  best_F=0.1413  plateau=105000
+2026-06-12 01:33:50,816 | INFO |   step=150000  rolling_F=0.0887  best_F=0.1413  plateau=110000
+2026-06-12 01:41:43,159 | INFO |   step=155000  rolling_F=0.08  best_F=0.1413  plateau=115000
+2026-06-12 01:49:34,190 | INFO |   step=160000  rolling_F=0.0457  best_F=0.1413  plateau=120000
+2026-06-12 01:57:25,023 | INFO |   step=165000  rolling_F=0.1099  best_F=0.1413  plateau=125000
+2026-06-12 02:05:14,991 | INFO |   step=170000  rolling_F=0.0772  best_F=0.1413  plateau=130000
+2026-06-12 02:13:06,631 | INFO |   step=175000  rolling_F=0.0408  best_F=0.1413  plateau=135000
+2026-06-12 02:20:59,761 | INFO |   step=180000  rolling_F=0.0568  best_F=0.1413  plateau=140000
+2026-06-12 02:28:51,894 | INFO |   step=185000  rolling_F=0.054  best_F=0.1413  plateau=145000
+2026-06-12 02:36:45,983 | INFO |   step=190000  rolling_F=0.0629  best_F=0.1413  plateau=150000
+2026-06-12 02:44:36,842 | INFO |   step=195000  rolling_F=0.0842  best_F=0.1413  plateau=155000
+2026-06-12 02:52:30,032 | INFO |   step=200000  rolling_F=0.031  best_F=0.1413  plateau=160000
+2026-06-12 03:00:19,421 | INFO |   step=205000  rolling_F=0.0886  best_F=0.1413  plateau=165000
+2026-06-12 03:08:08,816 | INFO |   step=210000  rolling_F=0.0417  best_F=0.1413  plateau=170000
+2026-06-12 03:15:57,813 | INFO |   step=215000  rolling_F=0.0347  best_F=0.1413  plateau=175000
+2026-06-12 03:23:47,293 | INFO |   step=220000  rolling_F=0.0396  best_F=0.1413  plateau=180000
+2026-06-12 03:31:35,647 | INFO |   step=225000  rolling_F=0.0458  best_F=0.1413  plateau=185000
+2026-06-12 03:39:24,331 | INFO |   step=230000  rolling_F=0.0632  best_F=0.1413  plateau=190000
+2026-06-12 03:47:15,612 | INFO |   step=235000  rolling_F=0.0777  best_F=0.1413  plateau=195000
+2026-06-12 03:55:05,829 | INFO |   step=240000  rolling_F=0.0581  best_F=0.1413  plateau=200000
+2026-06-12 03:55:05,831 | INFO |   Early stop (patience): no improvement in 200000 steps
+2026-06-12 03:55:34,833 | INFO |   DONE  target=ghz  seed=42  F=0.0542+-0.0058  elapsed=22672s  best_cb=0.1413  not converged
+2026-06-12 03:55:34,841 | INFO | [1/12] SAVED: /home/ralshehri0468/siliqun_e4_v3_results.json
+2026-06-12 03:55:34,841 | INFO | [2/12] START: target=ghz seed=123
+2026-06-12 03:55:34,841 | INFO |   [SB3-SAC v3] target=ghz  seed=123  steps=1000000
+2026-06-12 04:03:16,659 | INFO |   step=5000  rolling_F=0.1694  best_F=0.1694  [IMPROVED]
+2026-06-12 04:11:08,735 | INFO |   step=10000  rolling_F=0.0208  best_F=0.1694  plateau=5000
+2026-06-12 04:19:00,588 | INFO |   step=15000  rolling_F=0.0596  best_F=0.1694  plateau=10000
+2026-06-12 04:26:49,646 | INFO |   step=20000  rolling_F=0.0268  best_F=0.1694  plateau=15000
+2026-06-12 04:34:37,135 | INFO |   step=25000  rolling_F=0.1456  best_F=0.1694  plateau=20000
+2026-06-12 04:42:24,579 | INFO |   step=30000  rolling_F=0.0365  best_F=0.1694  plateau=25000
+2026-06-12 04:50:16,732 | INFO |   step=35000  rolling_F=0.0114  best_F=0.1694  plateau=30000
+2026-06-12 04:58:05,923 | INFO |   step=40000  rolling_F=0.0188  best_F=0.1694  plateau=35000
+2026-06-12 05:05:56,222 | INFO |   step=45000  rolling_F=0.1406  best_F=0.1694  plateau=40000
+2026-06-12 05:13:49,911 | INFO |   step=50000  rolling_F=0.4438  best_F=0.4438  [IMPROVED]
+2026-06-12 05:21:43,770 | INFO |   step=55000  rolling_F=0.1671  best_F=0.4438  plateau=5000
+2026-06-12 05:29:37,375 | INFO |   step=60000  rolling_F=0.1006  best_F=0.4438  plateau=10000
+2026-06-12 05:37:26,972 | INFO |   step=65000  rolling_F=0.0598  best_F=0.4438  plateau=15000
+2026-06-12 05:45:14,375 | INFO |   step=70000  rolling_F=0.3418  best_F=0.4438  plateau=20000
+2026-06-12 05:53:03,327 | INFO |   step=75000  rolling_F=0.0417  best_F=0.4438  plateau=25000
+2026-06-12 06:00:52,206 | INFO |   step=80000  rolling_F=0.0686  best_F=0.4438  plateau=30000
+2026-06-12 06:08:41,545 | INFO |   step=85000  rolling_F=0.1427  best_F=0.4438  plateau=35000
+2026-06-12 06:16:30,540 | INFO |   step=90000  rolling_F=0.2903  best_F=0.4438  plateau=40000
+2026-06-12 06:24:18,206 | INFO |   step=95000  rolling_F=0.0439  best_F=0.4438  plateau=45000
+2026-06-12 06:32:06,699 | INFO |   step=100000  rolling_F=0.0427  best_F=0.4438  plateau=50000
+2026-06-12 06:39:58,017 | INFO |   step=105000  rolling_F=0.1245  best_F=0.4438  plateau=55000
+2026-06-12 06:47:48,428 | INFO |   step=110000  rolling_F=0.0889  best_F=0.4438  plateau=60000
+2026-06-12 06:55:38,776 | INFO |   step=115000  rolling_F=0.1322  best_F=0.4438  plateau=65000
+2026-06-12 07:03:30,282 | INFO |   step=120000  rolling_F=0.0517  best_F=0.4438  plateau=70000
+2026-06-12 07:11:21,457 | INFO |   step=125000  rolling_F=0.0365  best_F=0.4438  plateau=75000
+2026-06-12 07:19:12,796 | INFO |   step=130000  rolling_F=0.0411  best_F=0.4438  plateau=80000
+2026-06-12 07:27:02,586 | INFO |   step=135000  rolling_F=0.0876  best_F=0.4438  plateau=85000
+2026-06-12 07:34:53,209 | INFO |   step=140000  rolling_F=0.0318  best_F=0.4438  plateau=90000
+2026-06-12 07:42:42,278 | INFO |   step=145000  rolling_F=0.0397  best_F=0.4438  plateau=95000
+2026-06-12 07:50:33,651 | INFO |   step=150000  rolling_F=0.0531  best_F=0.4438  plateau=100000
+2026-06-12 07:58:24,341 | INFO |   step=155000  rolling_F=0.0584  best_F=0.4438  plateau=105000
+2026-06-12 08:06:15,431 | INFO |   step=160000  rolling_F=0.0522  best_F=0.4438  plateau=110000
+2026-06-12 08:14:06,651 | INFO |   step=165000  rolling_F=0.0614  best_F=0.4438  plateau=115000
+2026-06-12 08:21:58,530 | INFO |   step=170000  rolling_F=0.0389  best_F=0.4438  plateau=120000
+2026-06-12 08:29:52,208 | INFO |   step=175000  rolling_F=0.0873  best_F=0.4438  plateau=125000
+2026-06-12 08:37:45,334 | INFO |   step=180000  rolling_F=0.0651  best_F=0.4438  plateau=130000
+2026-06-12 08:45:37,859 | INFO |   step=185000  rolling_F=0.0555  best_F=0.4438  plateau=135000
+2026-06-12 08:53:30,202 | INFO |   step=190000  rolling_F=0.0757  best_F=0.4438  plateau=140000
+2026-06-12 09:01:30,214 | INFO |   step=195000  rolling_F=0.0652  best_F=0.4438  plateau=145000
+2026-06-12 09:09:29,158 | INFO |   step=200000  rolling_F=0.1198  best_F=0.4438  plateau=150000
+2026-06-12 09:17:27,870 | INFO |   step=205000  rolling_F=0.0342  best_F=0.4438  plateau=155000
+2026-06-12 09:25:25,565 | INFO |   step=210000  rolling_F=0.0839  best_F=0.4438  plateau=160000
+2026-06-12 09:33:23,437 | INFO |   step=215000  rolling_F=0.1156  best_F=0.4438  plateau=165000
+2026-06-12 09:41:20,984 | INFO |   step=220000  rolling_F=0.1105  best_F=0.4438  plateau=170000
+2026-06-12 09:49:25,706 | INFO |   step=225000  rolling_F=0.0794  best_F=0.4438  plateau=175000
+2026-06-12 09:57:28,961 | INFO |   step=230000  rolling_F=0.0475  best_F=0.4438  plateau=180000
+2026-06-12 10:05:29,451 | INFO |   step=235000  rolling_F=0.0491  best_F=0.4438  plateau=185000
+2026-06-12 10:13:24,374 | INFO |   step=240000  rolling_F=0.0504  best_F=0.4438  plateau=190000
+2026-06-12 10:21:22,231 | INFO |   step=245000  rolling_F=0.1354  best_F=0.4438  plateau=195000
+2026-06-12 10:29:19,900 | INFO |   step=250000  rolling_F=0.0612  best_F=0.4438  plateau=200000
+2026-06-12 10:29:19,901 | INFO |   Early stop (patience): no improvement in 200000 steps
+2026-06-12 10:29:56,875 | INFO |   DONE  target=ghz  seed=123  F=0.0222+-0.001  elapsed=23625s  best_cb=0.4438  not converged
+2026-06-12 10:29:56,882 | INFO | [2/12] SAVED: /home/ralshehri0468/siliqun_e4_v3_results.json
+2026-06-12 10:29:56,882 | INFO | [3/12] START: target=ghz seed=456
+2026-06-12 10:29:56,882 | INFO |   [SB3-SAC v3] target=ghz  seed=456  steps=1000000
+2026-06-12 10:37:42,765 | INFO |   step=5000  rolling_F=0.0442  best_F=0.0442  [IMPROVED]
+2026-06-12 10:45:37,754 | INFO |   step=10000  rolling_F=0.038  best_F=0.0442  plateau=5000
+2026-06-12 10:53:32,744 | INFO |   step=15000  rolling_F=0.0478  best_F=0.0478  [IMPROVED]
+2026-06-12 11:01:31,762 | INFO |   step=20000  rolling_F=0.0443  best_F=0.0478  plateau=5000
+2026-06-12 11:09:30,452 | INFO |   step=25000  rolling_F=0.0545  best_F=0.0545  [IMPROVED]
+2026-06-12 11:17:32,610 | INFO |   step=30000  rolling_F=0.0366  best_F=0.0545  plateau=5000
+2026-06-12 11:25:30,258 | INFO |   step=35000  rolling_F=0.0472  best_F=0.0545  plateau=10000
+2026-06-12 11:33:22,533 | INFO |   step=40000  rolling_F=0.0088  best_F=0.0545  plateau=15000
+2026-06-12 11:41:16,998 | INFO |   step=45000  rolling_F=0.0417  best_F=0.0545  plateau=20000
+2026-06-12 11:49:10,472 | INFO |   step=50000  rolling_F=0.1053  best_F=0.1053  [IMPROVED]
+2026-06-12 11:57:07,167 | INFO |   step=55000  rolling_F=0.2381  best_F=0.2381  [IMPROVED]
+2026-06-12 12:05:00,223 | INFO |   step=60000  rolling_F=0.0519  best_F=0.2381  plateau=5000
+2026-06-12 12:12:55,801 | INFO |   step=65000  rolling_F=0.1563  best_F=0.2381  plateau=10000
+2026-06-12 12:20:54,542 | INFO |   step=70000  rolling_F=0.2069  best_F=0.2381  plateau=15000
+2026-06-12 12:28:50,341 | INFO |   step=75000  rolling_F=0.0149  best_F=0.2381  plateau=20000
+2026-06-12 12:36:47,129 | INFO |   step=80000  rolling_F=0.0935  best_F=0.2381  plateau=25000
+2026-06-12 12:44:42,083 | INFO |   step=85000  rolling_F=0.1017  best_F=0.2381  plateau=30000
+2026-06-12 12:52:36,465 | INFO |   step=90000  rolling_F=0.1116  best_F=0.2381  plateau=35000
+2026-06-12 13:00:31,805 | INFO |   step=95000  rolling_F=0.0915  best_F=0.2381  plateau=40000
+2026-06-12 13:08:29,703 | INFO |   step=100000  rolling_F=0.0864  best_F=0.2381  plateau=45000
+2026-06-12 13:16:24,199 | INFO |   step=105000  rolling_F=0.0623  best_F=0.2381  plateau=50000
+2026-06-12 13:24:18,306 | INFO |   step=110000  rolling_F=0.0453  best_F=0.2381  plateau=55000
+2026-06-12 13:32:12,193 | INFO |   step=115000  rolling_F=0.0438  best_F=0.2381  plateau=60000
+=>> PBS: job killed: walltime 57606 exceeded limit 57600

@@ -1,0 +1,921 @@
+{
+ "seed": 4,
+ "final_mean_fidelity": 0.4999999999999999,
+ "final_best_fidelity": 0.4999999999999999,
+ "final_pct_above_999": 0.0,
+ "final_pct_above_99": 0.0,
+ "training_time_min": 3.773,
+ "episodes": 5000,
+ "training_curve": [
+  {
+   "episode": 50,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 7.8,
+   "eps_per_sec": 6.3771
+  },
+  {
+   "episode": 100,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 10.7,
+   "eps_per_sec": 9.3342
+  },
+  {
+   "episode": 150,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 13.4,
+   "eps_per_sec": 11.1633
+  },
+  {
+   "episode": 200,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 16.1,
+   "eps_per_sec": 12.4206
+  },
+  {
+   "episode": 250,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 18.8,
+   "eps_per_sec": 13.3317
+  },
+  {
+   "episode": 300,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 21.6,
+   "eps_per_sec": 13.9059
+  },
+  {
+   "episode": 350,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 24.3,
+   "eps_per_sec": 14.3981
+  },
+  {
+   "episode": 400,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 27.0,
+   "eps_per_sec": 14.815
+  },
+  {
+   "episode": 450,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 29.8,
+   "eps_per_sec": 15.0986
+  },
+  {
+   "episode": 500,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 32.6,
+   "eps_per_sec": 15.3223
+  },
+  {
+   "episode": 550,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 35.3,
+   "eps_per_sec": 15.5771
+  },
+  {
+   "episode": 600,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 37.9,
+   "eps_per_sec": 15.8222
+  },
+  {
+   "episode": 650,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 40.6,
+   "eps_per_sec": 16.0196
+  },
+  {
+   "episode": 700,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 43.2,
+   "eps_per_sec": 16.1915
+  },
+  {
+   "episode": 750,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 46.0,
+   "eps_per_sec": 16.3153
+  },
+  {
+   "episode": 800,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 48.6,
+   "eps_per_sec": 16.456
+  },
+  {
+   "episode": 850,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 51.3,
+   "eps_per_sec": 16.5633
+  },
+  {
+   "episode": 900,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 54.1,
+   "eps_per_sec": 16.6409
+  },
+  {
+   "episode": 950,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 56.7,
+   "eps_per_sec": 16.7407
+  },
+  {
+   "episode": 1000,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 59.4,
+   "eps_per_sec": 16.8428
+  },
+  {
+   "episode": 1050,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 62.0,
+   "eps_per_sec": 16.9303
+  },
+  {
+   "episode": 1100,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 64.7,
+   "eps_per_sec": 16.9989
+  },
+  {
+   "episode": 1150,
+   "mean_fidelity": 0.48999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 67.4,
+   "eps_per_sec": 17.0727
+  },
+  {
+   "episode": 1200,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 70.1,
+   "eps_per_sec": 17.1256
+  },
+  {
+   "episode": 1250,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 72.8,
+   "eps_per_sec": 17.1709
+  },
+  {
+   "episode": 1300,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 75.6,
+   "eps_per_sec": 17.2043
+  },
+  {
+   "episode": 1350,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 78.3,
+   "eps_per_sec": 17.2448
+  },
+  {
+   "episode": 1400,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 81.0,
+   "eps_per_sec": 17.284
+  },
+  {
+   "episode": 1450,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 83.7,
+   "eps_per_sec": 17.331
+  },
+  {
+   "episode": 1500,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 86.3,
+   "eps_per_sec": 17.3887
+  },
+  {
+   "episode": 1550,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 88.9,
+   "eps_per_sec": 17.4294
+  },
+  {
+   "episode": 1600,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 90.9,
+   "eps_per_sec": 17.6081
+  },
+  {
+   "episode": 1650,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 92.7,
+   "eps_per_sec": 17.791
+  },
+  {
+   "episode": 1700,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 94.7,
+   "eps_per_sec": 17.9568
+  },
+  {
+   "episode": 1750,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 97.6,
+   "eps_per_sec": 17.9328
+  },
+  {
+   "episode": 1800,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 100.5,
+   "eps_per_sec": 17.9071
+  },
+  {
+   "episode": 1850,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 103.2,
+   "eps_per_sec": 17.9221
+  },
+  {
+   "episode": 1900,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 106.0,
+   "eps_per_sec": 17.9161
+  },
+  {
+   "episode": 1950,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 108.9,
+   "eps_per_sec": 17.912
+  },
+  {
+   "episode": 2000,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 111.6,
+   "eps_per_sec": 17.9192
+  },
+  {
+   "episode": 2050,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 114.4,
+   "eps_per_sec": 17.9126
+  },
+  {
+   "episode": 2100,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 117.2,
+   "eps_per_sec": 17.9145
+  },
+  {
+   "episode": 2150,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 120.1,
+   "eps_per_sec": 17.9071
+  },
+  {
+   "episode": 2200,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 122.9,
+   "eps_per_sec": 17.8961
+  },
+  {
+   "episode": 2250,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 125.7,
+   "eps_per_sec": 17.9046
+  },
+  {
+   "episode": 2300,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 128.3,
+   "eps_per_sec": 17.9239
+  },
+  {
+   "episode": 2350,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 131.1,
+   "eps_per_sec": 17.9312
+  },
+  {
+   "episode": 2400,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 133.7,
+   "eps_per_sec": 17.9449
+  },
+  {
+   "episode": 2450,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 136.5,
+   "eps_per_sec": 17.9455
+  },
+  {
+   "episode": 2500,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 138.2,
+   "eps_per_sec": 18.0892
+  },
+  {
+   "episode": 2550,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 139.6,
+   "eps_per_sec": 18.2634
+  },
+  {
+   "episode": 2600,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 140.9,
+   "eps_per_sec": 18.4492
+  },
+  {
+   "episode": 2650,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 142.2,
+   "eps_per_sec": 18.6368
+  },
+  {
+   "episode": 2700,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 143.5,
+   "eps_per_sec": 18.8174
+  },
+  {
+   "episode": 2750,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 144.9,
+   "eps_per_sec": 18.976
+  },
+  {
+   "episode": 2800,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 146.4,
+   "eps_per_sec": 19.1313
+  },
+  {
+   "episode": 2850,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 147.6,
+   "eps_per_sec": 19.3106
+  },
+  {
+   "episode": 2900,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 148.7,
+   "eps_per_sec": 19.4966
+  },
+  {
+   "episode": 2950,
+   "mean_fidelity": 0.48999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 149.9,
+   "eps_per_sec": 19.6813
+  },
+  {
+   "episode": 3000,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 151.0,
+   "eps_per_sec": 19.8625
+  },
+  {
+   "episode": 3050,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 152.2,
+   "eps_per_sec": 20.0414
+  },
+  {
+   "episode": 3100,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 153.3,
+   "eps_per_sec": 20.2196
+  },
+  {
+   "episode": 3150,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 154.5,
+   "eps_per_sec": 20.3858
+  },
+  {
+   "episode": 3200,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 155.8,
+   "eps_per_sec": 20.5439
+  },
+  {
+   "episode": 3250,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 157.1,
+   "eps_per_sec": 20.6869
+  },
+  {
+   "episode": 3300,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 158.4,
+   "eps_per_sec": 20.8394
+  },
+  {
+   "episode": 3350,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 159.6,
+   "eps_per_sec": 20.9938
+  },
+  {
+   "episode": 3400,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 160.8,
+   "eps_per_sec": 21.1503
+  },
+  {
+   "episode": 3450,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 162.0,
+   "eps_per_sec": 21.2905
+  },
+  {
+   "episode": 3500,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 163.3,
+   "eps_per_sec": 21.4368
+  },
+  {
+   "episode": 3550,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 164.7,
+   "eps_per_sec": 21.5602
+  },
+  {
+   "episode": 3600,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 166.8,
+   "eps_per_sec": 21.578
+  },
+  {
+   "episode": 3650,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 168.9,
+   "eps_per_sec": 21.6087
+  },
+  {
+   "episode": 3700,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 170.9,
+   "eps_per_sec": 21.6453
+  },
+  {
+   "episode": 3750,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 172.9,
+   "eps_per_sec": 21.6948
+  },
+  {
+   "episode": 3800,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 174.8,
+   "eps_per_sec": 21.7446
+  },
+  {
+   "episode": 3850,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 176.9,
+   "eps_per_sec": 21.7693
+  },
+  {
+   "episode": 3900,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 179.0,
+   "eps_per_sec": 21.7935
+  },
+  {
+   "episode": 3950,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 180.9,
+   "eps_per_sec": 21.8296
+  },
+  {
+   "episode": 4000,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 183.6,
+   "eps_per_sec": 21.7831
+  },
+  {
+   "episode": 4050,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 186.5,
+   "eps_per_sec": 21.7113
+  },
+  {
+   "episode": 4100,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 189.3,
+   "eps_per_sec": 21.6575
+  },
+  {
+   "episode": 4150,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 191.5,
+   "eps_per_sec": 21.6688
+  },
+  {
+   "episode": 4200,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 193.8,
+   "eps_per_sec": 21.6745
+  },
+  {
+   "episode": 4250,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 195.8,
+   "eps_per_sec": 21.7005
+  },
+  {
+   "episode": 4300,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 197.9,
+   "eps_per_sec": 21.7242
+  },
+  {
+   "episode": 4350,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 200.3,
+   "eps_per_sec": 21.7136
+  },
+  {
+   "episode": 4400,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 202.4,
+   "eps_per_sec": 21.7414
+  },
+  {
+   "episode": 4450,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 204.3,
+   "eps_per_sec": 21.7824
+  },
+  {
+   "episode": 4500,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 206.3,
+   "eps_per_sec": 21.8114
+  },
+  {
+   "episode": 4550,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 208.4,
+   "eps_per_sec": 21.8372
+  },
+  {
+   "episode": 4600,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 210.5,
+   "eps_per_sec": 21.8497
+  },
+  {
+   "episode": 4650,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 212.5,
+   "eps_per_sec": 21.8788
+  },
+  {
+   "episode": 4700,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 214.4,
+   "eps_per_sec": 21.9267
+  },
+  {
+   "episode": 4750,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 216.2,
+   "eps_per_sec": 21.9703
+  },
+  {
+   "episode": 4800,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 218.3,
+   "eps_per_sec": 21.9862
+  },
+  {
+   "episode": 4850,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 220.4,
+   "eps_per_sec": 22.0052
+  },
+  {
+   "episode": 4900,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 222.6,
+   "eps_per_sec": 22.0105
+  },
+  {
+   "episode": 4950,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 224.4,
+   "eps_per_sec": 22.0578
+  },
+  {
+   "episode": 5000,
+   "mean_fidelity": 0.49999999999999994,
+   "best_fidelity": 0.4999999999999999,
+   "pct_above_999": 0.0,
+   "pct_above_99": 0.0,
+   "elapsed_sec": 226.4,
+   "eps_per_sec": 22.0849
+  }
+ ],
+ "protocol": {
+  "experiment": "Regeneration R5: Replications 2/3 donor_electron 4q GHZ DQN",
+  "env": "SiliQunEnv(device='donor', n_qubits=4, target_state='ghz', max_steps=50, fidelity_threshold=0.99, sim_mode='mps')",
+  "action_space": "Discrete(23): 16 rotations RX/RY(pi/2,pi) x 4 qubits, 6 CNOT/CZ on pairs (0-1,1-2,2-3), 1 idle RZ(0)",
+  "algo": "SB3 DQN MlpPolicy [128,128] x2, buffer 1e5, train_freq 1, gradient_steps 1, target_update_interval 1000, eps 0.9->0.05 linear",
+  "config_anchor": "experiments/E2_replication_he/config_e2.json (lr 3e-4, batch 128, gamma 0.99, 5000 ep, threshold 0.999)",
+  "device": "CPU (no CUDA backend in env step path; 4q MPS is numpy-exact)",
+  "run_date": "2026-10-16 03:29:45",
+  "siliqun_repo_head": "1ec9a81"
+ }
+}

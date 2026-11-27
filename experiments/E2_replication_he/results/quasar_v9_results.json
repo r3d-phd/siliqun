@@ -1,0 +1,37 @@
+{
+  "version": "9.0",
+  "device_type": "simos",
+  "stages": [
+    3
+  ],
+  "seed": 456,
+  "started": "2026-06-11 09:46:14",
+  "components": {
+    "vapor_lite": true,
+    "swdft": true,
+    "erl": true,
+    "sdft": true,
+    "ttt": true,
+    "brfd": true,
+    "pbt": true,
+    "COMPONENT_MODES": {
+      "vapor_lite": "proactive",
+      "swdft": "proactive",
+      "erl": "reactive",
+      "sdft": "reactive",
+      "ttt": "reactive",
+      "brfd": "proactive",
+      "dehb_inner": "boundary",
+      "pbt": "boundary",
+      "hmrl": "proactive",
+      "sequraity_hmrl": "reactive"
+    }
+  },
+  "stage_0": {
+    "n_qubits": 3,
+    "step": 1500000,
+    "eval_fidelity": 0.19288743536248648,
+    "best_fidelity": 0.546075385553135,
+    "elapsed": 19675.047518491745
+  }
+}

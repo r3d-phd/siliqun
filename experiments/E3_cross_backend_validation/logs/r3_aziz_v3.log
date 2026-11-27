@@ -1,0 +1,5 @@
+=== Node: kcn502 | GPU: NVIDIA A100-PCIE-40GB ===
+=== Job start: Sat May 30 16:13:42 +03 2026 ===
+/var/spool/pbs/mom_priv/jobs/179087.khead2.SC: line 15: /opt/share/anaconda3/2024.06/etc/profile.d/conda.sh: No such file or directory
+/var/spool/pbs/mom_priv/jobs/179087.khead2.SC: line 16: /opt/share/anaconda3/2023.09/etc/profile.d/conda.sh: No such file or directory
+FATAL: Cannot find conda

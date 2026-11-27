@@ -1,0 +1,41 @@
+[dqn s0] 50000/500000 (last eval F=1.0000) wall=259s
+[dqn s0] 100000/500000 (last eval F=1.0000) wall=449s
+[dqn s0] 150000/500000 (last eval F=1.0000) wall=676s
+[dqn s0] 200000/500000 (last eval F=1.0000) wall=913s
+[dqn s0] 250000/500000 (last eval F=1.0000) wall=1149s
+[dqn s0] 300000/500000 (last eval F=1.0000) wall=1354s
+[dqn s0] 350000/500000 (last eval F=1.0000) wall=1542s
+[dqn s0] 400000/500000 (last eval F=1.0000) wall=1800s
+[dqn s0] 450000/500000 (last eval F=1.0000) wall=2056s
+[dqn s0] 500000/500000 (last eval F=1.0000) wall=2205s
+[dqn s0] DONE solved=True first_solve=2500 final_F=1.0000 failed=False -> C:\Users\raada\Documents\PhD-Audit\repos\siliqun\experiments\E6_survey_benchmark\results\e6_dqn_s0.json
+[ppo s0] 51200/500000 (last eval F=1.0000) wall=146s
+[ppo s0] 102400/500000 (last eval F=1.0000) wall=292s
+[ppo s0] 153600/500000 (last eval F=0.2500) wall=444s
+[ppo s0] 204800/500000 (last eval F=1.0000) wall=677s
+[ppo s0] 256000/500000 (last eval F=1.0000) wall=937s
+[ppo s0] 307200/500000 (last eval F=1.0000) wall=1170s
+[ppo s0] 358400/500000 (last eval F=1.0000) wall=1307s
+[ppo s0] 409600/500000 (last eval F=1.0000) wall=1518s
+[ppo s0] 460800/500000 (last eval F=1.0000) wall=1721s
+[ppo s0] 501760/500000 (last eval F=1.0000) wall=1836s
+[ppo s0] DONE solved=True first_solve=2500 final_F=1.0000 failed=False -> C:\Users\raada\Documents\PhD-Audit\repos\siliqun\experiments\E6_survey_benchmark\results\e6_ppo_s0.json
+[ppo_hier s0] 51200/500000 (last eval F=1.0000) wall=121s
+[ppo_hier s0] 102400/500000 (last eval F=1.0000) wall=229s
+[ppo_hier s0] 153600/500000 (last eval F=1.0000) wall=336s
+[ppo_hier s0] 204800/500000 (last eval F=1.0000) wall=437s
+[ppo_hier s0] 256000/500000 (last eval F=1.0000) wall=547s
+[ppo_hier s0] 307200/500000 (last eval F=0.5000) wall=662s
+[ppo_hier s0] 358400/500000 (last eval F=1.0000) wall=772s
+[ppo_hier s0] 409600/500000 (last eval F=1.0000) wall=882s
+[ppo_hier s0] 460800/500000 (last eval F=1.0000) wall=989s
+[ppo_hier s0] 501760/500000 (last eval F=1.0000) wall=1080s
+[ppo_hier s0] DONE solved=True first_solve=2500 final_F=1.0000 failed=False -> C:\Users\raada\Documents\PhD-Audit\repos\siliqun\experiments\E6_survey_benchmark\results\e6_ppo_hier_s0.json
+[ddpg s0] 50000/500000 (last eval F=0.5000) wall=597s
+[ddpg s0] 100000/500000 (last eval F=0.2500) wall=1206s
+[ddpg s0] 150000/500000 (last eval F=0.2500) wall=1835s
+[ddpg s0] 200000/500000 (last eval F=0.2500) wall=2461s
+[ddpg s0] 250000/500000 (last eval F=0.2500) wall=3083s
+[ddpg s0] 300000/500000 (last eval F=0.2500) wall=3719s
+[ddpg s0] 350000/500000 (last eval F=0.2500) wall=4347s
+[ddpg s0] 400000/500000 (last eval F=0.2500) wall=4981s

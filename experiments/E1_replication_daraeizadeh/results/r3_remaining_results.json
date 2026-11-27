@@ -1,0 +1,22 @@
+{
+  "666": {
+    "seed": 666,
+    "best_F": 0.0,
+    "mean_F_final": 0.0,
+    "std_F_final": 0.0,
+    "pct_above_999": 0.0,
+    "episode_fidelities": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "completed": true
+  }
+}

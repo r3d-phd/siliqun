@@ -1,0 +1,22 @@
+[sac s1] 50000/500000 (last eval F=1.0000) wall=735s
+[sac s1] 100000/500000 (last eval F=1.0000) wall=1486s
+[sac s1] 150000/500000 (last eval F=1.0000) wall=2296s
+[sac s1] 200000/500000 (last eval F=1.0000) wall=3124s
+[sac s1] 250000/500000 (last eval F=1.0000) wall=3857s
+[sac s1] 300000/500000 (last eval F=1.0000) wall=4688s
+[sac s1] 350000/500000 (last eval F=1.0000) wall=5423s
+[sac s1] 400000/500000 (last eval F=1.0000) wall=6151s
+[sac s1] 450000/500000 (last eval F=1.0000) wall=6884s
+[sac s1] 500000/500000 (last eval F=1.0000) wall=7617s
+[sac s1] DONE solved=True first_solve=2500 final_F=1.0000 failed=False -> C:\Users\raada\Documents\PhD-Audit\repos\siliqun\experiments\E6_survey_benchmark\results\e6_sac_s1.json
+[ddpg s1] 50000/500000 (last eval F=0.5000) wall=421s
+[ddpg s1] 100000/500000 (last eval F=0.5000) wall=860s
+[ddpg s1] 150000/500000 (last eval F=0.2500) wall=1297s
+[ddpg s1] 200000/500000 (last eval F=0.2500) wall=1713s
+[ddpg s1] 250000/500000 (last eval F=0.5000) wall=2120s
+[ddpg s1] 300000/500000 (last eval F=0.2500) wall=2546s
+[ddpg s1] 350000/500000 (last eval F=0.2500) wall=3009s
+[ddpg s1] 400000/500000 (last eval F=0.5000) wall=3548s
+[ddpg s1] 450000/500000 (last eval F=0.2500) wall=4095s
+[ddpg s1] 500000/500000 (last eval F=0.5000) wall=4633s
+[ddpg s1] DONE solved=False first_solve=None final_F=0.5000 failed=True -> C:\Users\raada\Documents\PhD-Audit\repos\siliqun\experiments\E6_survey_benchmark\results\e6_ddpg_s1.json

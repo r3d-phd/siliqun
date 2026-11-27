@@ -1,0 +1,27 @@
+[dqn_nas s0] 50000/500000 (last eval F=1.0000) wall=403s
+[dqn_nas s0] 100000/500000 (last eval F=1.0000) wall=839s
+[dqn_nas s0] 150000/500000 (last eval F=1.0000) wall=1271s
+[dqn_nas s0] 200000/500000 (last eval F=1.0000) wall=1618s
+[dqn_nas s0] 250000/500000 (last eval F=1.0000) wall=2074s
+[dqn_nas s0] 300000/500000 (last eval F=1.0000) wall=2363s
+[dqn_nas s0] 350000/500000 (last eval F=1.0000) wall=2660s
+[dqn_nas s0] 400000/500000 (last eval F=0.5000) wall=3146s
+[dqn_nas s0] 450000/500000 (last eval F=1.0000) wall=3523s
+[dqn_nas s0] 500000/500000 (last eval F=1.0000) wall=3931s
+[dqn_nas s0] DONE solved=True first_solve=2500 final_F=1.0000 failed=False -> C:\Users\raada\Documents\PhD-Audit\repos\siliqun\experiments\E6_survey_benchmark\results\e6_dqn_nas_s0.json
+[ppo_ent s0] 51200/500000 (last eval F=1.0000) wall=141s
+[ppo_ent s0] 102400/500000 (last eval F=1.0000) wall=258s
+[ppo_ent s0] 153600/500000 (last eval F=1.0000) wall=363s
+[ppo_ent s0] 204800/500000 (last eval F=1.0000) wall=469s
+[ppo_ent s0] 256000/500000 (last eval F=1.0000) wall=575s
+[ppo_ent s0] 307200/500000 (last eval F=1.0000) wall=686s
+[ppo_ent s0] 358400/500000 (last eval F=1.0000) wall=797s
+[ppo_ent s0] 409600/500000 (last eval F=1.0000) wall=907s
+[ppo_ent s0] 460800/500000 (last eval F=0.2500) wall=1019s
+[ppo_ent s0] 501760/500000 (last eval F=1.0000) wall=1107s
+[ppo_ent s0] DONE solved=True first_solve=2500 final_F=1.0000 failed=False -> C:\Users\raada\Documents\PhD-Audit\repos\siliqun\experiments\E6_survey_benchmark\results\e6_ppo_ent_s0.json
+[sac s0] 50000/500000 (last eval F=0.5000) wall=974s
+[sac s0] 100000/500000 (last eval F=1.0000) wall=1983s
+[sac s0] 150000/500000 (last eval F=1.0000) wall=3009s
+[sac s0] 200000/500000 (last eval F=1.0000) wall=4052s
+[sac s0] 250000/500000 (last eval F=1.0000) wall=5093s

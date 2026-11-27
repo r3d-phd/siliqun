@@ -1,0 +1,11 @@
+Alignment fix v2 verification:
+
+The Environment Layer paragraph now looks MUCH better:
+1. "Environment Layer." starts flush left (no indent) - aligned with figure caption
+2. All lines now extend to approximately the same right margin - proper full justification
+3. The sans-serif font (\textsf) for SiliQunEnv and gymnasium.Env is narrower than monospace (\texttt), allowing better line breaks
+4. The \emergencystretch=1em gives LaTeX more flexibility in justification
+5. The math symbols are now separated ($R_x$, $R_y$, $R_z$) instead of grouped, allowing line breaks between them
+6. "GPU state vector" replaces "GPU SV" which reads better and helps justification
+
+The paragraph text is now evenly justified on both left and right edges, matching the figure caption and other body text throughout the paper.

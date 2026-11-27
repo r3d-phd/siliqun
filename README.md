@@ -459,8 +459,8 @@ siliqun/
 ├── core/
 │   ├── __init__.py
 │   └── abc.py                        # TechnologyProfile ABC + PGIRSValidator
-├── paper/
-│   └── softwarex_siliqun_v2.tex      # SoftwareX manuscript
+├── archive/
+│   └── (superseded paper drafts, advisor report - kept for history)
 └── README.md
 plugins/
 └── siliqun-gaas/                     # Reference plugin (GAA, 47 lines)

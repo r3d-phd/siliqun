@@ -1,0 +1,93 @@
+DETAILED NOTES: arXiv:2603.03051 - Scaling of silicon spin qubits under correlated noise
+Authors: Rojas-Arias, Camenzind, Wu, Stano, Noiri, Takeda, Nakajima, Kobayashi, Scappucci, Loss, Tarucha
+Affiliations: RIKEN (Japan), QuTech (Delft), Basel, KFUPM (Saudi Arabia!)
+Submitted: March 3, 2026
+
+=== DEVICE ===
+- 5-qubit linear silicon spin array on Si/SiGe heterostructure
+- Isotopically enriched 28Si quantum well
+- In-plane magnetic field + Co micromagnet for qubit addressability
+- Exchange interactions < 10 kHz (negligible direct coupling)
+- Zeeman energies: 16.0-17.0 GHz across Q1-Q5
+
+=== THREE NOISE CORRELATION REGIMES ===
+1. UNCORRELATED (|c(f)| = 0): Nuclear spin noise, hyperfine coupling
+   - Local to each qubit, standard QEC assumption
+   
+2. PERFECTLY CORRELATED (|c(f)| = 1): Global magnetic field drifts
+   - ~8 Hz/s drift rate from superconducting magnet demagnetization
+   - Affects ALL qubits identically
+   - CRITICAL for QEC but MITIGABLE (drift correction, DFS encoding!)
+   - DFS encoding explicitly protects against this!
+   
+3. PARTIALLY CORRELATED (0 < |c(f)| < 1): Charge noise from TLFs
+   - Two-level fluctuators in oxide layers
+   - Short-range: decays with qubit separation
+   - Correlation length l_c = 81 nm (exponential decay)
+   - Average nearest-neighbor qubit spacing L_q = 108 nm
+   - Nearest-neighbor correlation ~0.57, next-nearest ~0.10
+   - ELECTRICALLY TUNABLE via gate voltages
+   - Compatible with fault-tolerant operation
+
+=== KEY QUANTITATIVE RESULTS ===
+- Charge noise correlation length: l_c = N_c * L_q = 81 nm
+- N_c = 0.75 (correlation extends ~0.75 qubit spacings)
+- TLF density: ρ_TLF = 3 × 10^10 cm^-2
+- Nearest-neighbor correlation: 0.33-0.57 (depends on gate voltage)
+- Second-neighbor correlation: 0.05-0.10
+- Third-neighbor correlation: ~0.04
+
+=== IMPACT ON QEC ===
+- Analyzed repetition code and surface code under correlated noise
+- Perfectly correlated noise (magnetic drift): can invalidate QEC threshold entirely
+  → But mitigable via drift correction or DFS encoding
+- Partially correlated charge noise: increases QEC overhead but does NOT prevent fault tolerance
+  → For measured correlations: ~1.5x overhead for repetition code, ~1.2x for surface code
+- Main conclusion: "correlated noise in silicon spin qubits, while present, does not represent a fundamental obstacle to fault-tolerant quantum computing"
+
+=== RELEVANCE TO SILIQUN ===
+1. DFS encoding (what SiliQun simulates) is EXPLICITLY mentioned as a mitigation for perfectly correlated noise (ref [35])
+2. The charge noise correlations they measure are the EXACT type of noise SiliQun's DFS projection handles
+3. Their 5-qubit linear array maps to our SLEDGE grid topology
+4. The correlation length (81 nm) and decay profile could parameterize SiliQun's noise model
+5. KFUPM co-author (Saudi Arabia) - potential collaboration angle
+6. This paper provides experimental validation for the noise model assumptions in SiliQun
+
+=== NOTABLE: KFUPM AFFILIATION ===
+- Author affiliations include King Fahd University of Petroleum and Minerals (KFUPM), Dhahran, Saudi Arabia
+- And Quantum Center, KFUPM
+- Daniel Loss has KFUPM affiliation (visiting?)
+- This is a Saudi connection - relevant for KAU collaboration potential
+
+=== QEC PERFORMANCE UNDER CORRELATED NOISE (Fig 5) ===
+- Repetition code analysis: logical error rate vs code distance d
+- Uncorrelated noise (N_c=0): exponential suppression with distance (standard QEC)
+- Perfectly correlated (N_c=∞): much weaker suppression, severe QEC degradation
+- TLF model (N_c≈1): nearly indistinguishable from uncorrelated limit!
+- For N_c=1 (their measured value): logical error rate < 10^-10 achievable with d=13
+- 2D layout shows worse performance than 1D due to shorter average qubit distances
+- Surface code: similar trends, but N=d^2 data qubits means larger overhead
+
+=== DISCUSSION KEY POINTS ===
+1. More compact layouts → stronger correlations → worse QEC (counterintuitive)
+2. Gate-voltage tuning can control correlation strength
+3. Charge noise correlations at measured levels: minor effect on QEC
+4. Global magnetic drift: hard lower bound on logical error rate
+   → Mitigation: DFS encoding (singlet-triplet or exchange-only qubits), active feedback
+   → Paper EXPLICITLY mentions DFS as mitigation strategy (page 8)
+5. Sparse arrays with shuttling could reduce correlations
+
+=== CONCLUSIONS ===
+- Correlated noise does NOT fundamentally prevent fault-tolerant QC in silicon
+- Magnetic drift needs mitigation (DFS encoding or feedback)
+- Charge noise correlations have only minor effects on logical error rates
+- Framework is generalizable to other qubit platforms
+
+=== CRITICAL CONNECTION TO SILIQUN ===
+This paper provides the STRONGEST experimental justification for SiliQun's DFS approach:
+1. They EXPLICITLY identify DFS encoding as the mitigation for perfectly correlated noise (p.8)
+2. Their measured charge noise correlations (N_c≈0.75) are within the regime where DFS projection is valid
+3. The 5-qubit linear array they study maps directly to SiliQun's SLEDGE topology
+4. Their noise parameters (TLF density, correlation length) could be used to parameterize SiliQun's noise model
+5. This is a March 2026 paper - very recent, citing it strengthens our paper's timeliness
+6. KFUPM Saudi connection - potential for local collaboration

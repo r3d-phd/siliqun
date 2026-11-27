@@ -1,0 +1,11 @@
+Figure 3 - Multi-scale SLEDGE Grid:
+Four panels showing progressively larger 2D grids of DFS-encoded silicon spin qubits.
+(a) 3x3 Grid: 9 logical qubits, 27 physical spins, benchmarked, < 1 ms/episode
+(b) 4x4 Grid: 16 logical qubits, 48 physical spins, benchmarked, ~5 ms/episode  
+(c) 5x5 Grid: 25 logical qubits, 75 physical spins, benchmarked, 430 ms/episode
+(d) 6x6 Grid: 36 logical qubits, 108 physical spins, projected H200, ~110 s/episode
+Each qubit is a circle containing 3 small dots (physical spins). Lines connect adjacent qubits (exchange coupling). Green background = benchmarked. Yellow dashed = projected.
+
+Figure 7 - Scaling Analysis (two panels):
+(a) Memory Scaling: Log-scale plot. Blue line = DFS projected memory (2^n * 16 bytes). Red line = full physical space (2^(3n) * 16 bytes). Horizontal lines for GPU memory limits (RTX 3090 24GB, A100 80GB, H200 141GB, B200 192GB, 8x H100 DGX 640GB, 1024x H100 80TB). Red star = Osaka/Fixstars result (41 qubits full space, 1024 GPUs). X-axis: logical qubits 5-45. Y-axis: memory in GB.
+(b) DRL Training Feasibility: Log-scale plot. Blue line = wall time for 10^6 episodes on single A100. Three colored zones: green (feasible, <1 week), yellow (challenging, 1-4 weeks), red (infeasible, >1 month). Key data points: 25q = 5 days, 27q = 20 days, 30q = 5.3 months. X-axis: logical qubits 20-40. Y-axis: wall time in days.

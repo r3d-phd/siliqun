@@ -1,0 +1,19 @@
+Multi-scale SLEDGE Grid Figure Observations:
+
+The figure looks excellent with four panels showing progressive scaling:
+(a) 3x3 Grid - 9 logical qubits, 27 spins, benchmarked, < 1 ms/ep
+(b) 4x4 Grid - 16 logical qubits, 48 spins, benchmarked, ~5 ms/ep
+(c) 5x5 Grid - 25 logical qubits, 75 spins, benchmarked, 430 ms/ep
+(d) 6x6 Grid - 36 logical qubits, 108 spins, projected (H200), ~110 s/ep
+
+Each qubit shows 3 physical spin dots inside a circle (DFS encoding visual).
+Exchange coupling lines connect adjacent qubits.
+Green background = benchmarked, blue = primary benchmark, yellow dashed = projected.
+Legend at bottom explains all visual elements.
+
+Minor issues to fix:
+1. The timing text overlaps slightly with the badge text on some panels
+2. The 5x5 panel background color should be green (benchmarked) not blue - need to fix
+3. Overall the figure communicates the scaling story very effectively
+
+Need to fix: 5x5 should also be green (benchmarked), not blue. Only 6x6 should be different.

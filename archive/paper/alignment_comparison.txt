@@ -1,0 +1,30 @@
+Comparing user screenshot vs current compiled PDF:
+
+USER'S SCREENSHOT: "Environment Layer." appears INDENTED - starts further right than the figure caption text.
+CURRENT PDF: "Environment Layer." appears flush left with \noindent - starts at the same left margin as body text.
+
+The user's screenshot appears to show the OLD version (before the \noindent fix). The user may be viewing the PDF from the Manus viewer which may have cached the old version.
+
+However, looking more carefully at BOTH versions, I notice the actual issue the user is complaining about:
+
+In the current PDF, "Environment Layer." starts flush left, BUT the text block of the Environment Layer paragraph appears to have a DIFFERENT text width than the figure caption above it. The figure caption text is narrower (it's set in \small font by elsarticle), while the body text uses the full column width. This creates a visual mismatch.
+
+But actually this is standard LaTeX behavior - figure captions are typically in a smaller font.
+
+Let me look at the user's screenshot one more time... The "Environment Layer" paragraph in the user's screenshot:
+- Line 1: "Environment Layer. The SiliQunEnv class implements the gymnasium.Env"
+- Line 2: "interface. At each step, the DRL agent selects a discrete action (e.g., Rx, Ry, Rz, CNOT)."
+
+Line 2 extends further RIGHT than line 1. And line 2 extends further right than the figure caption. This is because the monospace fonts on line 1 (SiliQunEnv, gymnasium.Env) are wider, causing the line to break earlier, while line 2 with its math symbols extends to the full justified width.
+
+The user might be seeing this as an alignment issue. The fix would be to ensure the paragraph text doesn't have monospace fonts causing uneven line breaks, or to use \sloppy or \emergencystretch to help LaTeX justify better.
+
+Actually, I think the user might be referring to the metadata table alignment from the original request, not the Environment Layer. Let me re-read the original request...
+
+Original request: "I think metadata table needs better centralization."
+Then I fixed the metadata table.
+Then user said "the text shown is out of alignment" with a screenshot showing the Environment Layer area.
+Then I fixed the Environment Layer with \noindent.
+Then user says "the alignment issue still persists!"
+
+The user is seeing the Environment Layer paragraph still looking misaligned. In the current PDF it does look flush left. The user may need to refresh or may be seeing a different issue than indentation.

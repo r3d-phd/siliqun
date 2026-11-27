@@ -1,0 +1,33 @@
+Detailed analysis of the alignment issue from user screenshot (ScreenshotFrom2026-04-0413-21-11.png):
+
+Looking at page 7 carefully:
+
+1. The figure caption text (starting "Figure 3: Multi-scale SLEDGE...") has its LEFT margin at approximately x=635 pixels and RIGHT margin at approximately x=1035 pixels.
+
+2. The "Environment Layer." paragraph has its LEFT margin at approximately x=640 pixels and RIGHT margin extending to approximately x=1080 pixels.
+
+3. The "2.2. Software functionalities" section text has LEFT margin at approximately x=640 and RIGHT margin at approximately x=1035.
+
+WAIT - looking more carefully, the "Environment Layer" paragraph RIGHT edge actually extends FURTHER right than the figure caption. On the second line "interface. At each step..." the text extends to "CNOT)." which goes past the right margin of the caption text.
+
+The issue is that the Elsarticle class uses a SINGLE COLUMN layout for SoftwareX. The figure caption is set within the figure float which may have slightly different margins. But the actual text body should be consistent.
+
+Actually, I think the user is pointing out that the "Environment Layer" paragraph looks visually different from the figure caption above it. The figure caption uses a smaller font (typically \small or \footnotesize in elsarticle), while the body text uses the normal font size. This creates a visual contrast where the body text appears to extend further right.
+
+But wait - looking at the screenshot even more carefully, I notice the "Environment Layer" text on the first line starts with "The SiliQunEnv class..." and the monospace font makes it look like the text is shifted. The second line "interface." starts at the left margin correctly.
+
+The REAL issue might be simpler: the user sees that the "Environment Layer" bold heading is NOT left-aligned with the figure caption "Figure 3:" text above. The "Environment Layer." starts with an indent (even though we added \noindent, maybe the PDF wasn't updated on the user's end?).
+
+Actually - looking at the screenshot: "Environment Layer." appears to be indented! It starts further right than "Figure 3:" above it. This means either:
+1. The \noindent didn't take effect
+2. The user is viewing an older version of the PDF
+
+Wait - the user is viewing it in the Manus viewer at manus.im. The commit was pushed but maybe the PDF in the viewer wasn't refreshed.
+
+Actually no - the user took this screenshot AFTER I said I fixed it. So either:
+1. The \noindent is not working because of the elsarticle class behavior after a table float
+2. Or the paragraph is getting indented by some other mechanism
+
+Looking again: "Environment Layer." starts at approximately x=660, while the figure caption "Figure 3:" starts at approximately x=635. That's about a 25px indent. This IS the standard paragraph indent.
+
+The \noindent should have removed this. Let me check if the edit was applied correctly.

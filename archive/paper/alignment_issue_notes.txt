@@ -1,0 +1,13 @@
+Alignment issue analysis:
+
+The user's screenshot shows the "Environment Layer" paragraph starting with a bold heading followed by text. The issue is that the "Environment Layer" paragraph appears to have its first line NOT indented (it starts flush left with the bold heading), but the continuation lines are justified to the full text width. This creates a visual misalignment where the bold heading "Environment Layer." protrudes slightly compared to the rest of the paragraph.
+
+Looking at the LaTeX source, the "Environment Layer" paragraph follows directly after a table environment (\end{table}). In LaTeX, paragraphs immediately after floats (tables/figures) do not get indented by default. This is standard LaTeX behavior.
+
+The issue is that the bold paragraph headings (Backend Layer, Simulation Core, Physics Layer, Environment Layer) are formatted as inline bold text within paragraphs, not as proper subsections. The "Environment Layer" paragraph follows a table, so it loses its indentation.
+
+Fix: Add \noindent before the paragraph to make it consistent, OR better yet, ensure all these layer descriptions have consistent formatting. Since the user wants better alignment, I should add \indent or ensure proper paragraph spacing after the table.
+
+Actually, looking more carefully at the user's screenshot, the text after "Environment Layer." appears to be slightly narrower/indented compared to the figure caption above it. This is because the figure caption uses the full column width, but the paragraph text has standard margins. This is normal LaTeX behavior.
+
+The real fix: ensure the "Environment Layer" paragraph has proper indentation matching other paragraphs.

@@ -1,0 +1,25 @@
+Paper: arXiv:2603.03051
+Title: Scaling of silicon spin qubits under correlated noise
+Authors: Juan S. Rojas-Arias, Leon C. Camenzind, Yi-Hsien Wu, Peter Stano, Akito Noiri, Kenta Takeda, Takashi Nakajima, Takashi Kobayashi, Giordano Scappucci, Daniel Loss, Seigo Tarucha
+Submitted: March 3, 2026
+26 pages, 5 main figures, 10 Extended Data figures
+Subjects: cond-mat.mes-hall, quant-ph
+
+ABSTRACT KEY POINTS:
+1. Focuses on scaling silicon spin qubits while remaining compatible with QEC
+2. Silicon spin qubits: industrial fabrication compatible, nanoscale footprint, millions of qubits on a chip
+3. Problem: spatially correlated noise from close qubit proximity erodes QEC redundancy
+4. Experiment: quantify spatial extent of noise correlations in a FIVE-QUBIT silicon array
+5. Two distinct correlated noise sources identified:
+   a) Global magnetic field drifts → perfectly correlated fluctuations (critical, but mitigable)
+   b) Charge noise from two-level fluctuators → short-range correlations decaying within neighboring qubits
+6. Magnetic drifts can compromise QEC but can be mitigated
+7. Charge noise correlations are moderate, electrically tunable, compatible with fault-tolerant operation with minimal qubit overhead
+8. Establishes quantitative benchmarks for correlated noise in scalable qubit arrays
+
+RELEVANCE TO OUR WORK:
+- Directly relevant to SiliQun: we simulate silicon spin qubits with DFS encoding
+- DFS encoding specifically protects against CORRELATED noise (collective dephasing)
+- This paper experimentally validates the noise model we simulate
+- The charge noise correlations they measure could inform our noise parameters
+- Their 5-qubit array is exactly the scale we benchmark (though we go to 25 encoded qubits)

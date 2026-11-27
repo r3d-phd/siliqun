@@ -1,0 +1,60 @@
+SiliQun DFS-Projected State Vector Scaling Analysis
+====================================================
+
+MEMORY TABLE:
+ Logical  Physical       Full Dim     Proj Dim       Full Mem     Proj Mem    Compression
+       5       15       3.28e+04     3.20e+01       512.0 KB       0.5 KB       1.02e+03
+      10       30       1.07e+09     1.02e+03       16.00 GB      16.0 KB       1.05e+06
+      15       45       3.52e+13     3.28e+04       512.0 TB     512.0 KB       1.07e+09
+      20       60       1.15e+18     1.05e+06        16.0 EB      16.0 MB       1.10e+12
+      25       75       3.78e+22     3.36e+07       512 EB       512.0 MB       1.13e+15
+      30       90       1.24e+27     1.07e+09       huge         16.00 GB       1.15e+18
+      35      105       4.06e+31     3.44e+10       huge        512.00 GB       1.18e+21
+      40      120       1.33e+36     1.10e+12       huge          16.0 TB       1.21e+24
+      45      135       4.36e+40     3.52e+13       huge         512.0 TB       1.24e+27
+      50      150       1.43e+45     1.13e+15       huge          16.0 PB       1.27e+30
+
+GPU MEMORY LIMITS vs MAX LOGICAL QUBITS (DFS Projected):
+  RTX 3090 (24 GB)          -> 30 logical qubits (90 physical spins) | SV uses 16.00 GB
+  A100 (40 GB)              -> 31 logical qubits (93 physical spins) | SV uses 32.00 GB
+  A100 (80 GB)              -> 32 logical qubits (96 physical spins) | SV uses 64.00 GB
+  H100 (80 GB)              -> 32 logical qubits (96 physical spins) | SV uses 64.00 GB
+  H200 (141 GB)             -> 33 logical qubits (99 physical spins) | SV uses 128.00 GB
+  B200 (192 GB)             -> 33 logical qubits (99 physical spins) | SV uses 128.00 GB
+  2x H100 (160 GB)          -> 33 logical qubits (99 physical spins) | SV uses 128.00 GB
+  4x H100 (320 GB)          -> 34 logical qubits (102 physical spins) | SV uses 256.00 GB
+  8x H100 (640 GB)          -> 35 logical qubits (105 physical spins) | SV uses 512.00 GB
+  1024x H100 (80 TB)        -> 42 logical qubits (126 physical spins) | SV uses 65536.00 GB
+
+DRL EPISODE TIMING ESTIMATES (extrapolated from 25-qubit benchmark):
+  25 logical qubits: ~430 ms/episode  -> 5.0 days for 1M episodes   [FEASIBLE]
+  30 logical qubits: ~13.8 s/episode  -> 5.3 months for 1M episodes [INFEASIBLE single GPU]
+  33 logical qubits: ~1.8 min/episode -> 3.5 years for 1M episodes  [INFEASIBLE]
+  35 logical qubits: ~7.3 min/episode -> 14.0 years for 1M episodes [INFEASIBLE]
+  37 logical qubits: ~29.4 min/episode-> 55.8 years for 1M episodes [INFEASIBLE]
+  40 logical qubits: ~3.9 hr/episode  -> 446.8 years for 1M episodes[INFEASIBLE]
+
+PRACTICAL SCALING LIMITS SUMMARY:
+
+MEMORY-LIMITED (state vector fits in GPU):
+  - Single A100-80GB:  max 32 logical qubits (96 physical spins)
+  - Single H200-141GB: max 33 logical qubits (99 physical spins)
+  - Single B200-192GB: max 33 logical qubits (99 physical spins)
+  - 8x H100 (DGX):    max 35 logical qubits (105 physical spins)
+  - 1024x H100:        max 42 logical qubits (126 physical spins)
+
+TIME-LIMITED (DRL training feasibility):
+  - 25 qubits: 430 ms/ep  -> 5.0 days for 1M episodes  [FEASIBLE]
+  - 27 qubits: ~1.7 s/ep  -> ~20 days for 1M episodes   [FEASIBLE with patience]
+  - 28 qubits: ~3.4 s/ep  -> ~40 days for 1M episodes   [BORDERLINE]
+  - 30 qubits: 13.8 s/ep  -> 5.3 months                 [INFEASIBLE]
+
+PRACTICAL DRL TRAINING LIMIT: ~27-28 logical qubits on single A100
+  (allows ~1M episodes in ~2-4 weeks)
+
+COMPARISON WITH OSAKA/FIXSTARS (April 2026):
+  Their approach: 1,024 H100 GPUs -> 41 qubits in FULL physical space
+  SiliQun DFS:    1 A100 GPU      -> 25 logical = 75 physical spins (demonstrated)
+  SiliQun DFS:    1 A100 GPU      -> 32 logical = 96 physical spins (memory limit)
+  SiliQun DFS:    1,024 H100 GPUs -> 42 logical = 126 physical spins (theoretical)
+  Compression advantage at 25 qubits: 2^(2*25) = 2^50 ≈ 10^15x

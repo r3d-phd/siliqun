@@ -1,0 +1,7 @@
+Scaling Figure Observations:
+
+Panel (a): Memory scaling shows clear exponential gap between DFS projected (blue, 2^n) and full physical space (red, 2^(3n)). GPU memory limits are shown as horizontal lines with markers at intersection points. The Osaka/Fixstars reference point (red star) sits on the full-space line at 41 qubits. The annotations are a bit crowded around the 30-35 qubit range where multiple GPU lines converge. The figure effectively communicates the core message.
+
+Panel (b): DRL training feasibility with green/yellow/red zones. Clear that 25 qubits is feasible (5 days), 27 qubits is challenging (20 days), and 30+ qubits is infeasible on a single GPU. The color zones make the message immediately clear.
+
+Minor issues: Some label overlap in panel (a) around the GPU memory lines. The figure is functional but could be cleaner. Good enough for the paper.

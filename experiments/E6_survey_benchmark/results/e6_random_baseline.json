@@ -1,9 +1,0 @@
-{
-  "experiment": "E6_survey_benchmark",
-  "protocol": "random tokens, best fidelity over <= 20 gates, 200 episodes (eval-protocol cap)",
-  "n_episodes": 200,
-  "mean_best_F": 0.62125,
-  "std_best_F": 0.22076217406974402,
-  "fidelity_max": 1.0,
-  "frac_ge_threshold": 0.25
-}

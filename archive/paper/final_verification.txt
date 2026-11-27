@@ -1,0 +1,15 @@
+Final verification of SiliQun v3 paper (April 4, 2026):
+
+Page 7: Figure 3 (multi-scale grid) renders perfectly with "encoded qubits" labels. Environment Layer and Software Functionalities sections clean.
+
+Page 8: Code listing renders cleanly with line numbers 1-14. Shows siliqun (correct), total_timesteps=1_000_000 (correct). No artifacts.
+
+Page 13: Table 6 (comparison) renders cleanly. Shows "DFS Encoded Subspace Projection" (fixed). Impact section bullet points clean. No repeated "1" characters.
+
+All DeepSeek-flagged issues resolved or confirmed non-existent in current version.
+
+Fixes applied in this session:
+1. "DFS Logical Subspace Projection" -> "DFS Encoded Subspace Projection" in Table 6
+2. Added "Accessed: April 2, 2026" to Hiraoka et al. reference [21]
+3. Confirmed siliquen/1.000.000 typos do NOT exist (DeepSeek misread PDF)
+4. Confirmed page 13 artifacts do NOT exist in current version

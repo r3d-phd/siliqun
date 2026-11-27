@@ -1,0 +1,22 @@
+DFS Validation Study Summary for Paper:
+
+1. Intra-qubit exchanges (J_12, J_23): EXACT - fidelity > 0.9999999999999992, leakage < 1e-15
+   - These map perfectly to logical Z and X rotations as claimed
+
+2. Inter-qubit exchange: Leakage increases with coupling angle
+   - At small angles (perturbative regime, theta < 0.3 rad): leakage < 1.9%, fidelity > 98.1%
+   - Leakage scales as theta^2 (exponent = 1.998), confirming perturbative treatment is valid
+   - At large angles (theta = pi): leakage up to 84%, projected fidelity drops to 16%
+   - This quantifies the regime where DFS projection is valid vs breaks down
+
+3. Encoded SWAP: EXACT - leakage < 1e-15 for all basis states
+   - |01_L> maps to |10_L> and vice versa, confirming correct SWAP implementation
+
+4. Fong-Wandzura CNOT: High leakage (42-77%) - this is a raw physical CNOT, not the DFS-projected one
+   - SiliQun uses pre-projected logical unitaries, not raw physical gates
+
+5. Uniq MCP independently confirmed DFS encoding correctness via circuit synthesis
+
+Key conclusion: SiliQun's DFS projection is exact for intra-qubit operations and valid in the perturbative regime
+(small inter-qubit coupling) where leakage scales as O(theta^2). The simulator correctly tracks this leakage
+as a diagnostic metric.

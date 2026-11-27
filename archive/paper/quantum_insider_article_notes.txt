@@ -1,0 +1,37 @@
+Quantum Insider Article: "Researchers Scale Quantum Circuit Simulation Beyond 40 Qubits"
+Published: April 2, 2026
+Source: https://thequantuminsider.com/2026/04/02/quantum-circuit-simulation-beyond-40-qubits/
+
+KEY FACTS:
+- Joint team: Osaka University QIQB + Fixstars Corporation
+- Used 1,024 NVIDIA H100 GPUs on AIST's ABCI-Q system
+- Surpassed previous 40-qubit limit for state-vector quantum circuit simulation
+- Focus: quantum chemistry (IQPE circuits)
+
+RESULTS:
+- Largest problem size: 42-spin-orbital system for H2O (with qubit reduction)
+- Largest circuit size: 41-qubit circuit for Fe2S2 molecule
+- Simulator: "chemqulacs-gpu" (GPU-based quantum circuit simulator)
+- Key innovation: parallel computing method for large-scale GPU clusters
+- Resolved inter-GPU communication bottlenecks
+
+BAR CHART DATA (from figure):
+Molecule | Qubits (System + 1 Ancilla) | Hamiltonian Terms
+C2H6 (Tapered) | 29 | ~25K
+C2H6 (Full) | 33 | ~50K
+Cl2 (Tapered) | 34 | ~50K
+Cl2 (Full) | 39 | ~100K
+SO2 (Full) | 39 | ~100K
+H2O (Tapered) | 39 | ~125K (42 spin-orbital system)
+Fe2S2 (Tapered) | 39 | ~175K
+Fe2S2 (Full) | 41 | ~225K (largest circuit)
+
+APPROACH:
+- State-vector based simulation (full Hilbert space)
+- IQPE (Iterative Quantum Phase Estimation) - requires fewer qubits than standard QPE
+- Multi-GPU distribution across 1,024 GPUs
+- 48-hour computation window
+
+APPLICATION DOMAIN:
+- Quantum chemistry for drug discovery and materials science
+- Fault-tolerant quantum computing (FTQC) algorithm validation

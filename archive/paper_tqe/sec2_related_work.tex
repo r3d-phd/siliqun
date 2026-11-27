@@ -1,0 +1,561 @@
+% ============================================================
+% PAPER 6 — SiliQun Framework (SDQF/PGIRS)
+% Section 2: Related Work
+% Author: Raad Mohammed Alshehri | KAU FCIT
+% ============================================================
+
+\section{Related Work}
+\label{sec:related_work}
+
+The development of SiliQun sits at the intersection of three research
+communities that have largely evolved in parallel: reinforcement learning
+environments for quantum computing, physics-grounded quantum simulation
+frameworks, and hardware-specific control of semiconductor spin qubits.
+This section surveys each community, identifies specific gaps motivating
+SiliQun's design, and provides a detailed comparison with closely related
+work.
+
+% -------------------------------------------------------------------
+\subsection{Reinforcement Learning Environments for Quantum Circuit Synthesis}
+\label{sec:rw_rl_envs}
+% -------------------------------------------------------------------
+
+Reinforcement learning applied to quantum circuit synthesis has yielded a
+growing body of specialised training environments over the past five years. RL environments broadly fall into three categories: abstract noise models, calibration-backed noise models, and first-principles physics models. The most mature abstract-noise environment is \textbf{qgym}~\cite{vanderLinde2023qgym},
+a Gymnasium-compatible framework introduced by van der Linde \emph{et al.}
+at IEEE QCE 2023 that provides modular environments for qubit routing, gate
+decomposition, and circuit scheduling. qgym sees broad adoption as the current RL compiler benchmark. However, qgym's noise model is
+entirely abstract: gate error rates are specified as scalar depolarising
+probabilities rather than derived from a physical decoherence model. As a
+consequence, an agent trained in qgym has no exposure to the correlated,
+time-dependent noise structure that characterises real semiconductor spin
+qubits, and the learned policies cannot be expected to generalise to
+hardware-realistic conditions.
+
+IBM's \textbf{Qiskit Gym}~\cite{QiskitGym2024} takes a complementary
+approach by grounding its noise model in calibration data extracted from
+real IBM superconducting devices. The resulting environments are more
+physically realistic than qgym for the IBM hardware family, but the noise
+model is calibration-data-backed rather than first-principles: it
+interpolates measured error rates rather than solving the Lindblad master
+equation from device Hamiltonian parameters. This distinction is crucial for spin-qubit research, as the relevant noise
+sources (charge noise, hyperfine coupling fluctuations, spin-orbit
+interaction) originate from fundamentally different physics than the flux
+noise and two-level fluctuators dominating superconducting qubit
+decoherence. Furthermore, Qiskit Gym lacks a SiMOS device model and is not
+designed for spin-qubit control tasks.
+
+At the more exploratory end of the spectrum, \textbf{QuantumCircuitEnv}
+(Bernard and García, 2024~\cite{Bernard2024QuantumCircuitEnv}) provides a
+lightweight Gymnasium wrapper for gate-sequence optimisation. While
+pedagogically useful, this environment includes no noise model and is not
+designed for hardware-specific studies. Similarly, the RL environments
+introduced by Kremer \emph{et al.}~\cite{Kremer2024} as part of IBM's
+internal transpiler pipeline achieve strong empirical results on
+superconducting hardware but are not publicly released as standalone
+environments and do not implement Lindblad dynamics.
+
+The \textbf{Altmann \emph{et al.}}~\cite{Altmann2024challenges} survey of
+RL challenges in quantum circuit design provides a useful taxonomy of
+existing environments and identifies the absence of physically realistic
+noise models as one of the primary barriers to deploying RL-trained policies
+on real hardware. SiliQun directly addresses this barrier for the SiMOS
+platform.
+
+% -------------------------------------------------------------------
+\subsection{Pulse-Level Quantum Control with Reinforcement Learning}
+\label{sec:rw_pulse}
+% -------------------------------------------------------------------
+
+A parallel line of research applies RL to pulse-level quantum control,
+where the action space consists of continuous microwave pulse parameters
+rather than discrete gate operations. \textbf{Sivak \emph{et al.}}
+(PRX Quantum 2022~\cite{Sivak2022}) demonstrated model-free RL for
+superconducting qubit state preparation and gate calibration directly on
+physical hardware, achieving results competitive with model-based optimal
+control. While this work is experimentally impressive, it operates on real
+superconducting hardware and does not provide a simulation environment for
+offline training. The action space (continuous pulse amplitudes and
+frequencies) is also fundamentally different from the discrete gate-level
+action space that SiliQun exposes, making direct comparison inappropriate.
+
+\textbf{Bolens and Dalmonte} (PRL 2021~\cite{Bolens2021}) introduced an RL
+algorithm for constructing optimised quantum circuits for digital quantum
+simulation of many-body Hamiltonians. Their approach is gate-level and
+includes a Gymnasium-style interface, but operates without a noise model:
+the environment assumes perfect gate execution and targets Hamiltonian
+simulation rather than entangled state preparation under decoherence.
+
+\textbf{Qiskit Pulse}~\cite{Alexander2020} and related pulse-level
+frameworks provide the infrastructure for continuous-variable control of IBM
+superconducting qubits but have no SiMOS device model and are not designed
+for RL training. The \textbf{C3} framework~\cite{Wittler2021} supports
+closed-loop optimal control via GRAPE and CMA-ES but does not implement
+standard RL algorithms and provides no Gymnasium interface. Pulse-level
+environments are also architecturally distinct from SiliQun in a
+fundamental sense: they expose a continuous action space that is appropriate
+for analogue control but ill-suited to the discrete gate-sequence synthesis
+that is the focus of this work.
+
+We note that classical optimal control methods --- most prominently
+GRAPE~\cite{Khaneja2005} and CRAB~\cite{Caneva2011} --- remain strong
+baselines for gate synthesis tasks and have been demonstrated on silicon
+spin qubit systems~\cite{Wittler2021,Sivak2022}. A direct comparison between
+SiliQun-trained DRL agents and GRAPE/CRAB on the SiMOS and donor profiles
+constitutes important future work and is identified as the highest-priority
+extension in Section~\ref{subsec:limitations}. The expected advantage of
+DRL over GRAPE lies not in final fidelity --- where GRAPE is competitive ---
+but in robustness to time-varying noise and adaptability to changing hardware
+parameters, which classical optimal control methods cannot exploit without
+full re-optimisation.
+
+% -------------------------------------------------------------------
+\subsection{Quantum Noise Simulation Frameworks}
+\label{sec:rw_noise_frameworks}
+% -------------------------------------------------------------------
+
+Several mature simulation frameworks provide high-fidelity quantum noise
+modelling but are not designed as RL training environments.
+\textbf{QuTiP}~\cite{Lambert2024} is the most comprehensive open-source
+Lindblad solver available, supporting arbitrary collapse operators,
+time-dependent Hamiltonians, and a wide range of master equation solvers.
+QuTiP's physics is correct and well-validated, but it provides no
+Gymnasium-compatible interface and is not designed for RL. Wrapping QuTiP
+as a Gymnasium environment requires substantial custom engineering: the
+user must implement the \texttt{step()}, \texttt{reset()}, and
+\texttt{observation\_space} interfaces, define a reward function, and
+manage the episode lifecycle. Several research groups have produced
+one-off QuTiP wrappers for specific tasks~\cite{Moro2021,Niu2018}, but
+these are not publicly released as reusable environments.
+
+\textbf{Qiskit Aer}~\cite{Qiskit2024} provides GPU-accelerated quantum
+circuit simulation with noise models derived from IBM device calibration
+data. As noted above, these noise models are calibration-data-backed rather
+than first-principles, and Qiskit Aer provides no RL interface.
+\textbf{PennyLane}~\cite{Bergholm2018} supports differentiable quantum
+computing with noise channels but is designed for variational quantum
+algorithms and quantum machine learning rather than DRL gate synthesis.
+\textbf{Qibo}~\cite{Efthymiou2021} provides GPU-accelerated quantum
+simulation with a focus on scalability but offers no RL interface and no
+SiMOS device model.
+
+The recently introduced \textbf{SimOS} framework~\cite{SimOS2025} provides
+a Python simulation library for optically addressable spins (primarily
+nitrogen-vacancy centres in diamond) and is the closest simulation
+framework to SiliQun in terms of hardware specificity. However, SimOS
+targets a different qubit modality (NV centres rather than SiMOS quantum
+dots), provides no Gymnasium interface, and is not designed for RL-based
+gate synthesis. The noise model in SimOS is also calibrated to NV-centre
+parameters that differ substantially from the SiMOS T\textsubscript{1}/T\textsubscript{2}
+values used in SiliQun.
+
+% -------------------------------------------------------------------
+\subsection{The Closest Competitor: Orbell (2024) and the Oxford Spin Qubit DRL Programme}
+\label{sec:rw_oxford}
+% -------------------------------------------------------------------
+
+The work most closely related to SiliQun in spirit and scientific scope is
+the Oxford DPhil thesis of \textbf{Orbell}~\cite{Orbell2024}, entitled
+\emph{Spin qubits in semiconductor devices: automation of measurement,
+optimisation, and control}, completed under the supervision of Ares,
+Briggs, and Bonilla Osorio. This thesis represents the most comprehensive
+application of machine learning — including deep reinforcement learning —
+to semiconductor spin qubit control currently available in the open
+literature, and it deserves a detailed comparison with SiliQun.
+
+\subsubsection{Summary of Orbell (2024)}
+
+The Orbell thesis develops three distinct automated control approaches for
+semiconductor spin qubits. The first contribution is a DRL decision agent
+combined with a convolutional neural network (CNN) computer vision model
+for the automatic discovery of \emph{bias triangles} in transport
+measurements of a GaAs double quantum dot. Bias triangles define the
+operational regime of a spin qubit, and their identification is a
+prerequisite for any downstream control task. The DRL agent navigates the
+gate voltage space to locate these features efficiently, replacing the
+manual tuning that currently dominates laboratory practice.
+
+The second contribution is a Bayesian optimisation framework for the
+automated discovery of qubit operational ``sweetspots'' — parameter
+configurations that minimise sensitivity to low-frequency noise. This
+framework is demonstrated on the Rabi frequency of a hole spin qubit in a
+Si finFET and the Q-factor of a singlet-triplet hole spin qubit in a
+Si/SiGe planar device.
+
+The third contribution is an algorithm for designing optimal quantum control
+pulse schemes that achieve robust, high-fidelity gate operations in spin
+qubits. The algorithm computes gradients through the time-evolution of
+quantum systems and incorporates realistic experimental constraints
+including non-linear transmission, cross-resonant driving, and finite
+control bandwidths. A numerical sampling method is introduced to design
+pulse envelopes that are robust to coloured noise spectra and quasi-static
+Hamiltonian errors. The thesis also introduces a Neural Controlled
+Differential Equation (NCDE) model as a differentiable digital twin for a
+quantum processor, providing a mechanism to bridge model uncertainty and
+experimental measurements.
+
+\subsubsection{Comparison with SiliQun}
+
+Despite the evident overlap in motivation — both works apply machine
+learning to semiconductor spin qubit control — SiliQun and Orbell (2024)
+address fundamentally different problems at different levels of the quantum
+computing stack. Table~\ref{tab:oxford_comparison_rw} summarises the key
+dimensions of comparison.
+
+\begin{table*}[ht]
+\centering
+\caption{Detailed comparison between SiliQun and the closest competitor,
+Orbell (2024). Differences are qualitative (task scope, abstraction level,
+interface design) rather than quantitative.}
+\label{tab:oxford_comparison_rw}
+\small
+\begin{tabular}{p{3.8cm}p{5.2cm}p{5.2cm}}
+\toprule
+\textbf{Dimension} & \textbf{Orbell (2024)} & \textbf{SiliQun (this work)} \\
+\midrule
+\textbf{Primary task} &
+  Measurement automation: bias triangle discovery, qubit tuning, sweetspot identification &
+  Gate synthesis: learning discrete gate sequences that prepare target entangled states \\
+\addlinespace
+\textbf{Control abstraction level} &
+  Pulse-level (continuous action space: pulse amplitudes, frequencies, envelopes) &
+  Gate-level (discrete action space: $\{H, X, Y, Z, CNOT, CZ, \ldots\}$) \\
+\addlinespace
+\textbf{Noise model} &
+  Phenomenological: coloured noise spectra, quasi-static Hamiltonian errors, finite bandwidth effects &
+  First-principles Lindblad: amplitude damping ($T_1$), dephasing ($T_2$), depolarising ($p$), calibrated to SiMOS \\
+\addlinespace
+\textbf{Hardware target} &
+  GaAs double quantum dot (Contribution 1); Si finFET hole spin (Contribution 2); Si/SiGe hole spin (Contribution 3) &
+  SiMOS silicon quantum dot spin qubits (calibrated to Yang \emph{et al.} 2020 and Nickl \emph{et al.} 2025 parameters) \\
+\addlinespace
+\textbf{RL interface} &
+  Custom, task-specific; not Gymnasium-compatible; not compatible with standard DRL libraries &
+  Gymnasium-compatible \texttt{SiliQunEnv}; directly compatible with Stable-Baselines3, RLlib, CleanRL \\
+\addlinespace
+\textbf{Public availability} &
+  Thesis PDF only; no public code, no reusable simulation environment &
+  Open-source MIT licence at \url{https://github.com/r3d-phd/siliqun} \\
+\addlinespace
+\textbf{DRL algorithm scope} &
+  Single DRL decision agent (architecture unspecified); Bayesian optimisation for parameter tuning &
+  Full SB3 algorithm suite: SAC, PPO, DQN, DDPG, TD3, A2C; cross-algorithm benchmark \\
+\addlinespace
+\textbf{Circuit synthesis} &
+  Not addressed; the thesis does not synthesise gate sequences for entangled state preparation &
+  Core contribution: synthesis of GHZ, W, and cluster states under SiMOS noise \\
+\addlinespace
+\textbf{Open-source release} &
+  Not released as a reusable framework; research code specific to the thesis experiments &
+  MIT-licensed open-source package with Gymnasium interface, reproducible scripts, and Aziz HPC job files \\
+\addlinespace
+\textbf{Validation methodology} &
+  Experimental validation on real GaAs/Si devices; no sim-to-real transferability metric &
+  Analytical benchmarks (Rabi, T\textsubscript{1} decay, Bell state) + cross-backend policy transferability (IonQ Aria-1) \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+The most important distinction is the \emph{level of the quantum computing
+stack} at which each work operates. Orbell (2024) addresses the
+\emph{device tuning and calibration layer}: the problem of bringing a
+physical spin qubit device into a regime where it can be operated as a
+qubit at all. This is an essential prerequisite for any quantum computation,
+and the DRL and Bayesian methods developed in that thesis are well-suited
+to the continuous, high-dimensional parameter spaces that characterise
+device tuning. SiliQun, by contrast, addresses the \emph{gate synthesis
+layer}: the problem of constructing sequences of discrete quantum gate
+operations that realise a target unitary transformation on a device that is
+already calibrated and operational. These two layers are complementary
+rather than competing: a complete quantum control stack requires both, and
+the output of Orbell's tuning pipeline is precisely the calibrated device
+that SiliQun's PGIRS methodology assumes as its starting point.
+
+The second important distinction concerns the \emph{noise model}. Orbell
+(2024) employs a phenomenological noise description — coloured noise
+spectra and quasi-static Hamiltonian errors — that is appropriate for
+characterising the noise environment during device tuning and pulse
+optimisation. SiliQun employs a first-principles Lindblad master equation
+calibrated to SiMOS T\textsubscript{1} and T\textsubscript{2} values,
+which is the appropriate model for simulating gate-level decoherence during
+circuit execution. The two noise models are not interchangeable: the
+Lindblad model captures the Markovian decoherence that accumulates over a
+gate sequence, while the phenomenological model captures the
+non-Markovian, low-frequency noise that dominates during slow parameter
+sweeps. SiliQun's Lindblad model is therefore not a simplification of
+Orbell's noise description but a different physical regime.
+
+The third distinction is \emph{reusability and standardisation}. Orbell
+(2024) is a thesis, not a software framework: the environments and
+algorithms described are implemented as research code specific to the
+experiments conducted and are not publicly released in a form that other
+researchers can use. SiliQun is designed from the outset as a reusable,
+open-source framework with a standard Gymnasium interface, enabling any
+researcher to train and evaluate DRL agents for SiMOS gate synthesis
+without reimplementing the physics engine.
+
+We therefore characterise the relationship between SiliQun and Orbell
+(2024) as \emph{complementary and non-overlapping}: Orbell's work
+establishes the device tuning layer, and SiliQun establishes the gate
+synthesis layer. A complete automated quantum computing stack for SiMOS
+devices would benefit from both.
+
+A closely related contribution at the device tuning layer is the work of
+\textbf{Nguyen \emph{et al.}}~\cite{Nguyen2021} (npj Quantum Information,
+2021), who applied deep reinforcement learning to the efficient measurement
+of quantum devices, specifically targeting the automated identification of
+charge sensing features in semiconductor quantum dot systems. Like Orbell's
+bias-triangle discovery contribution, this work operates at the
+calibration and measurement layer rather than the gate synthesis layer, and
+its action space is defined over gate voltage parameters rather than discrete
+quantum gate operations. SiliQun's PGIRS methodology assumes the device has
+already been brought into the operational regime that Nguyen \emph{et al.}\
+seek to identify; the two works are therefore complementary, with Nguyen
+\emph{et al.}\ addressing the prerequisite device characterisation step that
+precedes SiliQun's gate synthesis task.
+
+% -------------------------------------------------------------------
+\subsection{Fault-Tolerant Logical Qubit Encoding with RL}
+\label{sec:rw_fault_tolerant}
+% -------------------------------------------------------------------
+
+At the far end of the quantum computing stack, \textbf{Zen \emph{et al.}}
+(PRL 2025~\cite{Zen2025}) demonstrated RL for the discovery of
+fault-tolerant logical qubit encoding protocols, achieving results on
+distance-3 surface codes and other stabiliser codes. This work is
+scientifically significant and directly relevant to future hierarchical RL
+research that builds on SiliQun as a physics-grounded simulation substrate.
+However, Zen \emph{et al.}
+employ an abstract noise model (depolarising channels with uniform error
+rate) rather than a hardware-specific Lindblad model, and their
+environments are not publicly released as Gymnasium-compatible frameworks.
+SiliQun is therefore positioned as the physics simulation layer that can
+ground future fault-tolerant RL research in realistic hardware noise,
+extending the abstract results of Zen \emph{et al.}\ to the SiMOS platform.
+
+% -------------------------------------------------------------------
+\subsection{Summary: SiliQun's Unique Contribution}
+\label{sec:rw_summary}
+% -------------------------------------------------------------------
+
+Table~\ref{tab:rw_comparison} positions SiliQun within a representative
+landscape of existing quantum DRL environments and simulation frameworks,
+evaluating it against five critical properties that we argue are jointly
+essential for a robust and practically useful platform for silicon spin
+qubits.
+
+\begin{table*}[ht]
+\centering
+\caption{Comparison of SiliQun with related quantum RL environments and
+simulation frameworks across five jointly essential properties for
+silicon spin qubit simulation. A \checkmark\ indicates the property is
+fully satisfied; a $\circ$ indicates partial satisfaction; an
+\texttimes\ indicates the property is absent.}
+\label{tab:rw_comparison}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llllll}
+\toprule
+\textbf{Framework / Work} &
+  \textbf{Gymnasium} &
+  \textbf{Lindblad} &
+  \textbf{HW params} &
+  \textbf{Gate synth.} &
+  \textbf{Open src.} \\
+\midrule
+qgym~\cite{vanderLinde2023qgym}                  & \checkmark & \texttimes & \texttimes & \checkmark & \checkmark \\
+Qiskit Gym~\cite{QiskitGym2024}                  & \checkmark & \texttimes & $\circ$    & \checkmark & \checkmark \\
+QuantumCircuitEnv~\cite{Bernard2024QuantumCircuitEnv} & \checkmark & \texttimes & \texttimes & \checkmark & \checkmark \\
+Bolens \& Dalmonte~\cite{Bolens2021}             & $\circ$    & \texttimes & \texttimes & \checkmark & \texttimes \\
+QuTiP wrappers~\cite{Moro2021,Niu2018}           & \texttimes & \checkmark & \texttimes & $\circ$    & \texttimes \\
+Qiskit Aer~\cite{Qiskit2024}                     & \texttimes & \texttimes & $\circ$    & \texttimes & \checkmark \\
+SimOS~\cite{SimOS2025}                           & \texttimes & $\circ$    & $\circ$    & \texttimes & \checkmark \\
+Orbell (2024)~\cite{Orbell2024}                  & \texttimes & \texttimes & \checkmark & \texttimes & \texttimes \\
+Zen \emph{et al.}~\cite{Zen2025}                 & \texttimes & \texttimes & \texttimes & \checkmark & \texttimes \\
+Nguyen \emph{et al.}~\cite{Nguyen2021}           & \texttimes & \texttimes & $\circ$    & \texttimes & \texttimes \\
+\midrule
+\textbf{SiliQun (this work)}                     & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark \\
+\bottomrule
+\end{tabular}%
+}%
+\end{table*}
+
+As evident from Table~\ref{tab:rw_comparison}, no existing framework
+currently satisfies all five properties simultaneously. SiliQun uniquely
+emerges as the first open-source, Gymnasium-compatible simulation
+environment to seamlessly integrate physics-derived Lindblad noise models,
+SiMOS-calibrated hardware parameters, and gate-level circuit synthesis
+within a unified and reusable framework. This unique intersection defines SiliQun's scientific
+contribution and motivates the PGIRS methodology described in
+Section~\ref{subsec:pgirs}.
+
+% ---- Bibliography entries for this section ----
+% (to be merged into main .bib file)
+%
+% @inproceedings{vanderLinde2023qgym,
+%   author    = {van der Linde, S. and others},
+%   title     = {{qgym}: A Gym for Training and Benchmarking {RL}-Based Quantum Compilation},
+%   booktitle = {IEEE International Conference on Quantum Computing and Engineering (QCE)},
+%   year      = {2023},
+%   doi       = {10.1109/QCE57702.2023.00120}
+% }
+%
+% @misc{qiskitgym2024,
+%   author       = {{AI4quantum}},
+%   title        = {{Qiskit Gym}: Gymnasium-Compatible {RL} Environments for Quantum Circuit Synthesis},
+%   year         = {2024},
+%   howpublished = {\url{https://github.com/AI4quantum/qiskit-gym}}
+% }
+%
+% @article{Bernard2024QuantumCircuitEnv,
+%   author  = {Bernard, Y. H. K. and Garc\'{i}a, A. G.},
+%   title   = {Designing More Efficient Quantum Circuits Using Reinforcement Learning},
+%   journal = {ResearchGate preprint},
+%   year    = {2024}
+% }
+%
+% @article{Kremer2024,
+%   author  = {Kremer, D. and Villar, V. and Paik, H. and Duran, I. and Faro, I. and others},
+%   title   = {Practical and Efficient Quantum Circuit Synthesis and Transpiling with Reinforcement Learning},
+%   journal = {arXiv preprint arXiv:2405.13196},
+%   year    = {2024}
+% }
+%
+% @inproceedings{Altmann2024challenges,
+%   author    = {Altmann, P. and Stein, J. and K\"{o}lle, M. and B\"{a}rligea, A. and others},
+%   title     = {Challenges for Reinforcement Learning in Quantum Circuit Design},
+%   booktitle = {IEEE International Conference on Quantum Computing and Engineering (QCE)},
+%   year      = {2024},
+%   doi       = {10.1109/QCE60285.2024.00128}
+% }
+%
+% @article{Sivak2022,
+%   author  = {Sivak, V. V. and others},
+%   title   = {Model-Free Quantum Control with Reinforcement Learning},
+%   journal = {Physical Review X},
+%   volume  = {12},
+%   pages   = {011059},
+%   year    = {2022},
+%   doi     = {10.1103/PhysRevX.12.011059}
+% }
+%
+% @article{Bolens2021,
+%   author  = {Bolens, A. and Dalmonte, M.},
+%   title   = {Reinforcement Learning for Digital Quantum Simulation},
+%   journal = {Physical Review Letters},
+%   volume  = {127},
+%   pages   = {110502},
+%   year    = {2021},
+%   doi     = {10.1103/PhysRevLett.127.110502}
+% }
+%
+% @article{Alexander2020,
+%   author  = {Alexander, T. and others},
+%   title   = {{Qiskit Pulse}: Programming Quantum Computers through the Cloud with Pulses},
+%   journal = {Quantum Science and Technology},
+%   volume  = {5},
+%   pages   = {044006},
+%   year    = {2020},
+%   doi     = {10.1088/2058-9565/aba404}
+% }
+%
+% @article{Wittler2021,
+%   author  = {Wittler, N. and others},
+%   title   = {Integrated Tool Set for Control, Calibration, and Characterization of Quantum Devices Applied to Superconducting Qubits},
+%   journal = {Physical Review Applied},
+%   volume  = {15},
+%   pages   = {034080},
+%   year    = {2021},
+%   doi     = {10.1103/PhysRevApplied.15.034080}
+% }
+%
+% @article{Lambert2024,
+%   author  = {Lambert, N. and others},
+%   title   = {{QuTiP} 5: The Quantum Toolbox in Python},
+%   journal = {arXiv preprint arXiv:2412.04705},
+%   year    = {2024}
+% }
+%
+% @article{Moro2021,
+%   author  = {Moro, L. and others},
+%   title   = {Quantum Compiling by Deep Reinforcement Learning},
+%   journal = {Communications Physics},
+%   volume  = {4},
+%   pages   = {178},
+%   year    = {2021},
+%   doi     = {10.1038/s42005-021-00684-3}
+% }
+%
+% @article{Niu2018,
+%   author  = {Niu, M. Y. and others},
+%   title   = {Universal Quantum Control through Deep Reinforcement Learning},
+%   journal = {npj Quantum Information},
+%   volume  = {5},
+%   pages   = {33},
+%   year    = {2019},
+%   doi     = {10.1038/s41534-019-0141-3}
+% }
+%
+% @misc{Qiskit2024,
+%   author       = {{Qiskit contributors}},
+%   title        = {Qiskit: An Open-Source Framework for Quantum Computing},
+%   year         = {2024},
+%   howpublished = {\url{https://github.com/Qiskit/qiskit}},
+%   doi          = {10.5281/zenodo.2573505}
+% }
+%
+% @article{Bergholm2018,
+%   author  = {Bergholm, V. and others},
+%   title   = {{PennyLane}: Automatic Differentiation of Hybrid Quantum-Classical Computations},
+%   journal = {arXiv preprint arXiv:1811.04968},
+%   year    = {2018}
+% }
+%
+% @article{Efthymiou2021,
+%   author  = {Efthymiou, S. and others},
+%   title   = {{Qibo}: A Framework for Quantum Simulation with Hardware Acceleration},
+%   journal = {Quantum Science and Technology},
+%   volume  = {7},
+%   pages   = {015018},
+%   year    = {2022},
+%   doi     = {10.1088/2058-9565/ac39f5}
+% }
+%
+% @misc{SimOS2025,
+%   author       = {SimOS contributors},
+%   title        = {{SimOS}: A Python Framework for Simulations of Optically Addressable Spins},
+%   journal      = {arXiv preprint arXiv:2501.05922},
+%   year         = {2025}
+% }
+%
+% @phdthesis{Orbell2024,
+%   author = {Orbell, S. B.},
+%   title  = {Spin Qubits in Semiconductor Devices: Automation of Measurement, Optimisation, and Control},
+%   school = {University of Oxford},
+%   year   = {2024},
+%   doi    = {10.5287/ora-mvmeno1oo}
+% }
+%
+% @article{Zen2025,
+%   author  = {Zen, R. and others},
+%   title   = {Quantum Circuit Discovery for Fault-Tolerant Logical State Preparation with Reinforcement Learning},
+%   journal = {Physical Review Research},
+%   year    = {2025},
+%   doi     = {10.1103/gqpr-dgz7}
+% }
+%
+% @article{Yang2020,
+%   author  = {Yang, C. H. and others},
+%   title   = {Operation of a Silicon Quantum Processor Unit Cell Above One Kelvin},
+%   journal = {Nature},
+%   volume  = {580},
+%   pages   = {350--354},
+%   year    = {2020},
+%   doi     = {10.1038/s41586-020-2171-6}
+% }
+%
+% @article{Nickl2025,
+%   author  = {Nickl, P. and others},
+%   title   = {Coherence Times and Gate Fidelities in {SiMOS} Spin Qubits},
+%   journal = {arXiv preprint},
+%   year    = {2025}
+% }

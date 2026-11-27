@@ -1,0 +1,104 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\emailauthor{ralshehri0468@stu.kau.edu.sa}{Raad Alshehri\corref {cor1}}
+\Newlabel{cor1}{1}
+\Newlabel{label1}{a}
+\citation{zwanenburg2013silicon,muhonen2014storing}
+\citation{yoneda2018quantum}
+\citation{noiri2022fast,xue2022quantum,mills2022two,madzik2022precision}
+\citation{yoneda2018quantum,struck2020low,connors2022charge}
+\citation{khaneja2005optimal}
+\newlabel{metadata}{{a}{2}{Required Metadata}{section*.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Code metadata.}}{2}{table.1}\protected@file@percent }
+\newlabel{tab:codeMetadata}{{1}{2}{Code metadata}{table.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Motivation and significance}{2}{section.1}\protected@file@percent }
+\newlabel{sec:motivation}{{1}{2}{Motivation and significance}{section.1}{}}
+\citation{niu2019universal,fosel2018reinforcement,porotti2019coherent,an2019deep}
+\citation{qtcad2023}
+\citation{qiskit2024}
+\citation{cirq2018}
+\citation{raffin2021stable}
+\citation{liang2018rllib}
+\citation{vermersch2026spinpulse}
+\citation{bergholm2018pennylane}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Comparison of SiliQun with existing quantum simulation tools.}}{3}{table.2}\protected@file@percent }
+\newlabel{tab:comparison}{{2}{3}{Comparison of SiliQun with existing quantum simulation tools}{table.2}{}}
+\citation{muhonen2014storing}
+\citation{yoneda2018quantum}
+\citation{geyer2022twoqubit}
+\citation{connors2022charge}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Software description}{4}{section.2}\protected@file@percent }
+\newlabel{sec:description}{{2}{4}{Software description}{section.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Software architecture}{4}{subsection.2.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Layered architecture of SiliQun. The Backend Layer provides numerical primitives across CPU and GPU platforms. The Tensor Network Layer represents quantum states as MPS and applies gates as MPO contractions. The Physics Layer encodes silicon-specific device parameters and noise models. The Environment Layer exposes the full simulation as a standard Gymnasium environment for DRL training. The HPC Runner spans all layers, enabling automated job submission to PBS/SLURM clusters.}}{5}{figure.1}\protected@file@percent }
+\newlabel{fig:architecture}{{1}{5}{Layered architecture of SiliQun. The Backend Layer provides numerical primitives across CPU and GPU platforms. The Tensor Network Layer represents quantum states as MPS and applies gates as MPO contractions. The Physics Layer encodes silicon-specific device parameters and noise models. The Environment Layer exposes the full simulation as a standard Gymnasium environment for DRL training. The HPC Runner spans all layers, enabling automated job submission to PBS/SLURM clusters}{figure.1}{}}
+\citation{muhonen2014storing}
+\citation{laucht2015electrically}
+\citation{geyer2022twoqubit}
+\citation{yoneda2018quantum}
+\citation{muhonen2015quantifying}
+\citation{geyer2022twoqubit}
+\citation{madzik2022precision}
+\citation{xue2022quantum}
+\citation{connors2022charge}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Built-in silicon spin qubit device profiles in SiliQun. All parameters are drawn from the experimental references cited in the text.}}{6}{table.3}\protected@file@percent }
+\newlabel{tab:devices}{{3}{6}{Built-in silicon spin qubit device profiles in SiliQun. All parameters are drawn from the experimental references cited in the text}{table.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Software functionalities}{7}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Illustrative examples}{7}{section.3}\protected@file@percent }
+\newlabel{sec:examples}{{3}{7}{Illustrative examples}{section.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Example 1: DRL training loop}{7}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Example 2: Performance benchmarks}{8}{subsection.3.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Simulation throughput (steps per second) as a function of the number of qubits on the Aziz HPC (Intel Xeon E5-2695 v2 @ 2.40\,GHz). The MPS-based backend maintains nearly constant throughput ($\sim $91K steps/s) from 2 to 16 qubits, while the theoretical statevector scaling degrades exponentially.}}{9}{figure.2}\protected@file@percent }
+\newlabel{fig:scaling}{{2}{9}{Simulation throughput (steps per second) as a function of the number of qubits on the Aziz HPC (Intel Xeon E5-2695 v2 @ 2.40\,GHz). The MPS-based backend maintains nearly constant throughput ($\sim $91K steps/s) from 2 to 16 qubits, while the theoretical statevector scaling degrades exponentially}{figure.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Left: Gate throughput comparison between SiliQun (MPS), Qiskit Aer (statevector), and QuTiP (statevector) on a log scale. Right: SiliQun's speedup factor over both statevector simulators. The MPS advantage grows with system size as statevector methods encounter exponential scaling.}}{10}{figure.3}\protected@file@percent }
+\newlabel{fig:comparison}{{3}{10}{Left: Gate throughput comparison between SiliQun (MPS), Qiskit Aer (statevector), and QuTiP (statevector) on a log scale. Right: SiliQun's speedup factor over both statevector simulators. The MPS advantage grows with system size as statevector methods encounter exponential scaling}{figure.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Comparison of simulation throughput with and without noise channels enabled on the Aziz HPC. The noise overhead (red diamonds, right axis) ranges from 20\% to 39\%, averaging approximately 32\%.}}{10}{figure.4}\protected@file@percent }
+\newlabel{fig:noise}{{4}{10}{Comparison of simulation throughput with and without noise channels enabled on the Aziz HPC. The noise overhead (red diamonds, right axis) ranges from 20\% to 39\%, averaging approximately 32\%}{figure.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Throughput as a function of maximum bond dimension $\chi $ for an 8-qubit system on the Aziz HPC. Throughput remains approximately constant at $\sim $122K steps/s across all tested bond dimensions.}}{11}{figure.5}\protected@file@percent }
+\newlabel{fig:bonddim}{{5}{11}{Throughput as a function of maximum bond dimension $\chi $ for an 8-qubit system on the Aziz HPC. Throughput remains approximately constant at $\sim $122K steps/s across all tested bond dimensions}{figure.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Impact}{11}{section.4}\protected@file@percent }
+\newlabel{sec:impact}{{4}{11}{Impact}{section.4}{}}
+\citation{shi2006classical}
+\citation{zhao2016tensor}
+\citation{verstraete2004renormalization}
+\citation{gray2018quimb}
+\citation{vermersch2026spinpulse}
+\citation{cutensornet2024}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusions}{12}{section.5}\protected@file@percent }
+\newlabel{sec:conclusions}{{5}{12}{Conclusions}{section.5}{}}
+\bibcite{zwanenburg2013silicon}{{1}{}{{}}{{}}}
+\bibcite{muhonen2014storing}{{2}{}{{}}{{}}}
+\bibcite{muhonen2015quantifying}{{3}{}{{}}{{}}}
+\bibcite{yoneda2018quantum}{{4}{}{{}}{{}}}
+\bibcite{noiri2022fast}{{5}{}{{}}{{}}}
+\bibcite{xue2022quantum}{{6}{}{{}}{{}}}
+\bibcite{mills2022two}{{7}{}{{}}{{}}}
+\bibcite{madzik2022precision}{{8}{}{{}}{{}}}
+\bibcite{laucht2015electrically}{{9}{}{{}}{{}}}
+\bibcite{geyer2022twoqubit}{{10}{}{{}}{{}}}
+\bibcite{connors2022charge}{{11}{}{{}}{{}}}
+\bibcite{struck2020low}{{12}{}{{}}{{}}}
+\bibcite{khaneja2005optimal}{{13}{}{{}}{{}}}
+\bibcite{niu2019universal}{{14}{}{{}}{{}}}
+\bibcite{fosel2018reinforcement}{{15}{}{{}}{{}}}
+\bibcite{porotti2019coherent}{{16}{}{{}}{{}}}
+\bibcite{an2019deep}{{17}{}{{}}{{}}}
+\bibcite{qtcad2023}{{18}{}{{}}{{}}}
+\bibcite{qiskit2024}{{19}{}{{}}{{}}}
+\bibcite{cirq2018}{{20}{}{{}}{{}}}
+\bibcite{vermersch2026spinpulse}{{21}{}{{}}{{}}}
+\bibcite{bergholm2018pennylane}{{22}{}{{}}{{}}}
+\bibcite{raffin2021stable}{{23}{}{{}}{{}}}
+\bibcite{liang2018rllib}{{24}{}{{}}{{}}}
+\bibcite{stano2024review}{{25}{}{{}}{{}}}
+\bibcite{stemp2025eleven}{{26}{}{{}}{{}}}
+\bibcite{shi2006classical}{{27}{}{{}}{{}}}
+\bibcite{zhao2016tensor}{{28}{}{{}}{{}}}
+\bibcite{verstraete2004renormalization}{{29}{}{{}}{{}}}
+\bibcite{gray2018quimb}{{30}{}{{}}{{}}}
+\bibcite{cutensornet2024}{{31}{}{{}}{{}}}
+\bibcite{votto2026learning}{{32}{}{{}}{{}}}
+\providecommand\NAT@force@numbers{}\NAT@force@numbers
+\gdef \@abspage@last{16}

@@ -1,0 +1,43 @@
+Analysis of DeepSeek v3 Minor Fixes:
+
+1. FORMATTING GLITCHES ("1 1 1..." on pages 7 and 14):
+   - The code listing on line 188 uses `numbers=left, numberstyle=\tiny\color{gray}` 
+   - This adds line numbers to the code listing. DeepSeek may have interpreted these as artifacts.
+   - The line numbers are INTENTIONAL (1-14 for the code snippet). NOT a bug.
+   - However, the `\setlength{\parindent}{0pt}` on line 11 removes all paragraph indentation globally.
+   - This could be affecting formatting. Consider removing it or scoping it.
+   - VERDICT: No action needed - line numbers are intentional in code listings.
+
+2. REFERENCE [8] (Schaal et al.):
+   - Line 361: "Nature Electronics, 2(6), 236--242" - this IS complete with volume/page numbers.
+   - DeepSeek may have been looking at a cached/older version.
+   - VERDICT: Already fixed. No action needed.
+
+3. SINGLE-GPU FOCUS:
+   - Line 331: Section 5 already discusses "Multi-GPU distribution via NCCL or cuQuantum's multi-node capabilities is a planned extension."
+   - DeepSeek missed this. VERDICT: Already addressed. No action needed.
+
+4. AUTHOR AFFILIATION:
+   - Line 25: "Faculty of Computing and Information Technology"
+   - DeepSeek suggests "PhD Candidate, Faculty of..."
+   - This IS a valid point. SoftwareX uses institutional affiliation, but clarifying student status is good practice.
+   - ACTION: Change to "PhD Candidate, Faculty of Computing and Information Technology, King Abdulaziz University, Jeddah 21589, Saudi Arabia"
+
+5. "physically moti" CUTOFF:
+   - This is just a page break in the PDF. The word "motivated" continues on the next page.
+   - VERDICT: Not a real issue. No action needed.
+
+6. PPO vs REINFORCE:
+   - Code snippet (line 200) imports PPO and uses PPO for training.
+   - Text (line 205) says "REINFORCE agent trained for 150 episodes"
+   - This IS a genuine inconsistency! The code shows PPO but text says REINFORCE.
+   - ACTION: Either change the code to use REINFORCE, or change the text to say PPO.
+   - Since the learning curves figure was generated with REINFORCE, change the code snippet to match.
+   - Actually, the code snippet is meant to show how to USE SiliQun with stable-baselines3.
+   - The learning curves were generated separately with a custom REINFORCE implementation.
+   - BEST FIX: Clarify in the text that the code snippet shows PPO setup, while Figure 4 shows results from a lightweight REINFORCE agent.
+
+ACTIONABLE FIXES:
+A. Fix author affiliation to "PhD Candidate, Faculty of..."
+B. Fix PPO/REINFORCE inconsistency in text
+C. Remove global \setlength{\parindent}{0pt} (may be causing formatting issues)

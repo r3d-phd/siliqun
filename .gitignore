@@ -6,4 +6,6 @@ dist/
 build/
 .eggs/
 *.so
-paper/_frame_*.png
+archive/paper/_frame_*.png
+.pytest_cache/
+nohup.out

@@ -1,0 +1,35 @@
+Quantum Digital Twins Article Analysis (April 4, 2026)
+======================================================
+
+Source: The Quantum Insider, April 2, 2026
+Title: "Twinning! Quantum 'Digital Twins' Tackle Error Correction Task to Speed Path to Reliable Quantum Computers"
+
+WHO: AWS, Quantum Elements, USC, Harvard University
+WHAT: Monte Carlo-based digital twin to simulate quantum error correction
+SYSTEM: 97-qubit distance-7 surface code
+METHOD: Quantum Monte Carlo simulation on Amazon EC2 HPC
+RUNTIME: ~1 hour on a single compute node
+NOISE: Correlated errors, phase-sensitive errors, calibration errors, energy loss, dephasing, crosstalk
+OPERATIONS: ~400 quantum operations (1Q + 2Q gates, multiple layers)
+
+KEY FINDINGS:
+1. Realistic simulations reveal STRUCTURED spatial error patterns that simpler models miss
+2. When control signal frequencies varied, simulation showed spatially varying error patterns
+3. Standard simplified simulators predicted uniform response (wrong)
+4. Correlated and phase-sensitive errors significantly impact QEC performance
+5. Digital twins can train neural-network-based decoders with realistic data
+
+LIMITATIONS:
+- Monte Carlo sampling introduces statistical uncertainty
+- Noise model NOT calibrated to a specific device (general capabilities only)
+- Only single round of error correction simulated
+- Need to extend to many cycles for practical use
+
+RELEVANCE TO SILIQUN:
+- SiliQun IS a digital twin of silicon spin qubit hardware
+- Both emphasize correlated noise (TLF in our case, general in theirs)
+- Their approach: surface code QEC on superconducting-like qubits
+- Our approach: DFS encoding on silicon spin qubits + DRL control
+- Different qubit platforms, same philosophy: realistic simulation enables better control/QEC
+- Their Monte Carlo approach is complementary to our state vector approach
+- Key difference: they approximate (Monte Carlo), we are exact within encoded subspace
